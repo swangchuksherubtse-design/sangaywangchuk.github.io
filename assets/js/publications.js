@@ -241,10 +241,27 @@ const publications = [
   }
 ];
 
+
+/* =========================================================
+   RENDER PUBLICATIONS
+   ========================================================= */
+
 function renderPublications(list = publications) {
   const container = document.querySelector(".pub-list");
 
   if (!container) return;
+
+  if (list.length === 0) {
+    container.innerHTML = `
+      <div class="publication-empty">
+        <h3>No publications found</h3>
+        <p>
+          Try a different search term, year, or research area.
+        </p>
+      </div>
+    `;
+    return;
+  }
 
   container.innerHTML = list.map((pub, index) => `
     <article class="publication-item">
@@ -278,14 +295,22 @@ function renderPublications(list = publications) {
   `).join("");
 }
 
+
+/* =========================================================
+   PUBLICATION FILTERS
+   ========================================================= */
+
 function setupPublicationFilters() {
   const section = document.querySelector("#publications");
+
   if (!section) return;
 
   const feature = section.querySelector(".pub-feature");
+
   if (!feature) return;
 
   const controls = document.createElement("div");
+
   controls.className = "publication-controls";
 
   controls.innerHTML = `
@@ -296,44 +321,92 @@ function setupPublicationFilters() {
       aria-label="Search publications"
     >
 
-    <select id="publication-year" aria-label="Filter by publication year">
+    <select
+      id="publication-year"
+      aria-label="Filter by publication year"
+    >
       <option value="all">All years</option>
-      <option value="2026">2026</option>
-      <option value="2025">2025</option>
-      <option value="2024">2024</option>
-      <option value="2023">2023</option>
-      <option value="2022">2022</option>
     </select>
 
-    <select id="publication-category" aria-label="Filter by research area">
+    <select
+      id="publication-category"
+      aria-label="Filter by research area"
+    >
       <option value="all">All research areas</option>
-      <option value="Environmental Monitoring">Environmental Monitoring</option>
-      <option value="Biomedical Analysis">Biomedical Analysis</option>
-      <option value="Forensic Electrochemistry">Forensic Electrochemistry</option>
-      <option value="Forensic / Food Analysis">Forensic / Food Analysis</option>
-      <option value="Sustainable Nanomaterials">Sustainable Nanomaterials</option>
-      <option value="Biosensors">Biosensors</option>
-      <option value="Electrocatalysis">Electrocatalysis</option>
     </select>
   `;
 
   feature.parentNode.insertBefore(controls, feature);
 
-  const search = document.querySelector("#publication-search");
-  const year = document.querySelector("#publication-year");
-  const category = document.querySelector("#publication-category");
+
+  /* -------------------------------------------------------
+     Automatically generate year options
+     ------------------------------------------------------- */
+
+  const yearSelect =
+    controls.querySelector("#publication-year");
+
+  const years = [...new Set(
+    publications.map(pub => pub.year)
+  )].sort((a, b) => b - a);
+
+  years.forEach(year => {
+    const option = document.createElement("option");
+
+    option.value = year;
+    option.textContent = year;
+
+    yearSelect.appendChild(option);
+  });
+
+
+  /* -------------------------------------------------------
+     Automatically generate category options
+     ------------------------------------------------------- */
+
+  const categorySelect =
+    controls.querySelector("#publication-category");
+
+  const categories = [...new Set(
+    publications.map(pub => pub.category)
+  )].sort((a, b) => a.localeCompare(b));
+
+  categories.forEach(category => {
+    const option = document.createElement("option");
+
+    option.value = category;
+    option.textContent = category;
+
+    categorySelect.appendChild(option);
+  });
+
+
+  /* -------------------------------------------------------
+     Filter publications
+     ------------------------------------------------------- */
+
+  const search =
+    controls.querySelector("#publication-search");
 
   function filterPublications() {
-    const searchTerm = search.value.toLowerCase().trim();
-    const selectedYear = year.value;
-    const selectedCategory = category.value;
+    const searchTerm =
+      search.value.toLowerCase().trim();
+
+    const selectedYear =
+      yearSelect.value;
+
+    const selectedCategory =
+      categorySelect.value;
 
     const filtered = publications.filter(pub => {
+
       const searchableText =
-        `${pub.title} ${pub.journal} ${pub.category}`.toLowerCase();
+        `${pub.title} ${pub.journal} ${pub.category} ${pub.year}`
+        .toLowerCase();
 
       const matchesSearch =
-        !searchTerm || searchableText.includes(searchTerm);
+        !searchTerm ||
+        searchableText.includes(searchTerm);
 
       const matchesYear =
         selectedYear === "all" ||
@@ -343,16 +416,37 @@ function setupPublicationFilters() {
         selectedCategory === "all" ||
         pub.category === selectedCategory;
 
-      return matchesSearch && matchesYear && matchesCategory;
+      return (
+        matchesSearch &&
+        matchesYear &&
+        matchesCategory
+      );
     });
 
     renderPublications(filtered);
   }
 
-  search.addEventListener("input", filterPublications);
-  year.addEventListener("change", filterPublications);
-  category.addEventListener("change", filterPublications);
+
+  search.addEventListener(
+    "input",
+    filterPublications
+  );
+
+  yearSelect.addEventListener(
+    "change",
+    filterPublications
+  );
+
+  categorySelect.addEventListener(
+    "change",
+    filterPublications
+  );
 }
+
+
+/* =========================================================
+   INITIALIZE PUBLICATIONS
+   ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
   renderPublications();
