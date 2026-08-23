@@ -247,7 +247,8 @@ const publications = [
    ========================================================= */
 
 function renderPublications(list = publications) {
-    updatePublicationCount(list);
+  updatePublicationCount(list);
+
   const container = document.querySelector(".pub-list");
 
   if (!container) return;
