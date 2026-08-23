@@ -389,24 +389,29 @@ function setupPublicationFilters() {
     controls.querySelector("#publication-search");
 
   function filterPublications() {
-    const searchTerm =
-      search.value.toLowerCase().trim();
+    const searchTerms = search.value
+  .toLowerCase()
+  .split(/[\s,]+/)
+  .map(term => term.trim())
+  .filter(Boolean);
 
-    const selectedYear =
-      yearSelect.value;
+const selectedYear =
+  yearSelect.value;
 
-    const selectedCategory =
-      categorySelect.value;
+const selectedCategory =
+  categorySelect.value;
 
-    const filtered = publications.filter(pub => {
+const filtered = publications.filter(pub => {
 
-      const searchableText =
-        `${pub.title} ${pub.journal} ${pub.category} ${pub.year}`
-        .toLowerCase();
+  const searchableText =
+    `${pub.title} ${pub.journal} ${pub.category} ${pub.year}`
+    .toLowerCase();
 
-      const matchesSearch =
-        !searchTerm ||
-        searchableText.includes(searchTerm);
+  const matchesSearch =
+    searchTerms.length === 0 ||
+    searchTerms.every(term =>
+      searchableText.includes(term)
+    );
 
       const matchesYear =
         selectedYear === "all" ||
