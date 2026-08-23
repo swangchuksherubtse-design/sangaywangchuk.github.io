@@ -247,6 +247,7 @@ const publications = [
    ========================================================= */
 
 function renderPublications(list = publications) {
+    updatePublicationCount(list);
   const container = document.querySelector(".pub-list");
 
   if (!container) return;
@@ -457,3 +458,44 @@ document.addEventListener("DOMContentLoaded", () => {
   renderPublications();
   setupPublicationFilters();
 });
+/* =========================================================
+   PUBLICATION COUNT
+   ========================================================= */
+
+function updatePublicationCount(list) {
+  const section = document.querySelector("#publications");
+
+  if (!section) return;
+
+  let counter = section.querySelector(".publication-count");
+
+  if (!counter) {
+    counter = document.createElement("div");
+    counter.className = "publication-count";
+
+    const feature = section.querySelector(".pub-feature");
+
+    if (feature) {
+      feature.parentNode.insertBefore(counter, feature);
+    }
+  }
+
+  const total = publications.length;
+  const showing = list.length;
+
+  const years = publications.map(pub => pub.year);
+  const newestYear = Math.max(...years);
+  const oldestYear = Math.min(...years);
+
+  if (showing === total) {
+    counter.innerHTML = `
+      <strong>${total} Publications</strong>
+      <span>Peer-reviewed research articles · ${oldestYear}–${newestYear}</span>
+    `;
+  } else {
+    counter.innerHTML = `
+      <strong>Showing ${showing} of ${total} Publications</strong>
+      <span>Filtered research results</span>
+    `;
+  }
+}
