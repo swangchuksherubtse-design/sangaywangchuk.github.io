@@ -1263,3 +1263,77 @@ footer {
   }
 
 }
+/* =========================================================
+   PROFILE PHOTO — FINAL HOMEPAGE DISPLAY
+   ========================================================= */
+
+.profile-photo-wrap {
+  width: 100%;
+  height: 300px;
+  margin: 0 0 24px 0;
+  overflow: hidden;
+  border-radius: 18px;
+  position: relative;
+  background: #eef2ef;
+}
+
+.profile-photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: center center;
+  border-radius: 18px;
+}
+
+
+/* =========================================================
+   DESKTOP
+   ========================================================= */
+
+@media (min-width: 851px) {
+
+  .profile-photo-wrap {
+    height: 300px;
+  }
+
+  .profile-photo {
+    object-position: center 25%;
+  }
+
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 850px) {
+
+  .profile-photo-wrap {
+    height: 260px;
+  }
+
+  .profile-photo {
+    object-position: center 25%;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 520px) {
+
+  .profile-photo-wrap {
+    height: 230px;
+  }
+
+  .profile-photo {
+    object-position: center 25%;
+  }
+
+}
