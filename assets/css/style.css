@@ -1,9 +1,9 @@
-```css
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap');
 
 
 /* =========================================================
    ROOT VARIABLES
+   EXISTING COLOUR DESIGN PRESERVED
 ========================================================= */
 
 :root {
@@ -15,6 +15,13 @@
   --teal: #176d69;
   --line: #dce3df;
   --dark: #0d2429;
+
+  --shadow-soft: 0 18px 40px rgba(23, 60, 68, 0.07);
+  --shadow-card: 0 20px 60px rgba(23, 60, 68, 0.12);
+
+  --radius-small: 10px;
+  --radius-medium: 18px;
+  --radius-large: 28px;
 }
 
 
@@ -28,6 +35,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 90px;
 }
 
 body {
@@ -36,6 +44,14 @@ body {
   color: var(--ink);
   font-family: "DM Sans", sans-serif;
   line-height: 1.65;
+  overflow-x: hidden;
+}
+
+body,
+button,
+input,
+select {
+  font-family: "DM Sans", sans-serif;
 }
 
 a {
@@ -44,12 +60,52 @@ a {
 }
 
 img {
+  display: block;
   max-width: 100%;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+::selection {
+  background: rgba(23, 109, 105, 0.18);
 }
 
 .container {
   width: min(1160px, calc(100% - 48px));
   margin: auto;
+}
+
+
+/* =========================================================
+   ACCESSIBILITY / FOCUS
+========================================================= */
+
+:focus-visible {
+  outline: 3px solid rgba(217, 123, 66, 0.45);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 
@@ -60,14 +116,21 @@ img {
 .site-header {
   position: sticky;
   top: 0;
-  z-index: 20;
+  z-index: 100;
+
   background: rgba(247, 248, 245, 0.9);
+
   backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
   border-bottom: 1px solid rgba(220, 227, 223, 0.7);
 }
 
 .nav {
+  position: relative;
+
   height: 76px;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -85,29 +148,75 @@ img {
 
 .nav-links {
   display: flex;
-  gap: 30px;
   align-items: center;
+  gap: 30px;
+
   font-size: 14px;
   font-weight: 600;
+}
+
+.nav-links a {
+  position: relative;
+  transition:
+    color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.nav-links a:not(.nav-button)::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: -7px;
+
+  height: 1px;
+
+  background: var(--teal);
+
+  transform: scaleX(0);
+  transform-origin: center;
+
+  transition: transform 0.2s ease;
 }
 
 .nav-links a:hover {
   color: var(--teal);
 }
 
+.nav-links a:not(.nav-button):hover::after {
+  transform: scaleX(1);
+}
+
 .nav-button {
   padding: 10px 17px;
+
   border: 1px solid var(--ink);
   border-radius: 99px;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.nav-button:hover {
+  background: var(--ink);
+  color: var(--white);
+  transform: translateY(-1px);
 }
 
 .menu-toggle {
   display: none;
+
   background: none;
   border: 0;
+
   font-size: 24px;
+  line-height: 1;
+
   color: var(--ink);
-  cursor: pointer;
 }
 
 
@@ -122,24 +231,35 @@ img {
 
 .hero-grid {
   display: grid;
+
   grid-template-columns: 1.05fr 0.95fr;
+
   gap: 70px;
+
   align-items: center;
 }
 
 .eyebrow {
-  font-size: 11px;
-  letter-spacing: 2px;
-  font-weight: 700;
-  color: var(--teal);
   margin: 0 0 15px;
+
+  font-size: 11px;
+  line-height: 1.4;
+
+  letter-spacing: 2px;
+
+  font-weight: 700;
+
+  color: var(--teal);
 }
 
 .hero h1 {
-  font-size: clamp(55px, 7vw, 88px);
-  line-height: 0.98;
-  letter-spacing: -4px;
   margin: 0 0 28px;
+
+  font-size: clamp(55px, 7vw, 88px);
+
+  line-height: 0.98;
+
+  letter-spacing: -4px;
 }
 
 .hero h1 em,
@@ -150,10 +270,12 @@ h2 em {
 }
 
 .lead {
+  max-width: 680px;
+
   font-size: 19px;
   line-height: 1.65;
+
   color: var(--muted);
-  max-width: 680px;
 }
 
 .hero-affiliation {
@@ -162,36 +284,64 @@ h2 em {
 
 .hero-actions {
   display: flex;
+  flex-wrap: wrap;
+
   gap: 12px;
+
   margin: 32px 0 45px;
 }
 
 .button {
   display: inline-block;
+
   padding: 13px 20px;
+
   border-radius: 99px;
-  font-weight: 700;
+
   font-size: 14px;
+  font-weight: 700;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.button:hover {
+  transform: translateY(-2px);
 }
 
 .primary {
   background: var(--ink);
-  color: white;
+  color: var(--white);
+}
+
+.primary:hover {
+  box-shadow: 0 10px 25px rgba(16, 37, 43, 0.18);
 }
 
 .secondary {
   border: 1px solid var(--line);
+  background: transparent;
+}
+
+.secondary:hover {
+  border-color: var(--teal);
+  color: var(--teal);
 }
 
 .quick-stats {
   display: flex;
+  flex-wrap: wrap;
+
   gap: 35px;
 }
 
 .quick-stats div {
   display: flex;
-  gap: 10px;
   align-items: center;
+
+  gap: 10px;
 }
 
 .quick-stats strong {
@@ -207,11 +357,14 @@ h2 em {
 
 /* =========================================================
    HERO VISUAL PANEL
+   EXISTING COLOUR DESIGN PRESERVED
 ========================================================= */
 
 .hero-panel {
   position: relative;
+
   min-height: 650px;
+
   padding: 30px;
 
   display: flex;
@@ -227,6 +380,7 @@ h2 em {
     );
 
   border-radius: 35px;
+
   overflow: hidden;
 }
 
@@ -261,6 +415,7 @@ h2 em {
   filter: saturate(0.8);
 
   z-index: 0;
+
   pointer-events: none;
 }
 
@@ -296,12 +451,14 @@ h2 em {
     0 16px 40px rgba(16, 37, 43, 0.20);
 
   transform: translateY(57px);
+
+  transition: box-shadow 0.25s ease;
 }
 
 
 /* =========================================================
    ACTUAL PROFILE PHOTO
-   ONLY THE PHOTO IS MOVED UP ~1 CM
+   ONLY PHOTO MOVED UP
 ========================================================= */
 
 .hero-panel .hero-photo .profile-photo {
@@ -324,7 +481,6 @@ h2 em {
   object-position: center 14%;
 
   border: 0;
-
   border-radius: 50%;
 
   opacity: 1;
@@ -336,12 +492,15 @@ h2 em {
 
 
 /* =========================================================
-   HOVER
-   FRAME FIXED + PHOTO FIXED
+   HERO PHOTO HOVER
+   FRAME FIXED
 ========================================================= */
 
 .hero-panel .hero-photo:hover {
   transform: translateY(57px);
+
+  box-shadow:
+    0 20px 48px rgba(16, 37, 43, 0.23);
 }
 
 .hero-panel .hero-photo .profile-photo:hover {
@@ -355,7 +514,6 @@ h2 em {
 
 /* =========================================================
    RESEARCH CARD
-   COMPLETELY UNCHANGED
 ========================================================= */
 
 .hero-panel .research-card {
@@ -385,18 +543,12 @@ h2 em {
     0 20px 60px rgba(23, 60, 68, 0.18);
 }
 
-
-/* =========================================================
-   RESEARCH CARD LABEL
-========================================================= */
-
 .hero-panel .research-card > span {
   display: block;
 
   margin: 0 0 8px;
 
   font-size: 10px;
-
   line-height: 1.4;
 
   letter-spacing: 1.5px;
@@ -406,23 +558,12 @@ h2 em {
   color: var(--teal);
 }
 
-
-/* =========================================================
-   RESEARCH CARD TITLE
-========================================================= */
-
 .hero-panel .research-card h3 {
   margin: 8px 0 10px;
 
   font-size: 24px;
-
   line-height: 1.2;
 }
-
-
-/* =========================================================
-   RESEARCH CARD DESCRIPTION
-========================================================= */
 
 .hero-panel .research-card p {
   margin: 0;
@@ -430,7 +571,6 @@ h2 em {
   color: var(--muted);
 
   font-size: 14px;
-
   line-height: 1.55;
 }
 
@@ -441,15 +581,20 @@ h2 em {
 
 .tags {
   display: flex;
-  gap: 7px;
   flex-wrap: wrap;
+
+  gap: 7px;
+
   margin-top: 18px;
 }
 
 .tags span {
   padding: 5px 9px;
+
   border-radius: 99px;
+
   background: #e8efec;
+
   font-size: 10px;
   font-weight: 700;
 }
@@ -457,16 +602,23 @@ h2 em {
 .hero-panel .research-card .tags {
   display: flex;
   flex-wrap: wrap;
+
   gap: 7px;
+
   margin-top: 16px;
 }
 
 .hero-panel .research-card .tags span {
   display: inline-block;
+
   padding: 6px 9px;
+
   border-radius: 20px;
+
   background: #edf4f1;
+
   color: #287f79;
+
   font-size: 10px;
   line-height: 1.3;
 }
@@ -479,16 +631,23 @@ h2 em {
 .ticker {
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
-  background: #fff;
+
+  background: var(--white);
 }
 
 .ticker-inner {
   display: flex;
+
   justify-content: space-between;
+
   padding: 18px 0;
+
   font-size: 10px;
+
   letter-spacing: 1.8px;
+
   font-weight: 700;
+
   color: #829095;
 }
 
@@ -503,22 +662,30 @@ h2 em {
 
 .section-heading {
   display: grid;
+
   grid-template-columns: 1.1fr 0.9fr;
+
   gap: 80px;
+
   align-items: end;
+
   margin-bottom: 50px;
 }
 
 .section-heading h2 {
-  font-size: 48px;
-  line-height: 1.08;
-  letter-spacing: -2px;
   margin: 0;
+
+  font-size: 48px;
+
+  line-height: 1.08;
+
+  letter-spacing: -2px;
 }
 
 .section-heading > p {
-  color: var(--muted);
   margin: 0;
+
+  color: var(--muted);
 }
 
 
@@ -528,28 +695,39 @@ h2 em {
 
 .research-grid {
   display: grid;
+
   grid-template-columns: repeat(4, 1fr);
+
   gap: 14px;
 }
 
 .theme-card {
   min-height: 320px;
-  background: #fff;
-  padding: 28px;
-  border: 1px solid var(--line);
+
   display: flex;
   flex-direction: column;
-  transition: 0.25s;
+
+  padding: 28px;
+
+  background: var(--white);
+
+  border: 1px solid var(--line);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .theme-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 18px 40px #173c4412;
+
+  box-shadow:
+    0 18px 40px rgba(23, 60, 68, 0.07);
 }
 
 .theme-card.featured {
   background: var(--teal);
-  color: #fff;
+  color: var(--white);
 }
 
 .theme-card .number {
@@ -558,9 +736,10 @@ h2 em {
 }
 
 .theme-card h3 {
+  margin-top: auto;
+
   font-size: 23px;
   line-height: 1.2;
-  margin-top: auto;
 }
 
 .theme-card p {
@@ -573,9 +752,10 @@ h2 em {
 }
 
 .theme-card a {
+  margin-top: 12px;
+
   font-size: 12px;
   font-weight: 700;
-  margin-top: 12px;
 }
 
 
@@ -585,7 +765,7 @@ h2 em {
 
 .dark {
   background: var(--dark);
-  color: #fff;
+  color: var(--white);
 }
 
 .light .eyebrow {
@@ -602,9 +782,13 @@ h2 em {
 
 .project {
   display: grid;
+
   grid-template-columns: 90px 1fr;
+
   gap: 25px;
+
   padding: 38px 0;
+
   border-bottom: 1px solid #ffffff24;
 }
 
@@ -614,20 +798,25 @@ h2 em {
 }
 
 .project h3 {
+  margin: 8px 0 12px;
+
   font-size: 27px;
   line-height: 1.2;
-  margin: 8px 0 12px;
 }
 
 .project p {
-  color: #b3c2c5;
   max-width: 780px;
+
+  color: #b3c2c5;
 }
 
 .project-kicker {
   font-size: 10px !important;
+
   letter-spacing: 1.5px;
+
   color: #e1a378 !important;
+
   font-weight: 700;
 }
 
@@ -643,24 +832,33 @@ h2 em {
 
 .pub-feature {
   display: grid;
+
   grid-template-columns: 0.9fr 1.1fr;
-  background: #fff;
-  border: 1px solid var(--line);
-  padding: 45px;
+
   gap: 60px;
+
+  padding: 45px;
+
+  background: var(--white);
+
+  border: 1px solid var(--line);
 }
 
 .pub-feature strong {
   display: block;
+
   font-size: 88px;
   line-height: 1;
+
   margin: 12px 0;
+
   color: var(--teal);
 }
 
 .pub-feature p {
-  color: var(--muted);
   max-width: 420px;
+
+  color: var(--muted);
 }
 
 
@@ -670,46 +868,74 @@ h2 em {
 
 .research-glance {
   display: grid;
+
   grid-template-columns: repeat(4, 1fr);
+
   gap: 16px;
+
   margin: 0 0 28px;
 }
 
 .glance-card {
   padding: 22px;
+
   border: 1px solid rgba(127, 127, 127, 0.18);
+
   border-radius: 12px;
+
   background: rgba(255, 255, 255, 0.04);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.glance-card:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 12px 30px rgba(23, 60, 68, 0.06);
 }
 
 .glance-card span {
   display: block;
+
   margin-bottom: 10px;
+
   font-size: 0.72rem;
+
   font-weight: 700;
+
   letter-spacing: 0.12em;
+
   text-transform: uppercase;
+
   opacity: 0.65;
 }
 
 .glance-card strong {
   display: block;
+
   margin-bottom: 8px;
+
   font-size: 1.8rem;
+
   line-height: 1.1;
 }
 
 .glance-card p {
   margin: 0;
+
   font-size: 0.85rem;
+
   line-height: 1.5;
+
   opacity: 0.7;
 }
 
 
 /* =========================================================
    PUBLICATION INTRO
-   VERTICAL SPACING NARROWED
 ========================================================= */
 
 .publication-intro {
@@ -718,27 +944,33 @@ h2 em {
 
 .publication-intro h3 {
   margin: 8px 0 10px;
+
   font-size: 1.35rem;
 }
 
 .publication-intro p {
   max-width: 720px;
+
   margin: 0;
+
   line-height: 1.65;
+
   opacity: 0.75;
 }
 
 .pub-label {
   font-size: 10px;
+
   letter-spacing: 1.5px;
+
   font-weight: 700;
+
   color: var(--teal);
 }
 
 
 /* =========================================================
    PUBLICATION SEARCH / FILTER
-   TOP AND BOTTOM SPACING NARROWED
 ========================================================= */
 
 .publication-controls {
@@ -751,55 +983,80 @@ h2 em {
 
   gap: 12px;
 
-  /* Reduced vertical whitespace above and below controls */
   margin: 12px 0 16px;
 }
 
 .publication-controls input,
 .publication-controls select {
   width: 100%;
+
   min-height: 48px;
+
   padding: 0 15px;
+
   border: 1px solid rgba(127, 127, 127, 0.25);
+
   border-radius: 8px;
+
   background: transparent;
+
+  color: inherit;
+
   font-family: inherit;
+
   font-size: 0.86rem;
+
   outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.publication-controls input::placeholder {
+  color: currentColor;
+  opacity: 0.5;
 }
 
 .publication-controls input:focus,
 .publication-controls select:focus {
   border-color: currentColor;
-  box-shadow: 0 0 0 3px rgba(127, 127, 127, 0.08);
+
+  box-shadow:
+    0 0 0 3px rgba(127, 127, 127, 0.08);
 }
 
 
 /* =========================================================
    PUBLICATION COUNT
-   TOP SPACING NARROWED
 ========================================================= */
 
 .publication-count {
   display: flex;
+
   align-items: baseline;
+
   justify-content: space-between;
+
   gap: 20px;
 
-  /* Reduced space above count */
   margin: 12px 0 4px;
 
   padding-bottom: 14px;
+
   border-bottom: 1px solid rgba(127, 127, 127, 0.15);
 }
 
 .publication-count strong {
   font-size: 1rem;
+
   font-weight: 700;
 }
 
 .publication-count span {
   font-size: 0.78rem;
+
   opacity: 0.62;
 }
 
@@ -810,17 +1067,25 @@ h2 em {
 
 .pub-list {
   display: flex;
+
   flex-direction: column;
+
   gap: 0;
+
   margin-top: 10px;
 }
 
 .publication-item {
   display: grid;
+
   grid-template-columns: 64px minmax(0, 1fr);
+
   gap: 24px;
+
   padding: 28px 0;
+
   border-top: 1px solid rgba(127, 127, 127, 0.18);
+
   transition:
     padding-left 0.2s ease,
     background 0.2s ease;
@@ -836,12 +1101,19 @@ h2 em {
 
 .publication-number {
   display: flex;
+
   align-items: flex-start;
+
   justify-content: center;
+
   padding-top: 3px;
+
   font-size: 0.78rem;
+
   font-weight: 700;
+
   letter-spacing: 0.12em;
+
   opacity: 0.45;
 }
 
@@ -851,58 +1123,91 @@ h2 em {
 
 .publication-meta {
   display: flex;
+
   flex-wrap: wrap;
+
   align-items: center;
+
   gap: 8px;
+
   margin-bottom: 10px;
 }
 
 .publication-meta span {
   display: inline-flex;
+
   align-items: center;
+
   min-height: 26px;
+
   padding: 4px 9px;
+
   border: 1px solid rgba(127, 127, 127, 0.2);
+
   border-radius: 999px;
+
   font-size: 0.68rem;
+
   font-weight: 700;
+
   line-height: 1.2;
+
   letter-spacing: 0.04em;
 }
 
 .publication-content h3 {
-  margin: 0 0 10px;
   max-width: 900px;
+
+  margin: 0 0 10px;
+
   font-size: 1.05rem;
+
   line-height: 1.55;
+
   font-weight: 650;
 }
 
 .publication-journal {
   margin: 0 0 14px;
+
   font-size: 0.9rem;
+
   line-height: 1.5;
+
   font-style: italic;
+
   opacity: 0.68;
 }
 
 .publication-doi {
   display: inline-flex;
+
   align-items: center;
+
   font-size: 0.78rem;
+
   font-weight: 700;
+
   letter-spacing: 0.03em;
+
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
 }
 
 .publication-doi:hover {
   opacity: 0.7;
+
   transform: translateX(3px);
 }
 
 .publication-empty {
   padding: 40px 20px;
+
   text-align: center;
+
   border: 1px dashed rgba(127, 127, 127, 0.3);
+
   border-radius: 12px;
 }
 
@@ -912,6 +1217,7 @@ h2 em {
 
 .publication-empty p {
   margin: 0;
+
   opacity: 0.65;
 }
 
@@ -926,19 +1232,35 @@ h2 em {
 
 .academic-grid {
   display: grid;
+
   grid-template-columns: repeat(3, 1fr);
+
   gap: 15px;
 }
 
 .academic-grid article {
   padding: 30px;
-  background: #fff;
+
+  background: var(--white);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.academic-grid article:hover {
+  transform: translateY(-4px);
+
+  box-shadow: var(--shadow-soft);
 }
 
 .academic-grid span {
   font-size: 10px;
+
   letter-spacing: 1.5px;
+
   color: var(--teal);
+
   font-weight: 700;
 }
 
@@ -949,6 +1271,7 @@ h2 em {
 .academic-grid p,
 .about p {
   color: var(--muted);
+
   font-size: 14px;
 }
 
@@ -958,19 +1281,24 @@ h2 em {
 ========================================================= */
 
 .about {
-  background: #fff;
+  background: var(--white);
 }
 
 .about-grid {
   display: grid;
+
   grid-template-columns: 1fr 1fr;
+
   gap: 100px;
 }
 
 .about h2 {
-  font-size: 48px;
-  line-height: 1.08;
   margin: 0;
+
+  font-size: 48px;
+
+  line-height: 1.08;
+
   letter-spacing: -2px;
 }
 
@@ -985,63 +1313,89 @@ h2 em {
 
 .academic-profiles-grid {
   display: grid;
+
   grid-template-columns: repeat(3, 1fr);
+
   gap: 15px;
 }
 
 .profile-card {
   display: flex;
+
   flex-direction: column;
+
   min-height: 250px;
+
   padding: 28px;
-  background: #fff;
+
+  background: var(--white);
+
   border: 1px solid var(--line);
 
   transition:
     transform 0.25s ease,
-    box-shadow 0.25s ease;
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
 }
 
 .profile-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 18px 40px #173c4412;
+
+  border-color: #cbd8d3;
+
+  box-shadow:
+    0 18px 40px rgba(23, 60, 68, 0.07);
 }
 
 .profile-number {
   font-size: 12px;
+
   opacity: 0.5;
 }
 
 .profile-label {
   margin-top: 22px;
+
   font-size: 10px;
+
   letter-spacing: 1.5px;
+
   color: var(--teal);
+
   font-weight: 700;
 }
 
 .profile-card h3 {
   margin: 10px 0;
+
   font-size: 25px;
 }
 
 .profile-card p {
   margin: 0;
+
   color: var(--muted);
+
   font-size: 14px;
 }
 
 .profile-link {
   margin-top: auto;
+
   padding-top: 20px;
+
   color: var(--teal);
+
   font-size: 12px;
+
   font-weight: 700;
 }
 
 .profile-note {
   margin-top: 25px;
+
   color: var(--muted);
+
   font-size: 12px;
 }
 
@@ -1051,20 +1405,25 @@ h2 em {
 ========================================================= */
 
 .contact {
-  background: #d9e7e2;
   padding: 85px 0;
+
+  background: #d9e7e2;
 }
 
 .contact-inner {
   display: grid;
+
   grid-template-columns: 1fr 1fr;
+
   gap: 100px;
 }
 
 .contact h2 {
-  font-size: 48px;
-  line-height: 1.08;
   margin: 0;
+
+  font-size: 48px;
+
+  line-height: 1.08;
 }
 
 .contact p {
@@ -1081,20 +1440,47 @@ h2 em {
 ========================================================= */
 
 footer {
-  background: var(--dark);
-  color: #9db0b3;
   padding: 24px 0;
+
+  background: var(--dark);
+
+  color: #9db0b3;
+
   font-size: 11px;
 }
 
 .footer-inner {
   display: flex;
+
   justify-content: space-between;
+
+  gap: 20px;
 }
 
 
 /* =========================================================
    TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  .hero-grid {
+    gap: 45px;
+  }
+
+  .research-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .hero-panel {
+    min-height: 630px;
+  }
+
+}
+
+
+/* =========================================================
+   TABLET / SMALL DESKTOP
 ========================================================= */
 
 @media (max-width: 900px) {
@@ -1125,6 +1511,7 @@ footer {
 
   .pub-feature {
     grid-template-columns: 1fr;
+
     padding: 30px;
   }
 
@@ -1148,8 +1535,11 @@ footer {
 
   .ticker-inner {
     overflow: hidden;
+
     gap: 30px;
+
     justify-content: flex-start;
+
     white-space: nowrap;
   }
 
@@ -1160,19 +1550,22 @@ footer {
 
   .hero-panel {
     min-height: 620px;
+
     padding: 25px;
+
     border-radius: 28px;
   }
 
 
   /* =====================================================
-     TABLET PORTRAIT FRAME
+     TABLET PHOTO FRAME
      FRAME POSITION UNCHANGED
   ===================================================== */
 
   .hero-panel .hero-photo {
     width: 275px;
     height: 275px;
+
     flex-basis: 275px;
 
     margin: -78px auto 22px;
@@ -1189,7 +1582,7 @@ footer {
 
   /* =====================================================
      TABLET ACTUAL PHOTO
-     ONLY PHOTO MOVES UP ~1 CM
+     ONLY PHOTO MOVES UP
   ===================================================== */
 
   .hero-panel .hero-photo .profile-photo {
@@ -1209,11 +1602,11 @@ footer {
 
   /* =====================================================
      TABLET RESEARCH CARD
-     UNCHANGED
   ===================================================== */
 
   .hero-panel .research-card {
     width: min(430px, 100%);
+
     margin-top: 57px;
   }
 
@@ -1235,8 +1628,6 @@ footer {
   }
 
   .nav-links.open {
-    display: flex;
-
     position: absolute;
 
     top: 76px;
@@ -1244,15 +1635,27 @@ footer {
     left: 0;
     right: 0;
 
-    background: var(--paper);
-
-    padding: 20px 24px;
+    display: flex;
 
     flex-direction: column;
 
     align-items: flex-start;
 
+    gap: 18px;
+
+    padding: 20px 24px;
+
+    background: var(--paper);
+
     border-bottom: 1px solid var(--line);
+
+    box-shadow:
+      0 15px 30px rgba(16, 37, 43, 0.06);
+  }
+
+  .nav-links.open .nav-button {
+    width: 100%;
+    text-align: center;
   }
 
 }
@@ -1264,9 +1667,46 @@ footer {
 
 @media (max-width: 700px) {
 
+  .container {
+    width: min(100% - 36px, 1160px);
+  }
+
+  .section {
+    padding: 80px 0;
+  }
+
+  .hero {
+    padding: 70px 0 55px;
+  }
+
+  .lead {
+    font-size: 17px;
+  }
+
+  .section-heading {
+    margin-bottom: 38px;
+  }
+
+  .section-heading h2,
+  .about h2,
+  .contact h2 {
+    font-size: 36px;
+    letter-spacing: -1.5px;
+  }
+
+  .research-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .academic-profiles-grid {
+    grid-template-columns: 1fr;
+  }
+
   .publication-item {
     grid-template-columns: 42px minmax(0, 1fr);
+
     gap: 14px;
+
     padding: 22px 0;
   }
 
@@ -1280,11 +1720,13 @@ footer {
 
   .publication-meta span {
     padding: 4px 7px;
+
     font-size: 0.62rem;
   }
 
   .publication-content h3 {
     font-size: 0.96rem;
+
     line-height: 1.5;
   }
 
@@ -1298,6 +1740,20 @@ footer {
 
   .publication-item:hover {
     padding-left: 0;
+  }
+
+  .project {
+    grid-template-columns: 35px 1fr;
+
+    gap: 15px;
+  }
+
+  .project h3 {
+    font-size: 23px;
+  }
+
+  .footer-inner {
+    flex-direction: column;
   }
 
 }
@@ -1323,6 +1779,7 @@ footer {
 
   .publication-controls {
     grid-template-columns: 1fr;
+
     gap: 10px;
   }
 
@@ -1332,23 +1789,32 @@ footer {
 
   .publication-count {
     align-items: flex-start;
+
     flex-direction: column;
+
     gap: 5px;
   }
 
   .publication-item {
     grid-template-columns: 1fr;
+
     gap: 10px;
+
     padding: 18px;
   }
 
   .publication-number {
     justify-content: flex-start;
+
     padding-top: 0;
   }
 
   .academic-profiles-grid {
     grid-template-columns: 1fr;
+  }
+
+  .contact {
+    padding: 70px 0;
   }
 
 }
@@ -1364,13 +1830,32 @@ footer {
     width: min(100% - 30px, 1160px);
   }
 
+  .nav {
+    height: 70px;
+  }
+
+  .nav-links.open {
+    top: 70px;
+  }
+
   .hero {
     padding-top: 60px;
   }
 
   .hero h1 {
     font-size: 55px;
+
     letter-spacing: -3px;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .hero-actions .button {
+    text-align: center;
   }
 
 
@@ -1380,24 +1865,28 @@ footer {
 
   .hero-panel {
     min-height: auto;
+
     padding: 18px;
+
     border-radius: 24px;
   }
 
 
   /* =====================================================
-     MOBILE PORTRAIT FRAME
+     MOBILE PHOTO FRAME
      FRAME POSITION UNCHANGED
   ===================================================== */
 
   .hero-panel .hero-photo {
     width: 235px;
     height: 235px;
+
     flex-basis: 235px;
 
     margin: -65px auto 18px;
 
     border-radius: 50%;
+
     border-width: 5px;
 
     transform: translateY(57px);
@@ -1410,7 +1899,7 @@ footer {
 
   /* =====================================================
      MOBILE ACTUAL PHOTO
-     ONLY PHOTO MOVES UP ~1 CM
+     ONLY PHOTO MOVES UP
   ===================================================== */
 
   .hero-panel .hero-photo .profile-photo {
@@ -1432,12 +1921,13 @@ footer {
 
   /* =====================================================
      MOBILE RESEARCH CARD
-     UNCHANGED
   ===================================================== */
 
   .hero-panel .research-card {
     width: 100%;
+
     padding: 21px;
+
     border-radius: 18px;
 
     margin-top: 57px;
@@ -1449,13 +1939,36 @@ footer {
 
   .quick-stats {
     flex-wrap: wrap;
+
     gap: 18px;
   }
 
-  .footer-inner {
-    flex-direction: column;
-    gap: 8px;
+}
+
+
+/* =========================================================
+   EXTRA SMALL DEVICES
+========================================================= */
+
+@media (max-width: 380px) {
+
+  .hero h1 {
+    font-size: 48px;
+  }
+
+  .hero-panel .hero-photo {
+    width: 215px;
+    height: 215px;
+
+    flex-basis: 215px;
+  }
+
+  .hero-panel .hero-photo .profile-photo {
+    transform: translateY(-24px) scale(1.52);
+  }
+
+  .hero-panel .hero-photo .profile-photo:hover {
+    transform: translateY(-24px) scale(1.52);
   }
 
 }
-```
