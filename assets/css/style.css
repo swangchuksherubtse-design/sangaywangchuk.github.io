@@ -265,15 +265,8 @@ h2 em {
 
 
 /* =========================================================
-   HERO PHOTO
-   HEAD + SHOULDERS / UPPER-BODY CIRCULAR PORTRAIT
-
-   POSITION ONLY:
-   The circular frame is moved DOWN by approximately
-   1.5 cm from the previous position.
-
-   IMPORTANT:
-   The internal portrait crop is NOT changed.
+   HERO PHOTO FRAME
+   CIRCULAR FRAME MOVED DOWN BY 135px
 ========================================================= */
 
 .hero-panel .hero-photo {
@@ -286,22 +279,7 @@ h2 em {
 
   flex: 0 0 330px;
 
-  /*
-     CIRCULAR FRAME POSITION
-
-     Previous:
-       margin: -60px auto 28px;
-
-     New:
-       margin: -3px auto 28px;
-
-     Approximate downward movement:
-       57px ≈ 1.5 cm
-
-     Only the entire circular frame moves.
-     The portrait crop inside remains unchanged.
-  */
-  margin: -3px auto 28px;
+  margin: -60px auto 28px;
 
   padding: 0;
 
@@ -315,12 +293,26 @@ h2 em {
 
   box-shadow:
     0 18px 45px rgba(16, 37, 43, 0.20);
+
+  /*
+     ======================================================
+     PORTRAIT FRAME POSITION
+     ======================================================
+
+     Total downward movement:
+     135px ≈ 3.6 cm
+
+     ONLY THE CIRCULAR FRAME MOVES.
+     INTERNAL IMAGE CROP IS UNCHANGED.
+  */
+
+  transform: translateY(135px);
 }
 
 
 /* =========================================================
    ACTUAL PROFILE PHOTO
-   INTERNAL CROP — UNCHANGED
+   INTERNAL CROP UNCHANGED
 ========================================================= */
 
 .hero-panel .hero-photo .profile-photo {
@@ -338,18 +330,7 @@ h2 em {
 
   /*
      INTERNAL IMAGE CROP
-
-     UNCHANGED.
-
-     Visible area:
-       • Head
-       • Face
-       • Neck
-       • Shoulders
-       • Upper chest
-       • Upper arms / elbow area
-
-     Lower torso remains excluded.
+     REMAINS EXACTLY AS BEFORE
   */
 
   transform: scale(1.62);
@@ -371,11 +352,11 @@ h2 em {
 
 
 /* =========================================================
-   PREVENT UNWANTED HOVER EFFECTS
+   PREVENT UNWANTED HOVER MOVEMENT
 ========================================================= */
 
 .hero-panel .hero-photo:hover {
-  transform: none;
+  transform: translateY(135px);
 }
 
 .hero-panel .hero-photo .profile-photo:hover {
@@ -1193,11 +1174,6 @@ footer {
 
   /* =====================================================
      TABLET PORTRAIT
-     
-     Move entire circular frame DOWN by approximately
-     1.5 cm from the previous tablet position.
-     
-     Internal image crop remains unchanged.
   ===================================================== */
 
   .hero-panel .hero-photo {
@@ -1205,7 +1181,18 @@ footer {
     height: 300px;
     flex-basis: 300px;
 
-    margin: 2px auto 24px;
+    margin: -55px auto 24px;
+
+    /*
+       TOTAL DOWNWARD MOVEMENT:
+       135px ≈ 3.6 cm
+    */
+
+    transform: translateY(135px);
+  }
+
+  .hero-panel .hero-photo:hover {
+    transform: translateY(135px);
   }
 
   .hero-panel .hero-photo .profile-photo {
@@ -1395,23 +1382,29 @@ footer {
 
 
   /* =====================================================
-     MOBILE UPPER-BODY PORTRAIT
-
-     Circular frame moved DOWN by approximately
-     1.5 cm.
-
-     Internal portrait crop remains unchanged.
-  ===================================================== */
+     MOBILE PORTRAIT
+========================================================= */
 
   .hero-panel .hero-photo {
     width: 260px;
     height: 260px;
     flex-basis: 260px;
 
-    margin: 10px auto 20px;
+    margin: -47px auto 20px;
 
     border-radius: 50%;
     border-width: 5px;
+
+    /*
+       TOTAL DOWNWARD MOVEMENT:
+       135px ≈ 3.6 cm
+    */
+
+    transform: translateY(135px);
+  }
+
+  .hero-panel .hero-photo:hover {
+    transform: translateY(135px);
   }
 
 
@@ -1424,7 +1417,6 @@ footer {
 
     transform-origin: center 14%;
   }
-
 
   .hero-panel .hero-photo .profile-photo:hover {
     transform: scale(1.54);
