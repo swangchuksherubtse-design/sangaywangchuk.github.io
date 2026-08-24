@@ -9,7 +9,7 @@
   --ink: #10252b;
   --muted: #63747a;
   --paper: #f7f8f5;
-  --white: #fff;
+  --white: #ffffff;
   --accent: #d97b42;
   --teal: #176d69;
   --line: #dce3df;
@@ -102,6 +102,7 @@ a {
   border: 0;
   font-size: 24px;
   color: var(--ink);
+  cursor: pointer;
 }
 
 
@@ -170,7 +171,7 @@ h2 em {
 
 .primary {
   background: var(--ink);
-  color: white;
+  color: #ffffff;
 }
 
 .secondary {
@@ -219,9 +220,19 @@ h2 em {
   width: 390px;
   height: 390px;
   border-radius: 50%;
+
   background:
-    radial-gradient(circle at 35% 30%, #fff8, transparent 45%),
-    linear-gradient(135deg, #287f79, #d68a51);
+    radial-gradient(
+      circle at 35% 30%,
+      #fff8,
+      transparent 45%
+    ),
+    linear-gradient(
+      135deg,
+      #287f79,
+      #d68a51
+    );
+
   top: 30px;
   right: -50px;
   filter: saturate(0.8);
@@ -230,29 +241,22 @@ h2 em {
 
 /* =========================================================
    PROFILE PHOTO
-   IMPORTANT: PREVENTS UNWANTED IMAGE PARTS / DISTORTION
-========================================================= */
+   ========================================================= */
 
 .profile-photo-wrap {
   width: 100%;
-  height: 245px;
+  height: 300px;
 
-  margin-bottom: 24px;
-
-  border-radius: 16px;
+  margin: 0 0 24px 0;
 
   overflow: hidden;
 
-  background: #eef1ef;
+  border-radius: 18px;
 
   position: relative;
+
+  background: #eef2ef;
 }
-
-
-/*
-   The image keeps its natural colour.
-   No opacity, filter, blend mode or colour overlay.
-*/
 
 .profile-photo {
   display: block;
@@ -260,30 +264,25 @@ h2 em {
   width: 100%;
   height: 100%;
 
+  max-width: none;
+
   object-fit: cover;
 
   /*
-     Keeps the crop focused toward the upper/central
-     portion of the photograph.
-     This prevents unwanted surrounding areas appearing.
+     Portrait positioning.
+     Adjust only this value if the head/shoulders
+     need to move slightly up or down.
   */
-  object-position: center 20%;
+  object-position: center 25%;
+
+  border-radius: 18px;
 
   opacity: 1;
-
   filter: none;
-
   mix-blend-mode: normal;
 
   transform: none;
-
-  background: transparent;
 }
-
-
-/*
-   Prevent accidental image styling from other rules.
-*/
 
 .profile-photo:hover {
   transform: none;
@@ -300,6 +299,7 @@ h2 em {
   z-index: 2;
 
   background: rgba(255, 255, 255, 0.9);
+
   backdrop-filter: blur(15px);
 
   padding: 28px;
@@ -352,16 +352,19 @@ h2 em {
 .ticker {
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
-  background: #fff;
+  background: #ffffff;
 }
 
 .ticker-inner {
   display: flex;
   justify-content: space-between;
+
   padding: 18px 0;
+
   font-size: 10px;
   letter-spacing: 1.8px;
   font-weight: 700;
+
   color: #829095;
 }
 
@@ -377,8 +380,11 @@ h2 em {
 .section-heading {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
+
   gap: 80px;
+
   align-items: end;
+
   margin-bottom: 50px;
 }
 
@@ -407,8 +413,11 @@ h2 em {
 
 .theme-card {
   min-height: 320px;
-  background: #fff;
+
+  background: #ffffff;
+
   padding: 28px;
+
   border: 1px solid var(--line);
 
   display: flex;
@@ -419,12 +428,14 @@ h2 em {
 
 .theme-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 18px 40px #173c4412;
+
+  box-shadow:
+    0 18px 40px #173c4412;
 }
 
 .theme-card.featured {
   background: var(--teal);
-  color: #fff;
+  color: #ffffff;
 }
 
 .theme-card .number {
@@ -460,7 +471,7 @@ h2 em {
 
 .dark {
   background: var(--dark);
-  color: #fff;
+  color: #ffffff;
 }
 
 .light .eyebrow {
@@ -478,8 +489,11 @@ h2 em {
 .project {
   display: grid;
   grid-template-columns: 90px 1fr;
+
   gap: 25px;
+
   padding: 38px 0;
+
   border-bottom: 1px solid #ffffff24;
 }
 
@@ -518,9 +532,10 @@ h2 em {
 
 .pub-feature {
   display: grid;
+
   grid-template-columns: 0.9fr 1.1fr;
 
-  background: #fff;
+  background: #ffffff;
 
   border: 1px solid var(--line);
 
@@ -531,9 +546,13 @@ h2 em {
 
 .pub-feature strong {
   display: block;
+
   font-size: 88px;
+
   line-height: 1;
+
   margin: 12px 0;
+
   color: var(--teal);
 }
 
@@ -549,45 +568,63 @@ h2 em {
 
 .research-glance {
   display: grid;
+
   grid-template-columns: repeat(4, 1fr);
+
   gap: 16px;
+
   margin: 0 0 28px;
 }
 
 .glance-card {
   padding: 22px;
+
   border: 1px solid rgba(127, 127, 127, 0.18);
+
   border-radius: 12px;
+
   background: rgba(255, 255, 255, 0.04);
 }
 
 .glance-card span {
   display: block;
+
   margin-bottom: 10px;
+
   font-size: 0.72rem;
+
   font-weight: 700;
+
   letter-spacing: 0.12em;
+
   text-transform: uppercase;
+
   opacity: 0.65;
 }
 
 .glance-card strong {
   display: block;
+
   margin-bottom: 8px;
+
   font-size: 1.8rem;
+
   line-height: 1.1;
 }
 
 .glance-card p {
   margin: 0;
+
   font-size: 0.85rem;
+
   line-height: 1.5;
+
   opacity: 0.7;
 }
 
 
 /* =========================================================
-   PUBLICATION INTRO
+   PUBLICATION INTRODUCTION
 ========================================================= */
 
 .publication-intro {
@@ -596,19 +633,23 @@ h2 em {
 
 .publication-intro h3 {
   margin: 8px 0 10px;
+
   font-size: 1.35rem;
 }
 
 .publication-intro p {
   max-width: 720px;
+
   margin: 0;
+
   line-height: 1.65;
+
   opacity: 0.75;
 }
 
 
 /* =========================================================
-   PUBLICATION SEARCH / FILTER
+   PUBLICATION SEARCH & FILTER
 ========================================================= */
 
 .publication-controls {
@@ -627,16 +668,21 @@ h2 em {
 .publication-controls input,
 .publication-controls select {
   width: 100%;
+
   min-height: 48px;
 
   padding: 0 15px;
 
   border: 1px solid rgba(127, 127, 127, 0.25);
+
   border-radius: 8px;
 
   background: transparent;
 
+  color: inherit;
+
   font-family: inherit;
+
   font-size: 0.86rem;
 
   outline: none;
@@ -654,7 +700,9 @@ h2 em {
 .publication-controls input:focus,
 .publication-controls select:focus {
   border-color: currentColor;
-  box-shadow: 0 0 0 3px rgba(127, 127, 127, 0.08);
+
+  box-shadow:
+    0 0 0 3px rgba(127, 127, 127, 0.08);
 }
 
 .publication-controls select {
@@ -668,7 +716,9 @@ h2 em {
 
 .publication-count {
   display: flex;
+
   align-items: baseline;
+
   justify-content: space-between;
 
   gap: 20px;
@@ -697,21 +747,32 @@ h2 em {
 
 .pub-list {
   display: flex;
+
   flex-direction: column;
+
   gap: 0;
+
   margin-top: 10px;
 }
+
+
+/* =========================================================
+   INDIVIDUAL PUBLICATION
+========================================================= */
 
 .publication-item {
   display: grid;
 
-  grid-template-columns: 64px minmax(0, 1fr);
+  grid-template-columns:
+    64px
+    minmax(0, 1fr);
 
   gap: 24px;
 
   padding: 28px 0;
 
-  border-top: 1px solid rgba(127, 127, 127, 0.18);
+  border-top:
+    1px solid rgba(127, 127, 127, 0.18);
 
   transition:
     padding-left 0.2s ease,
@@ -719,26 +780,41 @@ h2 em {
 }
 
 .publication-item:last-child {
-  border-bottom: 1px solid rgba(127, 127, 127, 0.18);
+  border-bottom:
+    1px solid rgba(127, 127, 127, 0.18);
 }
 
 .publication-item:hover {
   padding-left: 8px;
 }
 
+
+/* =========================================================
+   PUBLICATION NUMBER
+========================================================= */
+
 .publication-number {
   display: flex;
+
   align-items: flex-start;
+
   justify-content: center;
 
   padding-top: 3px;
 
   font-size: 0.78rem;
+
   font-weight: 700;
+
   letter-spacing: 0.12em;
 
   opacity: 0.45;
 }
+
+
+/* =========================================================
+   PUBLICATION CONTENT
+========================================================= */
 
 .publication-content {
   min-width: 0;
@@ -746,7 +822,9 @@ h2 em {
 
 .publication-meta {
   display: flex;
+
   flex-wrap: wrap;
+
   align-items: center;
 
   gap: 8px;
@@ -756,18 +834,22 @@ h2 em {
 
 .publication-meta span {
   display: inline-flex;
+
   align-items: center;
 
   min-height: 26px;
 
   padding: 4px 9px;
 
-  border: 1px solid rgba(127, 127, 127, 0.2);
+  border:
+    1px solid rgba(127, 127, 127, 0.2);
 
   border-radius: 999px;
 
   font-size: 0.68rem;
+
   font-weight: 700;
+
   line-height: 1.2;
 
   letter-spacing: 0.04em;
@@ -779,7 +861,9 @@ h2 em {
   max-width: 900px;
 
   font-size: 1.05rem;
+
   line-height: 1.55;
+
   font-weight: 650;
 }
 
@@ -787,6 +871,7 @@ h2 em {
   margin: 0 0 14px;
 
   font-size: 0.9rem;
+
   line-height: 1.5;
 
   font-style: italic;
@@ -796,9 +881,11 @@ h2 em {
 
 .publication-doi {
   display: inline-flex;
+
   align-items: center;
 
   font-size: 0.78rem;
+
   font-weight: 700;
 
   letter-spacing: 0.03em;
@@ -812,15 +899,22 @@ h2 em {
 
 .publication-doi:hover {
   opacity: 0.7;
+
   transform: translateX(3px);
 }
+
+
+/* =========================================================
+   PUBLICATION EMPTY STATE
+========================================================= */
 
 .publication-empty {
   padding: 40px 20px;
 
   text-align: center;
 
-  border: 1px dashed rgba(127, 127, 127, 0.3);
+  border:
+    1px dashed rgba(127, 127, 127, 0.3);
 
   border-radius: 12px;
 }
@@ -831,6 +925,7 @@ h2 em {
 
 .publication-empty p {
   margin: 0;
+
   opacity: 0.65;
 }
 
@@ -845,19 +940,25 @@ h2 em {
 
 .academic-grid {
   display: grid;
+
   grid-template-columns: repeat(3, 1fr);
+
   gap: 15px;
 }
 
 .academic-grid article {
   padding: 30px;
-  background: #fff;
+
+  background: #ffffff;
 }
 
 .academic-grid span {
   font-size: 10px;
+
   letter-spacing: 1.5px;
+
   color: var(--teal);
+
   font-weight: 700;
 }
 
@@ -868,6 +969,7 @@ h2 em {
 .academic-grid p,
 .about p {
   color: var(--muted);
+
   font-size: 14px;
 }
 
@@ -877,24 +979,30 @@ h2 em {
 ========================================================= */
 
 .about {
-  background: #fff;
+  background: #ffffff;
 }
 
 .about-grid {
   display: grid;
+
   grid-template-columns: 1fr 1fr;
+
   gap: 100px;
 }
 
 .about h2 {
   font-size: 48px;
+
   line-height: 1.08;
+
   margin: 0;
+
   letter-spacing: -2px;
 }
 
 .text-link {
   font-weight: 700;
+
   color: var(--teal);
 }
 
@@ -905,18 +1013,23 @@ h2 em {
 
 .contact {
   background: #d9e7e2;
+
   padding: 85px 0;
 }
 
 .contact-inner {
   display: grid;
+
   grid-template-columns: 1fr 1fr;
+
   gap: 100px;
 }
 
 .contact h2 {
   font-size: 48px;
+
   line-height: 1.08;
+
   margin: 0;
 }
 
@@ -935,55 +1048,23 @@ h2 em {
 
 footer {
   background: var(--dark);
+
   color: #9db0b3;
+
   padding: 24px 0;
+
   font-size: 11px;
 }
 
 .footer-inner {
   display: flex;
+
   justify-content: space-between;
 }
 
 
 /* =========================================================
-   MOBILE NAVIGATION
-========================================================= */
-
-@media (max-width: 850px) {
-
-  .nav-links {
-    display: none;
-  }
-
-  .menu-toggle {
-    display: block;
-  }
-
-  .nav-links.open {
-    display: flex;
-
-    position: absolute;
-
-    top: 76px;
-    left: 0;
-    right: 0;
-
-    background: var(--paper);
-
-    padding: 20px 24px;
-
-    flex-direction: column;
-    align-items: flex-start;
-
-    border-bottom: 1px solid var(--line);
-  }
-
-}
-
-
-/* =========================================================
-   TABLET
+   RESPONSIVE — TABLET
 ========================================================= */
 
 @media (max-width: 900px) {
@@ -993,6 +1074,7 @@ footer {
   .about-grid,
   .contact-inner {
     grid-template-columns: 1fr;
+
     gap: 35px;
   }
 
@@ -1010,6 +1092,7 @@ footer {
 
   .pub-feature {
     grid-template-columns: 1fr;
+
     padding: 30px;
   }
 
@@ -1033,23 +1116,77 @@ footer {
 
   .ticker-inner {
     overflow: hidden;
+
     gap: 30px;
+
     justify-content: flex-start;
+
     white-space: nowrap;
+  }
+
+  .profile-photo-wrap {
+    height: 260px;
+  }
+
+  .profile-photo {
+    object-position: center 25%;
   }
 
 }
 
 
 /* =========================================================
-   MOBILE
+   RESPONSIVE — MOBILE NAVIGATION
+========================================================= */
+
+@media (max-width: 850px) {
+
+  .nav-links {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-links.open {
+    display: flex;
+
+    position: absolute;
+
+    top: 76px;
+
+    left: 0;
+    right: 0;
+
+    background: var(--paper);
+
+    padding: 20px 24px;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    border-bottom:
+      1px solid var(--line);
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — PUBLICATIONS
 ========================================================= */
 
 @media (max-width: 700px) {
 
   .publication-item {
-    grid-template-columns: 42px minmax(0, 1fr);
+    grid-template-columns:
+      42px
+      minmax(0, 1fr);
+
     gap: 14px;
+
     padding: 22px 0;
   }
 
@@ -1063,11 +1200,13 @@ footer {
 
   .publication-meta span {
     padding: 4px 7px;
+
     font-size: 0.62rem;
   }
 
   .publication-content h3 {
     font-size: 0.96rem;
+
     line-height: 1.5;
   }
 
@@ -1087,7 +1226,7 @@ footer {
 
 
 /* =========================================================
-   SMALL MOBILE
+   RESPONSIVE — SMALL MOBILE
 ========================================================= */
 
 @media (max-width: 600px) {
@@ -1106,6 +1245,7 @@ footer {
 
   .publication-controls {
     grid-template-columns: 1fr;
+
     gap: 10px;
   }
 
@@ -1115,18 +1255,23 @@ footer {
 
   .publication-count {
     align-items: flex-start;
+
     flex-direction: column;
+
     gap: 5px;
   }
 
   .publication-item {
     grid-template-columns: 1fr;
+
     gap: 10px;
+
     padding: 18px;
   }
 
   .publication-number {
     justify-content: flex-start;
+
     padding-top: 0;
   }
 
@@ -1134,13 +1279,16 @@ footer {
 
 
 /* =========================================================
-   VERY SMALL SCREENS
+   RESPONSIVE — VERY SMALL SCREENS
 ========================================================= */
 
 @media (max-width: 520px) {
 
   .container {
-    width: min(100% - 30px, 1160px);
+    width: min(
+      100% - 30px,
+      1160px
+    );
   }
 
   .hero {
@@ -1149,11 +1297,13 @@ footer {
 
   .hero h1 {
     font-size: 55px;
+
     letter-spacing: -3px;
   }
 
   .hero-panel {
     padding: 18px;
+
     min-height: 390px;
   }
 
@@ -1163,142 +1313,23 @@ footer {
 
   .quick-stats {
     flex-wrap: wrap;
+
     gap: 18px;
   }
 
   .footer-inner {
     flex-direction: column;
+
     gap: 8px;
   }
 
-}
-
-
-/* =========================================================
-   PROFILE PHOTO — MOBILE ADJUSTMENT
-========================================================= */
-
-@media (max-width: 850px) {
-
   .profile-photo-wrap {
     height: 230px;
-  }
 
-}
-
-
-@media (max-width: 520px) {
-
-  .profile-photo-wrap {
-    height: 210px;
     border-radius: 14px;
   }
 
   .profile-photo {
-    object-position: center 18%;
-  }
-
-}
-/* =========================================================
-   PROFILE PHOTO — PRECISE PORTRAIT DISPLAY
-   ========================================================= */
-
-.profile-photo-wrap {
-  width: 100%;
-  height: 230px;
-  margin-bottom: 24px;
-  overflow: hidden;
-  border-radius: 16px;
-  background: #eef2ef;
-  position: relative;
-}
-
-.profile-photo {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-  object-position: center 25%;
-  border-radius: 16px;
-}
-
-
-/* Desktop refinement */
-@media (min-width: 851px) {
-
-  .profile-photo-wrap {
-    height: 250px;
-  }
-
-  .profile-photo {
-    object-position: center 22%;
-  }
-
-}
-
-
-/* Mobile refinement */
-@media (max-width: 850px) {
-
-  .profile-photo-wrap {
-    height: 220px;
-  }
-
-  .profile-photo {
-    object-position: center 22%;
-  }
-
-}
-
-
-/* Small mobile screens */
-@media (max-width: 520px) {
-
-  .profile-photo-wrap {
-    height: 200px;
-  }
-
-  .profile-photo {
-    object-position: center 20%;
-  }
-
-}
-/* =========================================================
-   PROFILE PHOTO — FINAL HOMEPAGE DISPLAY
-   ========================================================= */
-
-.profile-photo-wrap {
-  width: 100%;
-  height: 300px;
-  margin: 0 0 24px 0;
-  overflow: hidden;
-  border-radius: 18px;
-  position: relative;
-  background: #eef2ef;
-}
-
-.profile-photo {
-  display: block;
-  width: 100%;
-  height: 100%;
-  max-width: none;
-  object-fit: cover;
-  object-position: center center;
-  border-radius: 18px;
-}
-
-
-/* =========================================================
-   DESKTOP
-   ========================================================= */
-
-@media (min-width: 851px) {
-
-  .profile-photo-wrap {
-    height: 300px;
-  }
-
-  .profile-photo {
     object-position: center 25%;
   }
 
@@ -1306,34 +1337,5 @@ footer {
 
 
 /* =========================================================
-   TABLET
-   ========================================================= */
-
-@media (max-width: 850px) {
-
-  .profile-photo-wrap {
-    height: 260px;
-  }
-
-  .profile-photo {
-    object-position: center 25%;
-  }
-
-}
-
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
-@media (max-width: 520px) {
-
-  .profile-photo-wrap {
-    height: 230px;
-  }
-
-  .profile-photo {
-    object-position: center 25%;
-  }
-
-}
+   END OF STYLE SHEET
+========================================================= */
