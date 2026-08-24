@@ -1199,3 +1199,67 @@ footer {
   }
 
 }
+/* =========================================================
+   PROFILE PHOTO — PRECISE PORTRAIT DISPLAY
+   ========================================================= */
+
+.profile-photo-wrap {
+  width: 100%;
+  height: 230px;
+  margin-bottom: 24px;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #eef2ef;
+  position: relative;
+}
+
+.profile-photo {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center 25%;
+  border-radius: 16px;
+}
+
+
+/* Desktop refinement */
+@media (min-width: 851px) {
+
+  .profile-photo-wrap {
+    height: 250px;
+  }
+
+  .profile-photo {
+    object-position: center 22%;
+  }
+
+}
+
+
+/* Mobile refinement */
+@media (max-width: 850px) {
+
+  .profile-photo-wrap {
+    height: 220px;
+  }
+
+  .profile-photo {
+    object-position: center 22%;
+  }
+
+}
+
+
+/* Small mobile screens */
+@media (max-width: 520px) {
+
+  .profile-photo-wrap {
+    height: 200px;
+  }
+
+  .profile-photo {
+    object-position: center 20%;
+  }
+
+}
