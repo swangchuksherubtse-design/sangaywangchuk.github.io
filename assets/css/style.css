@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap');
 
-
 /* =========================================================
    GLOBAL
 ========================================================= */
@@ -23,11 +22,8 @@
   --radius-md: 14px;
   --radius-lg: 22px;
 
-  --shadow-soft:
-    0 12px 35px rgba(16, 37, 43, 0.08);
-
-  --shadow-card:
-    0 16px 40px rgba(16, 37, 43, 0.10);
+  --shadow-soft: 0 12px 35px rgba(16, 37, 43, 0.08);
+  --shadow-card: 0 16px 40px rgba(16, 37, 43, 0.10);
 }
 
 * {
@@ -42,11 +38,9 @@ body {
   margin: 0;
   background: var(--paper);
   color: var(--ink);
-
   font-family: "DM Sans", sans-serif;
   font-size: 16px;
   line-height: 1.7;
-
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -125,13 +119,10 @@ p {
 
 .eyebrow {
   margin-bottom: 16px;
-
   color: var(--accent);
-
   font-size: 11px;
   line-height: 1.4;
   font-weight: 700;
-
   letter-spacing: 2px;
   text-transform: uppercase;
 }
@@ -145,18 +136,14 @@ p {
   position: sticky;
   top: 0;
   z-index: 1000;
-
   background: rgba(255, 255, 255, 0.94);
-
   border-bottom: 1px solid var(--line);
-
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 }
 
 .nav {
   min-height: 78px;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -165,11 +152,9 @@ p {
 
 .brand {
   color: var(--ink);
-
   font-size: 25px;
   line-height: 1;
   font-weight: 700;
-
   letter-spacing: -1px;
 }
 
@@ -185,25 +170,19 @@ p {
 
 .nav-links a {
   position: relative;
-
   color: var(--ink-soft);
-
   font-size: 13px;
   font-weight: 600;
 }
 
 .nav-links a:not(.nav-button)::after {
   content: "";
-
   position: absolute;
   left: 0;
   bottom: -7px;
-
   width: 0;
   height: 1px;
-
   background: var(--accent);
-
   transition: width 0.25s ease;
 }
 
@@ -213,13 +192,9 @@ p {
 
 .nav-button {
   padding: 10px 18px;
-
   border: 1px solid var(--ink);
   border-radius: 999px;
-
-  transition:
-    background 0.25s ease,
-    color 0.25s ease;
+  transition: background 0.25s ease, color 0.25s ease;
 }
 
 .nav-button:hover {
@@ -229,12 +204,9 @@ p {
 
 .menu-toggle {
   display: none;
-
   border: 0;
   background: transparent;
-
   color: var(--ink);
-
   font-size: 26px;
   cursor: pointer;
 }
@@ -247,7 +219,6 @@ p {
 .hero {
   position: relative;
   overflow: hidden;
-
   padding: 105px 0 95px;
 
   background:
@@ -273,18 +244,14 @@ p {
 
 .lead {
   max-width: 680px;
-
   margin-bottom: 22px;
-
   font-size: 18px;
   line-height: 1.75;
 }
 
 .hero-affiliation {
   margin-bottom: 30px;
-
   color: var(--muted);
-
   font-size: 13px;
   font-weight: 600;
 }
@@ -293,7 +260,6 @@ p {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-
   margin-bottom: 48px;
 }
 
@@ -301,13 +267,9 @@ p {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   min-height: 48px;
-
   padding: 12px 22px;
-
   border-radius: 999px;
-
   font-size: 13px;
   font-weight: 700;
 
@@ -355,21 +317,16 @@ p {
 
 .quick-stats strong {
   color: var(--ink);
-
   font-size: 27px;
   line-height: 1;
-
   font-weight: 700;
 }
 
 .quick-stats span {
   color: var(--muted);
-
   font-size: 10px;
   line-height: 1.35;
-
   font-weight: 700;
-
   letter-spacing: 0.8px;
   text-transform: uppercase;
 }
@@ -381,9 +338,7 @@ p {
 
 .hero-panel {
   position: relative;
-
   min-height: 620px;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -391,10 +346,8 @@ p {
 
 .orb {
   position: absolute;
-
   width: 460px;
   height: 460px;
-
   border-radius: 50%;
 
   background:
@@ -407,10 +360,10 @@ p {
 }
 
 
-/* ---------------------------------------------------------
+/* =========================================================
    PHOTO FRAME
-   Frame position remains at translateY(57px)
---------------------------------------------------------- */
+   Frame position intentionally preserved
+========================================================= */
 
 .hero-photo {
   position: relative;
@@ -422,24 +375,20 @@ p {
   overflow: hidden;
 
   border: 12px solid var(--white);
-
   border-radius: 210px 210px 22px 22px;
 
   background: var(--soft);
 
-  box-shadow:
-    0 16px 40px rgba(16, 37, 43, 0.20);
+  box-shadow: 0 16px 40px rgba(16, 37, 43, 0.20);
 
   transform: translateY(57px);
 }
 
 
-/* ---------------------------------------------------------
+/* =========================================================
    PROFILE PHOTO
-   IMPORTANT:
-   The image is NOT stretched vertically.
-   The image remains proportional.
---------------------------------------------------------- */
+   Image stays proportional inside the frame
+========================================================= */
 
 .profile-photo {
   width: 100%;
@@ -449,18 +398,17 @@ p {
   object-position: center top;
 
   /*
-     Small upward adjustment only.
-     No large scale that creates a distorted appearance.
+     Slight upward positioning only.
+     Moderate scaling prevents the previous dome/distortion effect.
   */
   transform: translateY(-18px) scale(1.12);
-
   transform-origin: center top;
 }
 
 
-/* ---------------------------------------------------------
+/* =========================================================
    RESEARCH CARD
---------------------------------------------------------- */
+========================================================= */
 
 .research-card {
   position: absolute;
@@ -485,16 +433,13 @@ p {
 
 .research-card > span {
   display: block;
-
   margin-bottom: 10px;
 
   color: var(--accent);
 
   font-size: 10px;
   line-height: 1.4;
-
   font-weight: 700;
-
   letter-spacing: 1.4px;
   text-transform: uppercase;
 }
@@ -503,16 +448,13 @@ p {
   margin-bottom: 10px;
 
   font-family: "Playfair Display", serif;
-
   font-size: 25px;
   font-weight: 500;
-
   line-height: 1.2;
 }
 
 .research-card p {
   margin-bottom: 16px;
-
   font-size: 12px;
   line-height: 1.55;
 }
@@ -541,7 +483,6 @@ p {
 
   font-size: 10px;
   line-height: 1.2;
-
   font-weight: 600;
 }
 
@@ -552,10 +493,8 @@ p {
 
 .ticker {
   overflow: hidden;
-
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
-
   background: var(--white);
 }
 
@@ -569,10 +508,8 @@ p {
   gap: 30px;
 
   color: var(--muted);
-
   font-size: 10px;
   font-weight: 700;
-
   letter-spacing: 1.5px;
 }
 
@@ -596,19 +533,14 @@ p {
 .section-heading {
   display: grid;
   grid-template-columns: 1fr 0.72fr;
-
   gap: 80px;
-
   align-items: end;
-
   margin-bottom: 60px;
 }
 
 .section-heading > p {
   max-width: 530px;
-
   margin-bottom: 6px;
-
   font-size: 15px;
   line-height: 1.8;
 }
@@ -630,13 +562,11 @@ p {
 .research-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-
   gap: 16px;
 }
 
 .theme-card {
   min-height: 360px;
-
   padding: 30px;
 
   border: 1px solid var(--line);
@@ -662,29 +592,22 @@ p {
 
 .theme-card .number {
   display: block;
-
   margin-bottom: 55px;
-
   color: var(--accent);
-
   font-size: 11px;
   font-weight: 700;
-
   letter-spacing: 1px;
 }
 
 .theme-card h3 {
   margin-bottom: 18px;
-
   font-family: "Playfair Display", serif;
-
   font-size: 27px;
   font-weight: 500;
 }
 
 .theme-card p {
   margin-bottom: 25px;
-
   font-size: 13px;
   line-height: 1.7;
 }
@@ -696,7 +619,6 @@ p {
 
 .theme-card a {
   color: var(--accent);
-
   font-size: 12px;
   font-weight: 700;
 }
@@ -713,52 +635,38 @@ p {
 .project {
   display: grid;
   grid-template-columns: 90px 1fr;
-
   gap: 35px;
-
   padding: 40px 0;
-
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .project-no {
   color: #d1a66c;
-
   font-size: 13px;
   font-weight: 700;
-
   letter-spacing: 1px;
 }
 
 .project-kicker {
   margin-bottom: 10px;
-
   color: #d1a66c;
-
   font-size: 10px;
   font-weight: 700;
-
   letter-spacing: 1.5px;
 }
 
 .project h3 {
   margin-bottom: 12px;
-
   color: var(--white);
-
   font-family: "Playfair Display", serif;
-
   font-size: 30px;
   font-weight: 500;
 }
 
 .project > div:last-child > p:not(.project-kicker) {
   max-width: 750px;
-
   margin-bottom: 18px;
-
   color: rgba(255, 255, 255, 0.70);
-
   font-size: 14px;
 }
 
@@ -769,17 +677,13 @@ p {
 
 .research-glance {
   display: grid;
-
   grid-template-columns: repeat(4, 1fr);
-
   gap: 12px;
-
   margin-bottom: 48px;
 }
 
 .research-glance .glance-card {
   min-height: 160px;
-
   padding: 25px 24px;
 
   border: 1px solid var(--line);
@@ -790,41 +694,32 @@ p {
 
 .research-glance .glance-card span {
   display: block;
-
   margin-bottom: 10px;
 
   color: var(--muted);
 
   font-size: 10px;
   line-height: 1.4;
-
   font-weight: 700;
-
   letter-spacing: 1.5px;
-
   text-transform: uppercase;
 }
 
 .research-glance .glance-card strong {
   display: block;
-
   margin: 0 0 8px;
 
   color: var(--ink);
 
   font-size: 28px;
   line-height: 1.15;
-
   font-weight: 700;
-
   letter-spacing: -0.5px;
 }
 
 .research-glance .glance-card p {
   margin: 0;
-
   color: var(--ink-soft);
-
   font-size: 13px;
   line-height: 1.5;
 }
@@ -849,16 +744,13 @@ p {
 
 .pub-label {
   display: block;
-
   margin-bottom: 9px;
 
   color: var(--accent);
 
   font-size: 10px;
   font-weight: 700;
-
   letter-spacing: 1.5px;
-
   text-transform: uppercase;
 }
 
@@ -866,16 +758,13 @@ p {
   margin-bottom: 10px;
 
   font-family: "Playfair Display", serif;
-
   font-size: 30px;
   font-weight: 500;
 }
 
 .publication-intro p {
   max-width: 780px;
-
   margin-bottom: 0;
-
   font-size: 14px;
   line-height: 1.7;
 }
@@ -901,7 +790,6 @@ p {
 .publication-controls input,
 .publication-controls select {
   width: 100%;
-
   min-height: 46px;
 
   padding: 10px 14px;
@@ -910,11 +798,9 @@ p {
   border-radius: 8px;
 
   background: var(--white);
-
   color: var(--ink);
 
   font-size: 13px;
-
   outline: none;
 
   transition:
@@ -941,14 +827,12 @@ p {
 
 .publication-count {
   display: flex;
-
   align-items: baseline;
   justify-content: space-between;
 
   gap: 20px;
 
   margin: 12px 0 4px;
-
   padding-bottom: 14px;
 
   border-bottom: 1px solid rgba(127, 127, 127, 0.15);
@@ -956,14 +840,12 @@ p {
 
 .publication-count-main {
   color: var(--ink);
-
   font-size: 14px;
   font-weight: 700;
 }
 
 .publication-count-sub {
   color: var(--muted);
-
   font-size: 11px;
 }
 
@@ -978,7 +860,6 @@ p {
 
 .publication-item {
   display: grid;
-
   grid-template-columns: 55px 1fr;
 
   gap: 20px;
@@ -990,19 +871,15 @@ p {
 
 .publication-number {
   color: var(--accent);
-
   font-size: 12px;
   font-weight: 700;
-
   letter-spacing: 1px;
 }
 
 .publication-meta {
   display: flex;
   flex-wrap: wrap;
-
   gap: 8px;
-
   margin-bottom: 9px;
 }
 
@@ -1012,16 +889,12 @@ p {
   border-radius: 999px;
 
   background: rgba(16, 37, 43, 0.06);
-
   color: var(--muted);
 
   font-size: 9px;
   line-height: 1.3;
-
   font-weight: 700;
-
   letter-spacing: 0.6px;
-
   text-transform: uppercase;
 }
 
@@ -1031,10 +904,8 @@ p {
   color: var(--ink);
 
   font-family: "Playfair Display", serif;
-
   font-size: 21px;
   line-height: 1.35;
-
   font-weight: 500;
 }
 
@@ -1044,15 +915,12 @@ p {
   color: var(--muted);
 
   font-size: 12px;
-
   font-style: italic;
 }
 
 .publication-doi {
   display: inline-block;
-
   color: var(--accent-dark);
-
   font-size: 11px;
   font-weight: 700;
 }
@@ -1063,7 +931,6 @@ p {
 
 .publication-empty {
   padding: 45px 20px;
-
   text-align: center;
 }
 
@@ -1071,13 +938,11 @@ p {
   margin-bottom: 8px;
 
   font-family: "Playfair Display", serif;
-
   font-size: 25px;
 }
 
 .publication-empty p {
   margin: 0;
-
   font-size: 13px;
 }
 
@@ -1088,9 +953,7 @@ p {
 
 .academic-grid {
   display: grid;
-
   grid-template-columns: repeat(3, 1fr);
-
   gap: 18px;
 }
 
@@ -1105,14 +968,12 @@ p {
 
 .academic-grid article > span {
   display: block;
-
   margin-bottom: 35px;
 
   color: var(--accent);
 
   font-size: 10px;
   font-weight: 700;
-
   letter-spacing: 1.4px;
 }
 
@@ -1120,14 +981,12 @@ p {
   margin-bottom: 12px;
 
   font-family: "Playfair Display", serif;
-
   font-size: 27px;
   font-weight: 500;
 }
 
 .academic-grid p {
   margin-bottom: 0;
-
   font-size: 13px;
 }
 
@@ -1142,9 +1001,7 @@ p {
 
 .about-grid {
   display: grid;
-
   grid-template-columns: 0.8fr 1.2fr;
-
   gap: 100px;
 }
 
@@ -1154,7 +1011,6 @@ p {
 
 .about-grid p {
   margin-bottom: 20px;
-
   font-size: 15px;
   line-height: 1.85;
 }
@@ -1174,9 +1030,7 @@ p {
 
 .academic-profiles-grid {
   display: grid;
-
   grid-template-columns: repeat(3, 1fr);
-
   gap: 16px;
 }
 
@@ -1184,7 +1038,6 @@ p {
   position: relative;
 
   min-height: 260px;
-
   padding: 28px;
 
   border: 1px solid var(--line);
@@ -1208,7 +1061,6 @@ p {
 
 .profile-number {
   display: block;
-
   margin-bottom: 30px;
 
   color: var(--accent);
@@ -1219,14 +1071,12 @@ p {
 
 .profile-label {
   display: block;
-
   margin-bottom: 8px;
 
   color: var(--muted);
 
   font-size: 9px;
   font-weight: 700;
-
   letter-spacing: 1.4px;
 }
 
@@ -1234,36 +1084,30 @@ p {
   margin-bottom: 10px;
 
   font-family: "Playfair Display", serif;
-
   font-size: 28px;
   font-weight: 500;
 }
 
 .profile-card p {
   margin-bottom: 18px;
-
   font-size: 12px;
   line-height: 1.6;
 }
 
 .profile-link {
   color: var(--accent-dark);
-
   font-size: 11px;
   font-weight: 700;
 }
 
 .profile-note {
   margin-top: 24px;
-
   text-align: center;
 }
 
 .profile-note p {
   margin: 0;
-
   color: var(--muted);
-
   font-size: 11px;
 }
 
@@ -1274,17 +1118,13 @@ p {
 
 .contact {
   padding: 105px 0;
-
   background: var(--dark);
 }
 
 .contact-inner {
   display: grid;
-
   grid-template-columns: 1fr 0.8fr;
-
   gap: 90px;
-
   align-items: center;
 }
 
@@ -1299,7 +1139,6 @@ p {
 
 .contact > .container > div:last-child > p:first-child {
   color: rgba(255, 255, 255, 0.68);
-
   font-size: 14px;
 }
 
@@ -1307,7 +1146,6 @@ p {
   margin-top: 15px;
 
   color: rgba(255, 255, 255, 0.55) !important;
-
   font-size: 11px !important;
 }
 
@@ -1318,7 +1156,6 @@ p {
 
 footer {
   background: #07111c;
-
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -1326,7 +1163,6 @@ footer {
   min-height: 80px;
 
   display: flex;
-
   align-items: center;
   justify-content: space-between;
 
@@ -1335,20 +1171,18 @@ footer {
   color: rgba(255, 255, 255, 0.55);
 
   font-size: 10px;
-
   letter-spacing: 0.5px;
 }
 
 
 /* =========================================================
-   RESPONSIVE — TABLET
+   TABLET
 ========================================================= */
 
 @media (max-width: 1000px) {
 
   .hero-grid {
     grid-template-columns: 1fr;
-
     gap: 30px;
   }
 
@@ -1370,26 +1204,23 @@ footer {
 
   .section-heading {
     grid-template-columns: 1fr;
-
     gap: 15px;
   }
 
   .about-grid {
     grid-template-columns: 1fr;
-
     gap: 40px;
   }
 
   .contact-inner {
     grid-template-columns: 1fr;
-
     gap: 35px;
   }
 }
 
 
 /* =========================================================
-   RESPONSIVE — MOBILE
+   MOBILE
 ========================================================= */
 
 @media (max-width: 720px) {
@@ -1408,18 +1239,15 @@ footer {
 
   .nav-links {
     position: absolute;
-
     top: 68px;
     left: 16px;
     right: 16px;
 
     display: none;
-
     flex-direction: column;
     align-items: stretch;
 
     gap: 0;
-
     padding: 10px;
 
     border: 1px solid var(--line);
@@ -1440,7 +1268,6 @@ footer {
 
   .nav-button {
     margin-top: 4px;
-
     text-align: center;
   }
 
@@ -1467,7 +1294,6 @@ footer {
   .hero-photo {
     width: min(340px, 84vw);
     height: 450px;
-
     transform: translateY(30px);
   }
 
@@ -1479,9 +1305,7 @@ footer {
   .research-card {
     right: 0;
     bottom: 5px;
-
     width: 85%;
-
     padding: 21px;
   }
 
@@ -1491,11 +1315,8 @@ footer {
 
   .ticker-inner {
     justify-content: flex-start;
-
     overflow-x: auto;
-
     padding: 0 5px;
-
     scrollbar-width: none;
   }
 
@@ -1519,9 +1340,7 @@ footer {
 
   .project {
     grid-template-columns: 1fr;
-
     gap: 12px;
-
     padding: 30px 0;
   }
 
@@ -1539,23 +1358,18 @@ footer {
 
   .publication-controls {
     grid-template-columns: 1fr;
-
     margin: 14px 0 16px;
   }
 
   .publication-count {
     align-items: flex-start;
-
     flex-direction: column;
-
     gap: 3px;
   }
 
   .publication-item {
     grid-template-columns: 38px 1fr;
-
     gap: 10px;
-
     padding: 22px 0;
   }
 
@@ -1581,9 +1395,7 @@ footer {
 
   .footer-inner {
     min-height: auto;
-
     padding: 25px 0;
-
     flex-direction: column;
     align-items: flex-start;
   }
@@ -1623,12 +1435,10 @@ footer {
 
   .quick-stats {
     display: grid;
-
     grid-template-columns: repeat(2, 1fr);
   }
 
   .quick-stats > div {
     align-items: flex-start;
   }
-
 }
