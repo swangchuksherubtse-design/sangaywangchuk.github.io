@@ -1591,3 +1591,292 @@ footer {
   }
 
 }
+/* =========================================================
+   FINAL HERO PHOTO + RESEARCH CARD
+   STRUCTURAL OVERRIDE
+   ========================================================= */
+
+/* Right-hand hero panel */
+.hero-panel {
+  position: relative !important;
+
+  min-height: 560px !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+
+  align-items: center !important;
+  justify-content: flex-start !important;
+
+  gap: 0 !important;
+
+  padding: 30px !important;
+
+  overflow: hidden !important;
+
+  background: linear-gradient(
+    145deg,
+    #dce8e3,
+    #f0dfce
+  ) !important;
+
+  border-radius: 35px !important;
+}
+
+
+/* Decorative orb stays behind everything */
+.hero-panel .orb {
+  position: absolute !important;
+
+  width: 390px !important;
+  height: 390px !important;
+
+  border-radius: 50% !important;
+
+  top: 20px !important;
+  right: -60px !important;
+
+  z-index: 0 !important;
+
+  pointer-events: none !important;
+}
+
+
+/* =========================================================
+   PHOTO
+========================================================= */
+
+.hero-panel .hero-photo {
+  position: relative !important;
+
+  z-index: 2 !important;
+
+  flex: 0 0 auto !important;
+
+  display: block !important;
+
+  width: 360px !important;
+  max-width: 100% !important;
+
+  height: 300px !important;
+
+  margin: 0 auto 22px auto !important;
+
+  overflow: hidden !important;
+
+  border-radius: 20px !important;
+
+  background: #eef2ef !important;
+
+  box-shadow:
+    0 18px 45px rgba(16, 37, 43, 0.18) !important;
+}
+
+
+/* Actual photograph */
+.hero-panel .hero-photo .profile-photo {
+  display: block !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  max-width: none !important;
+
+  object-fit: cover !important;
+
+  object-position: center 22% !important;
+
+  margin: 0 !important;
+
+  padding: 0 !important;
+
+  border: 0 !important;
+  border-radius: 20px !important;
+
+  opacity: 1 !important;
+
+  filter: none !important;
+
+  mix-blend-mode: normal !important;
+
+  transform: none !important;
+}
+
+
+/* =========================================================
+   RESEARCH CARD
+========================================================= */
+
+.hero-panel .research-card {
+  position: relative !important;
+
+  z-index: 3 !important;
+
+  flex: 0 0 auto !important;
+
+  display: block !important;
+
+  width: 430px !important;
+  max-width: 100% !important;
+
+  margin: 0 auto !important;
+
+  padding: 25px 28px !important;
+
+  background: rgba(255, 255, 255, 0.94) !important;
+
+  border-radius: 22px !important;
+
+  box-shadow:
+    0 20px 60px rgba(23, 60, 68, 0.18) !important;
+
+  backdrop-filter: blur(15px) !important;
+}
+
+
+/* Card heading */
+.hero-panel .research-card > span {
+  display: block !important;
+
+  margin: 0 0 8px 0 !important;
+
+  font-size: 10px !important;
+
+  letter-spacing: 1.5px !important;
+
+  font-weight: 700 !important;
+
+  color: var(--teal) !important;
+}
+
+
+.hero-panel .research-card h3 {
+  margin: 8px 0 10px 0 !important;
+
+  font-size: 24px !important;
+
+  line-height: 1.2 !important;
+}
+
+
+.hero-panel .research-card p {
+  margin: 0 !important;
+
+  color: var(--muted) !important;
+
+  font-size: 14px !important;
+
+  line-height: 1.55 !important;
+}
+
+
+/* =========================================================
+   TAGS
+========================================================= */
+
+.hero-panel .research-card .tags {
+  display: flex !important;
+
+  flex-wrap: wrap !important;
+
+  gap: 7px !important;
+
+  margin-top: 18px !important;
+}
+
+
+/* =========================================================
+   DESKTOP
+========================================================= */
+
+@media (min-width: 901px) {
+
+  .hero-panel {
+    min-height: 560px !important;
+  }
+
+  .hero-panel .hero-photo {
+    width: 360px !important;
+    height: 300px !important;
+
+    margin-top: 0 !important;
+    margin-bottom: 22px !important;
+  }
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .hero-panel {
+    min-height: 540px !important;
+
+    padding: 25px !important;
+
+    border-radius: 28px !important;
+  }
+
+  .hero-panel .hero-photo {
+    width: 340px !important;
+    max-width: 100% !important;
+
+    height: 290px !important;
+
+    margin-bottom: 20px !important;
+  }
+
+  .hero-panel .research-card {
+    width: 430px !important;
+    max-width: 100% !important;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 520px) {
+
+  .hero-panel {
+    min-height: auto !important;
+
+    padding: 18px !important;
+
+    border-radius: 24px !important;
+  }
+
+  .hero-panel .hero-photo {
+    width: 100% !important;
+
+    height: 290px !important;
+
+    margin-bottom: 18px !important;
+
+    border-radius: 18px !important;
+  }
+
+  .hero-panel .hero-photo .profile-photo {
+    border-radius: 18px !important;
+
+    object-position: center 20% !important;
+  }
+
+  .hero-panel .research-card {
+    width: 100% !important;
+
+    padding: 21px !important;
+
+    border-radius: 18px !important;
+  }
+
+  .hero-panel .research-card h3 {
+    font-size: 22px !important;
+  }
+
+}
