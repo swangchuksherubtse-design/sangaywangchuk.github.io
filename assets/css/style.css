@@ -10,7 +10,6 @@
   --cream: #f7f5ef;
   --paper: #ffffff;
   --soft: #eef2f0;
-
   --line: rgba(16, 37, 43, 0.14);
 
   --accent: #b8894d;
@@ -31,7 +30,7 @@
     0 12px 35px rgba(16, 37, 43, 0.08);
 
   --shadow-card:
-    0 16px 40px rgba(16, 37, 43, 0.12);
+    0 16px 40px rgba(16, 37, 43, 0.10);
 }
 
 * {
@@ -104,13 +103,17 @@ h2 {
 
 h1 {
   margin-bottom: 26px;
+
   font-size: clamp(52px, 7vw, 88px);
+
   letter-spacing: -2px;
 }
 
 h2 {
   margin-bottom: 24px;
+
   font-size: clamp(40px, 5vw, 64px);
+
   letter-spacing: -1.5px;
 }
 
@@ -135,9 +138,11 @@ p {
 
   font-size: 11px;
   line-height: 1.4;
+
   font-weight: 700;
 
   letter-spacing: 2px;
+
   text-transform: uppercase;
 }
 
@@ -148,7 +153,9 @@ p {
 
 .site-header {
   position: sticky;
+
   top: 0;
+
   z-index: 1000;
 
   background: rgba(255, 255, 255, 0.94);
@@ -163,6 +170,7 @@ p {
   min-height: 78px;
 
   display: flex;
+
   align-items: center;
   justify-content: space-between;
 
@@ -174,6 +182,7 @@ p {
 
   font-size: 25px;
   line-height: 1;
+
   font-weight: 700;
 
   letter-spacing: -1px;
@@ -185,7 +194,9 @@ p {
 
 .nav-links {
   display: flex;
+
   align-items: center;
+
   gap: 28px;
 }
 
@@ -195,6 +206,7 @@ p {
   color: var(--ink-soft);
 
   font-size: 13px;
+
   font-weight: 600;
 }
 
@@ -202,6 +214,7 @@ p {
   content: "";
 
   position: absolute;
+
   left: 0;
   bottom: -7px;
 
@@ -221,6 +234,7 @@ p {
   padding: 10px 18px;
 
   border: 1px solid var(--ink);
+
   border-radius: 999px;
 
   transition:
@@ -230,6 +244,7 @@ p {
 
 .nav-button:hover {
   background: var(--ink);
+
   color: var(--white);
 }
 
@@ -237,11 +252,13 @@ p {
   display: none;
 
   border: 0;
+
   background: transparent;
 
   color: var(--ink);
 
   font-size: 26px;
+
   cursor: pointer;
 }
 
@@ -252,6 +269,7 @@ p {
 
 .hero {
   position: relative;
+
   overflow: hidden;
 
   padding: 105px 0 95px;
@@ -259,7 +277,7 @@ p {
   background:
     radial-gradient(
       circle at 85% 20%,
-      rgba(184, 137, 77, 0.12),
+      rgba(184, 137, 77, 0.10),
       transparent 30%
     ),
     var(--cream);
@@ -277,7 +295,8 @@ p {
 
 .hero-copy {
   position: relative;
-  z-index: 5;
+
+  z-index: 2;
 }
 
 .lead {
@@ -286,6 +305,7 @@ p {
   margin-bottom: 22px;
 
   font-size: 18px;
+
   line-height: 1.75;
 }
 
@@ -295,11 +315,13 @@ p {
   color: var(--muted);
 
   font-size: 13px;
+
   font-weight: 600;
 }
 
 .hero-actions {
   display: flex;
+
   flex-wrap: wrap;
 
   gap: 12px;
@@ -320,6 +342,7 @@ p {
   border-radius: 999px;
 
   font-size: 13px;
+
   font-weight: 700;
 
   transition:
@@ -335,6 +358,7 @@ p {
 
 .button.primary {
   background: var(--ink);
+
   color: var(--white);
 }
 
@@ -344,16 +368,19 @@ p {
 
 .button.secondary {
   border: 1px solid var(--line);
+
   background: transparent;
 }
 
 .button.secondary:hover {
   border-color: var(--ink);
+
   background: var(--white);
 }
 
 .quick-stats {
   display: flex;
+
   flex-wrap: wrap;
 
   gap: 34px;
@@ -371,6 +398,7 @@ p {
   color: var(--ink);
 
   font-size: 27px;
+
   line-height: 1;
 
   font-weight: 700;
@@ -380,17 +408,19 @@ p {
   color: var(--muted);
 
   font-size: 10px;
+
   line-height: 1.35;
 
   font-weight: 700;
 
   letter-spacing: 0.8px;
+
   text-transform: uppercase;
 }
 
 
 /* =========================================================
-   HERO PHOTO PANEL
+   HERO PHOTO / PANEL
 ========================================================= */
 
 .hero-panel {
@@ -402,132 +432,115 @@ p {
 
   align-items: center;
   justify-content: center;
+
+  isolation: isolate;
 }
 
 
 /* =========================================================
-   DECORATIVE PHOTO BACKGROUND
-   Restored colour treatment
+   DECORATIVE GOLDEN ORB
 ========================================================= */
 
-.hero-panel::before {
-  content: "";
-
+.orb {
   position: absolute;
 
-  width: 500px;
-  height: 500px;
+  z-index: 0;
+
+  width: 460px;
+  height: 460px;
 
   border-radius: 50%;
 
   background:
     radial-gradient(
       circle,
-      rgba(184, 137, 77, 0.20) 0%,
-      rgba(184, 137, 77, 0.10) 42%,
-      rgba(184, 137, 77, 0.035) 68%,
+      rgba(184, 137, 77, 0.20),
+      rgba(184, 137, 77, 0.07) 52%,
+      rgba(184, 137, 77, 0.02) 68%,
       transparent 72%
     );
 
-  z-index: 0;
-}
-
-
-/* Secondary decorative ring */
-
-.hero-panel::after {
-  content: "";
-
-  position: absolute;
-
-  width: 475px;
-  height: 475px;
-
-  border-radius: 50%;
-
-  border: 1px solid rgba(184, 137, 77, 0.25);
-
-  box-shadow:
-    0 0 0 14px rgba(184, 137, 77, 0.035),
-    0 0 0 28px rgba(184, 137, 77, 0.025);
-
-  z-index: 1;
+  pointer-events: none;
 }
 
 
 /* =========================================================
    PHOTO FRAME
-   Frame remains in original vertical position
+   Balanced rounded arch
 ========================================================= */
 
 .hero-photo {
   position: relative;
 
-  z-index: 4;
+  z-index: 2;
 
-  width: min(390px, 75vw);
+  width: min(410px, 75vw);
 
-  height: 500px;
+  /*
+     Reduced height to prevent the previous
+     elongated dome appearance.
+  */
+  height: 470px;
 
   overflow: hidden;
 
   border: 12px solid var(--white);
 
-  border-radius: 195px 195px 24px 24px;
+  /*
+     Rounded/circular upper section,
+     with controlled lower corners.
+  */
+  border-radius: 50% 50% 28px 28px;
 
   background: var(--soft);
 
   box-shadow:
-    0 18px 45px rgba(16, 37, 43, 0.20),
-    0 0 0 1px rgba(184, 137, 77, 0.16);
+    0 18px 45px rgba(16, 37, 43, 0.18);
 
-  transform: translateY(57px);
-}
+  /*
+     Keeps the frame at a slightly lowered
+     position without excessive movement.
+  */
+  transform: translateY(35px);
 
-
-/* Decorative gold line around frame */
-
-.hero-photo::before {
-  content: "";
-
-  position: absolute;
-
-  inset: -5px;
-
-  border-radius: inherit;
-
-  border: 1px solid rgba(184, 137, 77, 0.28);
-
-  pointer-events: none;
-
-  z-index: 5;
+  isolation: isolate;
 }
 
 
 /* =========================================================
    PROFILE PHOTO
-   NO DISTORTION
+   IMPORTANT:
+   NO SCALE
+   NO STRETCH
 ========================================================= */
 
 .profile-photo {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 1;
+
   width: 100%;
   height: 100%;
 
   display: block;
 
+  /*
+     Preserves the photograph's natural proportions.
+  */
   object-fit: cover;
 
   /*
-     Keeps the original photograph proportional.
-     No aggressive scaling.
+     Keeps the existing top-oriented composition.
   */
-  object-position: center 18%;
+  object-position: center top;
 
   /*
-     Only moves the photograph upward.
-     The frame itself does NOT move.
+     Only a very small upward movement.
+     No scale is used.
   */
-  transform: translateY(-10px);
+  transform: translateY(-8px);
 
   transform-origin: center center;
 }
@@ -535,16 +548,24 @@ p {
 
 /* =========================================================
    RESEARCH CARD
-   Kept behind the photo/frame
+   ALWAYS ABOVE THE PHOTO FRAME
 ========================================================= */
 
 .research-card {
   position: absolute;
 
-  z-index: 3;
+  /*
+     Deliberately higher than the frame.
+  */
+  z-index: 20;
 
+  /*
+     Card sits below the photo/frame,
+     rather than overlapping its centre.
+  */
   right: -15px;
-  bottom: 25px;
+
+  bottom: -35px;
 
   width: min(390px, 78%);
 
@@ -554,12 +575,16 @@ p {
 
   border-radius: var(--radius-md);
 
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.96);
 
-  box-shadow: var(--shadow-card);
+  box-shadow:
+    0 18px 45px rgba(16, 37, 43, 0.16);
 
   backdrop-filter: blur(10px);
+
   -webkit-backdrop-filter: blur(10px);
+
+  isolation: isolate;
 }
 
 .research-card > span {
@@ -570,6 +595,7 @@ p {
   color: var(--accent);
 
   font-size: 10px;
+
   line-height: 1.4;
 
   font-weight: 700;
@@ -581,6 +607,8 @@ p {
 
 .research-card h3 {
   margin-bottom: 10px;
+
+  color: var(--ink);
 
   font-family: "Playfair Display", serif;
 
@@ -594,6 +622,8 @@ p {
 .research-card p {
   margin-bottom: 16px;
 
+  color: var(--ink-soft);
+
   font-size: 12px;
 
   line-height: 1.55;
@@ -606,6 +636,7 @@ p {
 
 .tags {
   display: flex;
+
   flex-wrap: wrap;
 
   gap: 7px;
@@ -640,6 +671,7 @@ p {
   overflow: hidden;
 
   border-top: 1px solid var(--line);
+
   border-bottom: 1px solid var(--line);
 
   background: var(--white);
@@ -888,8 +920,6 @@ p {
   border-radius: var(--radius-md);
 
   background: var(--white);
-
-  box-shadow: 0 6px 20px rgba(16, 37, 43, 0.04);
 }
 
 .research-glance .glance-card span {
@@ -938,7 +968,7 @@ p {
 
 
 /* =========================================================
-   PUBLICATIONS
+   PUBLICATION PROFILE
 ========================================================= */
 
 .pub-feature {
@@ -1055,7 +1085,6 @@ p {
   display: flex;
 
   align-items: baseline;
-
   justify-content: space-between;
 
   gap: 20px;
@@ -1457,7 +1486,6 @@ footer {
   display: flex;
 
   align-items: center;
-
   justify-content: space-between;
 
   gap: 20px;
@@ -1471,13 +1499,14 @@ footer {
 
 
 /* =========================================================
-   TABLET
+   RESPONSIVE — TABLET
 ========================================================= */
 
 @media (max-width: 1000px) {
 
   .hero-grid {
     grid-template-columns: 1fr;
+
     gap: 30px;
   }
 
@@ -1499,33 +1528,26 @@ footer {
 
   .section-heading {
     grid-template-columns: 1fr;
+
     gap: 15px;
   }
 
   .about-grid {
     grid-template-columns: 1fr;
+
     gap: 40px;
   }
 
   .contact-inner {
     grid-template-columns: 1fr;
+
     gap: 35px;
-  }
-
-  .hero-panel::before {
-    width: 450px;
-    height: 450px;
-  }
-
-  .hero-panel::after {
-    width: 425px;
-    height: 425px;
   }
 }
 
 
 /* =========================================================
-   MOBILE
+   RESPONSIVE — MOBILE
 ========================================================= */
 
 @media (max-width: 720px) {
@@ -1546,6 +1568,7 @@ footer {
     position: absolute;
 
     top: 68px;
+
     left: 16px;
     right: 16px;
 
@@ -1583,7 +1606,7 @@ footer {
   }
 
   .hero {
-    padding: 75px 0 70px;
+    padding: 75px 0 90px;
   }
 
   h1 {
@@ -1599,43 +1622,49 @@ footer {
   }
 
   .hero-panel {
-    min-height: 540px;
+    min-height: 555px;
   }
 
-  .hero-panel::before {
-    width: 390px;
-    height: 390px;
-  }
-
-  .hero-panel::after {
-    width: 365px;
-    height: 365px;
-  }
+  /* -------------------------------------------------------
+     MOBILE PHOTO FRAME
+  ------------------------------------------------------- */
 
   .hero-photo {
     width: min(340px, 84vw);
 
-    height: 440px;
+    height: 420px;
 
-    transform: translateY(30px);
+    border-width: 10px;
+
+    border-radius: 50% 50% 24px 24px;
+
+    transform: translateY(25px);
   }
+
+  /* -------------------------------------------------------
+     MOBILE PROFILE PHOTO
+     No scaling
+  ------------------------------------------------------- */
 
   .profile-photo {
-    object-position: center 18%;
-
-    transform: translateY(-8px);
+    transform: translateY(-6px);
   }
+
+  /* -------------------------------------------------------
+     MOBILE RESEARCH CARD
+     Clearly below and above frame
+  ------------------------------------------------------- */
 
   .research-card {
     right: 0;
 
-    bottom: 5px;
+    bottom: -45px;
 
     width: 85%;
 
     padding: 21px;
 
-    z-index: 3;
+    z-index: 20;
   }
 
   .quick-stats {
@@ -1759,33 +1788,37 @@ footer {
   }
 
   .hero-panel {
-    min-height: 500px;
+    min-height: 505px;
   }
 
-  .hero-panel::before {
-    width: 330px;
-    height: 330px;
-  }
-
-  .hero-panel::after {
-    width: 310px;
-    height: 310px;
-  }
+  /* -------------------------------------------------------
+     VERY SMALL PHOTO FRAME
+  ------------------------------------------------------- */
 
   .hero-photo {
     width: 290px;
 
-    height: 390px;
+    height: 375px;
 
-    transform: translateY(25px);
+    border-width: 9px;
+
+    border-radius: 50% 50% 22px 22px;
+
+    transform: translateY(20px);
   }
 
   .profile-photo {
-    transform: translateY(-6px);
+    transform: translateY(-5px);
   }
 
   .research-card {
     width: 92%;
+
+    right: 0;
+
+    bottom: -50px;
+
+    z-index: 20;
   }
 
   .quick-stats {
