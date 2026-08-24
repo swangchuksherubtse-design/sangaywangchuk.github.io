@@ -1,4 +1,4 @@
-import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap');
 
 
 /* =========================================================
@@ -406,6 +406,12 @@ p {
     );
 }
 
+
+/* ---------------------------------------------------------
+   PHOTO FRAME
+   Frame position remains at translateY(57px)
+--------------------------------------------------------- */
+
 .hero-photo {
   position: relative;
   z-index: 2;
@@ -416,6 +422,7 @@ p {
   overflow: hidden;
 
   border: 12px solid var(--white);
+
   border-radius: 210px 210px 22px 22px;
 
   background: var(--soft);
@@ -423,21 +430,37 @@ p {
   box-shadow:
     0 16px 40px rgba(16, 37, 43, 0.20);
 
-  /* FRAME POSITION REMAINS UNCHANGED */
   transform: translateY(57px);
 }
+
+
+/* ---------------------------------------------------------
+   PROFILE PHOTO
+   IMPORTANT:
+   The image is NOT stretched vertically.
+   The image remains proportional.
+--------------------------------------------------------- */
 
 .profile-photo {
   width: 100%;
   height: 100%;
 
   object-fit: cover;
+  object-position: center top;
 
-  /* PHOTO ONLY MOVED UP */
-  transform: translateY(-28px) scale(1.62);
+  /*
+     Small upward adjustment only.
+     No large scale that creates a distorted appearance.
+  */
+  transform: translateY(-18px) scale(1.12);
 
-  transform-origin: center 14%;
+  transform-origin: center top;
 }
+
+
+/* ---------------------------------------------------------
+   RESEARCH CARD
+--------------------------------------------------------- */
 
 .research-card {
   position: absolute;
@@ -573,6 +596,7 @@ p {
 .section-heading {
   display: grid;
   grid-template-columns: 1fr 0.72fr;
+
   gap: 80px;
 
   align-items: end;
@@ -598,10 +622,6 @@ p {
   color: #d1a66c;
 }
 
-.section-heading.light h2 {
-  color: var(--white);
-}
-
 
 /* =========================================================
    RESEARCH GRID
@@ -610,6 +630,7 @@ p {
 .research-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+
   gap: 16px;
 }
 
@@ -748,6 +769,7 @@ p {
 
 .research-glance {
   display: grid;
+
   grid-template-columns: repeat(4, 1fr);
 
   gap: 12px;
@@ -771,6 +793,8 @@ p {
 
   margin-bottom: 10px;
 
+  color: var(--muted);
+
   font-size: 10px;
   line-height: 1.4;
 
@@ -779,14 +803,14 @@ p {
   letter-spacing: 1.5px;
 
   text-transform: uppercase;
-
-  opacity: 0.62;
 }
 
 .research-glance .glance-card strong {
   display: block;
 
   margin: 0 0 8px;
+
+  color: var(--ink);
 
   font-size: 28px;
   line-height: 1.15;
@@ -799,10 +823,10 @@ p {
 .research-glance .glance-card p {
   margin: 0;
 
+  color: var(--ink-soft);
+
   font-size: 13px;
   line-height: 1.5;
-
-  opacity: 0.68;
 }
 
 
@@ -863,7 +887,11 @@ p {
 
 .publication-controls {
   display: grid;
-  grid-template-columns: minmax(220px, 1.6fr) minmax(140px, 0.7fr) minmax(180px, 0.9fr);
+
+  grid-template-columns:
+    minmax(220px, 1.6fr)
+    minmax(140px, 0.7fr)
+    minmax(180px, 0.9fr);
 
   gap: 12px;
 
@@ -913,6 +941,7 @@ p {
 
 .publication-count {
   display: flex;
+
   align-items: baseline;
   justify-content: space-between;
 
@@ -949,6 +978,7 @@ p {
 
 .publication-item {
   display: grid;
+
   grid-template-columns: 55px 1fr;
 
   gap: 20px;
@@ -970,6 +1000,7 @@ p {
 .publication-meta {
   display: flex;
   flex-wrap: wrap;
+
   gap: 8px;
 
   margin-bottom: 9px;
@@ -990,6 +1021,7 @@ p {
   font-weight: 700;
 
   letter-spacing: 0.6px;
+
   text-transform: uppercase;
 }
 
@@ -1012,6 +1044,7 @@ p {
   color: var(--muted);
 
   font-size: 12px;
+
   font-style: italic;
 }
 
@@ -1055,6 +1088,7 @@ p {
 
 .academic-grid {
   display: grid;
+
   grid-template-columns: repeat(3, 1fr);
 
   gap: 18px;
@@ -1108,6 +1142,7 @@ p {
 
 .about-grid {
   display: grid;
+
   grid-template-columns: 0.8fr 1.2fr;
 
   gap: 100px;
@@ -1139,6 +1174,7 @@ p {
 
 .academic-profiles-grid {
   display: grid;
+
   grid-template-columns: repeat(3, 1fr);
 
   gap: 16px;
@@ -1244,6 +1280,7 @@ p {
 
 .contact-inner {
   display: grid;
+
   grid-template-columns: 1fr 0.8fr;
 
   gap: 90px;
@@ -1289,6 +1326,7 @@ footer {
   min-height: 80px;
 
   display: flex;
+
   align-items: center;
   justify-content: space-between;
 
@@ -1376,6 +1414,7 @@ footer {
     right: 16px;
 
     display: none;
+
     flex-direction: column;
     align-items: stretch;
 
@@ -1433,7 +1472,8 @@ footer {
   }
 
   .profile-photo {
-    transform: translateY(-22px) scale(1.62);
+    transform: translateY(-14px) scale(1.10);
+    transform-origin: center top;
   }
 
   .research-card {
@@ -1505,6 +1545,7 @@ footer {
 
   .publication-count {
     align-items: flex-start;
+
     flex-direction: column;
 
     gap: 3px;
@@ -1572,12 +1613,17 @@ footer {
     height: 400px;
   }
 
+  .profile-photo {
+    transform: translateY(-12px) scale(1.08);
+  }
+
   .research-card {
     width: 92%;
   }
 
   .quick-stats {
     display: grid;
+
     grid-template-columns: repeat(2, 1fr);
   }
 
