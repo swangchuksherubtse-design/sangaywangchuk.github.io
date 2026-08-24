@@ -266,7 +266,7 @@ h2 em {
 
 /* =========================================================
    HERO PHOTO FRAME
-   CIRCULAR FRAME MOVED DOWN BY 135px
+   FRAME MOVED UP FROM 135px TO 60px
 ========================================================= */
 
 .hero-panel .hero-photo {
@@ -296,27 +296,34 @@ h2 em {
 
   /*
      ======================================================
-     PORTRAIT FRAME POSITION
+     FRAME POSITION
      ======================================================
 
-     Total downward movement:
-     135px ≈ 3.6 cm
+     Previous position:
+       translateY(135px)
 
-     ONLY THE CIRCULAR FRAME MOVES.
-     INTERNAL IMAGE CROP IS UNCHANGED.
+     New position:
+       translateY(60px)
+
+     This moves the entire circular frame
+     UP by approximately 2 cm.
+
+     The research card itself is NOT moved.
   */
 
-  transform: translateY(135px);
+  transform: translateY(60px);
 }
 
 
 /* =========================================================
    ACTUAL PROFILE PHOTO
-   INTERNAL CROP UNCHANGED
+   MOVED UP INDEPENDENTLY INSIDE FRAME
 ========================================================= */
 
 .hero-panel .hero-photo .profile-photo {
   display: block;
+
+  position: relative;
 
   width: 100%;
   height: 100%;
@@ -329,8 +336,24 @@ h2 em {
   object-fit: cover;
 
   /*
-     INTERNAL IMAGE CROP
-     REMAINS EXACTLY AS BEFORE
+     ======================================================
+     INTERNAL PORTRAIT POSITION
+     ======================================================
+
+     The circular FRAME is moved separately.
+
+     The portrait itself is now moved upward
+     by approximately 1.5 cm INSIDE the frame.
+
+     This does NOT move the frame.
+  */
+
+  top: -57px;
+
+  /*
+     Because the image is moved upward inside
+     an overflow:hidden circular frame, the
+     lower portion is naturally clipped.
   */
 
   transform: scale(1.62);
@@ -356,10 +379,12 @@ h2 em {
 ========================================================= */
 
 .hero-panel .hero-photo:hover {
-  transform: translateY(135px);
+  transform: translateY(60px);
 }
 
 .hero-panel .hero-photo .profile-photo:hover {
+  top: -57px;
+
   transform: scale(1.62);
 
   transform-origin: center 14%;
@@ -1173,7 +1198,8 @@ footer {
 
 
   /* =====================================================
-     TABLET PORTRAIT
+     TABLET PORTRAIT FRAME
+     FRAME: UP BY APPROX. 2 CM
   ===================================================== */
 
   .hero-panel .hero-photo {
@@ -1183,19 +1209,24 @@ footer {
 
     margin: -55px auto 24px;
 
-    /*
-       TOTAL DOWNWARD MOVEMENT:
-       135px ≈ 3.6 cm
-    */
-
-    transform: translateY(135px);
+    transform: translateY(60px);
   }
 
   .hero-panel .hero-photo:hover {
-    transform: translateY(135px);
+    transform: translateY(60px);
   }
 
+
+  /* =====================================================
+     TABLET PORTRAIT
+     PORTRAIT: ADDITIONAL ~1.5 CM UP
+  ===================================================== */
+
   .hero-panel .hero-photo .profile-photo {
+    position: relative;
+
+    top: -52px;
+
     object-position: center 14%;
 
     transform: scale(1.58);
@@ -1204,6 +1235,8 @@ footer {
   }
 
   .hero-panel .hero-photo .profile-photo:hover {
+    top: -52px;
+
     transform: scale(1.58);
 
     transform-origin: center 14%;
@@ -1382,8 +1415,9 @@ footer {
 
 
   /* =====================================================
-     MOBILE PORTRAIT
-========================================================= */
+     MOBILE PORTRAIT FRAME
+     FRAME: UP BY APPROX. 2 CM
+  ===================================================== */
 
   .hero-panel .hero-photo {
     width: 260px;
@@ -1395,20 +1429,24 @@ footer {
     border-radius: 50%;
     border-width: 5px;
 
-    /*
-       TOTAL DOWNWARD MOVEMENT:
-       135px ≈ 3.6 cm
-    */
-
-    transform: translateY(135px);
+    transform: translateY(60px);
   }
 
   .hero-panel .hero-photo:hover {
-    transform: translateY(135px);
+    transform: translateY(60px);
   }
 
 
+  /* =====================================================
+     MOBILE PORTRAIT
+     PORTRAIT: ADDITIONAL ~1.5 CM UP
+  ===================================================== */
+
   .hero-panel .hero-photo .profile-photo {
+    position: relative;
+
+    top: -45px;
+
     border-radius: 50%;
 
     object-position: center 14%;
@@ -1419,6 +1457,8 @@ footer {
   }
 
   .hero-panel .hero-photo .profile-photo:hover {
+    top: -45px;
+
     transform: scale(1.54);
 
     transform-origin: center 14%;
