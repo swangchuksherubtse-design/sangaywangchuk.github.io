@@ -267,7 +267,7 @@ h2 em {
 
 /* =========================================================
    HERO PHOTO FRAME
-   FRAME POSITION IS UNCHANGED
+   FRAME POSITION IS COMPLETELY UNCHANGED
 ========================================================= */
 
 .hero-panel .hero-photo {
@@ -295,16 +295,14 @@ h2 em {
   box-shadow:
     0 16px 40px rgba(16, 37, 43, 0.20);
 
-  /*
-     FRAME POSITION — DO NOT CHANGE
-  */
+  /* FRAME REMAINS AT ITS CURRENT POSITION */
   transform: translateY(57px);
 }
 
 
 /* =========================================================
    ACTUAL PROFILE PHOTO
-   ONLY THE IMAGE MOVES UP INSIDE THE FRAME
+   ONLY THIS IMAGE IS MOVED UP
 ========================================================= */
 
 .hero-panel .hero-photo .profile-photo {
@@ -321,14 +319,11 @@ h2 em {
   object-fit: cover;
 
   /*
-     EXISTING SCALE RETAINED
+     EXISTING CROP PRESERVED
+     IMAGE MOVED UP ONLY BY 12px
   */
-  transform: scale(1.62) translateY(-18px);
+  transform: translateY(-12px) scale(1.62);
 
-  /*
-     ONLY THE PORTRAIT IMAGE IS MOVED UP
-     FRAME REMAINS COMPLETELY FIXED
-  */
   transform-origin: center 14%;
 
   object-position: center 14%;
@@ -346,7 +341,9 @@ h2 em {
 
 
 /* =========================================================
-   PREVENT FRAME / IMAGE HOVER MOVEMENT
+   HOVER
+   FRAME STAYS FIXED
+   IMAGE STAYS 12px UP
 ========================================================= */
 
 .hero-panel .hero-photo:hover {
@@ -354,7 +351,7 @@ h2 em {
 }
 
 .hero-panel .hero-photo .profile-photo:hover {
-  transform: scale(1.62) translateY(-18px);
+  transform: translateY(-12px) scale(1.62);
 
   transform-origin: center 14%;
 
@@ -364,7 +361,7 @@ h2 em {
 
 /* =========================================================
    RESEARCH CARD
-   POSITION UNCHANGED
+   COMPLETELY UNCHANGED
 ========================================================= */
 
 .hero-panel .research-card {
@@ -1190,20 +1187,20 @@ footer {
 
 
   /* =====================================================
-     TABLET ACTUAL PORTRAIT
-     ONLY IMAGE MOVES UP
+     TABLET ACTUAL PHOTO
+     ONLY PHOTO MOVES UP
   ===================================================== */
 
   .hero-panel .hero-photo .profile-photo {
     object-position: center 14%;
 
-    transform: scale(1.58) translateY(-18px);
+    transform: translateY(-12px) scale(1.58);
 
     transform-origin: center 14%;
   }
 
   .hero-panel .hero-photo .profile-photo:hover {
-    transform: scale(1.58) translateY(-18px);
+    transform: translateY(-12px) scale(1.58);
 
     transform-origin: center 14%;
   }
@@ -1211,12 +1208,11 @@ footer {
 
   /* =====================================================
      TABLET RESEARCH CARD
-     POSITION UNCHANGED
+     UNCHANGED
   ===================================================== */
 
   .hero-panel .research-card {
     width: min(430px, 100%);
-
     margin-top: 57px;
   }
 
@@ -1412,8 +1408,8 @@ footer {
 
 
   /* =====================================================
-     MOBILE ACTUAL PORTRAIT
-     ONLY IMAGE MOVES UP
+     MOBILE ACTUAL PHOTO
+     ONLY PHOTO MOVES UP
   ===================================================== */
 
   .hero-panel .hero-photo .profile-photo {
@@ -1421,13 +1417,13 @@ footer {
 
     object-position: center 14%;
 
-    transform: scale(1.54) translateY(-18px);
+    transform: translateY(-10px) scale(1.54);
 
     transform-origin: center 14%;
   }
 
   .hero-panel .hero-photo .profile-photo:hover {
-    transform: scale(1.54) translateY(-18px);
+    transform: translateY(-10px) scale(1.54);
 
     transform-origin: center 14%;
   }
@@ -1435,7 +1431,7 @@ footer {
 
   /* =====================================================
      MOBILE RESEARCH CARD
-     POSITION UNCHANGED
+     UNCHANGED
   ===================================================== */
 
   .hero-panel .research-card {
