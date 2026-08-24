@@ -341,7 +341,7 @@ p {
 .hero-panel {
   position: relative;
 
-  min-height: 560px;
+  min-height: 540px;
 
   display: flex;
   flex-direction: column;
@@ -353,17 +353,17 @@ p {
 
 /* =========================================================
    DECORATIVE GOLD ORB
-   Reduced proportionally with smaller frame
+   Further reduced to match smaller frame
 ========================================================= */
 
 .orb {
   position: absolute;
 
-  top: 55px;
+  top: 45px;
   left: 50%;
 
-  width: 370px;
-  height: 370px;
+  width: 355px;
+  height: 355px;
 
   transform: translateX(-50%);
 
@@ -387,7 +387,7 @@ p {
 /* =========================================================
    PHOTO FRAME
    FURTHER REDUCED
-   Perfectly circular
+   Circular frame — no dome
 ========================================================= */
 
 .hero-photo {
@@ -397,10 +397,10 @@ p {
 
   flex: 0 0 auto;
 
-  width: 300px;
-  height: 300px;
+  width: 285px;
+  height: 285px;
 
-  margin-top: 80px;
+  margin-top: 68px;
 
   overflow: hidden;
 
@@ -411,7 +411,7 @@ p {
   background: var(--soft);
 
   box-shadow:
-    0 14px 34px rgba(16, 37, 43, 0.20),
+    0 16px 40px rgba(16, 37, 43, 0.20),
     0 0 0 1px rgba(184, 137, 77, 0.10);
 
   transform: none;
@@ -420,7 +420,7 @@ p {
 
 /* =========================================================
    PROFILE PHOTO
-   PHOTO POSITION REMAINS UNCHANGED
+   PHOTO POSITION UNCHANGED
 ========================================================= */
 
 .profile-photo {
@@ -441,7 +441,7 @@ p {
 
 /* =========================================================
    RESEARCH CARD
-   BELOW PHOTO — NEVER BEHIND FRAME
+   DIRECTLY BELOW SMALLER PHOTO
 ========================================================= */
 
 .research-card {
@@ -451,9 +451,9 @@ p {
 
   flex: 0 0 auto;
 
-  width: min(370px, 88%);
+  width: min(365px, 88%);
 
-  margin-top: 14px;
+  margin-top: 10px;
 
   margin-right: -35px;
 
@@ -1366,31 +1366,31 @@ footer {
   }
 
   .hero-panel {
-    min-height: 540px;
+    min-height: 520px;
   }
 
   .orb {
-    top: 40px;
+    top: 35px;
 
-    width: 350px;
-    height: 350px;
+    width: 345px;
+    height: 345px;
   }
 
   .hero-photo {
-    width: 300px;
-    height: 300px;
+    width: 280px;
+    height: 280px;
 
-    margin-top: 70px;
+    margin-top: 62px;
 
     border-width: 10px;
   }
 
   .research-card {
-    margin-top: 14px;
+    margin-top: 10px;
 
     margin-right: 0;
 
-    width: min(370px, 78%);
+    width: min(365px, 78%);
   }
 
   .research-grid {
@@ -1497,23 +1497,22 @@ footer {
   }
 
   .hero-panel {
-    min-height: 520px;
+    min-height: 500px;
     overflow: visible;
   }
 
   .orb {
-    top: 30px;
+    top: 25px;
 
-    width: 310px;
-    height: 310px;
+    width: 300px;
+    height: 300px;
   }
 
   .hero-photo {
-    width: min(270px, 72vw);
+    width: 245px;
+    height: 245px;
 
-    height: min(270px, 72vw);
-
-    margin-top: 50px;
+    margin-top: 42px;
 
     border-width: 9px;
 
@@ -1537,9 +1536,9 @@ footer {
     right: auto;
     bottom: auto;
 
-    width: min(320px, 86vw);
+    width: min(325px, 88vw);
 
-    margin-top: 14px;
+    margin-top: 10px;
 
     margin-right: 0;
 
@@ -1669,21 +1668,21 @@ footer {
   }
 
   .hero-panel {
-    min-height: 470px;
+    min-height: 450px;
   }
 
   .orb {
-    top: 25px;
+    top: 20px;
 
-    width: 270px;
-    height: 270px;
+    width: 255px;
+    height: 255px;
   }
 
   .hero-photo {
-    width: 235px;
-    height: 235px;
+    width: 220px;
+    height: 220px;
 
-    margin-top: 42px;
+    margin-top: 35px;
 
     border-width: 8px;
   }
@@ -1702,7 +1701,7 @@ footer {
   .research-card {
     width: 92%;
 
-    margin-top: 13px;
+    margin-top: 8px;
   }
 
   .quick-stats {
