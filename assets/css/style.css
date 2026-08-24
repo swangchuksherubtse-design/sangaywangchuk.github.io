@@ -554,3 +554,271 @@
   }
 
 }
+/* =========================================================
+   PUBLICATION DATABASE — REFINED ACADEMIC STYLE
+   ========================================================= */
+
+.pub-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 10px;
+}
+
+
+/* ---------------------------------------------------------
+   INDIVIDUAL PUBLICATION
+   --------------------------------------------------------- */
+
+.publication-item {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 24px;
+
+  padding: 28px 0;
+
+  border-top: 1px solid rgba(127, 127, 127, 0.18);
+
+  transition:
+    padding-left 0.2s ease,
+    background 0.2s ease;
+}
+
+
+/* ---------------------------------------------------------
+   PUBLICATION NUMBER
+   --------------------------------------------------------- */
+
+.publication-number {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+
+  padding-top: 3px;
+
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+
+  opacity: 0.45;
+}
+
+
+/* ---------------------------------------------------------
+   PUBLICATION CONTENT
+   --------------------------------------------------------- */
+
+.publication-content {
+  min-width: 0;
+}
+
+
+/* ---------------------------------------------------------
+   PUBLICATION META
+   --------------------------------------------------------- */
+
+.publication-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+
+  margin-bottom: 10px;
+}
+
+
+.publication-meta span {
+  display: inline-flex;
+  align-items: center;
+
+  min-height: 26px;
+  padding: 4px 9px;
+
+  border: 1px solid rgba(127, 127, 127, 0.2);
+  border-radius: 999px;
+
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1.2;
+
+  letter-spacing: 0.04em;
+}
+
+
+/* ---------------------------------------------------------
+   PUBLICATION TITLE
+   --------------------------------------------------------- */
+
+.publication-content h3 {
+  margin: 0 0 10px;
+
+  max-width: 900px;
+
+  font-size: 1.05rem;
+  line-height: 1.55;
+  font-weight: 650;
+}
+
+
+/* ---------------------------------------------------------
+   JOURNAL
+   --------------------------------------------------------- */
+
+.publication-journal {
+  margin: 0 0 14px;
+
+  font-size: 0.9rem;
+  line-height: 1.5;
+
+  font-style: italic;
+
+  opacity: 0.68;
+}
+
+
+/* ---------------------------------------------------------
+   DOI LINK
+   --------------------------------------------------------- */
+
+.publication-doi {
+  display: inline-flex;
+  align-items: center;
+
+  font-size: 0.78rem;
+  font-weight: 700;
+
+  letter-spacing: 0.03em;
+
+  text-decoration: none;
+
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.publication-doi:hover {
+  opacity: 0.7;
+  transform: translateX(3px);
+}
+
+
+/* ---------------------------------------------------------
+   HOVER EFFECT
+   --------------------------------------------------------- */
+
+.publication-item:hover {
+  padding-left: 8px;
+}
+
+
+/* ---------------------------------------------------------
+   LAST PUBLICATION
+   --------------------------------------------------------- */
+
+.publication-item:last-child {
+  border-bottom: 1px solid rgba(127, 127, 127, 0.18);
+}
+
+
+/* =========================================================
+   PUBLICATION EMPTY STATE
+   ========================================================= */
+
+.publication-empty {
+  padding: 40px 20px;
+
+  text-align: center;
+
+  border: 1px dashed rgba(127, 127, 127, 0.3);
+  border-radius: 12px;
+}
+
+
+.publication-empty h3 {
+  margin-bottom: 8px;
+}
+
+
+.publication-empty p {
+  margin: 0;
+  opacity: 0.65;
+}
+
+
+/* =========================================================
+   PUBLICATION DATABASE — MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  .publication-item {
+    grid-template-columns: 42px minmax(0, 1fr);
+    gap: 14px;
+
+    padding: 22px 0;
+  }
+
+
+  .publication-number {
+    font-size: 0.68rem;
+  }
+
+
+  .publication-meta {
+    gap: 6px;
+  }
+
+
+  .publication-meta span {
+    padding: 4px 7px;
+    font-size: 0.62rem;
+  }
+
+
+  .publication-content h3 {
+    font-size: 0.96rem;
+    line-height: 1.5;
+  }
+
+
+  .publication-journal {
+    font-size: 0.82rem;
+  }
+
+
+  .publication-doi {
+    font-size: 0.74rem;
+  }
+
+
+  .publication-item:hover {
+    padding-left: 0;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL SCREENS
+   ========================================================= */
+
+@media (max-width: 430px) {
+
+  .publication-item {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+
+  .publication-number {
+    justify-content: flex-start;
+    padding-top: 0;
+  }
+
+
+  .publication-content h3 {
+    font-size: 0.94rem;
+  }
+
+}
