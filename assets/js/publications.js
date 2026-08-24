@@ -208,6 +208,14 @@ const publications = [
     doi: "https://doi.org/10.1016/j.talanta.2023.124266"
   },
   {
+    year: 2023,
+    category: "Electrocatalysis",
+    title: "Polyaniline-coated glassy carbon microspheres decorated with nano-palladium as a new electrocatalyst for methanol oxidation.",
+    journal: "Journal of Electroanalytical Chemistry",
+    details: "Q1 · IF 4.5",
+    doi: "https://doi.org/10.1016/j.jelechem.2022.116995"
+  },
+  {
     year: 2022,
     category: "Forensic Electrochemistry",
     title: "New electrode material integrates silver nanoprisms with phosphorus-doped carbon nanotubes for forensic detection of nitrite.",
@@ -224,14 +232,6 @@ const publications = [
     doi: "https://doi.org/10.1016/j.electacta.2022.141272"
   },
   {
-    year: 2023,
-    category: "Electrocatalysis",
-    title: "Polyaniline-coated glassy carbon microspheres decorated with nano-palladium as a new electrocatalyst for methanol oxidation.",
-    journal: "Journal of Electroanalytical Chemistry",
-    details: "Q1 · IF 4.5",
-    doi: "https://doi.org/10.1016/j.jelechem.2022.116995"
-  },
-  {
     year: 2022,
     category: "Food Analysis / Bhutan",
     title: "Detection of adulterants in some common food items available in the Bhutanese market.",
@@ -243,17 +243,129 @@ const publications = [
 
 
 /* =========================================================
+   PUBLICATION STATISTICS
+   ========================================================= */
+
+function getPublicationYears() {
+  const years = publications.map(pub => pub.year);
+
+  return {
+    newest: Math.max(...years),
+    oldest: Math.min(...years)
+  };
+}
+
+
+/* =========================================================
+   PUBLICATION COUNT
+   ========================================================= */
+
+function updatePublicationCount(list = publications) {
+
+  const section = document.querySelector("#publications");
+
+  if (!section) return;
+
+  let counter = section.querySelector(".publication-count");
+
+  /* Create the counter if it does not already exist */
+  if (!counter) {
+
+    counter = document.createElement("div");
+
+    counter.className = "publication-count";
+
+    /*
+      Insert the counter directly before the publication
+      controls. This avoids depending on .pub-feature.
+    */
+
+    const controls =
+      section.querySelector(".publication-controls");
+
+    const publicationList =
+      section.querySelector(".pub-list");
+
+    if (controls) {
+
+      controls.parentNode.insertBefore(
+        counter,
+        controls
+      );
+
+    } else if (publicationList) {
+
+      publicationList.parentNode.insertBefore(
+        counter,
+        publicationList
+      );
+
+    } else {
+
+      section.appendChild(counter);
+
+    }
+  }
+
+  const total = publications.length;
+  const showing = list.length;
+
+  const { newest, oldest } =
+    getPublicationYears();
+
+  if (showing === total) {
+
+    counter.innerHTML = `
+      <div class="publication-count-main">
+        ${total} Publications
+      </div>
+
+      <div class="publication-count-sub">
+        Peer-reviewed research articles · ${oldest}–${newest}
+      </div>
+    `;
+
+  } else {
+
+    counter.innerHTML = `
+      <div class="publication-count-main">
+        Showing ${showing} of ${total} Publications
+      </div>
+
+      <div class="publication-count-sub">
+        Filtered research results
+      </div>
+    `;
+  }
+}
+
+
+/* =========================================================
    RENDER PUBLICATIONS
    ========================================================= */
 
 function renderPublications(list = publications) {
-  updatePublicationCount(list);
 
-  const container = document.querySelector(".pub-list");
+  const container =
+    document.querySelector(".pub-list");
 
   if (!container) return;
 
-  if (list.length === 0) {
+  /*
+    Always sort newest → oldest.
+    This also corrects the order if a new publication
+    is added later in the array.
+  */
+
+  const sortedList = [...list].sort(
+    (a, b) => b.year - a.year
+  );
+
+  /* Update publication counter */
+  updatePublicationCount(sortedList);
+
+  if (sortedList.length === 0) {
+
     container.innerHTML = `
       <div class="publication-empty">
         <h3>No publications found</h3>
@@ -262,39 +374,53 @@ function renderPublications(list = publications) {
         </p>
       </div>
     `;
+
     return;
   }
 
-  container.innerHTML = list.map((pub, index) => `
-    <article class="publication-item">
-      <div class="publication-number">
-        ${String(index + 1).padStart(2, "0")}
-      </div>
+  container.innerHTML =
+    sortedList.map((pub, index) => `
 
-      <div class="publication-content">
-        <div class="publication-meta">
-          <span>${pub.year}</span>
-          <span>${pub.category}</span>
-          <span>${pub.details}</span>
+      <article class="publication-item">
+
+        <div class="publication-number">
+          ${String(index + 1).padStart(2, "0")}
         </div>
 
-        <h3>${pub.title}</h3>
+        <div class="publication-content">
 
-        <p class="publication-journal">
-          ${pub.journal}
-        </p>
+          <div class="publication-meta">
 
-        <a
-          class="publication-doi"
-          href="${pub.doi}"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          View DOI →
-        </a>
-      </div>
-    </article>
-  `).join("");
+            <span>${pub.year}</span>
+
+            <span>${pub.category}</span>
+
+            <span>${pub.details}</span>
+
+          </div>
+
+          <h3>
+            ${pub.title}
+          </h3>
+
+          <p class="publication-journal">
+            ${pub.journal}
+          </p>
+
+          <a
+            class="publication-doi"
+            href="${pub.doi}"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View DOI →
+          </a>
+
+        </div>
+
+      </article>
+
+    `).join("");
 }
 
 
@@ -303,19 +429,33 @@ function renderPublications(list = publications) {
    ========================================================= */
 
 function setupPublicationFilters() {
-  const section = document.querySelector("#publications");
+
+  const section =
+    document.querySelector("#publications");
 
   if (!section) return;
 
-  const feature = section.querySelector(".pub-feature");
+  /*
+    Prevent duplicate controls if the script is
+    accidentally initialized more than once.
+  */
 
-  if (!feature) return;
+  if (
+    section.querySelector(
+      ".publication-controls"
+    )
+  ) {
+    return;
+  }
 
-  const controls = document.createElement("div");
+  const controls =
+    document.createElement("div");
 
-  controls.className = "publication-controls";
+  controls.className =
+    "publication-controls";
 
   controls.innerHTML = `
+
     <input
       type="search"
       id="publication-search"
@@ -327,112 +467,186 @@ function setupPublicationFilters() {
       id="publication-year"
       aria-label="Filter by publication year"
     >
-      <option value="all">All years</option>
+      <option value="all">
+        All years
+      </option>
     </select>
 
     <select
       id="publication-category"
       aria-label="Filter by research area"
     >
-      <option value="all">All research areas</option>
+      <option value="all">
+        All research areas
+      </option>
     </select>
+
   `;
 
-  feature.parentNode.insertBefore(controls, feature);
+
+  /*
+    Place controls immediately before the
+    publication list.
+  */
+
+  const publicationList =
+    section.querySelector(".pub-list");
+
+  if (publicationList) {
+
+    publicationList.parentNode.insertBefore(
+      controls,
+      publicationList
+    );
+
+  } else {
+
+    section.appendChild(controls);
+
+  }
 
 
   /* -------------------------------------------------------
-     Automatically generate year options
+     YEAR OPTIONS
      ------------------------------------------------------- */
 
   const yearSelect =
-    controls.querySelector("#publication-year");
+    controls.querySelector(
+      "#publication-year"
+    );
 
-  const years = [...new Set(
-    publications.map(pub => pub.year)
-  )].sort((a, b) => b - a);
+  const years = [
+    ...new Set(
+      publications.map(pub => pub.year)
+    )
+  ].sort(
+    (a, b) => b - a
+  );
 
   years.forEach(year => {
-    const option = document.createElement("option");
+
+    const option =
+      document.createElement("option");
 
     option.value = year;
+
     option.textContent = year;
 
     yearSelect.appendChild(option);
+
   });
 
 
   /* -------------------------------------------------------
-     Automatically generate category options
+     CATEGORY OPTIONS
      ------------------------------------------------------- */
 
   const categorySelect =
-    controls.querySelector("#publication-category");
+    controls.querySelector(
+      "#publication-category"
+    );
 
-  const categories = [...new Set(
-    publications.map(pub => pub.category)
-  )].sort((a, b) => a.localeCompare(b));
+  const categories = [
+    ...new Set(
+      publications.map(
+        pub => pub.category
+      )
+    )
+  ].sort(
+    (a, b) =>
+      a.localeCompare(b)
+  );
 
   categories.forEach(category => {
-    const option = document.createElement("option");
+
+    const option =
+      document.createElement("option");
 
     option.value = category;
+
     option.textContent = category;
 
     categorySelect.appendChild(option);
+
   });
 
 
   /* -------------------------------------------------------
-     Filter publications
+     SEARCH
      ------------------------------------------------------- */
 
   const search =
-    controls.querySelector("#publication-search");
-
-  function filterPublications() {
-    const searchTerms = search.value
-  .toLowerCase()
-  .split(/[\s,]+/)
-  .map(term => term.trim())
-  .filter(Boolean);
-
-const selectedYear =
-  yearSelect.value;
-
-const selectedCategory =
-  categorySelect.value;
-
-const filtered = publications.filter(pub => {
-
-  const searchableText =
-    `${pub.title} ${pub.journal} ${pub.category} ${pub.year}`
-    .toLowerCase();
-
-  const matchesSearch =
-    searchTerms.length === 0 ||
-    searchTerms.every(term =>
-      searchableText.includes(term)
+    controls.querySelector(
+      "#publication-search"
     );
 
-      const matchesYear =
-        selectedYear === "all" ||
-        String(pub.year) === selectedYear;
 
-      const matchesCategory =
-        selectedCategory === "all" ||
-        pub.category === selectedCategory;
+  /* -------------------------------------------------------
+     FILTER FUNCTION
+     ------------------------------------------------------- */
 
-      return (
-        matchesSearch &&
-        matchesYear &&
-        matchesCategory
-      );
-    });
+  function filterPublications() {
+
+    const searchTerms =
+      search.value
+        .toLowerCase()
+        .split(/[\s,]+/)
+        .map(term => term.trim())
+        .filter(Boolean);
+
+    const selectedYear =
+      yearSelect.value;
+
+    const selectedCategory =
+      categorySelect.value;
+
+
+    const filtered =
+      publications.filter(pub => {
+
+        const searchableText =
+          `${pub.title}
+           ${pub.journal}
+           ${pub.category}
+           ${pub.year}
+           ${pub.details}`
+            .toLowerCase();
+
+
+        const matchesSearch =
+          searchTerms.length === 0 ||
+          searchTerms.every(term =>
+            searchableText.includes(term)
+          );
+
+
+        const matchesYear =
+          selectedYear === "all" ||
+          String(pub.year) === selectedYear;
+
+
+        const matchesCategory =
+          selectedCategory === "all" ||
+          pub.category === selectedCategory;
+
+
+        return (
+          matchesSearch &&
+          matchesYear &&
+          matchesCategory
+        );
+
+      });
+
 
     renderPublications(filtered);
+
   }
 
+
+  /* -------------------------------------------------------
+     EVENT LISTENERS
+     ------------------------------------------------------- */
 
   search.addEventListener(
     "input",
@@ -455,48 +669,19 @@ const filtered = publications.filter(pub => {
    INITIALIZE PUBLICATIONS
    ========================================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
-  renderPublications();
-  setupPublicationFilters();
-});
-/* =========================================================
-   PUBLICATION COUNT
-   ========================================================= */
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
 
-function updatePublicationCount(list) {
-  const section = document.querySelector("#publications");
+    /*
+      Create filters first, then render publications.
+      This guarantees that the publication counter
+      has a stable location.
+    */
 
-  if (!section) return;
+    setupPublicationFilters();
 
-  let counter = section.querySelector(".publication-count");
+    renderPublications();
 
-  if (!counter) {
-    counter = document.createElement("div");
-    counter.className = "publication-count";
-
-    const feature = section.querySelector(".pub-feature");
-
-    if (feature) {
-      feature.parentNode.insertBefore(counter, feature);
-    }
   }
-
-  const total = publications.length;
-  const showing = list.length;
-
-  const years = publications.map(pub => pub.year);
-  const newestYear = Math.max(...years);
-  const oldestYear = Math.min(...years);
-
-  if (showing === total) {
-    counter.innerHTML = `
-      <strong>${total} Publications</strong>
-      <span>Peer-reviewed research articles · ${oldestYear}–${newestYear}</span>
-    `;
-  } else {
-    counter.innerHTML = `
-      <strong>Showing ${showing} of ${total} Publications</strong>
-      <span>Filtered research results</span>
-    `;
-  }
-}
+);
