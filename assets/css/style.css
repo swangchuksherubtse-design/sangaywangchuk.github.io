@@ -267,6 +267,13 @@ h2 em {
 /* =========================================================
    HERO PHOTO
    HEAD + SHOULDERS / UPPER-BODY CIRCULAR PORTRAIT
+
+   POSITION ONLY:
+   The circular frame is moved DOWN by approximately
+   1.5 cm from the previous position.
+
+   IMPORTANT:
+   The internal portrait crop is NOT changed.
 ========================================================= */
 
 .hero-panel .hero-photo {
@@ -280,16 +287,21 @@ h2 em {
   flex: 0 0 330px;
 
   /*
-     MOVE THE ENTIRE CIRCULAR PHOTO
-     UP BY AN ADDITIONAL ~1.5 CM.
+     CIRCULAR FRAME POSITION
 
-     IMPORTANT:
-     This changes only the position of the
-     circular photo container.
+     Previous:
+       margin: -60px auto 28px;
 
-     The internal portrait crop remains unchanged.
+     New:
+       margin: -3px auto 28px;
+
+     Approximate downward movement:
+       57px ≈ 1.5 cm
+
+     Only the entire circular frame moves.
+     The portrait crop inside remains unchanged.
   */
-  margin: -60px auto 28px;
+  margin: -3px auto 28px;
 
   padding: 0;
 
@@ -308,7 +320,7 @@ h2 em {
 
 /* =========================================================
    ACTUAL PROFILE PHOTO
-   TIGHT HEAD + SHOULDERS CROP
+   INTERNAL CROP — UNCHANGED
 ========================================================= */
 
 .hero-panel .hero-photo .profile-photo {
@@ -327,7 +339,7 @@ h2 em {
   /*
      INTERNAL IMAGE CROP
 
-     This is deliberately unchanged.
+     UNCHANGED.
 
      Visible area:
        • Head
@@ -1181,6 +1193,11 @@ footer {
 
   /* =====================================================
      TABLET PORTRAIT
+     
+     Move entire circular frame DOWN by approximately
+     1.5 cm from the previous tablet position.
+     
+     Internal image crop remains unchanged.
   ===================================================== */
 
   .hero-panel .hero-photo {
@@ -1188,12 +1205,7 @@ footer {
     height: 300px;
     flex-basis: 300px;
 
-    /*
-       MOVE ENTIRE CIRCULAR PHOTO
-       UP BY AN ADDITIONAL ~1.5 CM.
-       Internal crop remains unchanged.
-    */
-    margin: -55px auto 24px;
+    margin: 2px auto 24px;
   }
 
   .hero-panel .hero-photo .profile-photo {
@@ -1384,19 +1396,19 @@ footer {
 
   /* =====================================================
      MOBILE UPPER-BODY PORTRAIT
-========================================================= */
+
+     Circular frame moved DOWN by approximately
+     1.5 cm.
+
+     Internal portrait crop remains unchanged.
+  ===================================================== */
 
   .hero-panel .hero-photo {
     width: 260px;
     height: 260px;
     flex-basis: 260px;
 
-    /*
-       MOVE ENTIRE CIRCULAR PHOTO
-       UP BY AN ADDITIONAL ~1.5 CM.
-       Internal crop remains unchanged.
-    */
-    margin: -47px auto 20px;
+    margin: 10px auto 20px;
 
     border-radius: 50%;
     border-width: 5px;
