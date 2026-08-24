@@ -266,7 +266,7 @@ h2 em {
 
 /* =========================================================
    HERO PHOTO
-   UPPER-BODY CIRCULAR PORTRAIT
+   HEAD + SHOULDERS / UPPER-BODY CIRCULAR PORTRAIT
 ========================================================= */
 
 .hero-panel .hero-photo {
@@ -280,7 +280,7 @@ h2 em {
   flex: 0 0 330px;
 
   /*
-     MOVES THE WHOLE PORTRAIT UP
+     Keep the whole circular portrait slightly elevated.
   */
   margin: -20px auto 28px;
 
@@ -301,7 +301,7 @@ h2 em {
 
 /* =========================================================
    ACTUAL PROFILE PHOTO
-   HEAD + SHOULDERS + UPPER ARMS / ELBOW AREA
+   TIGHTER HEAD + SHOULDERS CROP
 ========================================================= */
 
 .hero-panel .hero-photo .profile-photo {
@@ -318,28 +318,37 @@ h2 em {
   object-fit: cover;
 
   /*
-     STRONGER ZOOM
+     IMPORTANT CROP ADJUSTMENT
 
-     This removes most of the lower body and
-     concentrates the circular portrait on:
+     Previous:
+       scale(1.55)
+       center 20%
 
-     • Head
-     • Neck
-     • Shoulders
-     • Upper chest
-     • Upper arms / elbow region
+     New:
+       scale(1.62)
+       center 14%
+
+     This brings the head noticeably closer to
+     the top of the circular frame and removes
+     more of the lower body.
+
+     The intended visible area is:
+
+       • Head
+       • Face
+       • Neck
+       • Shoulders
+       • Upper chest
+       • Upper arms / elbow area
+
+     The lower torso is deliberately excluded.
   */
 
-  transform: scale(1.55);
+  transform: scale(1.62);
 
-  transform-origin: center 20%;
+  transform-origin: center 14%;
 
-  /*
-     Keeps the face in the upper-middle area
-     while retaining the shoulders and upper arms.
-  */
-
-  object-position: center 20%;
+  object-position: center 14%;
 
   border: 0;
 
@@ -362,8 +371,10 @@ h2 em {
 }
 
 .hero-panel .hero-photo .profile-photo:hover {
-  transform: scale(1.55);
-  transform-origin: center 20%;
+  transform: scale(1.62);
+
+  transform-origin: center 14%;
+
   filter: none;
 }
 
@@ -1181,29 +1192,22 @@ footer {
     height: 300px;
     flex-basis: 300px;
 
-    /*
-       Move portrait upward on tablet
-    */
     margin: -15px auto 24px;
   }
 
   .hero-panel .hero-photo .profile-photo {
-    object-position: center 20%;
+    object-position: center 14%;
 
-    /*
-       Stronger upper-body crop
-    */
-    transform: scale(1.50);
+    transform: scale(1.58);
 
-    transform-origin: center 20%;
+    transform-origin: center 14%;
   }
-
 
   .hero-panel .hero-photo .profile-photo:hover {
-    transform: scale(1.50);
-    transform-origin: center 20%;
-  }
+    transform: scale(1.58);
 
+    transform-origin: center 14%;
+  }
 
   .hero-panel .research-card {
     width: min(430px, 100%);
@@ -1379,16 +1383,13 @@ footer {
 
   /* =====================================================
      MOBILE UPPER-BODY PORTRAIT
-  ===================================================== */
+========================================================= */
 
   .hero-panel .hero-photo {
     width: 260px;
     height: 260px;
     flex-basis: 260px;
 
-    /*
-       Move portrait upward
-    */
     margin: -12px auto 20px;
 
     border-radius: 50%;
@@ -1399,21 +1400,18 @@ footer {
   .hero-panel .hero-photo .profile-photo {
     border-radius: 50%;
 
-    /*
-       Strong crop for head,
-       shoulders and upper arms
-    */
-    object-position: center 19%;
+    object-position: center 14%;
 
-    transform: scale(1.48);
+    transform: scale(1.54);
 
-    transform-origin: center 19%;
+    transform-origin: center 14%;
   }
 
 
   .hero-panel .hero-photo .profile-photo:hover {
-    transform: scale(1.48);
-    transform-origin: center 19%;
+    transform: scale(1.54);
+
+    transform-origin: center 14%;
   }
 
 
