@@ -280,9 +280,10 @@ h2 em {
   flex: 0 0 330px;
 
   /*
-     Keep the whole circular portrait slightly elevated.
+     MOVE THE ENTIRE CIRCULAR PHOTO UP.
+     This does NOT alter the internal image crop.
   */
-  margin: -20px auto 28px;
+  margin: -45px auto 28px;
 
   padding: 0;
 
@@ -301,7 +302,7 @@ h2 em {
 
 /* =========================================================
    ACTUAL PROFILE PHOTO
-   TIGHTER HEAD + SHOULDERS CROP
+   TIGHT HEAD + SHOULDERS CROP
 ========================================================= */
 
 .hero-panel .hero-photo .profile-photo {
@@ -318,22 +319,11 @@ h2 em {
   object-fit: cover;
 
   /*
-     IMPORTANT CROP ADJUSTMENT
+     INTERNAL IMAGE CROP
 
-     Previous:
-       scale(1.55)
-       center 20%
+     Kept unchanged from your current version.
 
-     New:
-       scale(1.62)
-       center 14%
-
-     This brings the head noticeably closer to
-     the top of the circular frame and removes
-     more of the lower body.
-
-     The intended visible area is:
-
+     Visible area:
        • Head
        • Face
        • Neck
@@ -341,7 +331,7 @@ h2 em {
        • Upper chest
        • Upper arms / elbow area
 
-     The lower torso is deliberately excluded.
+     Lower torso remains excluded.
   */
 
   transform: scale(1.62);
@@ -1192,7 +1182,11 @@ footer {
     height: 300px;
     flex-basis: 300px;
 
-    margin: -15px auto 24px;
+    /*
+       MOVE THE ENTIRE CIRCULAR PHOTO UP
+       Internal crop remains unchanged.
+    */
+    margin: -40px auto 24px;
   }
 
   .hero-panel .hero-photo .profile-photo {
@@ -1390,7 +1384,11 @@ footer {
     height: 260px;
     flex-basis: 260px;
 
-    margin: -12px auto 20px;
+    /*
+       MOVE THE ENTIRE CIRCULAR PHOTO UP
+       Internal crop remains unchanged.
+    */
+    margin: -32px auto 20px;
 
     border-radius: 50%;
     border-width: 5px;
