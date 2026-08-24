@@ -38,3 +38,252 @@
 
   opacity: 0.68;
 }
+/* =========================================================
+   PUBLICATION DATABASE
+   ========================================================= */
+
+.publication-count {
+  margin: 28px 0 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(11, 23, 38, 0.12);
+}
+
+.publication-count-main {
+  font-family: "DM Sans", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #0b1726;
+}
+
+.publication-count-sub {
+  margin-top: 5px;
+  font-size: 0.82rem;
+  color: #687382;
+}
+
+
+/* =========================================================
+   PUBLICATION FILTER CONTROLS
+   ========================================================= */
+
+.publication-controls {
+  display: grid;
+  grid-template-columns: minmax(220px, 1.6fr) minmax(150px, 0.7fr) minmax(180px, 0.9fr);
+  gap: 12px;
+  margin: 28px 0 34px;
+}
+
+.publication-controls input,
+.publication-controls select {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 15px;
+  border: 1px solid rgba(11, 23, 38, 0.16);
+  border-radius: 4px;
+  background: #ffffff;
+  color: #0b1726;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.9rem;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.publication-controls input::placeholder {
+  color: #8a929d;
+}
+
+.publication-controls input:focus,
+.publication-controls select:focus {
+  border-color: #0b1726;
+  box-shadow: 0 0 0 3px rgba(11, 23, 38, 0.06);
+}
+
+
+/* =========================================================
+   PUBLICATION LIST
+   ========================================================= */
+
+.pub-list {
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* =========================================================
+   INDIVIDUAL PUBLICATION
+   ========================================================= */
+
+.publication-item {
+  display: grid;
+  grid-template-columns: 58px 1fr;
+  gap: 22px;
+  padding: 30px 0;
+  border-bottom: 1px solid rgba(11, 23, 38, 0.12);
+}
+
+.publication-item:first-child {
+  padding-top: 8px;
+}
+
+.publication-number {
+  padding-top: 3px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #8a929d;
+}
+
+.publication-content {
+  min-width: 0;
+}
+
+
+/* =========================================================
+   PUBLICATION META
+   ========================================================= */
+
+.publication-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.publication-meta span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 25px;
+  padding: 4px 9px;
+  border-radius: 3px;
+  background: #f2f4f6;
+  color: #52606d;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   PUBLICATION TITLE
+   ========================================================= */
+
+.publication-content h3 {
+  margin: 0;
+  max-width: 900px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  font-weight: 600;
+  color: #0b1726;
+}
+
+
+/* =========================================================
+   JOURNAL
+   ========================================================= */
+
+.publication-journal {
+  margin: 10px 0 12px;
+  font-family: "Playfair Display", serif;
+  font-size: 0.94rem;
+  font-style: italic;
+  color: #687382;
+}
+
+
+/* =========================================================
+   DOI LINK
+   ========================================================= */
+
+.publication-doi {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #0b1726;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: opacity 0.2s ease;
+}
+
+.publication-doi:hover {
+  opacity: 0.6;
+}
+
+
+/* =========================================================
+   EMPTY SEARCH RESULT
+   ========================================================= */
+
+.publication-empty {
+  padding: 55px 20px;
+  text-align: center;
+  border-top: 1px solid rgba(11, 23, 38, 0.12);
+  border-bottom: 1px solid rgba(11, 23, 38, 0.12);
+}
+
+.publication-empty h3 {
+  margin: 0 0 8px;
+  font-size: 1.1rem;
+}
+
+.publication-empty p {
+  margin: 0;
+  color: #687382;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+  .publication-controls {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .publication-item {
+    grid-template-columns: 40px 1fr;
+    gap: 14px;
+    padding: 25px 0;
+  }
+
+  .publication-content h3 {
+    font-size: 0.98rem;
+    line-height: 1.5;
+  }
+
+  .publication-number {
+    font-size: 0.7rem;
+  }
+
+}
+
+
+@media (max-width: 520px) {
+
+  .publication-item {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .publication-number {
+    padding-top: 0;
+  }
+
+  .publication-meta {
+    gap: 6px;
+  }
+
+  .publication-meta span {
+    font-size: 0.64rem;
+  }
+
+}
