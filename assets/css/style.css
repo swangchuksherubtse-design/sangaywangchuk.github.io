@@ -280,10 +280,16 @@ h2 em {
   flex: 0 0 330px;
 
   /*
-     MOVE THE ENTIRE CIRCULAR PHOTO UP.
-     This does NOT alter the internal image crop.
+     MOVE THE ENTIRE CIRCULAR PHOTO
+     UP BY AN ADDITIONAL ~1.5 CM.
+
+     IMPORTANT:
+     This changes only the position of the
+     circular photo container.
+
+     The internal portrait crop remains unchanged.
   */
-  margin: -45px auto 28px;
+  margin: -60px auto 28px;
 
   padding: 0;
 
@@ -321,7 +327,7 @@ h2 em {
   /*
      INTERNAL IMAGE CROP
 
-     Kept unchanged from your current version.
+     This is deliberately unchanged.
 
      Visible area:
        • Head
@@ -1183,10 +1189,11 @@ footer {
     flex-basis: 300px;
 
     /*
-       MOVE THE ENTIRE CIRCULAR PHOTO UP
+       MOVE ENTIRE CIRCULAR PHOTO
+       UP BY AN ADDITIONAL ~1.5 CM.
        Internal crop remains unchanged.
     */
-    margin: -40px auto 24px;
+    margin: -55px auto 24px;
   }
 
   .hero-panel .hero-photo .profile-photo {
@@ -1385,10 +1392,11 @@ footer {
     flex-basis: 260px;
 
     /*
-       MOVE THE ENTIRE CIRCULAR PHOTO UP
+       MOVE ENTIRE CIRCULAR PHOTO
+       UP BY AN ADDITIONAL ~1.5 CM.
        Internal crop remains unchanged.
     */
-    margin: -32px auto 20px;
+    margin: -47px auto 20px;
 
     border-radius: 50%;
     border-width: 5px;
