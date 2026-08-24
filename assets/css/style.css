@@ -50,7 +50,8 @@ body {
 body,
 button,
 input,
-select {
+select,
+textarea {
   font-family: "DM Sans", sans-serif;
 }
 
@@ -66,7 +67,8 @@ img {
 
 button,
 input,
-select {
+select,
+textarea {
   font: inherit;
 }
 
@@ -105,6 +107,7 @@ button {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
@@ -157,6 +160,7 @@ button {
 
 .nav-links a {
   position: relative;
+
   transition:
     color 0.2s ease,
     opacity 0.2s ease;
@@ -210,7 +214,9 @@ button {
 .menu-toggle {
   display: none;
 
-  background: none;
+  padding: 6px;
+
+  background: transparent;
   border: 0;
 
   font-size: 24px;
@@ -304,7 +310,8 @@ h2 em {
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease,
-    background 0.2s ease;
+    background 0.2s ease,
+    color 0.2s ease;
 }
 
 .button:hover {
@@ -357,7 +364,6 @@ h2 em {
 
 /* =========================================================
    HERO VISUAL PANEL
-   EXISTING COLOUR DESIGN PRESERVED
 ========================================================= */
 
 .hero-panel {
@@ -422,7 +428,8 @@ h2 em {
 
 /* =========================================================
    HERO PHOTO FRAME
-   FRAME POSITION MUST REMAIN UNCHANGED
+   IMPORTANT:
+   FRAME POSITION REMAINS UNCHANGED
 ========================================================= */
 
 .hero-panel .hero-photo {
@@ -450,15 +457,19 @@ h2 em {
   box-shadow:
     0 16px 40px rgba(16, 37, 43, 0.20);
 
+  /*
+     FRAME POSITION — DO NOT CHANGE
+  */
   transform: translateY(57px);
 
-  transition: box-shadow 0.25s ease;
+  transition:
+    box-shadow 0.25s ease;
 }
 
 
 /* =========================================================
    ACTUAL PROFILE PHOTO
-   ONLY PHOTO MOVED UP
+   ONLY THE PHOTO MOVES UP
 ========================================================= */
 
 .hero-panel .hero-photo .profile-photo {
@@ -474,6 +485,10 @@ h2 em {
 
   object-fit: cover;
 
+  /*
+     PHOTO POSITION ONLY
+     Approx. 1 cm upward movement
+  */
   transform: translateY(-28px) scale(1.62);
 
   transform-origin: center 14%;
@@ -481,6 +496,7 @@ h2 em {
   object-position: center 14%;
 
   border: 0;
+
   border-radius: 50%;
 
   opacity: 1;
@@ -488,12 +504,15 @@ h2 em {
   filter: none;
 
   mix-blend-mode: normal;
+
+  transition: none;
 }
 
 
 /* =========================================================
    HERO PHOTO HOVER
-   FRAME FIXED
+   FRAME STAYS FIXED
+   PHOTO STAYS FIXED
 ========================================================= */
 
 .hero-panel .hero-photo:hover {
@@ -514,6 +533,7 @@ h2 em {
 
 /* =========================================================
    RESEARCH CARD
+   POSITION PRESERVED
 ========================================================= */
 
 .hero-panel .research-card {
@@ -721,8 +741,7 @@ h2 em {
 .theme-card:hover {
   transform: translateY(-5px);
 
-  box-shadow:
-    0 18px 40px rgba(23, 60, 68, 0.07);
+  box-shadow: var(--shadow-soft);
 }
 
 .theme-card.featured {
@@ -827,7 +846,7 @@ h2 em {
 
 
 /* =========================================================
-   PUBLICATION SECTION
+   PUBLICATION FEATURE
 ========================================================= */
 
 .pub-feature {
@@ -1001,8 +1020,6 @@ h2 em {
   background: transparent;
 
   color: inherit;
-
-  font-family: inherit;
 
   font-size: 0.86rem;
 
@@ -1459,7 +1476,7 @@ footer {
 
 
 /* =========================================================
-   TABLET
+   LARGE TABLET / SMALL DESKTOP
 ========================================================= */
 
 @media (max-width: 1100px) {
@@ -1480,7 +1497,7 @@ footer {
 
 
 /* =========================================================
-   TABLET / SMALL DESKTOP
+   TABLET
 ========================================================= */
 
 @media (max-width: 900px) {
@@ -1490,6 +1507,7 @@ footer {
   .about-grid,
   .contact-inner {
     grid-template-columns: 1fr;
+
     gap: 35px;
   }
 
@@ -1582,21 +1600,18 @@ footer {
 
   /* =====================================================
      TABLET ACTUAL PHOTO
-     ONLY PHOTO MOVES UP
+     PHOTO ONLY MOVES UP
   ===================================================== */
 
-  .hero-panel .hero-photo .profile-photo {
+  .hero-panel .hero-photo .profile-photo,
+  .hero-panel .hero-photo .profile-photo:hover {
     object-position: center 14%;
 
     transform: translateY(-28px) scale(1.58);
 
     transform-origin: center 14%;
-  }
 
-  .hero-panel .hero-photo .profile-photo:hover {
-    transform: translateY(-28px) scale(1.58);
-
-    transform-origin: center 14%;
+    filter: none;
   }
 
 
@@ -1655,6 +1670,7 @@ footer {
 
   .nav-links.open .nav-button {
     width: 100%;
+
     text-align: center;
   }
 
@@ -1691,6 +1707,7 @@ footer {
   .about h2,
   .contact h2 {
     font-size: 36px;
+
     letter-spacing: -1.5px;
   }
 
@@ -1899,10 +1916,11 @@ footer {
 
   /* =====================================================
      MOBILE ACTUAL PHOTO
-     ONLY PHOTO MOVES UP
+     PHOTO ONLY MOVES UP
   ===================================================== */
 
-  .hero-panel .hero-photo .profile-photo {
+  .hero-panel .hero-photo .profile-photo,
+  .hero-panel .hero-photo .profile-photo:hover {
     border-radius: 50%;
 
     object-position: center 14%;
@@ -1910,12 +1928,8 @@ footer {
     transform: translateY(-26px) scale(1.54);
 
     transform-origin: center 14%;
-  }
 
-  .hero-panel .hero-photo .profile-photo:hover {
-    transform: translateY(-26px) scale(1.54);
-
-    transform-origin: center 14%;
+    filter: none;
   }
 
 
@@ -1963,10 +1977,7 @@ footer {
     flex-basis: 215px;
   }
 
-  .hero-panel .hero-photo .profile-photo {
-    transform: translateY(-24px) scale(1.52);
-  }
-
+  .hero-panel .hero-photo .profile-photo,
   .hero-panel .hero-photo .profile-photo:hover {
     transform: translateY(-24px) scale(1.52);
   }
