@@ -266,7 +266,7 @@ h2 em {
 
 /* =========================================================
    HERO PHOTO FRAME
-   SMALLER + MOVED UP
+   SMALLER + GROUP MOVED DOWN 1.5 CM
 ========================================================= */
 
 .hero-panel .hero-photo {
@@ -274,25 +274,13 @@ h2 em {
 
   z-index: 5;
 
-  /*
-     REDUCED FROM 330px TO 300px
-  */
   width: 300px;
   height: 300px;
 
   flex: 0 0 300px;
 
   /*
-     MOVED UP.
-     
-     The previous version used:
-       margin: -60px
-       + translateY(135px)
-
-     That combination pushed the frame downward.
-
-     This version uses ONLY the negative margin
-     to position the frame.
+     BASE POSITION
   */
   margin: -85px auto 24px;
 
@@ -310,16 +298,17 @@ h2 em {
     0 16px 40px rgba(16, 37, 43, 0.20);
 
   /*
-     IMPORTANT:
-     NO translateY HERE.
+     MOVE FRAME DOWN APPROX. 1.5 CM
+
+     1.5 cm ≈ 57px
   */
-  transform: none;
+  transform: translateY(57px);
 }
 
 
 /* =========================================================
    ACTUAL PROFILE PHOTO
-   TIGHT HEAD + SHOULDERS CROP
+   INTERNAL CROP UNCHANGED
 ========================================================= */
 
 .hero-panel .hero-photo .profile-photo {
@@ -336,20 +325,8 @@ h2 em {
   object-fit: cover;
 
   /*
-     INTERNAL CROP
-
-     The image remains tightly focused on:
-
-     • Head
-     • Face
-     • Neck
-     • Shoulders
-     • Upper chest
-     • Upper arms
-
-     Lower torso remains excluded.
+     KEEP EXISTING INTERNAL CROP
   */
-
   transform: scale(1.62);
 
   transform-origin: center 14%;
@@ -369,11 +346,11 @@ h2 em {
 
 
 /* =========================================================
-   PREVENT UNWANTED HOVER MOVEMENT
+   PREVENT HOVER MOVEMENT
 ========================================================= */
 
 .hero-panel .hero-photo:hover {
-  transform: none;
+  transform: translateY(57px);
 }
 
 .hero-panel .hero-photo .profile-photo:hover {
@@ -387,6 +364,7 @@ h2 em {
 
 /* =========================================================
    RESEARCH CARD
+   MOVED DOWN TO MATCH THE PORTRAIT GROUP
 ========================================================= */
 
 .hero-panel .research-card {
@@ -399,7 +377,11 @@ h2 em {
 
   flex: 0 0 auto;
 
-  margin: 0 auto;
+  /*
+     MOVE CARD DOWN APPROX. 1.5 CM
+     SO IT FOLLOWS THE FRAME/PORTRAIT
+  */
+  margin: 57px auto 0;
 
   padding: 26px 28px;
 
@@ -1190,7 +1172,7 @@ footer {
 
 
   /* =====================================================
-     TABLET PORTRAIT FRAME
+     TABLET PORTRAIT
   ===================================================== */
 
   .hero-panel .hero-photo {
@@ -1198,18 +1180,18 @@ footer {
     height: 275px;
     flex-basis: 275px;
 
-    /*
-       SMALLER AND HIGHER
-    */
     margin: -78px auto 22px;
 
     border-width: 5px;
 
-    transform: none;
+    /*
+       MOVE DOWN 1.5 CM
+    */
+    transform: translateY(57px);
   }
 
   .hero-panel .hero-photo:hover {
-    transform: none;
+    transform: translateY(57px);
   }
 
   .hero-panel .hero-photo .profile-photo {
@@ -1228,6 +1210,11 @@ footer {
 
   .hero-panel .research-card {
     width: min(430px, 100%);
+
+    /*
+       MOVE CARD DOWN 1.5 CM
+    */
+    margin-top: 57px;
   }
 
 }
@@ -1400,32 +1387,32 @@ footer {
 
   /* =====================================================
      MOBILE PORTRAIT FRAME
-========================================================= */
+  ===================================================== */
 
   .hero-panel .hero-photo {
     width: 235px;
     height: 235px;
     flex-basis: 235px;
 
-    /*
-       SMALLER + HIGHER
-    */
     margin: -65px auto 18px;
 
     border-radius: 50%;
     border-width: 5px;
 
-    transform: none;
+    /*
+       MOVE DOWN 1.5 CM
+    */
+    transform: translateY(57px);
   }
 
   .hero-panel .hero-photo:hover {
-    transform: none;
+    transform: translateY(57px);
   }
 
 
   /* =====================================================
      MOBILE PORTRAIT IMAGE
-========================================================= */
+  ===================================================== */
 
   .hero-panel .hero-photo .profile-photo {
     border-radius: 50%;
@@ -1446,12 +1433,17 @@ footer {
 
   /* =====================================================
      MOBILE RESEARCH CARD
-========================================================= */
+  ===================================================== */
 
   .hero-panel .research-card {
     width: 100%;
     padding: 21px;
     border-radius: 18px;
+
+    /*
+       MOVE CARD DOWN 1.5 CM
+    */
+    margin-top: 57px;
   }
 
   .hero-panel .research-card h3 {
