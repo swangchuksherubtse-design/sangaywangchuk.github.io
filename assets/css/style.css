@@ -341,7 +341,7 @@ p {
 .hero-panel {
   position: relative;
 
-  min-height: 630px;
+  min-height: 560px;
 
   display: flex;
   flex-direction: column;
@@ -353,17 +353,17 @@ p {
 
 /* =========================================================
    DECORATIVE GOLD ORB
-   Reduced to match smaller circular frame
+   Reduced proportionally with smaller frame
 ========================================================= */
 
 .orb {
   position: absolute;
 
-  top: 45px;
+  top: 55px;
   left: 50%;
 
-  width: 430px;
-  height: 430px;
+  width: 370px;
+  height: 370px;
 
   transform: translateX(-50%);
 
@@ -386,8 +386,8 @@ p {
 
 /* =========================================================
    PHOTO FRAME
-   REDUCED SIZE
-   Circular — no dome
+   FURTHER REDUCED
+   Perfectly circular
 ========================================================= */
 
 .hero-photo {
@@ -397,21 +397,21 @@ p {
 
   flex: 0 0 auto;
 
-  width: 350px;
-  height: 350px;
+  width: 300px;
+  height: 300px;
 
-  margin-top: 75px;
+  margin-top: 80px;
 
   overflow: hidden;
 
-  border: 11px solid var(--white);
+  border: 10px solid var(--white);
 
   border-radius: 50%;
 
   background: var(--soft);
 
   box-shadow:
-    0 16px 40px rgba(16, 37, 43, 0.20),
+    0 14px 34px rgba(16, 37, 43, 0.20),
     0 0 0 1px rgba(184, 137, 77, 0.10);
 
   transform: none;
@@ -420,7 +420,7 @@ p {
 
 /* =========================================================
    PROFILE PHOTO
-   Proportional — no stretching
+   PHOTO POSITION REMAINS UNCHANGED
 ========================================================= */
 
 .profile-photo {
@@ -441,8 +441,7 @@ p {
 
 /* =========================================================
    RESEARCH CARD
-   BELOW PHOTO
-   Pulled closer to smaller frame
+   BELOW PHOTO — NEVER BEHIND FRAME
 ========================================================= */
 
 .research-card {
@@ -452,13 +451,13 @@ p {
 
   flex: 0 0 auto;
 
-  width: min(390px, 90%);
+  width: min(370px, 88%);
 
-  margin-top: 18px;
+  margin-top: 14px;
 
-  margin-right: -45px;
+  margin-right: -35px;
 
-  padding: 26px 28px;
+  padding: 24px 26px;
 
   border: 1px solid rgba(255, 255, 255, 0.55);
 
@@ -494,7 +493,7 @@ p {
 
   font-family: "Playfair Display", serif;
 
-  font-size: 25px;
+  font-size: 24px;
 
   font-weight: 500;
 
@@ -1367,29 +1366,31 @@ footer {
   }
 
   .hero-panel {
-    min-height: 610px;
+    min-height: 540px;
   }
 
   .orb {
-    top: 35px;
+    top: 40px;
 
-    width: 400px;
-    height: 400px;
+    width: 350px;
+    height: 350px;
   }
 
   .hero-photo {
-    width: 350px;
-    height: 350px;
+    width: 300px;
+    height: 300px;
 
-    margin-top: 65px;
+    margin-top: 70px;
+
+    border-width: 10px;
   }
 
   .research-card {
-    margin-top: 18px;
+    margin-top: 14px;
 
     margin-right: 0;
 
-    width: min(390px, 78%);
+    width: min(370px, 78%);
   }
 
   .research-grid {
@@ -1496,25 +1497,25 @@ footer {
   }
 
   .hero-panel {
-    min-height: 570px;
+    min-height: 520px;
     overflow: visible;
   }
 
   .orb {
-    top: 25px;
+    top: 30px;
 
-    width: 340px;
-    height: 340px;
+    width: 310px;
+    height: 310px;
   }
 
   .hero-photo {
-    width: min(300px, 78vw);
+    width: min(270px, 72vw);
 
-    height: min(300px, 78vw);
+    height: min(270px, 72vw);
 
-    margin-top: 45px;
+    margin-top: 50px;
 
-    border-width: 10px;
+    border-width: 9px;
 
     transform: none;
   }
@@ -1536,13 +1537,13 @@ footer {
     right: auto;
     bottom: auto;
 
-    width: min(330px, 88vw);
+    width: min(320px, 86vw);
 
-    margin-top: 18px;
+    margin-top: 14px;
 
     margin-right: 0;
 
-    padding: 21px;
+    padding: 20px;
 
     z-index: 6;
   }
@@ -1668,23 +1669,23 @@ footer {
   }
 
   .hero-panel {
-    min-height: 520px;
+    min-height: 470px;
   }
 
   .orb {
-    top: 20px;
+    top: 25px;
 
-    width: 290px;
-    height: 290px;
+    width: 270px;
+    height: 270px;
   }
 
   .hero-photo {
-    width: 260px;
-    height: 260px;
+    width: 235px;
+    height: 235px;
 
-    margin-top: 38px;
+    margin-top: 42px;
 
-    border-width: 9px;
+    border-width: 8px;
   }
 
   .profile-photo {
@@ -1701,7 +1702,7 @@ footer {
   .research-card {
     width: 92%;
 
-    margin-top: 16px;
+    margin-top: 13px;
   }
 
   .quick-stats {
