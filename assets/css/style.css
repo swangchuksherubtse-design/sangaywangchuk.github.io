@@ -45,6 +45,16 @@
   --research-light: #e8f3f5;
   --research-blue-light: #eaf2f7;
 
+  /* Grants & Research Support palette */
+  --grant-blue: #123f50;
+  --grant-blue-2: #165467;
+  --grant-teal: #147d7b;
+  --grant-aqua: #65c6c1;
+  --grant-aqua-light: #9adbd6;
+  --grant-gold: #d8b77e;
+  --grant-card: rgba(255, 255, 255, 0.075);
+  --grant-card-hover: rgba(255, 255, 255, 0.115);
+
   /* Legacy / thematic accents retained */
   --accent-wangchuk: #a95f3e;
   --accent-materials: #95652b;
@@ -87,14 +97,12 @@
 
 html {
   scroll-behavior: smooth;
-
   overflow-x: clip;
 }
 
 body {
   margin: 0;
   min-width: 0;
-
   overflow-x: clip;
 
   background: var(--paper);
@@ -142,6 +150,8 @@ section,
 #research,
 #publications,
 #academic-contributions,
+#grants,
+#grants-research-support,
 #about,
 #academic-profiles,
 #contact {
@@ -222,6 +232,12 @@ p {
 
 #academic-contributions h2 em {
   color: #9a7050;
+}
+
+/* Grants & Research Support heading */
+#grants h2 em,
+#grants-research-support h2 em {
+  color: var(--grant-aqua-light);
 }
 
 #about h2 em {
@@ -700,7 +716,7 @@ select:focus-visible {
 
 /* =========================================================
    HERO PHOTO FRAME
-   FRAME POSITION — FIXED RELATIVE TO ITS DESIGN
+   FRAME POSITION — FIXED
 ========================================================= */
 
 .hero-photo {
@@ -729,17 +745,13 @@ select:focus-visible {
     0 0 0 1px rgba(216, 183, 126, 0.35),
     0 0 55px rgba(216, 183, 126, 0.13);
 
-  /*
-     The frame is moved as a whole only to preserve
-     the intended relationship with the research card.
-  */
   transform: translateY(57px);
 }
 
 
 /* =========================================================
    HERO PROFILE PHOTO
-   ONLY THE ACTUAL PHOTO MOVES UP INSIDE THE FRAME
+   ONLY THE ACTUAL PHOTO MOVES UP INSIDE FRAME
 ========================================================= */
 
 .profile-photo {
@@ -750,11 +762,6 @@ select:focus-visible {
 
   object-fit: cover;
 
-  /*
-     IMPORTANT:
-     The frame remains intact.
-     The image itself is enlarged and shifted upward.
-  */
   transform:
     translateY(-28px)
     scale(1.62);
@@ -776,10 +783,6 @@ select:focus-visible {
 
   width: min(350px, 88%);
 
-  /*
-     Increased to maintain the correct relationship
-     with the repositioned photo frame.
-  */
   margin-top: 57px;
   margin-right: -30px;
 
@@ -1192,6 +1195,452 @@ select:focus-visible {
   color: rgba(255, 255, 255, 0.72);
 
   font-size: 14px;
+}
+
+
+/* =========================================================
+   05 · GRANTS & RESEARCH SUPPORT
+   DEEP BLUE–TEAL DESIGN
+========================================================= */
+
+/*
+   This section intentionally uses a darker blue–teal background
+   so that it is visually distinct from Publications and Academic
+   Contributions.
+
+   The selectors cover both:
+   #grants
+   #grants-research-support
+   .grants
+   .grants-research-support
+
+   Therefore the design will work with the existing section naming.
+*/
+
+#grants,
+#grants-research-support,
+.grants,
+.grants-research-support {
+  position: relative;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 88% 12%,
+      rgba(101, 198, 193, 0.16),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 8% 88%,
+      rgba(216, 183, 126, 0.10),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #0a2b36 0%,
+      #103f4d 48%,
+      #0b303c 100%
+    );
+
+  color: var(--white);
+}
+
+/* Decorative upper-right glow */
+#grants::before,
+#grants-research-support::before,
+.grants::before,
+.grants-research-support::before {
+  content: "";
+
+  position: absolute;
+
+  width: 430px;
+  height: 430px;
+
+  top: -220px;
+  right: -150px;
+
+  border-radius: 50%;
+
+  border:
+    1px solid rgba(101, 198, 193, 0.14);
+
+  box-shadow:
+    0 0 0 55px rgba(101, 198, 193, 0.025),
+    0 0 0 110px rgba(101, 198, 193, 0.018);
+
+  pointer-events: none;
+}
+
+/* Decorative lower-left glow */
+#grants::after,
+#grants-research-support::after,
+.grants::after,
+.grants-research-support::after {
+  content: "";
+
+  position: absolute;
+
+  width: 360px;
+  height: 360px;
+
+  bottom: -210px;
+  left: -140px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(216, 183, 126, 0.09),
+      transparent 70%
+    );
+
+  pointer-events: none;
+}
+
+
+/* ---------------------------------------------------------
+   Grants heading
+--------------------------------------------------------- */
+
+#grants .container,
+#grants-research-support .container,
+.grants .container,
+.grants-research-support .container {
+  position: relative;
+  z-index: 2;
+}
+
+#grants .section-heading,
+#grants-research-support .section-heading,
+.grants .section-heading,
+.grants-research-support .section-heading {
+  position: relative;
+  z-index: 2;
+}
+
+#grants .eyebrow,
+#grants-research-support .eyebrow,
+.grants .eyebrow,
+.grants-research-support .eyebrow {
+  color: var(--grant-gold);
+}
+
+#grants h2,
+#grants-research-support h2,
+.grants h2,
+.grants-research-support h2 {
+  color: var(--white);
+}
+
+#grants h2 em,
+#grants-research-support h2 em,
+.grants h2 em,
+.grants-research-support h2 em {
+  color: var(--grant-aqua-light);
+}
+
+#grants .section-heading > p,
+#grants-research-support .section-heading > p,
+.grants .section-heading > p,
+.grants-research-support .section-heading > p {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+
+/* ---------------------------------------------------------
+   Grants grid
+--------------------------------------------------------- */
+
+.grants-grid,
+.grant-grid,
+.grants-list,
+.grant-list {
+  position: relative;
+  z-index: 2;
+
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 18px;
+}
+
+
+/* ---------------------------------------------------------
+   Grant cards
+--------------------------------------------------------- */
+
+.grant-card,
+.grants-grid article,
+.grant-grid article,
+.grants-list article,
+.grant-list article {
+  position: relative;
+
+  min-height: 330px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  padding: 30px;
+
+  border:
+    1px solid rgba(101, 198, 193, 0.18);
+
+  border-radius: var(--radius-md);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.095),
+      rgba(255, 255, 255, 0.045)
+    );
+
+  box-shadow:
+    0 14px 35px rgba(3, 24, 31, 0.20);
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  transition:
+    transform 0.30s ease,
+    border-color 0.30s ease,
+    background 0.30s ease,
+    box-shadow 0.30s ease;
+}
+
+.grant-card:hover,
+.grants-grid article:hover,
+.grant-grid article:hover,
+.grants-list article:hover,
+.grant-list article:hover {
+  transform: translateY(-5px);
+
+  border-color:
+    rgba(216, 183, 126, 0.50);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.13),
+      rgba(255, 255, 255, 0.065)
+    );
+
+  box-shadow:
+    0 20px 45px rgba(3, 24, 31, 0.28);
+}
+
+
+/* ---------------------------------------------------------
+   Grant number
+--------------------------------------------------------- */
+
+.grant-number,
+.grant-card .number,
+.grants-grid article > .number,
+.grant-grid article > .number {
+  display: block;
+
+  margin-bottom: 24px;
+
+  color: var(--grant-aqua-light);
+
+  font-size: 11px;
+
+  line-height: 1.4;
+
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+}
+
+
+/* ---------------------------------------------------------
+   Grant source / funding body
+--------------------------------------------------------- */
+
+.grant-kicker,
+.grant-source,
+.grant-card .kicker,
+.grant-card > span:first-child,
+.grants-grid article > span:first-child,
+.grant-grid article > span:first-child {
+  display: block;
+
+  margin-bottom: 10px;
+
+  color: var(--grant-gold);
+
+  font-size: 10px;
+
+  line-height: 1.4;
+
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+
+  text-transform: uppercase;
+}
+
+
+/* ---------------------------------------------------------
+   Grant title
+--------------------------------------------------------- */
+
+.grant-card h3,
+.grants-grid article h3,
+.grant-grid article h3,
+.grants-list article h3,
+.grant-list article h3 {
+  margin-bottom: 14px;
+
+  color: var(--white);
+
+  font-family: "Playfair Display", serif;
+
+  font-size: 25px;
+
+  line-height: 1.3;
+
+  font-weight: 500;
+}
+
+
+/* ---------------------------------------------------------
+   Grant description
+--------------------------------------------------------- */
+
+.grant-card p,
+.grants-grid article p,
+.grant-grid article p,
+.grants-list article p,
+.grant-list article p {
+  margin-bottom: 20px;
+
+  color: rgba(255, 255, 255, 0.73);
+
+  font-size: 13px;
+
+  line-height: 1.72;
+}
+
+
+/* ---------------------------------------------------------
+   Grant metadata
+   Examples:
+   Co-PI
+   PI
+   Nu. 200,000
+   Food Analysis
+--------------------------------------------------------- */
+
+.grant-meta,
+.grant-tags,
+.grant-details,
+.grant-card .tags {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 7px;
+
+  margin-top: auto;
+}
+
+.grant-meta span,
+.grant-tags span,
+.grant-details span,
+.grant-card .tags span {
+  display: inline-flex;
+
+  align-items: center;
+
+  min-height: 27px;
+
+  padding: 5px 9px;
+
+  border:
+    1px solid rgba(101, 198, 193, 0.24);
+
+  border-radius: 999px;
+
+  background:
+    rgba(101, 198, 193, 0.08);
+
+  color: var(--grant-aqua-light);
+
+  font-size: 9px;
+
+  line-height: 1.2;
+
+  font-weight: 700;
+
+  letter-spacing: 0.7px;
+
+  text-transform: uppercase;
+}
+
+
+/* Gold treatment for financial values */
+.grant-meta .amount,
+.grant-tags .amount,
+.grant-details .amount,
+.grant-card .amount {
+  border-color:
+    rgba(216, 183, 126, 0.32);
+
+  background:
+    rgba(216, 183, 126, 0.10);
+
+  color: var(--grant-gold);
+}
+
+
+/* ---------------------------------------------------------
+   Alternative markup support
+   If metadata is written directly as paragraphs/spans
+--------------------------------------------------------- */
+
+.grant-card strong,
+.grants-grid article strong,
+.grant-grid article strong {
+  color: var(--grant-gold);
+}
+
+
+/* ---------------------------------------------------------
+   Grants divider
+--------------------------------------------------------- */
+
+#grants .grant-list,
+#grants-research-support .grant-list,
+#grants .grants-list,
+#grants-research-support .grants-list {
+  border-top:
+    1px solid rgba(255, 255, 255, 0.13);
+}
+
+
+/* ---------------------------------------------------------
+   Featured grant card
+--------------------------------------------------------- */
+
+.grant-card.featured,
+.grants-grid article.featured,
+.grant-grid article.featured {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(20, 125, 123, 0.34),
+      rgba(13, 63, 77, 0.70)
+    );
+
+  border-color:
+    rgba(216, 183, 126, 0.28);
 }
 
 
@@ -2281,17 +2730,10 @@ footer {
 
     border-width: 9px;
 
-    /*
-       Keep frame relationship fixed.
-    */
     transform: translateY(57px);
   }
 
   .profile-photo {
-    /*
-       Tablet-specific image movement.
-       Frame remains intact.
-    */
     transform:
       translateY(-28px)
       scale(1.58);
@@ -2333,6 +2775,14 @@ footer {
     grid-template-columns: 1fr;
 
     gap: 35px;
+  }
+
+  /* Grants tablet */
+  .grants-grid,
+  .grant-grid,
+  .grants-list,
+  .grant-list {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -2437,6 +2887,8 @@ footer {
   #research,
   #publications,
   #academic-contributions,
+  #grants,
+  #grants-research-support,
   #about,
   #academic-profiles,
   #contact {
@@ -2453,6 +2905,15 @@ footer {
 
   .publication-reset {
     width: 100%;
+  }
+
+  /* Grants mobile/tablet navigation */
+  .grant-card,
+  .grants-grid article,
+  .grant-grid article,
+  .grants-list article,
+  .grant-list article {
+    min-height: 300px;
   }
 }
 
@@ -2594,6 +3055,48 @@ footer {
 
   .research-glance {
     grid-template-columns: 1fr;
+  }
+
+
+  /* =======================================================
+     GRANTS & RESEARCH SUPPORT — MOBILE
+  ======================================================= */
+
+  .grants-grid,
+  .grant-grid,
+  .grants-list,
+  .grant-list {
+    grid-template-columns: 1fr;
+
+    gap: 14px;
+  }
+
+  .grant-card,
+  .grants-grid article,
+  .grant-grid article,
+  .grants-list article,
+  .grant-list article {
+    min-height: auto;
+
+    padding: 24px 22px;
+  }
+
+  .grant-card h3,
+  .grants-grid article h3,
+  .grant-grid article h3,
+  .grants-list article h3,
+  .grant-list article h3 {
+    font-size: 23px;
+  }
+
+  .grant-card p,
+  .grants-grid article p,
+  .grant-grid article p,
+  .grants-list article p,
+  .grant-list article p {
+    font-size: 12.5px;
+
+    line-height: 1.7;
   }
 
 
@@ -2798,6 +3301,35 @@ footer {
 
   .quick-stats > div {
     align-items: flex-start;
+  }
+
+
+  /* =======================================================
+     VERY SMALL GRANT CARDS
+  ======================================================= */
+
+  .grant-card,
+  .grants-grid article,
+  .grant-grid article,
+  .grants-list article,
+  .grant-list article {
+    padding: 21px 18px;
+  }
+
+  .grant-card h3,
+  .grants-grid article h3,
+  .grant-grid article h3,
+  .grants-list article h3,
+  .grant-list article h3 {
+    font-size: 21px;
+  }
+
+  .grant-card p,
+  .grants-grid article p,
+  .grant-grid article p,
+  .grants-list article p,
+  .grant-list article p {
+    font-size: 12px;
   }
 
   .publication-item {
