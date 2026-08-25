@@ -2299,3 +2299,108 @@ footer {
     align-items: flex-start;
   }
 }
+/* =========================================================
+   PUBLICATION METRICS — PROFESSIONAL BADGES
+========================================================= */
+
+/* Keep the metadata row aligned and visually balanced */
+.publication-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+
+/* ---------------------------------------------------------
+   BASE STYLE FOR ALL PUBLICATION METADATA
+--------------------------------------------------------- */
+
+.publication-meta span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 5px 10px;
+
+  border: 1px solid rgba(127, 127, 127, 0.22);
+  border-radius: 999px;
+
+  font-size: 0.76rem;
+  font-weight: 600;
+  line-height: 1.2;
+
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+
+  background: rgba(255, 255, 255, 0.55);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+
+/* ---------------------------------------------------------
+   YEAR
+--------------------------------------------------------- */
+
+.publication-meta span:first-child {
+  color: #8a6416;
+  background: rgba(212, 175, 55, 0.10);
+  border-color: rgba(212, 175, 55, 0.28);
+}
+
+
+/* ---------------------------------------------------------
+   RESEARCH CATEGORY
+--------------------------------------------------------- */
+
+.publication-meta span:nth-child(2) {
+  color: #176b68;
+  background: rgba(23, 107, 104, 0.08);
+  border-color: rgba(23, 107, 104, 0.22);
+}
+
+
+/* ---------------------------------------------------------
+   PUBLICATION METRICS
+   Q1 · IF 7.5 (JCR 2025)
+--------------------------------------------------------- */
+
+.publication-meta span:nth-child(3) {
+  color: #5d467c;
+  background: rgba(93, 70, 124, 0.08);
+  border-color: rgba(93, 70, 124, 0.22);
+
+  font-weight: 650;
+}
+
+
+/* ---------------------------------------------------------
+   SUBTLE HOVER EFFECT
+--------------------------------------------------------- */
+
+.publication-meta span:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+}
+
+
+/* =========================================================
+   MOBILE RESPONSIVE ADJUSTMENT
+========================================================= */
+
+@media (max-width: 640px) {
+
+  .publication-meta {
+    gap: 6px;
+  }
+
+  .publication-meta span {
+    min-height: 26px;
+    padding: 4px 8px;
+    font-size: 0.70rem;
+  }
+
+}
