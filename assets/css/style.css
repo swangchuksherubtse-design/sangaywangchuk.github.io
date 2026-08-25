@@ -215,31 +215,46 @@ p {
   position: sticky;
   top: 0;
   z-index: 1000;
+
   background: rgba(255, 255, 255, 0.96);
-  border-bottom: 1px solid rgba(16, 37, 43, 0.10);
+
+  border-bottom:
+    1px solid rgba(16, 37, 43, 0.10);
+
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
 }
 
 .nav {
+  position: relative;
+
   min-height: 78px;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   gap: 30px;
 }
 
 .brand {
   color: var(--ink);
+
   font-size: 25px;
   line-height: 1;
   font-weight: 700;
+
   letter-spacing: -1px;
 }
 
 .brand span {
   color: var(--accent);
 }
+
+
+/* =========================================================
+   DESKTOP NAVIGATION
+========================================================= */
 
 .nav-links {
   display: flex;
@@ -249,19 +264,26 @@ p {
 
 .nav-links a {
   position: relative;
+
   color: var(--ink-soft);
+
   font-size: 13px;
   font-weight: 600;
 }
 
 .nav-links a:not(.nav-button)::after {
   content: "";
+
   position: absolute;
+
   left: 0;
   bottom: -7px;
+
   width: 0;
   height: 1px;
+
   background: var(--accent);
+
   transition: width 0.25s ease;
 }
 
@@ -271,8 +293,11 @@ p {
 
 .nav-button {
   padding: 10px 18px;
+
   border: 1px solid var(--ink);
+
   border-radius: 999px;
+
   transition:
     background 0.25s ease,
     color 0.25s ease,
@@ -281,28 +306,64 @@ p {
 
 .nav-button:hover {
   background: var(--deep-teal);
+
   border-color: var(--deep-teal);
+
   color: var(--white);
 }
 
+
+/* =========================================================
+   MOBILE MENU BUTTON
+========================================================= */
+
 .menu-toggle {
   display: none;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 44px;
+  height: 44px;
+
+  padding: 0;
+
   border: 0;
+  border-radius: 8px;
+
   background: transparent;
+
   color: var(--ink);
-  font-size: 26px;
+
+  font-size: 28px;
+  line-height: 1;
+
   cursor: pointer;
+
+  position: relative;
+  z-index: 1101;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+.menu-toggle:hover {
+  background: rgba(16, 37, 43, 0.06);
+}
+
+.menu-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
 
 /* =========================================================
    HERO
-   PREMIUM ACADEMIC HERO DESIGN
 ========================================================= */
 
 .hero {
   position: relative;
   overflow: hidden;
+
   padding: 105px 0 95px;
 
   background:
@@ -326,13 +387,19 @@ p {
 
 .hero::before {
   content: "";
+
   position: absolute;
+
   width: 560px;
   height: 560px;
+
   top: -280px;
   right: -180px;
+
   border-radius: 50%;
-  border: 1px solid rgba(216, 183, 126, 0.18);
+
+  border:
+    1px solid rgba(216, 183, 126, 0.18);
 
   box-shadow:
     0 0 0 70px rgba(216, 183, 126, 0.025),
@@ -343,11 +410,15 @@ p {
 
 .hero::after {
   content: "";
+
   position: absolute;
+
   width: 420px;
   height: 420px;
+
   bottom: -250px;
   left: -180px;
+
   border-radius: 50%;
 
   background:
@@ -362,8 +433,11 @@ p {
 
 .hero-grid {
   display: grid;
+
   grid-template-columns: 1.02fr 0.98fr;
+
   align-items: center;
+
   gap: 70px;
 }
 
@@ -382,15 +456,20 @@ p {
 
 .hero .lead {
   max-width: 680px;
+
   margin-bottom: 22px;
+
   color: rgba(255, 255, 255, 0.84);
+
   font-size: 18px;
   line-height: 1.75;
 }
 
 .hero-affiliation {
   margin-bottom: 30px;
+
   color: rgba(255, 255, 255, 0.64);
+
   font-size: 13px;
   font-weight: 600;
 }
@@ -398,17 +477,24 @@ p {
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
+
   gap: 12px;
+
   margin-bottom: 48px;
 }
 
 .button {
   display: inline-flex;
+
   align-items: center;
   justify-content: center;
+
   min-height: 48px;
+
   padding: 12px 22px;
+
   border-radius: 999px;
+
   font-size: 13px;
   font-weight: 700;
 
@@ -434,40 +520,52 @@ p {
 
 .button.secondary {
   border: 1px solid rgba(255, 255, 255, 0.28);
+
   background: rgba(255, 255, 255, 0.07);
+
   color: var(--white);
 }
 
 .button.secondary:hover {
   border-color: rgba(255, 255, 255, 0.55);
+
   background: rgba(255, 255, 255, 0.14);
 }
 
 .quick-stats {
   display: flex;
   flex-wrap: wrap;
+
   gap: 34px;
 }
 
 .quick-stats > div {
   display: flex;
+
   align-items: center;
+
   gap: 10px;
 }
 
 .quick-stats strong {
   color: var(--white);
+
   font-size: 27px;
   line-height: 1;
+
   font-weight: 700;
 }
 
 .quick-stats span {
   color: rgba(255, 255, 255, 0.60);
+
   font-size: 10px;
   line-height: 1.35;
+
   font-weight: 700;
+
   letter-spacing: 0.8px;
+
   text-transform: uppercase;
 }
 
@@ -478,22 +576,24 @@ p {
 
 .hero-panel {
   position: relative;
+
   min-height: 590px;
+
   display: flex;
+
   flex-direction: column;
+
   align-items: center;
+
   justify-content: flex-start;
 }
 
-
-/* =========================================================
-   HERO ORB
-========================================================= */
-
 .orb {
   position: absolute;
+
   top: 35px;
   left: 50%;
+
   width: 405px;
   height: 405px;
 
@@ -514,17 +614,13 @@ p {
     0 0 90px rgba(216, 183, 126, 0.08);
 
   z-index: 1;
+
   pointer-events: none;
 }
 
-
-/* =========================================================
-   HERO PHOTO FRAME
-   FRAME POSITION UNCHANGED
-========================================================= */
-
 .hero-photo {
   position: relative;
+
   z-index: 4;
 
   flex: 0 0 auto;
@@ -536,7 +632,9 @@ p {
 
   overflow: hidden;
 
-  border: 10px solid rgba(255, 255, 255, 0.96);
+  border:
+    10px solid rgba(255, 255, 255, 0.96);
+
   border-radius: 50%;
 
   background: #f5f2e9;
@@ -549,13 +647,6 @@ p {
   transform: none;
 }
 
-
-/* =========================================================
-   PROFILE PHOTO
-   ONLY THE PHOTO IS MOVED UPWARD
-   FRAME REMAINS UNCHANGED
-========================================================= */
-
 .profile-photo {
   display: block;
 
@@ -564,16 +655,10 @@ p {
 
   object-fit: cover;
 
-  /*
-    Previous:
-    object-position: center center;
-
-    New:
-    Slightly higher position inside the fixed frame.
-  */
   object-position: center 42%;
 
   transform: none;
+
   transform-origin: center center;
 }
 
@@ -584,6 +669,7 @@ p {
 
 .research-card {
   position: relative;
+
   z-index: 6;
 
   flex: 0 0 auto;
@@ -595,7 +681,9 @@ p {
 
   padding: 23px 25px;
 
-  border: 1px solid rgba(255, 255, 255, 0.50);
+  border:
+    1px solid rgba(255, 255, 255, 0.50);
+
   border-radius: var(--radius-md);
 
   background: rgba(255, 255, 255, 0.96);
@@ -604,19 +692,24 @@ p {
     0 18px 45px rgba(3, 18, 24, 0.22);
 
   backdrop-filter: blur(14px);
+
   -webkit-backdrop-filter: blur(14px);
 }
 
 .research-card > span {
   display: block;
+
   margin-bottom: 9px;
 
   color: var(--accent-dark);
 
   font-size: 10px;
   line-height: 1.4;
+
   font-weight: 700;
+
   letter-spacing: 1.4px;
+
   text-transform: uppercase;
 }
 
@@ -626,8 +719,11 @@ p {
   color: var(--ink);
 
   font-family: "Playfair Display", serif;
+
   font-size: 23px;
+
   font-weight: 500;
+
   line-height: 1.2;
 }
 
@@ -637,6 +733,7 @@ p {
   color: var(--ink-soft);
 
   font-size: 12px;
+
   line-height: 1.55;
 }
 
@@ -647,23 +744,30 @@ p {
 
 .tags {
   display: flex;
+
   flex-wrap: wrap;
+
   gap: 7px;
 }
 
 .tags span {
   display: inline-flex;
+
   align-items: center;
 
   padding: 5px 9px;
 
-  border: 1px solid rgba(16, 37, 43, 0.12);
+  border:
+    1px solid rgba(16, 37, 43, 0.12);
+
   border-radius: 999px;
 
   color: var(--ink-soft);
 
   font-size: 10px;
+
   line-height: 1.2;
+
   font-weight: 600;
 
   background: #f7f8f6;
@@ -677,8 +781,11 @@ p {
 .ticker {
   overflow: hidden;
 
-  border-top: 1px solid rgba(16, 37, 43, 0.10);
-  border-bottom: 1px solid rgba(16, 37, 43, 0.10);
+  border-top:
+    1px solid rgba(16, 37, 43, 0.10);
+
+  border-bottom:
+    1px solid rgba(16, 37, 43, 0.10);
 
   background: #ffffff;
 }
@@ -687,7 +794,9 @@ p {
   min-height: 64px;
 
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
 
   gap: 30px;
@@ -695,7 +804,9 @@ p {
   color: var(--muted);
 
   font-size: 10px;
+
   font-weight: 700;
+
   letter-spacing: 1.5px;
 }
 
@@ -706,7 +817,9 @@ p {
 
 .section {
   position: relative;
+
   padding: 110px 0;
+
   overflow: hidden;
 }
 
@@ -758,11 +871,13 @@ p {
 
 .section-heading > p {
   max-width: 530px;
+
   margin-bottom: 6px;
 
   color: var(--ink-soft);
 
   font-size: 15px;
+
   line-height: 1.8;
 }
 
@@ -782,15 +897,20 @@ p {
 
 .research-grid {
   display: grid;
+
   grid-template-columns: repeat(4, 1fr);
+
   gap: 16px;
 }
 
 .theme-card {
   min-height: 360px;
+
   padding: 30px;
 
-  border: 1px solid rgba(16, 37, 43, 0.09);
+  border:
+    1px solid rgba(16, 37, 43, 0.09);
+
   border-radius: var(--radius-md);
 
   background:
@@ -837,7 +957,9 @@ p {
   color: var(--accent-dark);
 
   font-size: 11px;
+
   font-weight: 700;
+
   letter-spacing: 1px;
 }
 
@@ -851,7 +973,9 @@ p {
   color: var(--ink);
 
   font-family: "Playfair Display", serif;
+
   font-size: 27px;
+
   font-weight: 500;
 }
 
@@ -861,6 +985,7 @@ p {
   color: var(--ink-soft);
 
   font-size: 13px;
+
   line-height: 1.7;
 }
 
@@ -873,6 +998,7 @@ p {
   color: var(--accent-dark);
 
   font-size: 12px;
+
   font-weight: 700;
 }
 
@@ -1777,26 +1903,138 @@ footer {
 
   .section-heading {
     grid-template-columns: 1fr;
+
     gap: 15px;
   }
 
   .about-grid {
     grid-template-columns: 1fr;
+
     gap: 40px;
   }
 
   .contact-inner {
     grid-template-columns: 1fr;
+
     gap: 35px;
   }
 
-  /*
-    Tablet:
-    keep frame position unchanged and move only
-    the image upward.
-  */
   .profile-photo {
     object-position: center 42%;
+  }
+}
+
+
+/* =========================================================
+   MOBILE NAVIGATION
+   SINGLE CONSOLIDATED RULE
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .nav {
+    min-height: 68px;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  /*
+    Closed state
+  */
+
+  .nav-links {
+    display: none;
+
+    position: absolute;
+
+    top: calc(100% + 8px);
+
+    left: 0;
+    right: 0;
+
+    z-index: 1100;
+
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 4px;
+
+    padding: 12px;
+
+    border:
+      1px solid rgba(16, 37, 43, 0.12);
+
+    border-radius: 14px;
+
+    background:
+      rgba(255, 255, 255, 0.99);
+
+    box-shadow:
+      0 18px 45px rgba(16, 37, 43, 0.16);
+
+    backdrop-filter: blur(14px);
+
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  /*
+    OPEN state.
+    This matches:
+    links.classList.toggle('open')
+  */
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .nav-links a {
+    display: block;
+
+    width: 100%;
+
+    padding: 13px 14px;
+
+    border-radius: 8px;
+
+    color: var(--ink);
+
+    font-size: 14px;
+
+    text-align: left;
+  }
+
+  .nav-links a:hover {
+    background: rgba(16, 37, 43, 0.05);
+  }
+
+  /*
+    Disable desktop underline animation
+    inside the mobile menu.
+  */
+
+  .nav-links a:not(.nav-button)::after {
+    display: none;
+  }
+
+  .nav-button {
+    margin-top: 5px;
+
+    text-align: center !important;
+
+    background: var(--deep-teal);
+
+    border-color: var(--deep-teal);
+
+    color: var(--white) !important;
+  }
+
+  .nav-button:hover {
+    background: var(--deep-teal-2);
+
+    border-color: var(--deep-teal-2);
   }
 }
 
@@ -1810,61 +2048,6 @@ footer {
   .container {
     width: min(100% - 32px, 1180px);
   }
-
-  .nav {
-    min-height: 68px;
-  }
-
-  .menu-toggle {
-    display: block;
-  }
-
-  .nav-links {
-    position: absolute;
-
-    top: 68px;
-
-    left: 16px;
-    right: 16px;
-
-    display: none;
-
-    flex-direction: column;
-
-    align-items: stretch;
-
-    gap: 0;
-
-    padding: 10px;
-
-    border:
-      1px solid rgba(16, 37, 43, 0.10);
-
-    border-radius: 12px;
-
-    background:
-      rgba(255, 255, 255, 0.98);
-
-    box-shadow: var(--shadow-card);
-  }
-
-  .nav-links.active {
-    display: flex;
-  }
-
-  .nav-links a {
-    padding: 12px;
-  }
-
-  .nav-button {
-    margin-top: 4px;
-    text-align: center;
-  }
-
-
-  /* =======================================================
-     HERO MOBILE
-  ======================================================= */
 
   .hero {
     padding: 75px 0 70px;
@@ -1884,6 +2067,7 @@ footer {
 
   .hero-panel {
     min-height: 525px;
+
     overflow: visible;
   }
 
@@ -1895,8 +2079,9 @@ footer {
   }
 
   /*
-    Frame remains in the same position.
+    Frame position remains unchanged.
   */
+
   .hero-photo {
     width: 270px;
     height: 270px;
@@ -1909,8 +2094,9 @@ footer {
   }
 
   /*
-    Only the image moves upward.
+    Only the photograph is moved upward.
   */
+
   .profile-photo {
     width: 100%;
     height: 100%;
@@ -1931,7 +2117,6 @@ footer {
     width: min(315px, 88vw);
 
     margin-top: 8px;
-
     margin-right: 0;
 
     padding: 19px;
@@ -2073,6 +2258,7 @@ footer {
   /*
     Frame remains unchanged.
   */
+
   .hero-photo {
     width: 240px;
     height: 240px;
@@ -2085,6 +2271,7 @@ footer {
   /*
     Only the photo is shifted upward.
   */
+
   .profile-photo {
     width: 100%;
     height: 100%;
@@ -2111,41 +2298,4 @@ footer {
   .quick-stats > div {
     align-items: flex-start;
   }
-}
-/* =========================================================
-   MOBILE NAVIGATION FIX
-========================================================= */
-
-@media (max-width: 900px) {
-
-  .menu-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    z-index: 1001;
-    cursor: pointer;
-  }
-
-  .nav-links {
-    display: none;
-  }
-
-  .nav-links.open {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    padding: 1.25rem;
-    gap: 0.75rem;
-  }
-
-  .nav-links.open a {
-    display: block;
-    width: 100%;
-  }
-
 }
