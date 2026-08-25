@@ -2404,3 +2404,382 @@ footer {
   }
 
 }
+/* =========================================================
+   PUBLICATION DATABASE
+   Search · Filters · Results
+========================================================= */
+
+.publication-count {
+  margin: 2rem 0 1.25rem;
+  padding: 1rem 1.25rem;
+  border-left: 3px solid var(--accent, #b88a44);
+  background: rgba(11, 23, 38, 0.035);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.publication-count strong {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.publication-count span {
+  font-size: 0.82rem;
+  opacity: 0.68;
+}
+
+
+/* =========================================================
+   SEARCH / FILTER BAR
+========================================================= */
+
+.publication-controls {
+  display: grid;
+  grid-template-columns: minmax(260px, 1.6fr) minmax(150px, 0.75fr) minmax(190px, 1fr) auto;
+  gap: 0.75rem;
+  margin: 1.5rem 0 2rem;
+  padding: 1rem;
+  background: #ffffff;
+  border: 1px solid rgba(11, 23, 38, 0.10);
+  box-shadow: 0 12px 30px rgba(11, 23, 38, 0.06);
+}
+
+.publication-search-wrap,
+.publication-filter-wrap {
+  min-width: 0;
+}
+
+.publication-filter-wrap {
+  display: contents;
+}
+
+.publication-controls input,
+.publication-controls select,
+.publication-controls button {
+  min-height: 48px;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+
+.publication-controls input,
+.publication-controls select {
+  border: 1px solid rgba(11, 23, 38, 0.14);
+  background: #fafafa;
+  color: #0b1726;
+  padding: 0 0.95rem;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.publication-controls input::placeholder {
+  color: #6f7883;
+}
+
+.publication-controls input:focus,
+.publication-controls select:focus {
+  background: #ffffff;
+  border-color: #b88a44;
+  box-shadow: 0 0 0 3px rgba(184, 138, 68, 0.10);
+}
+
+.publication-controls select {
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   RESET BUTTON
+========================================================= */
+
+.publication-reset {
+  border: 1px solid #0b1726;
+  background: #0b1726;
+  color: #ffffff;
+  padding: 0 1.25rem;
+  cursor: pointer;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.publication-reset:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.publication-reset:active {
+  transform: translateY(0);
+}
+
+
+/* =========================================================
+   PUBLICATION FEATURE AREA
+========================================================= */
+
+.pub-feature {
+  margin-top: 1rem;
+}
+
+.publication-intro {
+  margin-bottom: 2rem;
+}
+
+.publication-intro h3 {
+  margin-bottom: 0.75rem;
+}
+
+.publication-intro p {
+  max-width: 760px;
+}
+
+
+/* =========================================================
+   PUBLICATION LIST
+========================================================= */
+
+.pub-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+
+/* =========================================================
+   PUBLICATION ITEM
+========================================================= */
+
+.publication-item {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 1.5rem;
+  padding: 1.75rem 0;
+  border-top: 1px solid rgba(11, 23, 38, 0.11);
+  transition:
+    padding-left 0.25s ease,
+    background 0.25s ease;
+}
+
+.publication-item:last-child {
+  border-bottom: 1px solid rgba(11, 23, 38, 0.11);
+}
+
+.publication-item:hover {
+  padding-left: 0.6rem;
+}
+
+
+/* =========================================================
+   PUBLICATION NUMBER
+========================================================= */
+
+.publication-number {
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #b88a44;
+  letter-spacing: 0.08em;
+  padding-top: 0.2rem;
+}
+
+
+/* =========================================================
+   PUBLICATION META
+========================================================= */
+
+.publication-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem 0.8rem;
+  margin-bottom: 0.7rem;
+}
+
+.publication-meta span {
+  font-size: 0.72rem;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #68727d;
+}
+
+.publication-meta span:first-child {
+  color: #b88a44;
+}
+
+
+/* =========================================================
+   PUBLICATION TITLE
+========================================================= */
+
+.publication-content h3 {
+  margin: 0;
+  max-width: 920px;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(1.15rem, 1.7vw, 1.45rem);
+  line-height: 1.4;
+  font-weight: 600;
+  color: #0b1726;
+}
+
+
+/* =========================================================
+   JOURNAL
+========================================================= */
+
+.publication-journal {
+  margin: 0.65rem 0 0;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #56616d;
+  font-style: italic;
+}
+
+
+/* =========================================================
+   DOI LINK
+========================================================= */
+
+.publication-doi {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 0.9rem;
+  color: #0b1726;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-bottom: 1px solid #b88a44;
+  padding-bottom: 0.15rem;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.publication-doi:hover {
+  color: #b88a44;
+  border-color: #0b1726;
+}
+
+
+/* =========================================================
+   EMPTY SEARCH RESULT
+========================================================= */
+
+.publication-empty {
+  padding: 4rem 2rem;
+  text-align: center;
+  border: 1px dashed rgba(11, 23, 38, 0.18);
+  background: rgba(11, 23, 38, 0.025);
+}
+
+.publication-empty h3 {
+  margin-bottom: 0.5rem;
+}
+
+.publication-empty p {
+  margin: 0;
+  opacity: 0.7;
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .publication-controls {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .publication-search-wrap {
+    grid-column: 1 / -1;
+  }
+
+  .publication-reset {
+    width: 100%;
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .publication-controls {
+    grid-template-columns: 1fr;
+    padding: 0.8rem;
+  }
+
+  .publication-search-wrap {
+    grid-column: auto;
+  }
+
+  .publication-item {
+    grid-template-columns: 42px minmax(0, 1fr);
+    gap: 0.8rem;
+    padding: 1.4rem 0;
+  }
+
+  .publication-number {
+    font-size: 0.72rem;
+  }
+
+  .publication-content h3 {
+    font-size: 1.08rem;
+    line-height: 1.45;
+  }
+
+  .publication-meta {
+    gap: 0.4rem 0.55rem;
+  }
+
+  .publication-meta span {
+    font-size: 0.65rem;
+  }
+
+  .publication-journal {
+    font-size: 0.85rem;
+  }
+
+  .publication-count {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+}
