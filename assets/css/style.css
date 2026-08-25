@@ -74,6 +74,18 @@
 
   --shadow-deep:
     0 22px 55px rgba(7, 25, 32, 0.18);
+
+  /* =======================================================
+     HERO PHOTO POSITION
+     
+     Approximately 1 cm upward.
+     38px ≈ 1 cm on a standard CSS display.
+     
+     IMPORTANT:
+     This affects ONLY the image, not the circular frame.
+  ======================================================= */
+
+  --profile-photo-shift-y: -38px;
 }
 
 
@@ -414,7 +426,6 @@ select:focus-visible {
 
 /* =========================================================
    HERO
-   DEEP TEAL / NAVY + CHAMPAGNE GOLD
 ========================================================= */
 
 .hero {
@@ -678,7 +689,7 @@ select:focus-visible {
 
 /* =========================================================
    HERO PHOTO FRAME
-   FIXED — DO NOT MOVE
+   FRAME POSITION IS COMPLETELY FIXED
 ========================================================= */
 
 .hero-photo {
@@ -713,10 +724,8 @@ select:focus-visible {
 
 /* =========================================================
    HERO PROFILE PHOTO
-   ONLY THE PHOTO IS SHIFTED UPWARD
-   FRAME REMAINS FIXED
-
-   Approximately 1 cm upward displacement.
+   ONLY THE PHOTO MOVES UP
+   FRAME DOES NOT MOVE
 ========================================================= */
 
 .profile-photo {
@@ -727,7 +736,15 @@ select:focus-visible {
 
   object-fit: cover;
 
-  object-position: center calc(42% - 10px);
+  /*
+     Original vertical position:
+     42%
+
+     Upward adjustment:
+     approximately 38px / 1cm
+  */
+  object-position:
+    center calc(42% + var(--profile-photo-shift-y));
 
   transform: none;
 
@@ -737,7 +754,6 @@ select:focus-visible {
 
 /* =========================================================
    HERO RESEARCH CARD
-   STRUCTURE + POSITIONING RETAINED
 ========================================================= */
 
 .research-card {
@@ -899,7 +915,6 @@ select:focus-visible {
 
 /* =========================================================
    RESEARCH
-   LIGHT COOL BLUE / TEAL
 ========================================================= */
 
 .section.soft {
@@ -920,7 +935,6 @@ select:focus-visible {
 
 /* =========================================================
    PROJECTS
-   SOPHISTICATED DARK TEAL
 ========================================================= */
 
 .section.dark {
@@ -984,7 +998,6 @@ select:focus-visible {
 
 /* =========================================================
    RESEARCH GRID
-   LIGHT COOL BLUE / TEAL CARDS
 ========================================================= */
 
 .research-grid {
@@ -1244,7 +1257,6 @@ select:focus-visible {
 
 /* =========================================================
    PUBLICATIONS
-   WARM IVORY / WHITE
 ========================================================= */
 
 #publications {
@@ -1256,11 +1268,6 @@ select:focus-visible {
       #f8f5ee 100%
     );
 }
-
-
-/* =========================================================
-   PUBLICATION FEATURE AREA
-========================================================= */
 
 .pub-feature {
   margin-top: 1rem;
@@ -1618,11 +1625,6 @@ select:focus-visible {
     background 0.2s ease;
 }
 
-
-/* =========================================================
-   YEAR BADGE
-========================================================= */
-
 .publication-meta span:first-child {
   color: #8a6416;
 
@@ -1633,11 +1635,6 @@ select:focus-visible {
     rgba(212, 175, 55, 0.28);
 }
 
-
-/* =========================================================
-   RESEARCH CATEGORY BADGE
-========================================================= */
-
 .publication-meta span:nth-child(2) {
   color: #176b68;
 
@@ -1647,11 +1644,6 @@ select:focus-visible {
   border-color:
     rgba(23, 107, 104, 0.22);
 }
-
-
-/* =========================================================
-   PUBLICATION METRIC BADGE
-========================================================= */
 
 .publication-meta span:nth-child(3) {
   color: #5d467c;
@@ -1664,11 +1656,6 @@ select:focus-visible {
 
   font-weight: 650;
 }
-
-
-/* =========================================================
-   METADATA HOVER
-========================================================= */
 
 .publication-meta span:hover {
   transform: translateY(-1px);
@@ -1791,7 +1778,6 @@ select:focus-visible {
 
 /* =========================================================
    ACADEMIC CONTRIBUTIONS
-   WARM NEUTRAL
 ========================================================= */
 
 #academic-contributions {
@@ -1883,7 +1869,6 @@ select:focus-visible {
 
 /* =========================================================
    ABOUT
-   PALE BLUE-GREEN / IVORY
 ========================================================= */
 
 .about {
@@ -1937,7 +1922,6 @@ select:focus-visible {
 
 /* =========================================================
    ACADEMIC PROFILES
-   RESTRAINED LAVENDER-BLUE
 ========================================================= */
 
 .profiles {
@@ -2135,7 +2119,6 @@ select:focus-visible {
 
 /* =========================================================
    CONTACT
-   DEEP TEAL / NAVY
 ========================================================= */
 
 .contact {
@@ -2196,7 +2179,6 @@ select:focus-visible {
 
 /* =========================================================
    FOOTER
-   DEEP NAVY / TEAL
 ========================================================= */
 
 footer {
@@ -2322,10 +2304,6 @@ footer {
 
     gap: 35px;
   }
-
-  .profile-photo {
-    object-position: center calc(42% - 10px);
-  }
 }
 
 
@@ -2425,11 +2403,6 @@ footer {
     border-color: var(--deep-teal-2);
   }
 
-
-  /* =======================================================
-     PUBLICATION SEARCH — TABLET
-  ======================================================= */
-
   .publication-controls {
     grid-template-columns: 1fr 1fr;
   }
@@ -2503,7 +2476,7 @@ footer {
 
   /* =======================================================
      MOBILE PHOTO
-     ONLY PHOTO SHIFTS UPWARD
+     ONLY PHOTO SHIFTS UP
   ======================================================= */
 
   .profile-photo {
@@ -2512,7 +2485,8 @@ footer {
 
     object-fit: cover;
 
-    object-position: center calc(42% - 10px);
+    object-position:
+      center calc(42% + var(--profile-photo-shift-y));
 
     transform: none;
   }
@@ -2746,12 +2720,14 @@ footer {
     margin-top: 25px;
 
     border-width: 8px;
+
+    transform: none;
   }
 
 
   /* =======================================================
      VERY SMALL PHOTO
-     ONLY PHOTO SHIFTS UPWARD
+     ONLY PHOTO SHIFTS UP
   ======================================================= */
 
   .profile-photo {
@@ -2760,7 +2736,8 @@ footer {
 
     object-fit: cover;
 
-    object-position: center calc(42% - 10px);
+    object-position:
+      center calc(42% + var(--profile-photo-shift-y));
 
     transform: none;
   }
