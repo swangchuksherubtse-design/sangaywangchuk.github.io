@@ -370,11 +370,19 @@ function getPublicationDetails(pub) {
 
   const parts = [];
 
+  /*
+    Journal quartile
+  */
   if (pub.quartile) {
     parts.push(pub.quartile);
   }
 
+  /*
+    Impact Factor with the specific
+    JCR metric year.
+  */
   if (pub.impactFactor) {
+
     parts.push(
       `IF ${pub.impactFactor}${
         pub.metricYear
@@ -382,8 +390,13 @@ function getPublicationDetails(pub) {
           : ""
       }`
     );
+
   }
 
+  /*
+    Additional journal information,
+    e.g. volume/issue for journals without IF.
+  */
   if (pub.details) {
     parts.push(pub.details);
   }
@@ -501,6 +514,9 @@ function renderPublications(
   if (!container) return;
 
 
+  /*
+    Always show newest publications first.
+  */
   const sortedList =
     [...list].sort(
       (a, b) =>
@@ -513,6 +529,10 @@ function renderPublications(
     sortedList
   );
 
+
+  /* -------------------------------------------------------
+     EMPTY RESULTS
+  ------------------------------------------------------- */
 
   if (sortedList.length === 0) {
 
@@ -534,6 +554,10 @@ function renderPublications(
     return;
   }
 
+
+  /* -------------------------------------------------------
+     PUBLICATION CARDS
+  ------------------------------------------------------- */
 
   container.innerHTML =
     sortedList
@@ -658,6 +682,11 @@ function setupPublicationFilters() {
 
   if (!section) return;
 
+
+  /*
+    Use existing controls if present.
+    Otherwise create them automatically.
+  */
 
   let controls =
     section.querySelector(
