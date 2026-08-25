@@ -1,3 +1,4 @@
+```javascript
 const publications = [
   {
     year: 2026,
@@ -349,6 +350,141 @@ function getPublicationYears() {
 
 
 /* =========================================================
+   PUBLICATION OVERVIEW
+========================================================= */
+
+function updatePublicationOverview() {
+
+  const section =
+    document.querySelector("#publications");
+
+  if (!section) return;
+
+  let overview =
+    section.querySelector(".publication-overview");
+
+  if (!overview) {
+
+    overview =
+      document.createElement("div");
+
+    overview.className =
+      "publication-overview";
+
+    const controls =
+      section.querySelector(
+        ".publication-controls"
+      );
+
+    const publicationList =
+      section.querySelector(".pub-list");
+
+    if (controls) {
+
+      section.insertBefore(
+        overview,
+        controls
+      );
+
+    } else if (publicationList) {
+
+      section.insertBefore(
+        overview,
+        publicationList
+      );
+
+    } else {
+
+      section.appendChild(
+        overview
+      );
+
+    }
+  }
+
+
+  const total =
+    publications.length;
+
+
+  const {
+    newest,
+    oldest
+  } = getPublicationYears();
+
+
+  const q1Count =
+    publications.filter(
+      pub => pub.quartile === "Q1"
+    ).length;
+
+
+  const categories =
+    new Set(
+      publications.map(
+        pub => pub.category
+      )
+    ).size;
+
+
+  overview.innerHTML = `
+
+    <div class="publication-overview-card">
+
+      <span class="publication-overview-value">
+        ${total}
+      </span>
+
+      <span class="publication-overview-label">
+        Publications
+      </span>
+
+    </div>
+
+
+    <div class="publication-overview-card">
+
+      <span class="publication-overview-value">
+        ${oldest}–${newest}
+      </span>
+
+      <span class="publication-overview-label">
+        Publication Period
+      </span>
+
+    </div>
+
+
+    <div class="publication-overview-card">
+
+      <span class="publication-overview-value">
+        ${q1Count}
+      </span>
+
+      <span class="publication-overview-label">
+        Q1 Publications
+      </span>
+
+    </div>
+
+
+    <div class="publication-overview-card">
+
+      <span class="publication-overview-value">
+        ${categories}
+      </span>
+
+      <span class="publication-overview-label">
+        Research Areas
+      </span>
+
+    </div>
+
+  `;
+}
+
+
+/* =========================================================
    ESCAPE HTML
 ========================================================= */
 
@@ -370,17 +506,10 @@ function getPublicationDetails(pub) {
 
   const parts = [];
 
-  /*
-    Journal quartile
-  */
   if (pub.quartile) {
     parts.push(pub.quartile);
   }
 
-  /*
-    Impact Factor with the specific
-    JCR metric year.
-  */
   if (pub.impactFactor) {
 
     parts.push(
@@ -393,10 +522,6 @@ function getPublicationDetails(pub) {
 
   }
 
-  /*
-    Additional journal information,
-    e.g. volume/issue for journals without IF.
-  */
   if (pub.details) {
     parts.push(pub.details);
   }
@@ -409,7 +534,9 @@ function getPublicationDetails(pub) {
    PUBLICATION COUNT
 ========================================================= */
 
-function updatePublicationCount(list = publications) {
+function updatePublicationCount(
+  list = publications
+) {
 
   const section =
     document.querySelector("#publications");
@@ -417,7 +544,10 @@ function updatePublicationCount(list = publications) {
   if (!section) return;
 
   let counter =
-    section.querySelector(".publication-count");
+    section.querySelector(
+      ".publication-count"
+    );
+
 
   if (!counter) {
 
@@ -433,7 +563,10 @@ function updatePublicationCount(list = publications) {
       );
 
     const publicationList =
-      section.querySelector(".pub-list");
+      section.querySelector(
+        ".pub-list"
+      );
+
 
     if (controls) {
 
@@ -451,16 +584,20 @@ function updatePublicationCount(list = publications) {
 
     } else {
 
-      section.appendChild(counter);
+      section.appendChild(
+        counter
+      );
 
     }
   }
+
 
   const total =
     publications.length;
 
   const showing =
     list.length;
+
 
   const {
     newest,
@@ -509,14 +646,13 @@ function renderPublications(
 ) {
 
   const container =
-    document.querySelector(".pub-list");
+    document.querySelector(
+      ".pub-list"
+    );
 
   if (!container) return;
 
 
-  /*
-    Always show newest publications first.
-  */
   const sortedList =
     [...list].sort(
       (a, b) =>
@@ -524,6 +660,8 @@ function renderPublications(
         Number(a.year)
     );
 
+
+  updatePublicationOverview();
 
   updatePublicationCount(
     sortedList
@@ -683,11 +821,6 @@ function setupPublicationFilters() {
   if (!section) return;
 
 
-  /*
-    Use existing controls if present.
-    Otherwise create them automatically.
-  */
-
   let controls =
     section.querySelector(
       ".publication-controls"
@@ -701,6 +834,7 @@ function setupPublicationFilters() {
 
     controls.className =
       "publication-controls";
+
 
     controls.innerHTML = `
 
@@ -984,3 +1118,4 @@ document.addEventListener(
 
   }
 );
+```
