@@ -1,3 +1,4 @@
+```css
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap');
 
 
@@ -77,11 +78,8 @@
 
   /* =======================================================
      HERO PHOTO POSITION
-     
+
      Approximately 1 cm upward.
-     38px ≈ 1 cm on a standard CSS display.
-     
-     IMPORTANT:
      This affects ONLY the image, not the circular frame.
   ======================================================= */
 
@@ -99,13 +97,24 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
+
+  /*
+     IMPORTANT:
+     Use clip instead of hidden so the sticky header
+     is not trapped by an overflow container.
+  */
+  overflow-x: clip;
 }
 
 body {
   margin: 0;
   min-width: 0;
-  overflow-x: hidden;
+
+  /*
+     IMPORTANT:
+     Use clip instead of hidden for the same reason.
+  */
+  overflow-x: clip;
 
   background: var(--paper);
   color: var(--ink);
@@ -141,6 +150,23 @@ button {
 .container {
   width: min(1180px, calc(100% - 48px));
   margin-inline: auto;
+}
+
+
+/* =========================================================
+   SECTION SCROLL OFFSET
+   Prevents sticky navigation from covering headings
+   when a navigation link is clicked.
+========================================================= */
+
+section,
+#research,
+#publications,
+#academic-contributions,
+#about,
+#academic-profiles,
+#contact {
+  scroll-margin-top: 95px;
 }
 
 
@@ -253,20 +279,36 @@ p {
 
 /* =========================================================
    HEADER
+   STICKY NAVIGATION — FIXED WHILE SCROLLING
 ========================================================= */
 
 .site-header {
+  position: -webkit-sticky;
   position: sticky;
+
   top: 0;
+
   z-index: 1000;
 
-  background: rgba(255, 255, 255, 0.96);
+  /*
+     Slightly stronger background ensures that content
+     scrolling underneath never becomes visually distracting.
+  */
+  background: rgba(255, 255, 255, 0.97);
 
   border-bottom:
     1px solid rgba(16, 37, 43, 0.10);
 
+  /*
+     Keep the premium glass effect.
+  */
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+
+  /*
+     Prevent accidental transparency during scrolling.
+  */
+  isolation: isolate;
 }
 
 .nav {
@@ -725,7 +767,6 @@ select:focus-visible {
 /* =========================================================
    HERO PROFILE PHOTO
    ONLY THE PHOTO MOVES UP
-   FRAME DOES NOT MOVE
 ========================================================= */
 
 .profile-photo {
@@ -736,13 +777,6 @@ select:focus-visible {
 
   object-fit: cover;
 
-  /*
-     Original vertical position:
-     42%
-
-     Upward adjustment:
-     approximately 38px / 1cm
-  */
   object-position:
     center calc(42% + var(--profile-photo-shift-y));
 
@@ -2403,6 +2437,19 @@ footer {
     border-color: var(--deep-teal-2);
   }
 
+  /*
+     Smaller scroll offset for the mobile header.
+  */
+  section,
+  #research,
+  #publications,
+  #academic-contributions,
+  #about,
+  #academic-profiles,
+  #contact {
+    scroll-margin-top: 82px;
+  }
+
   .publication-controls {
     grid-template-columns: 1fr 1fr;
   }
@@ -2794,3 +2841,4 @@ footer {
     scroll-behavior: auto !important;
   }
 }
+```
