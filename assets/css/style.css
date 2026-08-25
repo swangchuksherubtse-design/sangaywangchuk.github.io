@@ -1,4 +1,3 @@
-```css
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap');
 
 
@@ -7,48 +6,66 @@
 ========================================================= */
 
 :root {
+  /* Core text */
   --ink: #10252b;
   --ink-soft: #3f555b;
   --ink-light: #64767b;
 
+  /* Core surfaces */
   --paper: #ffffff;
   --cream: #f8f6f1;
   --ivory: #fbfaf7;
   --soft: #eef4f2;
-  --soft-blue: #f1f5f8;
+  --soft-blue: #edf5f7;
 
+  /* Deep brand colours */
   --deep-teal: #0d2930;
   --deep-teal-2: #143840;
+  --deep-teal-3: #1b4650;
+
   --deep-navy: #101e2c;
   --deep-navy-2: #172b3a;
 
+  /* Primary champagne-gold accent */
   --accent: #b88a4a;
   --accent-dark: #91692f;
   --accent-light: #d8b77e;
+  --accent-pale: #efe1c7;
 
+  /* Supporting colours */
   --muted: #68797d;
   --line: rgba(16, 37, 43, 0.12);
   --line-light: rgba(16, 37, 43, 0.08);
 
   --white: #ffffff;
 
+  /* Research accents */
+  --research-blue: #2b7186;
+  --research-teal: #147d7b;
+  --research-light: #e8f3f5;
+  --research-blue-light: #eaf2f7;
+
+  /* Legacy / thematic accents retained */
   --accent-wangchuk: #a95f3e;
   --accent-materials: #95652b;
   --accent-sensing: #147d7b;
   --accent-literature: #66509a;
-  --accent-programme: #b44f68;
+  --accent-programme: #9a7050;
   --accent-chemistry: #236c98;
   --accent-impact: #a96820;
-  --accent-platforms: #4e5fa8;
+  --accent-platforms: #5d6398;
 
+  /* Academic profiles */
   --profile-bg-1: #f1f4f8;
   --profile-bg-2: #f2f1f8;
   --profile-bg-3: #f8f6f1;
 
+  /* Radius */
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 22px;
 
+  /* Shadows */
   --shadow-soft:
     0 10px 30px rgba(16, 37, 43, 0.07);
 
@@ -165,19 +182,19 @@ p {
 }
 
 #research h2 em {
-  color: var(--accent-materials);
+  color: var(--research-blue);
 }
 
 #research .section-heading h2 em {
-  color: var(--accent-sensing);
+  color: var(--research-teal);
 }
 
 #publications h2 em {
-  color: var(--accent-literature);
+  color: var(--accent-dark);
 }
 
 #academic-contributions h2 em {
-  color: var(--accent-programme);
+  color: #9a7050;
 }
 
 #about h2 em {
@@ -359,6 +376,7 @@ p {
 
 /* =========================================================
    HERO
+   DEEP TEAL / NAVY + CHAMPAGNE GOLD
 ========================================================= */
 
 .hero {
@@ -380,9 +398,9 @@ p {
     ),
     linear-gradient(
       135deg,
-      #102c33 0%,
-      #153a41 48%,
-      #102b34 100%
+      #0b242c 0%,
+      #12353e 48%,
+      #101f2d 100%
     );
 }
 
@@ -622,8 +640,7 @@ p {
 
 /* =========================================================
    HERO PHOTO FRAME
-   IMPORTANT:
-   The frame itself remains fixed.
+   FIXED — DO NOT MOVE
 ========================================================= */
 
 .hero-photo {
@@ -658,14 +675,10 @@ p {
 
 /* =========================================================
    HERO PROFILE PHOTO
-   IMPORTANT:
-   ONLY THE PHOTO IS MOVED UP.
-   THE FRAME ABOVE DOES NOT MOVE.
+   ONLY THE PHOTO IS SHIFTED UPWARD
+   FRAME REMAINS FIXED
 
-   The original vertical position was approximately 42%.
-   Changing it to calc(42% - 10px) shifts the image
-   upward by approximately 1 cm while keeping the
-   circular frame completely fixed.
+   Approximately 1 cm upward displacement.
 ========================================================= */
 
 .profile-photo {
@@ -686,6 +699,7 @@ p {
 
 /* =========================================================
    HERO RESEARCH CARD
+   STRUCTURE + POSITIONING RETAINED
 ========================================================= */
 
 .research-card {
@@ -844,15 +858,32 @@ p {
   overflow: hidden;
 }
 
+
+/* =========================================================
+   RESEARCH
+   LIGHT COOL BLUE / TEAL
+========================================================= */
+
 .section.soft {
   background:
+    radial-gradient(
+      circle at 90% 10%,
+      rgba(43, 113, 134, 0.07),
+      transparent 28%
+    ),
     linear-gradient(
       135deg,
-      #f2f6f4 0%,
-      #faf9f5 52%,
-      #f0f4f3 100%
+      #edf6f7 0%,
+      #f6faf9 52%,
+      #eaf3f5 100%
     );
 }
+
+
+/* =========================================================
+   PROJECTS
+   SOPHISTICATED DARK TEAL
+========================================================= */
 
 .section.dark {
   background:
@@ -868,8 +899,9 @@ p {
     ),
     linear-gradient(
       135deg,
-      #0d242c,
-      #122f38
+      #0b252d,
+      #12343d 52%,
+      #0c2730
     );
 }
 
@@ -914,6 +946,7 @@ p {
 
 /* =========================================================
    RESEARCH GRID
+   LIGHT COOL BLUE / TEAL CARDS
 ========================================================= */
 
 .research-grid {
@@ -930,7 +963,7 @@ p {
   padding: 30px;
 
   border:
-    1px solid rgba(16, 37, 43, 0.09);
+    1px solid rgba(43, 113, 134, 0.12);
 
   border-radius: var(--radius-md);
 
@@ -938,10 +971,11 @@ p {
     linear-gradient(
       145deg,
       #ffffff,
-      #f8f8f5
+      #eef6f7
     );
 
-  box-shadow: var(--shadow-soft);
+  box-shadow:
+    0 10px 30px rgba(28, 86, 100, 0.07);
 
   transition:
     transform 0.3s ease,
@@ -962,8 +996,8 @@ p {
   background:
     linear-gradient(
       145deg,
-      #143840,
-      #0d2930
+      #1a4b56,
+      #0d3039
     );
 
   border-color:
@@ -975,7 +1009,7 @@ p {
 
   margin-bottom: 55px;
 
-  color: var(--accent-dark);
+  color: var(--research-blue);
 
   font-size: 11px;
 
@@ -1016,7 +1050,7 @@ p {
 }
 
 .theme-card a {
-  color: var(--accent-dark);
+  color: var(--research-blue);
 
   font-size: 12px;
 
@@ -1115,14 +1149,14 @@ p {
   padding: 25px 24px;
 
   border:
-    1px solid rgba(16, 37, 43, 0.09);
+    1px solid rgba(43, 113, 134, 0.10);
 
   border-radius: var(--radius-md);
 
-  background: #ffffff;
+  background: #f9fcfc;
 
   box-shadow:
-    0 8px 25px rgba(16, 37, 43, 0.05);
+    0 8px 25px rgba(28, 86, 100, 0.05);
 }
 
 .research-glance .glance-card span {
@@ -1130,7 +1164,7 @@ p {
 
   margin-bottom: 10px;
 
-  color: var(--muted);
+  color: var(--research-blue);
 
   font-size: 10px;
 
@@ -1171,6 +1205,22 @@ p {
 
 
 /* =========================================================
+   PUBLICATIONS
+   WARM IVORY / WHITE
+========================================================= */
+
+#publications {
+  background:
+    linear-gradient(
+      135deg,
+      #fffdf8 0%,
+      #fbfaf6 52%,
+      #f8f5ee 100%
+    );
+}
+
+
+/* =========================================================
    PUBLICATION FEATURE AREA
 ========================================================= */
 
@@ -1187,8 +1237,8 @@ p {
   background:
     linear-gradient(
       135deg,
-      #fffdf8,
-      #f5f7f5
+      #fffefb,
+      #faf8f2
     );
 
   box-shadow:
@@ -1242,7 +1292,6 @@ p {
 
 /* =========================================================
    PUBLICATION DATABASE
-   SEARCH · FILTERS · RESULTS
 ========================================================= */
 
 .publication-controls {
@@ -1260,7 +1309,7 @@ p {
 
   padding: 1rem;
 
-  background: #ffffff;
+  background: #fffefb;
 
   border:
     1px solid rgba(11, 23, 38, 0.10);
@@ -1297,7 +1346,7 @@ p {
   border:
     1px solid rgba(11, 23, 38, 0.14);
 
-  background: #fafafa;
+  background: #fcfbf8;
 
   color: #0b1726;
 
@@ -1319,7 +1368,7 @@ p {
 .publication-controls select:focus {
   background: #ffffff;
 
-  border-color: #b88a44;
+  border-color: var(--accent);
 
   box-shadow:
     0 0 0 3px rgba(184, 138, 68, 0.10);
@@ -1336,9 +1385,9 @@ p {
 
 .publication-reset {
   border:
-    1px solid #0b1726;
+    1px solid var(--deep-navy);
 
-  background: #0b1726;
+  background: var(--deep-navy);
 
   color: #ffffff;
 
@@ -1357,7 +1406,9 @@ p {
 }
 
 .publication-reset:hover {
-  opacity: 0.9;
+  background: var(--deep-teal);
+
+  opacity: 0.95;
 
   transform: translateY(-1px);
 }
@@ -1475,7 +1526,7 @@ p {
 
 
 /* =========================================================
-   PUBLICATION METADATA / METRIC BADGES
+   PUBLICATION METADATA
 ========================================================= */
 
 .publication-meta {
@@ -1517,7 +1568,7 @@ p {
   text-transform: uppercase;
 
   background:
-    rgba(255, 255, 255, 0.55);
+    rgba(255, 255, 255, 0.70);
 
   transition:
     transform 0.2s ease,
@@ -1526,9 +1577,9 @@ p {
 }
 
 
-/* ---------------------------------------------------------
+/* =========================================================
    YEAR BADGE
---------------------------------------------------------- */
+========================================================= */
 
 .publication-meta span:first-child {
   color: #8a6416;
@@ -1541,9 +1592,9 @@ p {
 }
 
 
-/* ---------------------------------------------------------
+/* =========================================================
    RESEARCH CATEGORY BADGE
---------------------------------------------------------- */
+========================================================= */
 
 .publication-meta span:nth-child(2) {
   color: #176b68;
@@ -1556,11 +1607,9 @@ p {
 }
 
 
-/* ---------------------------------------------------------
+/* =========================================================
    PUBLICATION METRIC BADGE
-   Example:
-   Q1 · IF 7.5 (JCR 2025)
---------------------------------------------------------- */
+========================================================= */
 
 .publication-meta span:nth-child(3) {
   color: #5d467c;
@@ -1575,9 +1624,9 @@ p {
 }
 
 
-/* ---------------------------------------------------------
+/* =========================================================
    METADATA HOVER
---------------------------------------------------------- */
+========================================================= */
 
 .publication-meta span:hover {
   transform: translateY(-1px);
@@ -1700,7 +1749,23 @@ p {
 
 /* =========================================================
    ACADEMIC CONTRIBUTIONS
+   WARM NEUTRAL
 ========================================================= */
+
+#academic-contributions {
+  background:
+    radial-gradient(
+      circle at 90% 12%,
+      rgba(184, 137, 77, 0.07),
+      transparent 28%
+    ),
+    linear-gradient(
+      135deg,
+      #f8f6f1,
+      #f4f0e8 52%,
+      #faf9f5
+    );
+}
 
 .academic-grid {
   display: grid;
@@ -1714,19 +1779,19 @@ p {
   padding: 32px;
 
   border:
-    1px solid rgba(16, 37, 43, 0.09);
+    1px solid rgba(126, 100, 70, 0.12);
 
   border-radius: var(--radius-md);
 
   background:
     linear-gradient(
       145deg,
-      #ffffff,
-      #f7f5ef
+      #fffefa,
+      #f6f1e8
     );
 
   box-shadow:
-    0 8px 25px rgba(16, 37, 43, 0.05);
+    0 8px 25px rgba(73, 59, 40, 0.05);
 
   transition:
     transform 0.25s ease,
@@ -1776,6 +1841,7 @@ p {
 
 /* =========================================================
    ABOUT
+   PALE BLUE-GREEN / IVORY
 ========================================================= */
 
 .about {
@@ -1795,7 +1861,8 @@ p {
     linear-gradient(
       135deg,
       #f8f7f3,
-      #edf3f1
+      #eaf3f1 55%,
+      #f4f8f6 100%
     );
 }
 
@@ -1828,6 +1895,7 @@ p {
 
 /* =========================================================
    ACADEMIC PROFILES
+   RESTRAINED LAVENDER-BLUE
 ========================================================= */
 
 .profiles {
@@ -1848,9 +1916,9 @@ p {
     ),
     linear-gradient(
       135deg,
-      #f2f5f8 0%,
-      #f4f2f8 52%,
-      #f8f6f1 100%
+      #f1f4f8 0%,
+      #f1f0f8 52%,
+      #f6f4f8 100%
     );
 }
 
@@ -2025,6 +2093,7 @@ p {
 
 /* =========================================================
    CONTACT
+   DEEP TEAL / NAVY
 ========================================================= */
 
 .contact {
@@ -2043,8 +2112,9 @@ p {
     ),
     linear-gradient(
       135deg,
-      #0b222a,
-      #102d36
+      #091f27,
+      #102f39 55%,
+      #101e2c
     );
 }
 
@@ -2084,13 +2154,14 @@ p {
 
 /* =========================================================
    FOOTER
+   DEEP NAVY / TEAL
 ========================================================= */
 
 footer {
   background:
     linear-gradient(
       135deg,
-      #07171f,
+      #06151d,
       #0b222a
     );
 
@@ -2313,9 +2384,9 @@ footer {
   }
 
 
-  /* -----------------------------------------------
+  /* =======================================================
      PUBLICATION SEARCH — TABLET
-  ------------------------------------------------ */
+  ======================================================= */
 
   .publication-controls {
     grid-template-columns: 1fr 1fr;
@@ -2371,10 +2442,10 @@ footer {
   }
 
 
-  /* -----------------------------------------------
+  /* =======================================================
      MOBILE PHOTO FRAME
-     Frame remains completely unchanged in position.
-  ------------------------------------------------ */
+     FRAME REMAINS FIXED
+  ======================================================= */
 
   .hero-photo {
     width: 270px;
@@ -2388,10 +2459,10 @@ footer {
   }
 
 
-  /* -----------------------------------------------
+  /* =======================================================
      MOBILE PHOTO
-     Only the photograph moves upward.
-  ------------------------------------------------ */
+     ONLY PHOTO SHIFTS UPWARD
+  ======================================================= */
 
   .profile-photo {
     width: 100%;
@@ -2469,9 +2540,9 @@ footer {
   }
 
 
-  /* -----------------------------------------------
+  /* =======================================================
      PUBLICATION FEATURE — MOBILE
-  ------------------------------------------------ */
+  ======================================================= */
 
   .pub-feature {
     padding: 22px 18px;
@@ -2490,9 +2561,9 @@ footer {
   }
 
 
-  /* -----------------------------------------------
+  /* =======================================================
      PUBLICATION COUNT — MOBILE
-  ------------------------------------------------ */
+  ======================================================= */
 
   .publication-count {
     align-items: flex-start;
@@ -2503,9 +2574,9 @@ footer {
   }
 
 
-  /* -----------------------------------------------
+  /* =======================================================
      PUBLICATION ITEM — MOBILE
-  ------------------------------------------------ */
+  ======================================================= */
 
   .publication-item {
     grid-template-columns:
@@ -2527,9 +2598,9 @@ footer {
   }
 
 
-  /* -----------------------------------------------
+  /* =======================================================
      PUBLICATION METADATA — MOBILE
-  ------------------------------------------------ */
+  ======================================================= */
 
   .publication-meta {
     gap: 6px;
@@ -2593,10 +2664,10 @@ footer {
   }
 
 
-  /* -----------------------------------------------
+  /* =======================================================
      VERY SMALL PHOTO FRAME
-     Frame position remains unchanged.
-  ------------------------------------------------ */
+     FRAME POSITION REMAINS UNCHANGED
+  ======================================================= */
 
   .hero-photo {
     width: 240px;
@@ -2608,10 +2679,10 @@ footer {
   }
 
 
-  /* -----------------------------------------------
+  /* =======================================================
      VERY SMALL PHOTO
-     Only photograph shifts upward.
-  ------------------------------------------------ */
+     ONLY PHOTO SHIFTS UPWARD
+  ======================================================= */
 
   .profile-photo {
     width: 100%;
@@ -2640,4 +2711,3 @@ footer {
     align-items: flex-start;
   }
 }
-```
