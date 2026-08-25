@@ -1,3 +1,4 @@
+```css
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap');
 
 
@@ -618,6 +619,13 @@ p {
   pointer-events: none;
 }
 
+
+/* =========================================================
+   HERO PHOTO FRAME
+   IMPORTANT:
+   The frame itself remains fixed.
+========================================================= */
+
 .hero-photo {
   position: relative;
 
@@ -647,6 +655,19 @@ p {
   transform: none;
 }
 
+
+/* =========================================================
+   HERO PROFILE PHOTO
+   IMPORTANT:
+   ONLY THE PHOTO IS MOVED UP.
+   THE FRAME ABOVE DOES NOT MOVE.
+
+   The original vertical position was approximately 42%.
+   Changing it to calc(42% - 10px) shifts the image
+   upward by approximately 1 cm while keeping the
+   circular frame completely fixed.
+========================================================= */
+
 .profile-photo {
   display: block;
 
@@ -655,7 +676,7 @@ p {
 
   object-fit: cover;
 
-  object-position: center 42%;
+  object-position: center calc(42% - 10px);
 
   transform: none;
 
@@ -1150,10 +1171,12 @@ p {
 
 
 /* =========================================================
-   PUBLICATION PROFILE
+   PUBLICATION FEATURE AREA
 ========================================================= */
 
 .pub-feature {
+  margin-top: 1rem;
+
   padding: 38px;
 
   border:
@@ -1173,7 +1196,7 @@ p {
 }
 
 .publication-intro {
-  margin-bottom: 12px;
+  margin-bottom: 2rem;
 }
 
 .pub-label {
@@ -1193,7 +1216,7 @@ p {
 }
 
 .publication-intro h3 {
-  margin-bottom: 10px;
+  margin-bottom: 0.75rem;
 
   color: var(--ink);
 
@@ -1218,58 +1241,129 @@ p {
 
 
 /* =========================================================
-   PUBLICATION SEARCH / FILTER
+   PUBLICATION DATABASE
+   SEARCH · FILTERS · RESULTS
 ========================================================= */
 
 .publication-controls {
   display: grid;
 
   grid-template-columns:
-    minmax(220px, 1.6fr)
-    minmax(140px, 0.7fr)
-    minmax(180px, 0.9fr);
+    minmax(260px, 1.6fr)
+    minmax(150px, 0.75fr)
+    minmax(190px, 1fr)
+    auto;
 
-  gap: 12px;
+  gap: 0.75rem;
 
-  margin: 12px 0 16px;
+  margin: 1.5rem 0 2rem;
+
+  padding: 1rem;
+
+  background: #ffffff;
+
+  border:
+    1px solid rgba(11, 23, 38, 0.10);
+
+  box-shadow:
+    0 12px 30px rgba(11, 23, 38, 0.06);
+}
+
+.publication-search-wrap,
+.publication-filter-wrap {
+  min-width: 0;
+}
+
+.publication-filter-wrap {
+  display: contents;
+}
+
+.publication-controls input,
+.publication-controls select,
+.publication-controls button {
+  min-height: 48px;
+
+  width: 100%;
+
+  box-sizing: border-box;
+
+  font-family: inherit;
+
+  font-size: 0.9rem;
 }
 
 .publication-controls input,
 .publication-controls select {
-  width: 100%;
-
-  min-height: 46px;
-
-  padding: 10px 14px;
-
   border:
-    1px solid rgba(16, 37, 43, 0.13);
+    1px solid rgba(11, 23, 38, 0.14);
 
-  border-radius: 8px;
+  background: #fafafa;
 
-  background: #ffffff;
+  color: #0b1726;
 
-  color: var(--ink);
-
-  font-size: 13px;
+  padding: 0 0.95rem;
 
   outline: none;
 
   transition:
     border-color 0.2s ease,
+    background 0.2s ease,
     box-shadow 0.2s ease;
 }
 
 .publication-controls input::placeholder {
-  color: var(--muted);
+  color: #6f7883;
 }
 
 .publication-controls input:focus,
 .publication-controls select:focus {
-  border-color: var(--accent);
+  background: #ffffff;
+
+  border-color: #b88a44;
 
   box-shadow:
-    0 0 0 3px rgba(184, 137, 77, 0.10);
+    0 0 0 3px rgba(184, 138, 68, 0.10);
+}
+
+.publication-controls select {
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   PUBLICATION RESET BUTTON
+========================================================= */
+
+.publication-reset {
+  border:
+    1px solid #0b1726;
+
+  background: #0b1726;
+
+  color: #ffffff;
+
+  padding: 0 1.25rem;
+
+  cursor: pointer;
+
+  font-weight: 600;
+
+  letter-spacing: 0.02em;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.publication-reset:hover {
+  opacity: 0.9;
+
+  transform: translateY(-1px);
+}
+
+.publication-reset:active {
+  transform: translateY(0);
 }
 
 
@@ -1278,34 +1372,41 @@ p {
 ========================================================= */
 
 .publication-count {
+  margin: 2rem 0 1.25rem;
+
+  padding: 1rem 1.25rem;
+
+  border-left:
+    3px solid var(--accent);
+
+  background:
+    rgba(11, 23, 38, 0.035);
+
   display: flex;
 
   align-items: baseline;
 
   justify-content: space-between;
 
-  gap: 20px;
+  gap: 1rem;
 
-  margin: 12px 0 4px;
-
-  padding-bottom: 14px;
-
-  border-bottom:
-    1px solid rgba(16, 37, 43, 0.10);
+  flex-wrap: wrap;
 }
 
 .publication-count-main {
   color: var(--ink);
 
-  font-size: 14px;
+  font-size: 1rem;
 
   font-weight: 700;
+
+  letter-spacing: 0.01em;
 }
 
 .publication-count-sub {
   color: var(--muted);
 
-  font-size: 11px;
+  font-size: 0.82rem;
 }
 
 
@@ -1314,108 +1415,274 @@ p {
 ========================================================= */
 
 .pub-list {
-  margin-top: 0;
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 0;
 }
+
+
+/* =========================================================
+   PUBLICATION ITEM
+========================================================= */
 
 .publication-item {
   display: grid;
 
-  grid-template-columns: 55px 1fr;
+  grid-template-columns:
+    72px minmax(0, 1fr);
 
-  gap: 20px;
+  gap: 1.5rem;
 
-  padding: 26px 0;
+  padding: 1.75rem 0;
 
-  border-bottom:
-    1px solid rgba(16, 37, 43, 0.10);
+  border-top:
+    1px solid rgba(11, 23, 38, 0.11);
+
+  transition:
+    padding-left 0.25s ease,
+    background 0.25s ease;
 }
 
-.publication-number {
-  color: var(--accent-dark);
+.publication-item:last-child {
+  border-bottom:
+    1px solid rgba(11, 23, 38, 0.11);
+}
 
-  font-size: 12px;
+.publication-item:hover {
+  padding-left: 0.6rem;
+}
+
+
+/* =========================================================
+   PUBLICATION NUMBER
+========================================================= */
+
+.publication-number {
+  font-family: "DM Sans", sans-serif;
+
+  font-size: 0.82rem;
 
   font-weight: 700;
 
-  letter-spacing: 1px;
+  color: var(--accent);
+
+  letter-spacing: 0.08em;
+
+  padding-top: 0.2rem;
 }
+
+
+/* =========================================================
+   PUBLICATION METADATA / METRIC BADGES
+========================================================= */
 
 .publication-meta {
   display: flex;
 
   flex-wrap: wrap;
 
+  align-items: center;
+
   gap: 8px;
 
-  margin-bottom: 9px;
+  margin-bottom: 0.7rem;
 }
 
 .publication-meta span {
-  padding: 4px 8px;
+  display: inline-flex;
+
+  align-items: center;
+
+  min-height: 28px;
+
+  padding: 5px 10px;
+
+  border:
+    1px solid rgba(127, 127, 127, 0.22);
 
   border-radius: 999px;
 
-  background: #eef2f1;
-
-  color: var(--muted);
-
-  font-size: 9px;
-
-  line-height: 1.3;
+  font-size: 0.72rem;
 
   font-weight: 700;
 
-  letter-spacing: 0.6px;
+  line-height: 1.2;
+
+  letter-spacing: 0.04em;
+
+  white-space: nowrap;
 
   text-transform: uppercase;
+
+  background:
+    rgba(255, 255, 255, 0.55);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
 }
 
-.publication-content h3 {
-  margin-bottom: 8px;
 
-  color: var(--ink);
+/* ---------------------------------------------------------
+   YEAR BADGE
+--------------------------------------------------------- */
+
+.publication-meta span:first-child {
+  color: #8a6416;
+
+  background:
+    rgba(212, 175, 55, 0.10);
+
+  border-color:
+    rgba(212, 175, 55, 0.28);
+}
+
+
+/* ---------------------------------------------------------
+   RESEARCH CATEGORY BADGE
+--------------------------------------------------------- */
+
+.publication-meta span:nth-child(2) {
+  color: #176b68;
+
+  background:
+    rgba(23, 107, 104, 0.08);
+
+  border-color:
+    rgba(23, 107, 104, 0.22);
+}
+
+
+/* ---------------------------------------------------------
+   PUBLICATION METRIC BADGE
+   Example:
+   Q1 · IF 7.5 (JCR 2025)
+--------------------------------------------------------- */
+
+.publication-meta span:nth-child(3) {
+  color: #5d467c;
+
+  background:
+    rgba(93, 70, 124, 0.08);
+
+  border-color:
+    rgba(93, 70, 124, 0.22);
+
+  font-weight: 650;
+}
+
+
+/* ---------------------------------------------------------
+   METADATA HOVER
+--------------------------------------------------------- */
+
+.publication-meta span:hover {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 3px 10px rgba(0, 0, 0, 0.06);
+}
+
+
+/* =========================================================
+   PUBLICATION TITLE
+========================================================= */
+
+.publication-content h3 {
+  margin: 0;
+
+  max-width: 920px;
+
+  color: #0b1726;
 
   font-family: "Playfair Display", serif;
 
-  font-size: 21px;
+  font-size: clamp(1.15rem, 1.7vw, 1.45rem);
 
-  line-height: 1.35;
+  line-height: 1.4;
 
-  font-weight: 500;
+  font-weight: 600;
 }
 
+
+/* =========================================================
+   JOURNAL
+========================================================= */
+
 .publication-journal {
-  margin-bottom: 10px;
+  margin: 0.65rem 0 0;
 
-  color: var(--muted);
+  color: #56616d;
 
-  font-size: 12px;
+  font-size: 0.92rem;
+
+  font-weight: 600;
 
   font-style: italic;
 }
 
+
+/* =========================================================
+   DOI LINK
+========================================================= */
+
 .publication-doi {
-  display: inline-block;
+  display: inline-flex;
 
-  color: var(--accent-dark);
+  align-items: center;
 
-  font-size: 11px;
+  margin-top: 0.9rem;
+
+  color: #0b1726;
+
+  font-size: 0.78rem;
 
   font-weight: 700;
+
+  text-decoration: none;
+
+  letter-spacing: 0.04em;
+
+  text-transform: uppercase;
+
+  border-bottom:
+    1px solid var(--accent);
+
+  padding-bottom: 0.15rem;
+
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .publication-doi:hover {
-  color: var(--ink);
+  color: var(--accent);
+
+  border-color: #0b1726;
 }
 
+
+/* =========================================================
+   EMPTY SEARCH RESULT
+========================================================= */
+
 .publication-empty {
-  padding: 45px 20px;
+  padding: 4rem 2rem;
 
   text-align: center;
+
+  border:
+    1px dashed rgba(11, 23, 38, 0.18);
+
+  background:
+    rgba(11, 23, 38, 0.025);
 }
 
 .publication-empty h3 {
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
 
   color: var(--ink);
 
@@ -1427,7 +1694,7 @@ p {
 .publication-empty p {
   margin: 0;
 
-  font-size: 13px;
+  opacity: 0.7;
 }
 
 
@@ -1851,6 +2118,29 @@ footer {
 
 
 /* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+.sr-only {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  padding: 0;
+  margin: -1px;
+
+  overflow: hidden;
+
+  clip: rect(0, 0, 0, 0);
+
+  white-space: nowrap;
+
+  border: 0;
+}
+
+
+/* =========================================================
    TABLET
 ========================================================= */
 
@@ -1858,6 +2148,7 @@ footer {
 
   .hero-grid {
     grid-template-columns: 1fr;
+
     gap: 30px;
   }
 
@@ -1920,14 +2211,13 @@ footer {
   }
 
   .profile-photo {
-    object-position: center 42%;
+    object-position: center calc(42% - 10px);
   }
 }
 
 
 /* =========================================================
    MOBILE NAVIGATION
-   SINGLE CONSOLIDATED RULE
 ========================================================= */
 
 @media (max-width: 900px) {
@@ -1939,10 +2229,6 @@ footer {
   .menu-toggle {
     display: flex;
   }
-
-  /*
-    Closed state
-  */
 
   .nav-links {
     display: none;
@@ -1980,12 +2266,6 @@ footer {
     -webkit-backdrop-filter: blur(14px);
   }
 
-  /*
-    OPEN state.
-    This matches:
-    links.classList.toggle('open')
-  */
-
   .nav-links.open {
     display: flex;
   }
@@ -2010,11 +2290,6 @@ footer {
     background: rgba(16, 37, 43, 0.05);
   }
 
-  /*
-    Disable desktop underline animation
-    inside the mobile menu.
-  */
-
   .nav-links a:not(.nav-button)::after {
     display: none;
   }
@@ -2035,6 +2310,23 @@ footer {
     background: var(--deep-teal-2);
 
     border-color: var(--deep-teal-2);
+  }
+
+
+  /* -----------------------------------------------
+     PUBLICATION SEARCH — TABLET
+  ------------------------------------------------ */
+
+  .publication-controls {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .publication-search-wrap {
+    grid-column: 1 / -1;
+  }
+
+  .publication-reset {
+    width: 100%;
   }
 }
 
@@ -2078,9 +2370,11 @@ footer {
     height: 330px;
   }
 
-  /*
-    Frame position remains unchanged.
-  */
+
+  /* -----------------------------------------------
+     MOBILE PHOTO FRAME
+     Frame remains completely unchanged in position.
+  ------------------------------------------------ */
 
   .hero-photo {
     width: 270px;
@@ -2093,9 +2387,11 @@ footer {
     transform: none;
   }
 
-  /*
-    Only the photograph is moved upward.
-  */
+
+  /* -----------------------------------------------
+     MOBILE PHOTO
+     Only the photograph moves upward.
+  ------------------------------------------------ */
 
   .profile-photo {
     width: 100%;
@@ -2103,7 +2399,7 @@ footer {
 
     object-fit: cover;
 
-    object-position: center 42%;
+    object-position: center calc(42% - 10px);
 
     transform: none;
   }
@@ -2172,6 +2468,11 @@ footer {
     grid-template-columns: 1fr;
   }
 
+
+  /* -----------------------------------------------
+     PUBLICATION FEATURE — MOBILE
+  ------------------------------------------------ */
+
   .pub-feature {
     padding: 22px 18px;
   }
@@ -2179,35 +2480,71 @@ footer {
   .publication-controls {
     grid-template-columns: 1fr;
 
+    padding: 0.8rem;
+
     margin: 14px 0 16px;
   }
+
+  .publication-search-wrap {
+    grid-column: auto;
+  }
+
+
+  /* -----------------------------------------------
+     PUBLICATION COUNT — MOBILE
+  ------------------------------------------------ */
 
   .publication-count {
     align-items: flex-start;
 
     flex-direction: column;
 
-    gap: 3px;
+    gap: 0.35rem;
   }
 
+
+  /* -----------------------------------------------
+     PUBLICATION ITEM — MOBILE
+  ------------------------------------------------ */
+
   .publication-item {
-    grid-template-columns: 38px 1fr;
+    grid-template-columns:
+      42px minmax(0, 1fr);
 
-    gap: 10px;
+    gap: 0.8rem;
 
-    padding: 22px 0;
+    padding: 1.4rem 0;
+  }
+
+  .publication-number {
+    font-size: 0.72rem;
   }
 
   .publication-content h3 {
-    font-size: 18px;
+    font-size: 1.08rem;
+
+    line-height: 1.45;
   }
 
+
+  /* -----------------------------------------------
+     PUBLICATION METADATA — MOBILE
+  ------------------------------------------------ */
+
   .publication-meta {
-    gap: 5px;
+    gap: 6px;
   }
 
   .publication-meta span {
-    font-size: 8px;
+    min-height: 26px;
+
+    padding: 4px 8px;
+
+    font-size: 0.65rem;
+  }
+
+  .publication-journal {
+    font-size: 0.85rem;
   }
 
   .about-grid {
@@ -2255,9 +2592,11 @@ footer {
     height: 290px;
   }
 
-  /*
-    Frame remains unchanged.
-  */
+
+  /* -----------------------------------------------
+     VERY SMALL PHOTO FRAME
+     Frame position remains unchanged.
+  ------------------------------------------------ */
 
   .hero-photo {
     width: 240px;
@@ -2268,9 +2607,11 @@ footer {
     border-width: 8px;
   }
 
-  /*
-    Only the photo is shifted upward.
-  */
+
+  /* -----------------------------------------------
+     VERY SMALL PHOTO
+     Only photograph shifts upward.
+  ------------------------------------------------ */
 
   .profile-photo {
     width: 100%;
@@ -2278,7 +2619,7 @@ footer {
 
     object-fit: cover;
 
-    object-position: center 42%;
+    object-position: center calc(42% - 10px);
 
     transform: none;
   }
@@ -2299,487 +2640,4 @@ footer {
     align-items: flex-start;
   }
 }
-/* =========================================================
-   PUBLICATION METRICS — PROFESSIONAL BADGES
-========================================================= */
-
-/* Keep the metadata row aligned and visually balanced */
-.publication-meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-}
-
-
-/* ---------------------------------------------------------
-   BASE STYLE FOR ALL PUBLICATION METADATA
---------------------------------------------------------- */
-
-.publication-meta span {
-  display: inline-flex;
-  align-items: center;
-  min-height: 28px;
-  padding: 5px 10px;
-
-  border: 1px solid rgba(127, 127, 127, 0.22);
-  border-radius: 999px;
-
-  font-size: 0.76rem;
-  font-weight: 600;
-  line-height: 1.2;
-
-  letter-spacing: 0.01em;
-  white-space: nowrap;
-
-  background: rgba(255, 255, 255, 0.55);
-
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    background 0.2s ease;
-}
-
-
-/* ---------------------------------------------------------
-   YEAR
---------------------------------------------------------- */
-
-.publication-meta span:first-child {
-  color: #8a6416;
-  background: rgba(212, 175, 55, 0.10);
-  border-color: rgba(212, 175, 55, 0.28);
-}
-
-
-/* ---------------------------------------------------------
-   RESEARCH CATEGORY
---------------------------------------------------------- */
-
-.publication-meta span:nth-child(2) {
-  color: #176b68;
-  background: rgba(23, 107, 104, 0.08);
-  border-color: rgba(23, 107, 104, 0.22);
-}
-
-
-/* ---------------------------------------------------------
-   PUBLICATION METRICS
-   Q1 · IF 7.5 (JCR 2025)
---------------------------------------------------------- */
-
-.publication-meta span:nth-child(3) {
-  color: #5d467c;
-  background: rgba(93, 70, 124, 0.08);
-  border-color: rgba(93, 70, 124, 0.22);
-
-  font-weight: 650;
-}
-
-
-/* ---------------------------------------------------------
-   SUBTLE HOVER EFFECT
---------------------------------------------------------- */
-
-.publication-meta span:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
-}
-
-
-/* =========================================================
-   MOBILE RESPONSIVE ADJUSTMENT
-========================================================= */
-
-@media (max-width: 640px) {
-
-  .publication-meta {
-    gap: 6px;
-  }
-
-  .publication-meta span {
-    min-height: 26px;
-    padding: 4px 8px;
-    font-size: 0.70rem;
-  }
-
-}
-/* =========================================================
-   PUBLICATION DATABASE
-   Search · Filters · Results
-========================================================= */
-
-.publication-count {
-  margin: 2rem 0 1.25rem;
-  padding: 1rem 1.25rem;
-  border-left: 3px solid var(--accent, #b88a44);
-  background: rgba(11, 23, 38, 0.035);
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.publication-count strong {
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-}
-
-.publication-count span {
-  font-size: 0.82rem;
-  opacity: 0.68;
-}
-
-
-/* =========================================================
-   SEARCH / FILTER BAR
-========================================================= */
-
-.publication-controls {
-  display: grid;
-  grid-template-columns: minmax(260px, 1.6fr) minmax(150px, 0.75fr) minmax(190px, 1fr) auto;
-  gap: 0.75rem;
-  margin: 1.5rem 0 2rem;
-  padding: 1rem;
-  background: #ffffff;
-  border: 1px solid rgba(11, 23, 38, 0.10);
-  box-shadow: 0 12px 30px rgba(11, 23, 38, 0.06);
-}
-
-.publication-search-wrap,
-.publication-filter-wrap {
-  min-width: 0;
-}
-
-.publication-filter-wrap {
-  display: contents;
-}
-
-.publication-controls input,
-.publication-controls select,
-.publication-controls button {
-  min-height: 48px;
-  width: 100%;
-  box-sizing: border-box;
-  font-family: inherit;
-  font-size: 0.9rem;
-}
-
-.publication-controls input,
-.publication-controls select {
-  border: 1px solid rgba(11, 23, 38, 0.14);
-  background: #fafafa;
-  color: #0b1726;
-  padding: 0 0.95rem;
-  outline: none;
-  transition:
-    border-color 0.2s ease,
-    background 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.publication-controls input::placeholder {
-  color: #6f7883;
-}
-
-.publication-controls input:focus,
-.publication-controls select:focus {
-  background: #ffffff;
-  border-color: #b88a44;
-  box-shadow: 0 0 0 3px rgba(184, 138, 68, 0.10);
-}
-
-.publication-controls select {
-  cursor: pointer;
-}
-
-
-/* =========================================================
-   RESET BUTTON
-========================================================= */
-
-.publication-reset {
-  border: 1px solid #0b1726;
-  background: #0b1726;
-  color: #ffffff;
-  padding: 0 1.25rem;
-  cursor: pointer;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  transition:
-    background 0.2s ease,
-    transform 0.2s ease,
-    opacity 0.2s ease;
-}
-
-.publication-reset:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
-}
-
-.publication-reset:active {
-  transform: translateY(0);
-}
-
-
-/* =========================================================
-   PUBLICATION FEATURE AREA
-========================================================= */
-
-.pub-feature {
-  margin-top: 1rem;
-}
-
-.publication-intro {
-  margin-bottom: 2rem;
-}
-
-.publication-intro h3 {
-  margin-bottom: 0.75rem;
-}
-
-.publication-intro p {
-  max-width: 760px;
-}
-
-
-/* =========================================================
-   PUBLICATION LIST
-========================================================= */
-
-.pub-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-
-/* =========================================================
-   PUBLICATION ITEM
-========================================================= */
-
-.publication-item {
-  display: grid;
-  grid-template-columns: 72px minmax(0, 1fr);
-  gap: 1.5rem;
-  padding: 1.75rem 0;
-  border-top: 1px solid rgba(11, 23, 38, 0.11);
-  transition:
-    padding-left 0.25s ease,
-    background 0.25s ease;
-}
-
-.publication-item:last-child {
-  border-bottom: 1px solid rgba(11, 23, 38, 0.11);
-}
-
-.publication-item:hover {
-  padding-left: 0.6rem;
-}
-
-
-/* =========================================================
-   PUBLICATION NUMBER
-========================================================= */
-
-.publication-number {
-  font-family: "DM Sans", sans-serif;
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: #b88a44;
-  letter-spacing: 0.08em;
-  padding-top: 0.2rem;
-}
-
-
-/* =========================================================
-   PUBLICATION META
-========================================================= */
-
-.publication-meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.45rem 0.8rem;
-  margin-bottom: 0.7rem;
-}
-
-.publication-meta span {
-  font-size: 0.72rem;
-  line-height: 1;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #68727d;
-}
-
-.publication-meta span:first-child {
-  color: #b88a44;
-}
-
-
-/* =========================================================
-   PUBLICATION TITLE
-========================================================= */
-
-.publication-content h3 {
-  margin: 0;
-  max-width: 920px;
-  font-family: "Playfair Display", serif;
-  font-size: clamp(1.15rem, 1.7vw, 1.45rem);
-  line-height: 1.4;
-  font-weight: 600;
-  color: #0b1726;
-}
-
-
-/* =========================================================
-   JOURNAL
-========================================================= */
-
-.publication-journal {
-  margin: 0.65rem 0 0;
-  font-size: 0.92rem;
-  font-weight: 600;
-  color: #56616d;
-  font-style: italic;
-}
-
-
-/* =========================================================
-   DOI LINK
-========================================================= */
-
-.publication-doi {
-  display: inline-flex;
-  align-items: center;
-  margin-top: 0.9rem;
-  color: #0b1726;
-  font-size: 0.78rem;
-  font-weight: 700;
-  text-decoration: none;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  border-bottom: 1px solid #b88a44;
-  padding-bottom: 0.15rem;
-  transition:
-    color 0.2s ease,
-    border-color 0.2s ease;
-}
-
-.publication-doi:hover {
-  color: #b88a44;
-  border-color: #0b1726;
-}
-
-
-/* =========================================================
-   EMPTY SEARCH RESULT
-========================================================= */
-
-.publication-empty {
-  padding: 4rem 2rem;
-  text-align: center;
-  border: 1px dashed rgba(11, 23, 38, 0.18);
-  background: rgba(11, 23, 38, 0.025);
-}
-
-.publication-empty h3 {
-  margin-bottom: 0.5rem;
-}
-
-.publication-empty p {
-  margin: 0;
-  opacity: 0.7;
-}
-
-
-/* =========================================================
-   ACCESSIBILITY
-========================================================= */
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-
-/* =========================================================
-   RESPONSIVE — TABLET
-========================================================= */
-
-@media (max-width: 900px) {
-
-  .publication-controls {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .publication-search-wrap {
-    grid-column: 1 / -1;
-  }
-
-  .publication-reset {
-    width: 100%;
-  }
-
-}
-
-
-/* =========================================================
-   RESPONSIVE — MOBILE
-========================================================= */
-
-@media (max-width: 600px) {
-
-  .publication-controls {
-    grid-template-columns: 1fr;
-    padding: 0.8rem;
-  }
-
-  .publication-search-wrap {
-    grid-column: auto;
-  }
-
-  .publication-item {
-    grid-template-columns: 42px minmax(0, 1fr);
-    gap: 0.8rem;
-    padding: 1.4rem 0;
-  }
-
-  .publication-number {
-    font-size: 0.72rem;
-  }
-
-  .publication-content h3 {
-    font-size: 1.08rem;
-    line-height: 1.45;
-  }
-
-  .publication-meta {
-    gap: 0.4rem 0.55rem;
-  }
-
-  .publication-meta span {
-    font-size: 0.65rem;
-  }
-
-  .publication-journal {
-    font-size: 0.85rem;
-  }
-
-  .publication-count {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 0.35rem;
-  }
-
-}
+```
