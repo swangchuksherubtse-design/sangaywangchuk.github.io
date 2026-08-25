@@ -441,13 +441,13 @@ p {
 
 /* =========================================================
    HERO PHOTO / PANEL
-   ENLARGED PHOTO VERSION
+   FURTHER ENLARGED PHOTO VERSION
 ========================================================= */
 
 .hero-panel {
   position: relative;
 
-  min-height: 535px;
+  min-height: 590px;
 
   display: flex;
   flex-direction: column;
@@ -460,17 +460,17 @@ p {
 
 /* =========================================================
    DECORATIVE GOLD ORB
-   ENLARGED TO MATCH PHOTO
+   ENLARGED TO MATCH LARGER PHOTO
 ========================================================= */
 
 .orb {
   position: absolute;
 
-  top: 45px;
+  top: 35px;
   left: 50%;
 
-  width: 365px;
-  height: 365px;
+  width: 405px;
+  height: 405px;
 
   transform: translateX(-50%);
 
@@ -493,7 +493,7 @@ p {
 
 /* =========================================================
    PHOTO FRAME
-   ENLARGED DESKTOP VERSION
+   FURTHER ENLARGED DESKTOP VERSION
 ========================================================= */
 
 .hero-photo {
@@ -503,10 +503,10 @@ p {
 
   flex: 0 0 auto;
 
-  width: 290px;
-  height: 290px;
+  width: 330px;
+  height: 330px;
 
-  margin-top: 60px;
+  margin-top: 48px;
 
   overflow: hidden;
 
@@ -1695,21 +1695,21 @@ footer {
   }
 
   .hero-panel {
-    min-height: 545px;
+    min-height: 615px;
   }
 
   .orb {
-    top: 35px;
+    top: 30px;
 
-    width: 340px;
-    height: 340px;
+    width: 365px;
+    height: 365px;
   }
 
   .hero-photo {
-    width: 275px;
-    height: 275px;
+    width: 310px;
+    height: 310px;
 
-    margin-top: 55px;
+    margin-top: 45px;
 
     border-width: 9px;
   }
@@ -1830,23 +1830,23 @@ footer {
   }
 
   .hero-panel {
-    min-height: 465px;
+    min-height: 525px;
 
     overflow: visible;
   }
 
   .orb {
-    top: 22px;
+    top: 18px;
 
-    width: 300px;
-    height: 300px;
+    width: 330px;
+    height: 330px;
   }
 
   .hero-photo {
-    width: 240px;
-    height: 240px;
+    width: 270px;
+    height: 270px;
 
-    margin-top: 40px;
+    margin-top: 34px;
 
     border-width: 8px;
 
@@ -2002,21 +2002,21 @@ footer {
   }
 
   .hero-panel {
-    min-height: 425px;
+    min-height: 480px;
   }
 
   .orb {
-    top: 18px;
+    top: 15px;
 
-    width: 260px;
-    height: 260px;
+    width: 290px;
+    height: 290px;
   }
 
   .hero-photo {
-    width: 215px;
-    height: 215px;
+    width: 240px;
+    height: 240px;
 
-    margin-top: 30px;
+    margin-top: 25px;
 
     border-width: 8px;
   }
