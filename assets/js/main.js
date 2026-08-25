@@ -1,5 +1,3 @@
-Main.js
-
 /* =========================================================
    MAIN WEBSITE JAVASCRIPT
    Dr. Sangay Wangchuk — Academic Website
