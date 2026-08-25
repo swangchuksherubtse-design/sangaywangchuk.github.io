@@ -6,38 +6,31 @@
 ========================================================= */
 
 :root {
-
-  /* Core text colours */
   --ink: #10252b;
   --ink-soft: #3f555b;
   --ink-light: #64767b;
 
-  /* Primary backgrounds */
   --paper: #ffffff;
   --cream: #f8f6f1;
   --ivory: #fbfaf7;
   --soft: #eef4f2;
   --soft-blue: #f1f5f8;
 
-  /* Deep academic colours */
   --deep-teal: #0d2930;
   --deep-teal-2: #143840;
   --deep-navy: #101e2c;
   --deep-navy-2: #172b3a;
 
-  /* Accent */
   --accent: #b88a4a;
   --accent-dark: #91692f;
   --accent-light: #d8b77e;
 
-  /* Supporting colours */
   --muted: #68797d;
   --line: rgba(16, 37, 43, 0.12);
   --line-light: rgba(16, 37, 43, 0.08);
 
   --white: #ffffff;
 
-  /* Special accent colours for italic phrases */
   --accent-wangchuk: #a95f3e;
   --accent-materials: #95652b;
   --accent-sensing: #147d7b;
@@ -47,17 +40,14 @@
   --accent-impact: #a96820;
   --accent-platforms: #4e5fa8;
 
-  /* Academic Profiles */
   --profile-bg-1: #f1f4f8;
   --profile-bg-2: #f2f1f8;
   --profile-bg-3: #f8f6f1;
 
-  /* Radius */
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 22px;
 
-  /* Shadows */
   --shadow-soft:
     0 10px 30px rgba(16, 37, 43, 0.07);
 
@@ -83,19 +73,12 @@ html {
 
 body {
   margin: 0;
-
   background: var(--paper);
-
   color: var(--ink);
-
   font-family: "DM Sans", sans-serif;
-
   font-size: 16px;
-
   line-height: 1.7;
-
   -webkit-font-smoothing: antialiased;
-
   text-rendering: optimizeLegibility;
 }
 
@@ -141,25 +124,19 @@ h3 {
 h1,
 h2 {
   font-family: "Playfair Display", serif;
-
   font-weight: 500;
-
   line-height: 1.08;
 }
 
 h1 {
   margin-bottom: 26px;
-
   font-size: clamp(52px, 7vw, 88px);
-
   letter-spacing: -2px;
 }
 
 h2 {
   margin-bottom: 24px;
-
   font-size: clamp(40px, 5vw, 64px);
-
   letter-spacing: -1.5px;
 }
 
@@ -221,17 +198,11 @@ p {
 
 .eyebrow {
   margin-bottom: 16px;
-
   color: var(--accent);
-
   font-size: 11px;
-
   line-height: 1.4;
-
   font-weight: 700;
-
   letter-spacing: 2px;
-
   text-transform: uppercase;
 }
 
@@ -242,43 +213,27 @@ p {
 
 .site-header {
   position: sticky;
-
   top: 0;
-
   z-index: 1000;
-
-  background:
-    rgba(255, 255, 255, 0.96);
-
-  border-bottom:
-    1px solid rgba(16, 37, 43, 0.10);
-
+  background: rgba(255, 255, 255, 0.96);
+  border-bottom: 1px solid rgba(16, 37, 43, 0.10);
   backdrop-filter: blur(16px);
-
   -webkit-backdrop-filter: blur(16px);
 }
 
 .nav {
   min-height: 78px;
-
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
-
   gap: 30px;
 }
 
 .brand {
   color: var(--ink);
-
   font-size: 25px;
-
   line-height: 1;
-
   font-weight: 700;
-
   letter-spacing: -1px;
 }
 
@@ -288,37 +243,25 @@ p {
 
 .nav-links {
   display: flex;
-
   align-items: center;
-
   gap: 28px;
 }
 
 .nav-links a {
   position: relative;
-
   color: var(--ink-soft);
-
   font-size: 13px;
-
   font-weight: 600;
 }
 
 .nav-links a:not(.nav-button)::after {
   content: "";
-
   position: absolute;
-
   left: 0;
-
   bottom: -7px;
-
   width: 0;
-
   height: 1px;
-
   background: var(--accent);
-
   transition: width 0.25s ease;
 }
 
@@ -328,11 +271,8 @@ p {
 
 .nav-button {
   padding: 10px 18px;
-
   border: 1px solid var(--ink);
-
   border-radius: 999px;
-
   transition:
     background 0.25s ease,
     color 0.25s ease,
@@ -341,23 +281,16 @@ p {
 
 .nav-button:hover {
   background: var(--deep-teal);
-
   border-color: var(--deep-teal);
-
   color: var(--white);
 }
 
 .menu-toggle {
   display: none;
-
   border: 0;
-
   background: transparent;
-
   color: var(--ink);
-
   font-size: 26px;
-
   cursor: pointer;
 }
 
@@ -369,9 +302,7 @@ p {
 
 .hero {
   position: relative;
-
   overflow: hidden;
-
   padding: 105px 0 95px;
 
   background:
@@ -393,24 +324,15 @@ p {
     );
 }
 
-
-/* subtle architectural glow */
-
 .hero::before {
   content: "";
-
   position: absolute;
-
   width: 560px;
   height: 560px;
-
   top: -280px;
   right: -180px;
-
   border-radius: 50%;
-
-  border:
-    1px solid rgba(216, 183, 126, 0.18);
+  border: 1px solid rgba(216, 183, 126, 0.18);
 
   box-shadow:
     0 0 0 70px rgba(216, 183, 126, 0.025),
@@ -421,15 +343,11 @@ p {
 
 .hero::after {
   content: "";
-
   position: absolute;
-
   width: 420px;
   height: 420px;
-
   bottom: -250px;
   left: -180px;
-
   border-radius: 50%;
 
   background:
@@ -444,17 +362,13 @@ p {
 
 .hero-grid {
   display: grid;
-
   grid-template-columns: 1.02fr 0.98fr;
-
   align-items: center;
-
   gap: 70px;
 }
 
 .hero-copy {
   position: relative;
-
   z-index: 5;
 }
 
@@ -468,51 +382,34 @@ p {
 
 .hero .lead {
   max-width: 680px;
-
   margin-bottom: 22px;
-
   color: rgba(255, 255, 255, 0.84);
-
   font-size: 18px;
-
   line-height: 1.75;
 }
 
 .hero-affiliation {
   margin-bottom: 30px;
-
   color: rgba(255, 255, 255, 0.64);
-
   font-size: 13px;
-
   font-weight: 600;
 }
 
 .hero-actions {
   display: flex;
-
   flex-wrap: wrap;
-
   gap: 12px;
-
   margin-bottom: 48px;
 }
 
 .button {
   display: inline-flex;
-
   align-items: center;
-
   justify-content: center;
-
   min-height: 48px;
-
   padding: 12px 22px;
-
   border-radius: 999px;
-
   font-size: 13px;
-
   font-weight: 700;
 
   transition:
@@ -528,7 +425,6 @@ p {
 
 .button.primary {
   background: var(--accent);
-
   color: var(--deep-teal);
 }
 
@@ -537,59 +433,41 @@ p {
 }
 
 .button.secondary {
-  border:
-    1px solid rgba(255, 255, 255, 0.28);
-
-  background:
-    rgba(255, 255, 255, 0.07);
-
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.07);
   color: var(--white);
 }
 
 .button.secondary:hover {
   border-color: rgba(255, 255, 255, 0.55);
-
-  background:
-    rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.14);
 }
 
 .quick-stats {
   display: flex;
-
   flex-wrap: wrap;
-
   gap: 34px;
 }
 
 .quick-stats > div {
   display: flex;
-
   align-items: center;
-
   gap: 10px;
 }
 
 .quick-stats strong {
   color: var(--white);
-
   font-size: 27px;
-
   line-height: 1;
-
   font-weight: 700;
 }
 
 .quick-stats span {
   color: rgba(255, 255, 255, 0.60);
-
   font-size: 10px;
-
   line-height: 1.35;
-
   font-weight: 700;
-
   letter-spacing: 0.8px;
-
   text-transform: uppercase;
 }
 
@@ -600,15 +478,10 @@ p {
 
 .hero-panel {
   position: relative;
-
   min-height: 590px;
-
   display: flex;
-
   flex-direction: column;
-
   align-items: center;
-
   justify-content: flex-start;
 }
 
@@ -619,11 +492,8 @@ p {
 
 .orb {
   position: absolute;
-
   top: 35px;
-
   left: 50%;
-
   width: 405px;
   height: 405px;
 
@@ -644,19 +514,17 @@ p {
     0 0 90px rgba(216, 183, 126, 0.08);
 
   z-index: 1;
-
   pointer-events: none;
 }
 
 
 /* =========================================================
    HERO PHOTO FRAME
-   POSITION RETAINED
+   FRAME POSITION UNCHANGED
 ========================================================= */
 
 .hero-photo {
   position: relative;
-
   z-index: 4;
 
   flex: 0 0 auto;
@@ -668,13 +536,10 @@ p {
 
   overflow: hidden;
 
-  border:
-    10px solid rgba(255, 255, 255, 0.96);
-
+  border: 10px solid rgba(255, 255, 255, 0.96);
   border-radius: 50%;
 
-  background:
-    #f5f2e9;
+  background: #f5f2e9;
 
   box-shadow:
     0 20px 50px rgba(3, 18, 24, 0.32),
@@ -687,6 +552,8 @@ p {
 
 /* =========================================================
    PROFILE PHOTO
+   ONLY THE PHOTO IS MOVED UPWARD
+   FRAME REMAINS UNCHANGED
 ========================================================= */
 
 .profile-photo {
@@ -697,10 +564,16 @@ p {
 
   object-fit: cover;
 
-  object-position: center center;
+  /*
+    Previous:
+    object-position: center center;
+
+    New:
+    Slightly higher position inside the fixed frame.
+  */
+  object-position: center 42%;
 
   transform: none;
-
   transform-origin: center center;
 }
 
@@ -711,7 +584,6 @@ p {
 
 .research-card {
   position: relative;
-
   z-index: 6;
 
   flex: 0 0 auto;
@@ -719,42 +591,32 @@ p {
   width: min(350px, 88%);
 
   margin-top: 14px;
-
   margin-right: -30px;
 
   padding: 23px 25px;
 
-  border:
-    1px solid rgba(255, 255, 255, 0.50);
-
+  border: 1px solid rgba(255, 255, 255, 0.50);
   border-radius: var(--radius-md);
 
-  background:
-    rgba(255, 255, 255, 0.96);
+  background: rgba(255, 255, 255, 0.96);
 
   box-shadow:
     0 18px 45px rgba(3, 18, 24, 0.22);
 
   backdrop-filter: blur(14px);
-
   -webkit-backdrop-filter: blur(14px);
 }
 
 .research-card > span {
   display: block;
-
   margin-bottom: 9px;
 
   color: var(--accent-dark);
 
   font-size: 10px;
-
   line-height: 1.4;
-
   font-weight: 700;
-
   letter-spacing: 1.4px;
-
   text-transform: uppercase;
 }
 
@@ -764,11 +626,8 @@ p {
   color: var(--ink);
 
   font-family: "Playfair Display", serif;
-
   font-size: 23px;
-
   font-weight: 500;
-
   line-height: 1.2;
 }
 
@@ -778,7 +637,6 @@ p {
   color: var(--ink-soft);
 
   font-size: 12px;
-
   line-height: 1.55;
 }
 
@@ -789,30 +647,23 @@ p {
 
 .tags {
   display: flex;
-
   flex-wrap: wrap;
-
   gap: 7px;
 }
 
 .tags span {
   display: inline-flex;
-
   align-items: center;
 
   padding: 5px 9px;
 
-  border:
-    1px solid rgba(16, 37, 43, 0.12);
-
+  border: 1px solid rgba(16, 37, 43, 0.12);
   border-radius: 999px;
 
   color: var(--ink-soft);
 
   font-size: 10px;
-
   line-height: 1.2;
-
   font-weight: 600;
 
   background: #f7f8f6;
@@ -826,23 +677,17 @@ p {
 .ticker {
   overflow: hidden;
 
-  border-top:
-    1px solid rgba(16, 37, 43, 0.10);
+  border-top: 1px solid rgba(16, 37, 43, 0.10);
+  border-bottom: 1px solid rgba(16, 37, 43, 0.10);
 
-  border-bottom:
-    1px solid rgba(16, 37, 43, 0.10);
-
-  background:
-    #ffffff;
+  background: #ffffff;
 }
 
 .ticker-inner {
   min-height: 64px;
 
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
 
   gap: 30px;
@@ -850,9 +695,7 @@ p {
   color: var(--muted);
 
   font-size: 10px;
-
   font-weight: 700;
-
   letter-spacing: 1.5px;
 }
 
@@ -863,14 +706,9 @@ p {
 
 .section {
   position: relative;
-
   padding: 110px 0;
-
   overflow: hidden;
 }
-
-
-/* Light neutral section */
 
 .section.soft {
   background:
@@ -881,9 +719,6 @@ p {
       #f0f4f3 100%
     );
 }
-
-
-/* Dark research/project section */
 
 .section.dark {
   background:
@@ -923,13 +758,11 @@ p {
 
 .section-heading > p {
   max-width: 530px;
-
   margin-bottom: 6px;
 
   color: var(--ink-soft);
 
   font-size: 15px;
-
   line-height: 1.8;
 }
 
@@ -949,20 +782,15 @@ p {
 
 .research-grid {
   display: grid;
-
   grid-template-columns: repeat(4, 1fr);
-
   gap: 16px;
 }
 
 .theme-card {
   min-height: 360px;
-
   padding: 30px;
 
-  border:
-    1px solid rgba(16, 37, 43, 0.09);
-
+  border: 1px solid rgba(16, 37, 43, 0.09);
   border-radius: var(--radius-md);
 
   background:
@@ -1009,9 +837,7 @@ p {
   color: var(--accent-dark);
 
   font-size: 11px;
-
   font-weight: 700;
-
   letter-spacing: 1px;
 }
 
@@ -1025,9 +851,7 @@ p {
   color: var(--ink);
 
   font-family: "Playfair Display", serif;
-
   font-size: 27px;
-
   font-weight: 500;
 }
 
@@ -1037,7 +861,6 @@ p {
   color: var(--ink-soft);
 
   font-size: 13px;
-
   line-height: 1.7;
 }
 
@@ -1050,7 +873,6 @@ p {
   color: var(--accent-dark);
 
   font-size: 12px;
-
   font-weight: 700;
 }
 
@@ -1150,8 +972,7 @@ p {
 
   border-radius: var(--radius-md);
 
-  background:
-    #ffffff;
+  background: #ffffff;
 
   box-shadow:
     0 8px 25px rgba(16, 37, 43, 0.05);
@@ -1911,7 +1732,6 @@ footer {
 
   .hero-grid {
     grid-template-columns: 1fr;
-
     gap: 30px;
   }
 
@@ -1957,20 +1777,26 @@ footer {
 
   .section-heading {
     grid-template-columns: 1fr;
-
     gap: 15px;
   }
 
   .about-grid {
     grid-template-columns: 1fr;
-
     gap: 40px;
   }
 
   .contact-inner {
     grid-template-columns: 1fr;
-
     gap: 35px;
+  }
+
+  /*
+    Tablet:
+    keep frame position unchanged and move only
+    the image upward.
+  */
+  .profile-photo {
+    object-position: center 42%;
   }
 }
 
@@ -2032,12 +1858,13 @@ footer {
 
   .nav-button {
     margin-top: 4px;
-
     text-align: center;
   }
 
 
-  /* Hero mobile */
+  /* =======================================================
+     HERO MOBILE
+  ======================================================= */
 
   .hero {
     padding: 75px 0 70px;
@@ -2057,7 +1884,6 @@ footer {
 
   .hero-panel {
     min-height: 525px;
-
     overflow: visible;
   }
 
@@ -2068,6 +1894,9 @@ footer {
     height: 330px;
   }
 
+  /*
+    Frame remains in the same position.
+  */
   .hero-photo {
     width: 270px;
     height: 270px;
@@ -2079,13 +1908,16 @@ footer {
     transform: none;
   }
 
+  /*
+    Only the image moves upward.
+  */
   .profile-photo {
     width: 100%;
     height: 100%;
 
     object-fit: cover;
 
-    object-position: center center;
+    object-position: center 42%;
 
     transform: none;
   }
@@ -2238,6 +2070,9 @@ footer {
     height: 290px;
   }
 
+  /*
+    Frame remains unchanged.
+  */
   .hero-photo {
     width: 240px;
     height: 240px;
@@ -2247,13 +2082,16 @@ footer {
     border-width: 8px;
   }
 
+  /*
+    Only the photo is shifted upward.
+  */
   .profile-photo {
     width: 100%;
     height: 100%;
 
     object-fit: cover;
 
-    object-position: center center;
+    object-position: center 42%;
 
     transform: none;
   }
