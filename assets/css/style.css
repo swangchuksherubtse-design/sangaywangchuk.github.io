@@ -1,4 +1,3 @@
-```css
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap');
 
 
@@ -75,15 +74,6 @@
 
   --shadow-deep:
     0 22px 55px rgba(7, 25, 32, 0.18);
-
-  /* =======================================================
-     HERO PHOTO POSITION
-
-     Approximately 1 cm upward.
-     This affects ONLY the image, not the circular frame.
-  ======================================================= */
-
-  --profile-photo-shift-y: -38px;
 }
 
 
@@ -98,11 +88,6 @@
 html {
   scroll-behavior: smooth;
 
-  /*
-     IMPORTANT:
-     Use clip instead of hidden so the sticky header
-     is not trapped by an overflow container.
-  */
   overflow-x: clip;
 }
 
@@ -110,10 +95,6 @@ body {
   margin: 0;
   min-width: 0;
 
-  /*
-     IMPORTANT:
-     Use clip instead of hidden for the same reason.
-  */
   overflow-x: clip;
 
   background: var(--paper);
@@ -155,8 +136,6 @@ button {
 
 /* =========================================================
    SECTION SCROLL OFFSET
-   Prevents sticky navigation from covering headings
-   when a navigation link is clicked.
 ========================================================= */
 
 section,
@@ -279,7 +258,7 @@ p {
 
 /* =========================================================
    HEADER
-   STICKY NAVIGATION — FIXED WHILE SCROLLING
+   STICKY NAVIGATION
 ========================================================= */
 
 .site-header {
@@ -290,24 +269,14 @@ p {
 
   z-index: 1000;
 
-  /*
-     Slightly stronger background ensures that content
-     scrolling underneath never becomes visually distracting.
-  */
   background: rgba(255, 255, 255, 0.97);
 
   border-bottom:
     1px solid rgba(16, 37, 43, 0.10);
 
-  /*
-     Keep the premium glass effect.
-  */
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
 
-  /*
-     Prevent accidental transparency during scrolling.
-  */
   isolation: isolate;
 }
 
@@ -731,7 +700,7 @@ select:focus-visible {
 
 /* =========================================================
    HERO PHOTO FRAME
-   FRAME POSITION IS COMPLETELY FIXED
+   FRAME POSITION — FIXED RELATIVE TO ITS DESIGN
 ========================================================= */
 
 .hero-photo {
@@ -760,13 +729,17 @@ select:focus-visible {
     0 0 0 1px rgba(216, 183, 126, 0.35),
     0 0 55px rgba(216, 183, 126, 0.13);
 
-  transform: none;
+  /*
+     The frame is moved as a whole only to preserve
+     the intended relationship with the research card.
+  */
+  transform: translateY(57px);
 }
 
 
 /* =========================================================
    HERO PROFILE PHOTO
-   ONLY THE PHOTO MOVES UP
+   ONLY THE ACTUAL PHOTO MOVES UP INSIDE THE FRAME
 ========================================================= */
 
 .profile-photo {
@@ -777,10 +750,14 @@ select:focus-visible {
 
   object-fit: cover;
 
-  object-position:
-    center calc(42% + var(--profile-photo-shift-y));
-
-  transform: none;
+  /*
+     IMPORTANT:
+     The frame remains intact.
+     The image itself is enlarged and shifted upward.
+  */
+  transform:
+    translateY(-28px)
+    scale(1.62);
 
   transform-origin: center center;
 }
@@ -799,7 +776,11 @@ select:focus-visible {
 
   width: min(350px, 88%);
 
-  margin-top: 14px;
+  /*
+     Increased to maintain the correct relationship
+     with the repositioned photo frame.
+  */
+  margin-top: 57px;
   margin-right: -30px;
 
   padding: 23px 25px;
@@ -2299,10 +2280,25 @@ footer {
     margin-top: 45px;
 
     border-width: 9px;
+
+    /*
+       Keep frame relationship fixed.
+    */
+    transform: translateY(57px);
+  }
+
+  .profile-photo {
+    /*
+       Tablet-specific image movement.
+       Frame remains intact.
+    */
+    transform:
+      translateY(-28px)
+      scale(1.58);
   }
 
   .research-card {
-    margin-top: 12px;
+    margin-top: 57px;
 
     margin-right: 0;
 
@@ -2437,9 +2433,6 @@ footer {
     border-color: var(--deep-teal-2);
   }
 
-  /*
-     Smaller scroll offset for the mobile header.
-  */
   section,
   #research,
   #publications,
@@ -2506,7 +2499,7 @@ footer {
 
   /* =======================================================
      MOBILE PHOTO FRAME
-     FRAME REMAINS FIXED
+     FRAME POSITION PRESERVED
   ======================================================= */
 
   .hero-photo {
@@ -2517,13 +2510,13 @@ footer {
 
     border-width: 8px;
 
-    transform: none;
+    transform: translateY(57px);
   }
 
 
   /* =======================================================
      MOBILE PHOTO
-     ONLY PHOTO SHIFTS UP
+     ONLY PHOTO MOVES UP
   ======================================================= */
 
   .profile-photo {
@@ -2532,10 +2525,11 @@ footer {
 
     object-fit: cover;
 
-    object-position:
-      center calc(42% + var(--profile-photo-shift-y));
+    transform:
+      translateY(-26px)
+      scale(1.54);
 
-    transform: none;
+    transform-origin: center center;
   }
 
   .research-card {
@@ -2546,7 +2540,7 @@ footer {
 
     width: min(315px, 88vw);
 
-    margin-top: 8px;
+    margin-top: 57px;
     margin-right: 0;
 
     padding: 19px;
@@ -2757,7 +2751,7 @@ footer {
 
   /* =======================================================
      VERY SMALL PHOTO FRAME
-     FRAME POSITION REMAINS UNCHANGED
+     FRAME POSITION PRESERVED
   ======================================================= */
 
   .hero-photo {
@@ -2768,13 +2762,13 @@ footer {
 
     border-width: 8px;
 
-    transform: none;
+    transform: translateY(57px);
   }
 
 
   /* =======================================================
      VERY SMALL PHOTO
-     ONLY PHOTO SHIFTS UP
+     ONLY PHOTO MOVES UP
   ======================================================= */
 
   .profile-photo {
@@ -2783,16 +2777,17 @@ footer {
 
     object-fit: cover;
 
-    object-position:
-      center calc(42% + var(--profile-photo-shift-y));
+    transform:
+      translateY(-26px)
+      scale(1.54);
 
-    transform: none;
+    transform-origin: center center;
   }
 
   .research-card {
     width: 92%;
 
-    margin-top: 6px;
+    margin-top: 57px;
   }
 
   .quick-stats {
@@ -2841,4 +2836,3 @@ footer {
     scroll-behavior: auto !important;
   }
 }
-```
