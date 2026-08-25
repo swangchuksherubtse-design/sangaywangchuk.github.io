@@ -339,7 +339,14 @@ const publications = [
 function getPublicationYears() {
   const years = publications
     .map(pub => Number(pub.year))
-    .filter(Boolean);
+    .filter(year => Number.isFinite(year));
+
+  if (!years.length) {
+    return {
+      newest: "",
+      oldest: ""
+    };
+  }
 
   return {
     newest: Math.max(...years),
@@ -363,42 +370,28 @@ function escapeHTML(value) {
 
 
 /* =========================================================
-   PUBLICATION METRICS DISPLAY
+   PUBLICATION DETAILS
 ========================================================= */
 
 function getPublicationDetails(pub) {
-
   const parts = [];
 
-  /*
-    Journal quartile
-  */
   if (pub.quartile) {
     parts.push(pub.quartile);
   }
 
-  /*
-    Impact Factor with the specific
-    JCR metric year.
-  */
   if (pub.impactFactor) {
-
     parts.push(
-      `IF ${pub.impactFactor}${
+      `IF ${escapeHTML(pub.impactFactor)}${
         pub.metricYear
-          ? ` (JCR ${pub.metricYear})`
+          ? ` (JCR ${escapeHTML(pub.metricYear)})`
           : ""
       }`
     );
-
   }
 
-  /*
-    Additional journal information,
-    e.g. volume/issue for journals without IF.
-  */
   if (pub.details) {
-    parts.push(pub.details);
+    parts.push(escapeHTML(pub.details));
   }
 
   return parts.join(" · ");
@@ -410,86 +403,46 @@ function getPublicationDetails(pub) {
 ========================================================= */
 
 function updatePublicationCount(list = publications) {
-
-  const section =
-    document.querySelector("#publications");
+  const section = document.querySelector("#publications");
 
   if (!section) return;
 
-  let counter =
-    section.querySelector(".publication-count");
+  let counter = section.querySelector(".publication-count");
 
   if (!counter) {
+    counter = document.createElement("div");
+    counter.className = "publication-count";
 
-    counter =
-      document.createElement("div");
-
-    counter.className =
-      "publication-count";
-
-    const controls =
-      section.querySelector(
-        ".publication-controls"
-      );
-
-    const publicationList =
-      section.querySelector(".pub-list");
+    const controls = section.querySelector(".publication-controls");
+    const publicationList = section.querySelector(".pub-list");
 
     if (controls) {
-
-      controls.parentNode.insertBefore(
-        counter,
-        controls
-      );
-
+      controls.parentNode.insertBefore(counter, controls);
     } else if (publicationList) {
-
-      publicationList.parentNode.insertBefore(
-        counter,
-        publicationList
-      );
-
+      publicationList.parentNode.insertBefore(counter, publicationList);
     } else {
-
       section.appendChild(counter);
-
     }
   }
 
-  const total =
-    publications.length;
-
-  const showing =
-    list.length;
-
-  const {
-    newest,
-    oldest
-  } = getPublicationYears();
-
+  const total = publications.length;
+  const showing = list.length;
+  const { newest, oldest } = getPublicationYears();
 
   if (showing === total) {
-
     counter.innerHTML = `
       <div>
-        <strong>
-          ${total} Publications
-        </strong>
+        <strong>${total} Publications</strong>
       </div>
 
       <span>
-        Peer-reviewed research articles ·
-        ${oldest}–${newest}
+        Peer-reviewed research articles · ${oldest}–${newest}
       </span>
     `;
-
   } else {
-
     counter.innerHTML = `
       <div>
-        <strong>
-          Showing ${showing} of ${total} Publications
-        </strong>
+        <strong>Showing ${showing} of ${total} Publications</strong>
       </div>
 
       <span>
@@ -504,168 +457,113 @@ function updatePublicationCount(list = publications) {
    RENDER PUBLICATIONS
 ========================================================= */
 
-function renderPublications(
-  list = publications
-) {
-
-  const container =
-    document.querySelector(".pub-list");
+function renderPublications(list = publications) {
+  const container = document.querySelector(".pub-list");
 
   if (!container) return;
 
+  const sortedList = [...list].sort((a, b) => {
+    const yearDifference =
+      Number(b.year) - Number(a.year);
 
-  /*
-    Always show newest publications first.
-  */
-  const sortedList =
-    [...list].sort(
-      (a, b) =>
-        Number(b.year) -
-        Number(a.year)
-    );
+    if (yearDifference !== 0) {
+      return yearDifference;
+    }
 
+    return a.title.localeCompare(b.title);
+  });
 
-  updatePublicationCount(
-    sortedList
-  );
-
-
-  /* -------------------------------------------------------
-     EMPTY RESULTS
-  ------------------------------------------------------- */
+  updatePublicationCount(sortedList);
 
   if (sortedList.length === 0) {
-
     container.innerHTML = `
       <div class="publication-empty">
-
-        <h3>
-          No publications found
-        </h3>
+        <h3>No publications found</h3>
 
         <p>
-          Try a different search term,
-          year, or research area.
+          Try another search term, year, or research area.
         </p>
-
       </div>
     `;
 
     return;
   }
 
+  container.innerHTML = sortedList
+    .map((pub, index) => {
+      const title = escapeHTML(pub.title);
+      const journal = escapeHTML(pub.journal);
+      const category = escapeHTML(pub.category);
+      const year = escapeHTML(pub.year);
+      const details = getPublicationDetails(pub);
 
-  /* -------------------------------------------------------
-     PUBLICATION CARDS
-  ------------------------------------------------------- */
+      return `
+        <article
+          class="publication-item"
+          data-year="${year}"
+          data-category="${category}"
+        >
 
-  container.innerHTML =
-    sortedList
-      .map((pub, index) => {
-
-        const title =
-          escapeHTML(pub.title);
-
-        const journal =
-          escapeHTML(pub.journal);
-
-        const category =
-          escapeHTML(pub.category);
-
-        const details =
-          escapeHTML(
-            getPublicationDetails(pub)
-          );
-
-        const year =
-          escapeHTML(pub.year);
-
-        const doi =
-          escapeHTML(pub.doi);
-
-
-        return `
-
-          <article
-            class="publication-item"
-            data-year="${year}"
-            data-category="${category}"
+          <div
+            class="publication-number"
+            aria-hidden="true"
           >
+            ${String(index + 1).padStart(2, "0")}
+          </div>
 
-            <div
-              class="publication-number"
-              aria-hidden="true"
-            >
-              ${String(index + 1).padStart(2, "0")}
-            </div>
+          <div class="publication-content">
 
+            <div class="publication-meta">
 
-            <div class="publication-content">
+              <span>${year}</span>
 
-              <div class="publication-meta">
-
-                <span>
-                  ${year}
-                </span>
-
-                <span>
-                  ${category}
-                </span>
-
-                ${
-                  details
-                    ? `
-                      <span>
-                        ${details}
-                      </span>
-                    `
-                    : ""
-                }
-
-              </div>
-
-
-              <h3>
-                ${title}
-              </h3>
-
-
-              <p class="publication-journal">
-                ${journal}
-              </p>
-
+              <span>${category}</span>
 
               ${
-                pub.doi
-                  ? `
-                    <a
-                      class="publication-doi"
-                      href="${doi}"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="Open DOI for ${title}"
-                    >
-                      View DOI →
-                    </a>
-                  `
-                  : `
-                    <span
-                      class="publication-doi"
-                      aria-disabled="true"
-                    >
-                      DOI unavailable
-                    </span>
-                  `
+                details
+                  ? `<span>${details}</span>`
+                  : ""
               }
 
             </div>
 
-          </article>
+            <h3>
+              ${title}
+            </h3>
 
-        `;
+            <p class="publication-journal">
+              ${journal}
+            </p>
 
-      })
-      .join("");
+            ${
+              pub.doi
+                ? `
+                  <a
+                    class="publication-doi"
+                    href="${escapeHTML(pub.doi)}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Open DOI for ${title}"
+                  >
+                    View DOI →
+                  </a>
+                `
+                : `
+                  <span
+                    class="publication-doi"
+                    aria-disabled="true"
+                  >
+                    DOI unavailable
+                  </span>
+                `
+            }
+
+          </div>
+
+        </article>
+      `;
+    })
+    .join("");
 }
 
 
@@ -674,109 +572,109 @@ function renderPublications(
 ========================================================= */
 
 function setupPublicationFilters() {
-
-  const section =
-    document.querySelector(
-      "#publications"
-    );
+  const section = document.querySelector("#publications");
 
   if (!section) return;
 
-
-  /*
-    Use existing controls if present.
-    Otherwise create them automatically.
-  */
-
-  let controls =
-    section.querySelector(
-      ".publication-controls"
-    );
-
+  let controls = section.querySelector(".publication-controls");
 
   if (!controls) {
-
-    controls =
-      document.createElement("div");
-
-    controls.className =
-      "publication-controls";
+    controls = document.createElement("div");
+    controls.className = "publication-controls";
 
     controls.innerHTML = `
+      <div class="publication-search-wrap">
 
-      <input
-        type="search"
-        id="publication-search"
-        placeholder="Search title, journal, keyword..."
-        aria-label="Search publications"
-        autocomplete="off"
-      >
+        <label
+          for="publication-search"
+          class="sr-only"
+        >
+          Search publications
+        </label>
 
+        <input
+          type="search"
+          id="publication-search"
+          placeholder="Search publications..."
+          aria-label="Search publications"
+          autocomplete="off"
+        >
 
-      <select
-        id="publication-year"
-        aria-label="Filter publications by year"
-      >
-
-        <option value="all">
-          All years
-        </option>
-
-      </select>
+      </div>
 
 
-      <select
-        id="publication-category"
-        aria-label="Filter publications by research area"
-      >
+      <div class="publication-filter-wrap">
 
-        <option value="all">
-          All research areas
-        </option>
+        <label
+          for="publication-year"
+          class="sr-only"
+        >
+          Filter by year
+        </label>
 
-      </select>
+        <select
+          id="publication-year"
+          aria-label="Filter publications by year"
+        >
+          <option value="all">
+            All years
+          </option>
+        </select>
 
+
+        <label
+          for="publication-category"
+          class="sr-only"
+        >
+          Filter by research area
+        </label>
+
+        <select
+          id="publication-category"
+          aria-label="Filter publications by research area"
+        >
+          <option value="all">
+            All research areas
+          </option>
+        </select>
+
+
+        <button
+          type="button"
+          id="publication-reset"
+          class="publication-reset"
+        >
+          Reset
+        </button>
+
+      </div>
     `;
 
-
     const publicationList =
-      section.querySelector(
-        ".pub-list"
-      );
-
+      section.querySelector(".pub-list");
 
     if (publicationList) {
-
       publicationList.parentNode.insertBefore(
         controls,
         publicationList
       );
-
     } else {
-
-      section.appendChild(
-        controls
-      );
-
+      section.appendChild(controls);
     }
-
   }
 
 
   const search =
-    controls.querySelector(
-      "#publication-search"
-    );
+    controls.querySelector("#publication-search");
 
   const yearSelect =
-    controls.querySelector(
-      "#publication-year"
-    );
+    controls.querySelector("#publication-year");
 
   const categorySelect =
-    controls.querySelector(
-      "#publication-category"
-    );
+    controls.querySelector("#publication-category");
+
+  const resetButton =
+    controls.querySelector("#publication-reset");
 
 
   if (
@@ -794,39 +692,27 @@ function setupPublicationFilters() {
 
   const years = [
     ...new Set(
-      publications.map(
-        pub => Number(pub.year)
-      )
+      publications
+        .map(pub => Number(pub.year))
+        .filter(year => Number.isFinite(year))
     )
-  ].sort(
-    (a, b) => b - a
-  );
+  ].sort((a, b) => b - a);
 
 
-  if (
-    yearSelect.options.length === 1
-  ) {
+  years.forEach(year => {
+    if (
+      ![
+        ...yearSelect.options
+      ].some(option => option.value === String(year))
+    ) {
+      const option = document.createElement("option");
 
-    years.forEach(year => {
+      option.value = String(year);
+      option.textContent = String(year);
 
-      const option =
-        document.createElement(
-          "option"
-        );
-
-      option.value =
-        String(year);
-
-      option.textContent =
-        String(year);
-
-      yearSelect.appendChild(
-        option
-      );
-
-    });
-
-  }
+      yearSelect.appendChild(option);
+    }
+  });
 
 
   /* -------------------------------------------------------
@@ -835,40 +721,27 @@ function setupPublicationFilters() {
 
   const categories = [
     ...new Set(
-      publications.map(
-        pub => pub.category
-      )
+      publications
+        .map(pub => pub.category)
+        .filter(Boolean)
     )
-  ].sort(
-    (a, b) =>
-      a.localeCompare(b)
-  );
+  ].sort((a, b) => a.localeCompare(b));
 
 
-  if (
-    categorySelect.options.length === 1
-  ) {
+  categories.forEach(category => {
+    if (
+      ![
+        ...categorySelect.options
+      ].some(option => option.value === category)
+    ) {
+      const option = document.createElement("option");
 
-    categories.forEach(category => {
+      option.value = category;
+      option.textContent = category;
 
-      const option =
-        document.createElement(
-          "option"
-        );
-
-      option.value =
-        category;
-
-      option.textContent =
-        category;
-
-      categorySelect.appendChild(
-        option
-      );
-
-    });
-
-  }
+      categorySelect.appendChild(option);
+    }
+  });
 
 
   /* -------------------------------------------------------
@@ -876,7 +749,6 @@ function setupPublicationFilters() {
   ------------------------------------------------------- */
 
   function filterPublications() {
-
     const searchTerms =
       search.value
         .toLowerCase()
@@ -884,73 +756,61 @@ function setupPublicationFilters() {
         .split(/\s+/)
         .filter(Boolean);
 
-
     const selectedYear =
       yearSelect.value;
-
 
     const selectedCategory =
       categorySelect.value;
 
 
-    const filtered =
-      publications.filter(pub => {
+    const filtered = publications.filter(pub => {
 
-        const searchableText =
-          [
-            pub.title,
-            pub.journal,
-            pub.category,
-            pub.year,
-            pub.quartile,
-            pub.impactFactor,
-            pub.metricYear,
-            pub.details
-          ]
-            .join(" ")
-            .toLowerCase();
-
-
-        const matchesSearch =
-          searchTerms.length === 0 ||
-          searchTerms.every(
-            term =>
-              searchableText.includes(
-                term
-              )
-          );
+      const searchableText = [
+        pub.title,
+        pub.journal,
+        pub.category,
+        pub.year,
+        pub.quartile,
+        pub.impactFactor,
+        pub.metricYear,
+        pub.details
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
 
 
-        const matchesYear =
-          selectedYear === "all" ||
-          String(pub.year) ===
-            selectedYear;
-
-
-        const matchesCategory =
-          selectedCategory === "all" ||
-          pub.category ===
-            selectedCategory;
-
-
-        return (
-          matchesSearch &&
-          matchesYear &&
-          matchesCategory
+      const matchesSearch =
+        searchTerms.length === 0 ||
+        searchTerms.every(term =>
+          searchableText.includes(term)
         );
 
-      });
+
+      const matchesYear =
+        selectedYear === "all" ||
+        String(pub.year) === selectedYear;
 
 
-    renderPublications(
-      filtered
-    );
+      const matchesCategory =
+        selectedCategory === "all" ||
+        pub.category === selectedCategory;
 
+
+      return (
+        matchesSearch &&
+        matchesYear &&
+        matchesCategory
+      );
+    });
+
+
+    renderPublications(filtered);
   }
 
 
   /* -------------------------------------------------------
-     EVENT LISTENERS
+     EVENTS
   ------------------------------------------------------- */
 
   search.addEventListener(
@@ -967,6 +827,22 @@ function setupPublicationFilters() {
     "change",
     filterPublications
   );
+
+
+  if (resetButton) {
+    resetButton.addEventListener(
+      "click",
+      () => {
+        search.value = "";
+        yearSelect.value = "all";
+        categorySelect.value = "all";
+
+        filterPublications();
+
+        search.focus();
+      }
+    );
+  }
 }
 
 
@@ -977,10 +853,7 @@ function setupPublicationFilters() {
 document.addEventListener(
   "DOMContentLoaded",
   () => {
-
     setupPublicationFilters();
-
     renderPublications();
-
   }
 );
