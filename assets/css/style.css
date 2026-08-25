@@ -1,21 +1,26 @@
-```css
+style.css
+
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap');
+
 
 /* =========================================================
    GLOBAL DESIGN SYSTEM
 ========================================================= */
 
 :root {
+  /* Core text */
   --ink: #10252b;
   --ink-soft: #3f555b;
   --ink-light: #64767b;
 
+  /* Core surfaces */
   --paper: #ffffff;
   --cream: #f8f6f1;
   --ivory: #fbfaf7;
   --soft: #eef4f2;
   --soft-blue: #edf5f7;
 
+  /* Deep brand colours */
   --deep-teal: #0d2930;
   --deep-teal-2: #143840;
   --deep-teal-3: #1b4650;
@@ -23,22 +28,26 @@
   --deep-navy: #101e2c;
   --deep-navy-2: #172b3a;
 
+  /* Primary champagne-gold accent */
   --accent: #b88a4a;
   --accent-dark: #91692f;
   --accent-light: #d8b77e;
   --accent-pale: #efe1c7;
 
+  /* Supporting colours */
   --muted: #68797d;
   --line: rgba(16, 37, 43, 0.12);
   --line-light: rgba(16, 37, 43, 0.08);
 
   --white: #ffffff;
 
+  /* Research accents */
   --research-blue: #2b7186;
   --research-teal: #147d7b;
   --research-light: #e8f3f5;
   --research-blue-light: #eaf2f7;
 
+  /* Legacy / thematic accents retained */
   --accent-wangchuk: #a95f3e;
   --accent-materials: #95652b;
   --accent-sensing: #147d7b;
@@ -48,14 +57,17 @@
   --accent-impact: #a96820;
   --accent-platforms: #5d6398;
 
+  /* Academic profiles */
   --profile-bg-1: #f1f4f8;
   --profile-bg-2: #f2f1f8;
   --profile-bg-3: #f8f6f1;
 
+  /* Radius */
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 22px;
 
+  /* Shadows */
   --shadow-soft:
     0 10px 30px rgba(16, 37, 43, 0.07);
 
@@ -77,12 +89,14 @@
 
 html {
   scroll-behavior: smooth;
+
   overflow-x: clip;
 }
 
 body {
   margin: 0;
   min-width: 0;
+
   overflow-x: clip;
 
   background: var(--paper);
@@ -245,7 +259,8 @@ p {
 
 
 /* =========================================================
-   HEADER / STICKY NAVIGATION
+   HEADER
+   STICKY NAVIGATION
 ========================================================= */
 
 .site-header {
@@ -253,6 +268,7 @@ p {
   position: sticky;
 
   top: 0;
+
   z-index: 1000;
 
   background: rgba(255, 255, 255, 0.97);
@@ -686,8 +702,7 @@ select:focus-visible {
 
 /* =========================================================
    HERO PHOTO FRAME
-   IMPORTANT:
-   THE FRAME POSITION IS PRESERVED
+   FRAME POSITION — FIXED RELATIVE TO ITS DESIGN
 ========================================================= */
 
 .hero-photo {
@@ -717,9 +732,8 @@ select:focus-visible {
     0 0 55px rgba(216, 183, 126, 0.13);
 
   /*
-     DO NOT CHANGE THIS.
-     The entire frame remains in the
-     currently approved position.
+     The frame is moved as a whole only to preserve
+     the intended relationship with the research card.
   */
   transform: translateY(57px);
 }
@@ -727,7 +741,7 @@ select:focus-visible {
 
 /* =========================================================
    HERO PROFILE PHOTO
-   ONLY THE PHOTO MOVES INSIDE THE FRAME
+   ONLY THE ACTUAL PHOTO MOVES UP INSIDE THE FRAME
 ========================================================= */
 
 .profile-photo {
@@ -737,11 +751,11 @@ select:focus-visible {
   height: 100%;
 
   object-fit: cover;
-  object-position: center center;
 
   /*
-     The circular frame remains fixed.
-     Only the actual photograph is shifted upward.
+     IMPORTANT:
+     The frame remains intact.
+     The image itself is enlarged and shifted upward.
   */
   transform:
     translateY(-28px)
@@ -764,6 +778,10 @@ select:focus-visible {
 
   width: min(350px, 88%);
 
+  /*
+     Increased to maintain the correct relationship
+     with the repositioned photo frame.
+  */
   margin-top: 57px;
   margin-right: -30px;
 
@@ -1007,11 +1025,6 @@ select:focus-visible {
   gap: 16px;
 }
 
-
-/* =========================================================
-   RESEARCH THEME CARDS
-========================================================= */
-
 .theme-card {
   min-height: 360px;
 
@@ -1047,41 +1060,17 @@ select:focus-visible {
   box-shadow: var(--shadow-card);
 }
 
-
-/* =========================================================
-   FEATURED RESEARCH CARD
-   LIGHT TEAL BACKGROUND
-   REPLACES THE PREVIOUS CAMOUFLAGED DEEP-TEAL CARD
-========================================================= */
-
 .theme-card.featured {
   background:
     linear-gradient(
       145deg,
-      #f1f8f8 0%,
-      #e4f1f2 55%,
-      #edf6f7 100%
+      #1a4b56,
+      #0d3039
     );
 
-  border:
-    1px solid rgba(20, 125, 123, 0.24);
-
-  box-shadow:
-    0 12px 32px rgba(20, 125, 123, 0.10);
-}
-
-.theme-card.featured:hover {
   border-color:
-    rgba(20, 125, 123, 0.38);
-
-  box-shadow:
-    0 18px 40px rgba(20, 125, 123, 0.14);
+    rgba(216, 183, 126, 0.18);
 }
-
-
-/* =========================================================
-   RESEARCH CARD NUMBER
-========================================================= */
 
 .theme-card .number {
   display: block;
@@ -1098,13 +1087,8 @@ select:focus-visible {
 }
 
 .theme-card.featured .number {
-  color: var(--research-teal);
+  color: var(--accent-light);
 }
-
-
-/* =========================================================
-   RESEARCH CARD TITLE
-========================================================= */
 
 .theme-card h3 {
   margin-bottom: 18px;
@@ -1116,18 +1100,7 @@ select:focus-visible {
   font-size: 27px;
 
   font-weight: 500;
-
-  line-height: 1.25;
 }
-
-.theme-card.featured h3 {
-  color: #123f46;
-}
-
-
-/* =========================================================
-   RESEARCH CARD DESCRIPTION
-========================================================= */
 
 .theme-card p {
   margin-bottom: 25px;
@@ -1139,14 +1112,10 @@ select:focus-visible {
   line-height: 1.7;
 }
 
+.theme-card.featured h3,
 .theme-card.featured p {
-  color: #405b60;
+  color: var(--white);
 }
-
-
-/* =========================================================
-   RESEARCH CARD LINK
-========================================================= */
 
 .theme-card a {
   color: var(--research-blue);
@@ -1157,19 +1126,7 @@ select:focus-visible {
 }
 
 .theme-card.featured a {
-  color: var(--research-teal);
-}
-
-
-/* =========================================================
-   FEATURED CARD TEXT CLARITY
-========================================================= */
-
-.theme-card.featured h3,
-.theme-card.featured p,
-.theme-card.featured .number,
-.theme-card.featured a {
-  text-shadow: none;
+  color: var(--accent-light);
 }
 
 
@@ -1396,7 +1353,7 @@ select:focus-visible {
 
 
 /* =========================================================
-   PUBLICATION DATABASE CONTROLS
+   PUBLICATION DATABASE
 ========================================================= */
 
 .publication-controls {
@@ -2327,15 +2284,15 @@ footer {
     border-width: 9px;
 
     /*
-       Frame position preserved.
+       Keep frame relationship fixed.
     */
     transform: translateY(57px);
   }
 
   .profile-photo {
     /*
-       Only the actual image moves.
-       The frame remains fixed.
+       Tablet-specific image movement.
+       Frame remains intact.
     */
     transform:
       translateY(-28px)
@@ -2544,7 +2501,7 @@ footer {
 
   /* =======================================================
      MOBILE PHOTO FRAME
-     POSITION PRESERVED
+     FRAME POSITION PRESERVED
   ======================================================= */
 
   .hero-photo {
@@ -2569,7 +2526,6 @@ footer {
     height: 100%;
 
     object-fit: cover;
-    object-position: center center;
 
     transform:
       translateY(-26px)
@@ -2797,7 +2753,7 @@ footer {
 
   /* =======================================================
      VERY SMALL PHOTO FRAME
-     POSITION PRESERVED
+     FRAME POSITION PRESERVED
   ======================================================= */
 
   .hero-photo {
@@ -2822,7 +2778,6 @@ footer {
     height: 100%;
 
     object-fit: cover;
-    object-position: center center;
 
     transform:
       translateY(-26px)
@@ -2883,4 +2838,3 @@ footer {
     scroll-behavior: auto !important;
   }
 }
-```
