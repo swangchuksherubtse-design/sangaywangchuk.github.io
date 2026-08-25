@@ -4,238 +4,328 @@ const publications = [
     category: "Environmental Monitoring",
     title: "A smartphone-assisted NFC-enabled microfluidic electrochemical sensor for on-site monitoring of residual free chlorine in water.",
     journal: "Journal of Environmental Chemical Engineering",
-    details: "Q1 · IF 7.5",
+    quartile: "Q1",
+    impactFactor: "7.5",
+    metricYear: "2025",
     doi: "https://doi.org/10.1016/j.jece.2026.123838"
   },
+
   {
     year: 2026,
     category: "Biomedical / Wearable Sensors",
     title: "Ammonium Ion-Sensing Skin Patch Based on Three-Dimensional Nanoarchitecture of Polystyrenesulfonate:Polyaniline/Copper Microflowers Deposited on Flexible Graphene Electrodes.",
     journal: "ACS Applied Nano Materials",
-    details: "Q1 · IF 5.5",
+    quartile: "Q1",
+    impactFactor: "5.5",
+    metricYear: "2024",
     doi: "https://doi.org/10.1021/acsanm.5c05854"
   },
+
   {
     year: 2026,
     category: "Forensic Electrochemistry",
     title: "Electrochemical clonazepam sensor based on B-doped laser-induced graphene for on-site forensic analysis.",
     journal: "Microchemical Journal",
-    details: "Q1 · IF 5.1",
+    quartile: "Q1",
+    impactFactor: "5.1",
+    metricYear: "2024",
     doi: "https://doi.org/10.1016/j.microc.2026.117476"
   },
+
   {
     year: 2025,
     category: "Forensic Electrochemistry",
     title: "N-doped porous laser-induced graphene applied for forensic electrochemical sensing of xylazine.",
     journal: "Microchemical Journal",
-    details: "Q1 · IF 5.1",
+    quartile: "Q1",
+    impactFactor: "5.1",
+    metricYear: "2024",
     doi: "https://doi.org/10.1016/j.microc.2025.114935"
   },
+
   {
     year: 2025,
     category: "Forensic Electrochemistry",
     title: "One-step laser fabrication of a P-doped 3D porous graphene electrode for on-site detection of promethazine.",
     journal: "Talanta",
-    details: "Q1 · IF 6.1",
+    quartile: "Q1",
+    impactFactor: "6.1",
+    metricYear: "2024",
     doi: "https://doi.org/10.1016/j.talanta.2025.128715"
   },
+
   {
     year: 2025,
     category: "Sustainable Nanomaterials",
     title: "Revolutionizing oil palm biomass into laser-induced graphene for sustainable and high-performance electrochemical sensors.",
     journal: "Materials Today Chemistry",
-    details: "Q1 · IF 6.7",
+    quartile: "Q1",
+    impactFactor: "6.7",
+    metricYear: "2024",
     doi: "https://doi.org/10.1016/j.mtchem.2025.102872"
   },
+
   {
     year: 2025,
     category: "Forensic Electrochemistry",
     title: "Sustainable Paper-Derived Laser-Induced Graphene Electrochemical Platform for Ultra-Sensitive Diazepam Detection in Forensic Investigations.",
     journal: "ACS Omega",
-    details: "Q1 · IF 4.3",
+    quartile: "Q1",
+    impactFactor: "4.3",
+    metricYear: "2024",
     doi: "https://doi.org/10.1021/acsomega.5c03662"
   },
+
   {
     year: 2025,
     category: "Environmental / Food Analysis",
     title: "Smartphone-enabled detection of urea in animal feed based on a disposable electrode modified with silver nanoparticles decorated on nitrogen-doped graphene nanoplatelets.",
     journal: "Talanta",
-    details: "Q1 · IF 6.1",
+    quartile: "Q1",
+    impactFactor: "6.1",
+    metricYear: "2024",
     doi: "https://doi.org/10.1016/j.talanta.2025.128431"
   },
+
   {
     year: 2025,
     category: "Environmental Analysis",
     title: "A disposable dual-mode electrochemical/colorimetric paper-based analytical device for simultaneous detection of hydroquinone and mercury ion.",
     journal: "Talanta",
-    details: "Q1 · IF 6.1",
+    quartile: "Q1",
+    impactFactor: "6.1",
+    metricYear: "2024",
     doi: "https://doi.org/10.1016/j.talanta.2025.128166"
   },
+
   {
     year: 2025,
     category: "Biomedical / Glucose Sensing",
     title: "Portable NFC potentiostat integrated with a 3D paper-based microfluidic electrochemical device for glucose detection in whole blood using PEDOT:PSS/DMSO/GOx sensitive film.",
     journal: "Microchemical Journal",
-    details: "Q1 · IF 5.1",
+    quartile: "Q1",
+    impactFactor: "5.1",
+    metricYear: "2024",
     doi: "https://doi.org/10.1016/j.microc.2025.113623"
   },
+
   {
     year: 2025,
     category: "Environmental Analysis",
     title: "A β-cyclodextrin/porous graphene ink electrode for smartphone-assisted electrochemical Hg²⁺ sensing.",
     journal: "Talanta",
-    details: "Q1 · IF 6.1",
+    quartile: "Q1",
+    impactFactor: "6.1",
+    metricYear: "2024",
     doi: "https://doi.org/10.1016/j.talanta.2025.127776"
   },
+
   {
     year: 2025,
     category: "Food / Electrochemical Analysis",
     title: "NS Dual-Doped 3D Porous Laser-Induced Graphene Electrode for Curcumin Determination in Turmeric.",
     journal: "Talanta",
-    details: "Q1 · IF 6.1",
+    quartile: "Q1",
+    impactFactor: "6.1",
+    metricYear: "2024",
     doi: "https://doi.org/10.1016/j.talanta.2025.127722"
   },
+
   {
     year: 2025,
     category: "Environmental Monitoring",
     title: "Cuprous oxide-functionalized activated porous carbon-modified screen-printed carbon electrode integrated with a smartphone for portable electrochemical nitrate detection.",
     journal: "Talanta",
-    details: "Q1 · IF 6.1",
+    quartile: "Q1",
+    impactFactor: "6.1",
+    metricYear: "2024",
     doi: "https://doi.org/10.1016/j.talanta.2025.127581"
   },
+
   {
     year: 2025,
     category: "Food / Forensic Analysis",
     title: "Portable unibody semi-flow injection voltammetric sensor for on-site screening of illegal additive sibutramine in food supplements.",
     journal: "Talanta",
-    details: "Q1 · IF 6.1",
+    quartile: "Q1",
+    impactFactor: "6.1",
+    metricYear: "2024",
     doi: "https://doi.org/10.1016/j.talanta.2024.127123"
   },
+
   {
     year: 2024,
     category: "Biomedical Analysis",
     title: "A disposable metal-free electrochemical sensor uses a boron/nitrogen co-doped multi-walled carbon nanotubes electrocatalyst to determine the anticancer drug flutamide.",
     journal: "Microchemical Journal",
-    details: "Q1 · IF 5.1",
+    quartile: "Q1",
+    impactFactor: "5.1",
+    metricYear: "2024",
     doi: "https://doi.org/10.1016/j.microc.2024.112217"
   },
+
   {
     year: 2024,
     category: "Biomedical Analysis",
     title: "A portable disposable metal-free electrochemical sensor for uric acid measurement in human blood serum.",
     journal: "Microchemical Journal",
-    details: "Q1 · IF 5.1",
+    quartile: "Q1",
+    impactFactor: "5.1",
+    metricYear: "2024",
     doi: "https://doi.org/10.1016/j.microc.2024.112216"
   },
+
   {
     year: 2024,
     category: "Biosensors",
     title: "Bio-functionalized conductive poly(acrylic acid):poly(3,4-ethylenedioxythiophene)-Prussian blue hybrid transducer for biosensors and bioelectronics interfaces.",
     journal: "Materials Today Chemistry",
-    details: "Q1 · IF 6.7",
+    quartile: "Q1",
+    impactFactor: "6.7",
+    metricYear: "2024",
     doi: "https://doi.org/10.1016/j.mtchem.2024.102271"
   },
+
   {
     year: 2024,
     category: "Environmental Monitoring",
     title: "Electrode modified with CO₂ laser-reduced graphene oxide-silver nanoparticles for determination of nitrite in water.",
     journal: "Microchemical Journal",
-    details: "Q1 · IF 5.1",
+    quartile: "Q1",
+    impactFactor: "5.1",
+    metricYear: "2024",
     doi: "https://doi.org/10.1016/j.microc.2024.111100"
   },
+
   {
     year: 2024,
     category: "Environmental Monitoring",
     title: "Single-drop electrodeposition of nanoneedle-like bismuth on disposable graphene electrode for on-site electrochemical detection of cadmium and lead.",
     journal: "Talanta",
-    details: "Q1 · IF 6.1",
+    quartile: "Q1",
+    impactFactor: "6.1",
+    metricYear: "2024",
     doi: "https://doi.org/10.1016/j.talanta.2024.126179"
   },
+
   {
     year: 2024,
     category: "Biomedical / Glucose Sensing",
     title: "Smartphone-interfaced flow injection amperometric system for enzyme-free glucose detection using a palladium-PANI/carbon microsphere@carbon nanotubes modified electrode.",
     journal: "Electrochimica Acta",
-    details: "Q1 · IF 6.6",
+    quartile: "Q1",
+    impactFactor: "5.6",
+    metricYear: "2024",
     doi: "https://doi.org/10.1016/j.electacta.2024.144292"
   },
+
   {
     year: 2024,
     category: "Food / Environmental Analysis",
     title: "Nano-palladium-decorated bismuth sulfide microspheres on a disposable electrode integrated with smartphone-based electrochemical detection of nitrite in food samples.",
     journal: "Food Chemistry",
-    details: "Q1 · IF 8.8",
+    quartile: "Q1",
+    impactFactor: "9.8",
+    metricYear: "2024",
     doi: "https://doi.org/10.1016/j.foodchem.2024.138987"
   },
+
   {
     year: 2024,
     category: "Forensic Analysis",
     title: "A novel 3D-printed portable electroplating device enhances latent fingerprints on metal substrates.",
     journal: "Talanta",
-    details: "Q1 · IF 6.1",
+    quartile: "Q1",
+    impactFactor: "6.1",
+    metricYear: "2024",
     doi: "https://doi.org/10.1016/j.talanta.2024.125822"
   },
+
   {
     year: 2024,
     category: "Environmental Analysis",
     title: "Electropolymerization of poly(phenol red) on laser-induced graphene electrode enhanced adsorption of zinc for electrochemical detection.",
     journal: "Talanta",
-    details: "Q1 · IF 6.1",
+    quartile: "Q1",
+    impactFactor: "6.1",
+    metricYear: "2024",
     doi: "https://doi.org/10.1016/j.talanta.2024.125751"
   },
+
   {
     year: 2023,
     category: "Forensic Electrochemistry",
     title: "A Ternary Nanocomposite Based on Nano-Bimetallic Platinum/Nickel Decorated on Multi-Walled Carbon Nanotubes for Flow Injection Amperometric Detection of Promethazine.",
     journal: "Journal of The Electrochemical Society",
-    details: "Q1 · IF 3.9",
+    quartile: "Q1",
+    impactFactor: "3.1",
+    metricYear: "2023",
     doi: "https://doi.org/10.1149/1945-7111/acdb9d"
   },
+
   {
     year: 2023,
     category: "Forensic / Food Analysis",
     title: "Sibutramine detection in weight-loss products using a sodium/phosphorus dual-doped carbon nanotubes modified electrode.",
     journal: "Microchemical Journal",
-    details: "Q1 · IF 5.1",
+    quartile: "Q1",
+    impactFactor: "4.9",
+    metricYear: "2023",
     doi: "https://doi.org/10.1016/j.microc.2023.108668"
   },
+
   {
     year: 2023,
     category: "Biomedical / Biosensors",
     title: "Novel biosensor platform for glucose monitoring via smartphone based on battery-less NFC potentiostat.",
     journal: "Talanta",
-    details: "Q1 · IF 6.1",
+    quartile: "Q1",
+    impactFactor: "5.6",
+    metricYear: "2023",
     doi: "https://doi.org/10.1016/j.talanta.2023.124266"
   },
+
   {
     year: 2023,
     category: "Electrocatalysis",
     title: "Polyaniline-coated glassy carbon microspheres decorated with nano-palladium as a new electrocatalyst for methanol oxidation.",
     journal: "Journal of Electroanalytical Chemistry",
-    details: "Q1 · IF 4.5",
+    quartile: "Q1",
+    impactFactor: "4.5",
+    metricYear: "2023",
     doi: "https://doi.org/10.1016/j.jelechem.2022.116995"
   },
+
   {
     year: 2022,
     category: "Forensic Electrochemistry",
     title: "New electrode material integrates silver nanoprisms with phosphorus-doped carbon nanotubes for forensic detection of nitrite.",
     journal: "Electrochimica Acta",
-    details: "Q1 · IF 6.6",
+    quartile: "Q1",
+    impactFactor: "6.6",
+    metricYear: "2022",
     doi: "https://doi.org/10.1016/j.electacta.2022.141439"
   },
+
   {
     year: 2022,
     category: "Environmental Analysis",
     title: "A poly(neutral red)/porous graphene modified electrode for a voltammetric hydroquinone sensor.",
     journal: "Electrochimica Acta",
-    details: "Q1 · IF 6.6",
+    quartile: "Q1",
+    impactFactor: "6.6",
+    metricYear: "2022",
     doi: "https://doi.org/10.1016/j.electacta.2022.141272"
   },
+
   {
     year: 2022,
     category: "Food Analysis / Bhutan",
     title: "Detection of adulterants in some common food items available in the Bhutanese market.",
     journal: "Bhutan Journal of Research and Development",
+    quartile: "",
+    impactFactor: "",
+    metricYear: "",
     details: "11(1)",
     doi: "https://doi.org/10.17102/bjrd.rub.11.1.026"
   }
@@ -260,7 +350,6 @@ function getPublicationYears() {
 
 /* =========================================================
    ESCAPE HTML
-   Prevents publication data from being interpreted as HTML
 ========================================================= */
 
 function escapeHTML(value) {
@@ -270,6 +359,36 @@ function escapeHTML(value) {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
+}
+
+
+/* =========================================================
+   PUBLICATION METRICS DISPLAY
+========================================================= */
+
+function getPublicationDetails(pub) {
+
+  const parts = [];
+
+  if (pub.quartile) {
+    parts.push(pub.quartile);
+  }
+
+  if (pub.impactFactor) {
+    parts.push(
+      `IF ${pub.impactFactor}${
+        pub.metricYear
+          ? ` (JCR ${pub.metricYear})`
+          : ""
+      }`
+    );
+  }
+
+  if (pub.details) {
+    parts.push(pub.details);
+  }
+
+  return parts.join(" · ");
 }
 
 
@@ -323,7 +442,6 @@ function updatePublicationCount(list = publications) {
 
     }
   }
-
 
   const total =
     publications.length;
@@ -383,10 +501,6 @@ function renderPublications(
   if (!container) return;
 
 
-  /*
-    Newest publications first.
-  */
-
   const sortedList =
     [...list].sort(
       (a, b) =>
@@ -399,10 +513,6 @@ function renderPublications(
     sortedList
   );
 
-
-  /* -------------------------------------------------------
-     EMPTY RESULTS
-  ------------------------------------------------------- */
 
   if (sortedList.length === 0) {
 
@@ -425,10 +535,6 @@ function renderPublications(
   }
 
 
-  /* -------------------------------------------------------
-     PUBLICATION CARDS
-  ------------------------------------------------------- */
-
   container.innerHTML =
     sortedList
       .map((pub, index) => {
@@ -443,7 +549,9 @@ function renderPublications(
           escapeHTML(pub.category);
 
         const details =
-          escapeHTML(pub.details);
+          escapeHTML(
+            getPublicationDetails(pub)
+          );
 
         const year =
           escapeHTML(pub.year);
@@ -480,9 +588,15 @@ function renderPublications(
                   ${category}
                 </span>
 
-                <span>
-                  ${details}
-                </span>
+                ${
+                  details
+                    ? `
+                      <span>
+                        ${details}
+                      </span>
+                    `
+                    : ""
+                }
 
               </div>
 
@@ -544,11 +658,6 @@ function setupPublicationFilters() {
 
   if (!section) return;
 
-
-  /*
-    If controls already exist in HTML,
-    do not create duplicates.
-  */
 
   let controls =
     section.querySelector(
@@ -651,7 +760,7 @@ function setupPublicationFilters() {
 
 
   /* -------------------------------------------------------
-     POPULATE YEARS
+     YEARS
   ------------------------------------------------------- */
 
   const years = [
@@ -664,11 +773,6 @@ function setupPublicationFilters() {
     (a, b) => b - a
   );
 
-
-  /*
-    Prevent duplicate options if the script
-    is initialized more than once.
-  */
 
   if (
     yearSelect.options.length === 1
@@ -697,7 +801,7 @@ function setupPublicationFilters() {
 
 
   /* -------------------------------------------------------
-     POPULATE CATEGORIES
+     CATEGORIES
   ------------------------------------------------------- */
 
   const categories = [
@@ -769,6 +873,9 @@ function setupPublicationFilters() {
             pub.journal,
             pub.category,
             pub.year,
+            pub.quartile,
+            pub.impactFactor,
+            pub.metricYear,
             pub.details
           ]
             .join(" ")
