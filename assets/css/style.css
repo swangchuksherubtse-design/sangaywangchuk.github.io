@@ -1,54 +1,56 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap');
 
+
 /* =========================================================
-   GLOBAL
-   ========================================================= */
+   GLOBAL DESIGN SYSTEM
+========================================================= */
 
 :root {
+
   /* Core text colours */
-  --ink: #102a35;
-  --ink-soft: #425a63;
-  --muted: #687c83;
+  --ink: #10252b;
+  --ink-soft: #3f555b;
+  --ink-light: #64767b;
 
-  /* Main backgrounds */
+  /* Primary backgrounds */
   --paper: #ffffff;
-  --cream: #f8f5ed;
-  --soft: #edf4f4;
+  --cream: #f8f6f1;
+  --ivory: #fbfaf7;
+  --soft: #eef4f2;
+  --soft-blue: #f1f5f8;
 
-  /* Dark backgrounds */
-  --dark: #0b202b;
-  --dark-soft: #12313c;
-  --navy: #102a38;
+  /* Deep academic colours */
+  --deep-teal: #0d2930;
+  --deep-teal-2: #143840;
+  --deep-navy: #101e2c;
+  --deep-navy-2: #172b3a;
 
   /* Accent */
-  --accent: #c59652;
-  --accent-dark: #9b6d31;
-  --accent-light: #e2bd7d;
+  --accent: #b88a4a;
+  --accent-dark: #91692f;
+  --accent-light: #d8b77e;
+
+  /* Supporting colours */
+  --muted: #68797d;
+  --line: rgba(16, 37, 43, 0.12);
+  --line-light: rgba(16, 37, 43, 0.08);
 
   --white: #ffffff;
 
-  /* Secondary accent colours */
-  --accent-wangchuk: #c47b52;
-  --accent-materials: #a97832;
-  --accent-sensing: #168d8a;
-  --accent-literature: #7055a0;
-  --accent-programme: #bd5e76;
-  --accent-chemistry: #286f9e;
-  --accent-impact: #b77925;
-  --accent-platforms: #5369ae;
+  /* Special accent colours for italic phrases */
+  --accent-wangchuk: #a95f3e;
+  --accent-materials: #95652b;
+  --accent-sensing: #147d7b;
+  --accent-literature: #66509a;
+  --accent-programme: #b44f68;
+  --accent-chemistry: #236c98;
+  --accent-impact: #a96820;
+  --accent-platforms: #4e5fa8;
 
-  /* Section backgrounds */
-  --research-bg: #edf5f5;
-  --publication-bg: #faf7f0;
-  --academic-bg: #eef3f8;
-  --about-bg: #f7f3ea;
-  --profile-bg-1: #eef2fb;
-  --profile-bg-2: #f2eef9;
-  --profile-bg-3: #f8f5ef;
-
-  /* Borders */
-  --line: rgba(16, 42, 53, 0.13);
-  --line-light: rgba(255, 255, 255, 0.16);
+  /* Academic Profiles */
+  --profile-bg-1: #f1f4f8;
+  --profile-bg-2: #f2f1f8;
+  --profile-bg-3: #f8f6f1;
 
   /* Radius */
   --radius-sm: 8px;
@@ -56,9 +58,20 @@
   --radius-lg: 22px;
 
   /* Shadows */
-  --shadow-soft: 0 12px 35px rgba(16, 42, 53, 0.07);
-  --shadow-card: 0 18px 42px rgba(16, 42, 53, 0.11);
+  --shadow-soft:
+    0 10px 30px rgba(16, 37, 43, 0.07);
+
+  --shadow-card:
+    0 16px 40px rgba(16, 37, 43, 0.11);
+
+  --shadow-deep:
+    0 22px 55px rgba(7, 25, 32, 0.18);
 }
+
+
+/* =========================================================
+   RESET
+========================================================= */
 
 * {
   box-sizing: border-box;
@@ -70,12 +83,19 @@ html {
 
 body {
   margin: 0;
+
   background: var(--paper);
+
   color: var(--ink);
+
   font-family: "DM Sans", sans-serif;
+
   font-size: 16px;
+
   line-height: 1.7;
+
   -webkit-font-smoothing: antialiased;
+
   text-rendering: optimizeLegibility;
 }
 
@@ -103,7 +123,7 @@ select {
 
 /* =========================================================
    TYPOGRAPHY
-   ========================================================= */
+========================================================= */
 
 h1,
 h2,
@@ -121,19 +141,25 @@ h3 {
 h1,
 h2 {
   font-family: "Playfair Display", serif;
+
   font-weight: 500;
+
   line-height: 1.08;
 }
 
 h1 {
   margin-bottom: 26px;
+
   font-size: clamp(52px, 7vw, 88px);
+
   letter-spacing: -2px;
 }
 
 h2 {
   margin-bottom: 24px;
+
   font-size: clamp(40px, 5vw, 64px);
+
   letter-spacing: -1.5px;
 }
 
@@ -153,8 +179,8 @@ p {
 
 
 /* =========================================================
-   KEY ITALICISED PHRASES
-   ========================================================= */
+   SECTION-SPECIFIC ITALIC ACCENTS
+========================================================= */
 
 .hero h1 em {
   color: var(--accent-light);
@@ -188,31 +214,47 @@ p {
   color: var(--accent-platforms);
 }
 
+
+/* =========================================================
+   EYEBROW
+========================================================= */
+
 .eyebrow {
   margin-bottom: 16px;
-  color: var(--accent-dark);
+
+  color: var(--accent);
+
   font-size: 11px;
+
   line-height: 1.4;
+
   font-weight: 700;
+
   letter-spacing: 2px;
+
   text-transform: uppercase;
 }
 
 
 /* =========================================================
    HEADER
-   ========================================================= */
+========================================================= */
 
 .site-header {
   position: sticky;
+
   top: 0;
+
   z-index: 1000;
 
-  background: rgba(255, 255, 255, 0.96);
+  background:
+    rgba(255, 255, 255, 0.96);
 
-  border-bottom: 1px solid rgba(16, 42, 53, 0.12);
+  border-bottom:
+    1px solid rgba(16, 37, 43, 0.10);
 
   backdrop-filter: blur(16px);
+
   -webkit-backdrop-filter: blur(16px);
 }
 
@@ -220,7 +262,9 @@ p {
   min-height: 78px;
 
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
 
   gap: 30px;
@@ -230,9 +274,11 @@ p {
   color: var(--ink);
 
   font-size: 25px;
+
   line-height: 1;
 
   font-weight: 700;
+
   letter-spacing: -1px;
 }
 
@@ -242,14 +288,19 @@ p {
 
 .nav-links {
   display: flex;
+
   align-items: center;
+
   gap: 28px;
 }
 
 .nav-links a {
   position: relative;
+
   color: var(--ink-soft);
+
   font-size: 13px;
+
   font-weight: 600;
 }
 
@@ -257,11 +308,14 @@ p {
   content: "";
 
   position: absolute;
+
   left: 0;
+
   bottom: -7px;
 
   width: 0;
-  height: 2px;
+
+  height: 1px;
 
   background: var(--accent);
 
@@ -276,15 +330,20 @@ p {
   padding: 10px 18px;
 
   border: 1px solid var(--ink);
+
   border-radius: 999px;
 
   transition:
     background 0.25s ease,
-    color 0.25s ease;
+    color 0.25s ease,
+    border-color 0.25s ease;
 }
 
 .nav-button:hover {
-  background: var(--ink);
+  background: var(--deep-teal);
+
+  border-color: var(--deep-teal);
+
   color: var(--white);
 }
 
@@ -292,6 +351,7 @@ p {
   display: none;
 
   border: 0;
+
   background: transparent;
 
   color: var(--ink);
@@ -304,52 +364,57 @@ p {
 
 /* =========================================================
    HERO
-   NEW DEEP ACADEMIC TEAL / NAVY DESIGN
-   ========================================================= */
+   PREMIUM ACADEMIC HERO DESIGN
+========================================================= */
 
 .hero {
   position: relative;
+
   overflow: hidden;
 
   padding: 105px 0 95px;
 
   background:
     radial-gradient(
-      circle at 82% 18%,
-      rgba(197, 150, 82, 0.25),
-      transparent 28%
+      circle at 88% 18%,
+      rgba(216, 183, 126, 0.20),
+      transparent 25%
     ),
     radial-gradient(
-      circle at 12% 85%,
-      rgba(46, 130, 145, 0.24),
-      transparent 30%
+      circle at 8% 90%,
+      rgba(37, 108, 152, 0.13),
+      transparent 28%
     ),
     linear-gradient(
       135deg,
-      #0b2632 0%,
-      #103642 48%,
-      #142a39 100%
+      #102c33 0%,
+      #153a41 48%,
+      #102b34 100%
     );
 }
+
+
+/* subtle architectural glow */
 
 .hero::before {
   content: "";
 
   position: absolute;
 
-  width: 520px;
-  height: 520px;
+  width: 560px;
+  height: 560px;
 
-  right: -210px;
-  top: -260px;
+  top: -280px;
+  right: -180px;
 
   border-radius: 50%;
 
-  border: 1px solid rgba(226, 189, 125, 0.16);
+  border:
+    1px solid rgba(216, 183, 126, 0.18);
 
   box-shadow:
-    0 0 0 45px rgba(226, 189, 125, 0.025),
-    0 0 0 90px rgba(226, 189, 125, 0.018);
+    0 0 0 70px rgba(216, 183, 126, 0.025),
+    0 0 0 140px rgba(216, 183, 126, 0.018);
 
   pointer-events: none;
 }
@@ -359,18 +424,18 @@ p {
 
   position: absolute;
 
-  width: 380px;
-  height: 380px;
+  width: 420px;
+  height: 420px;
 
-  left: -220px;
-  bottom: -240px;
+  bottom: -250px;
+  left: -180px;
 
   border-radius: 50%;
 
   background:
     radial-gradient(
       circle,
-      rgba(66, 157, 166, 0.16),
+      rgba(50, 133, 155, 0.16),
       transparent 68%
     );
 
@@ -389,6 +454,7 @@ p {
 
 .hero-copy {
   position: relative;
+
   z-index: 5;
 }
 
@@ -400,32 +466,31 @@ p {
   color: var(--white);
 }
 
-.hero h1 em {
-  color: #e1b86f;
-}
-
-.lead {
+.hero .lead {
   max-width: 680px;
 
   margin-bottom: 22px;
 
-  color: rgba(255, 255, 255, 0.82);
+  color: rgba(255, 255, 255, 0.84);
 
   font-size: 18px;
+
   line-height: 1.75;
 }
 
 .hero-affiliation {
   margin-bottom: 30px;
 
-  color: rgba(255, 255, 255, 0.62);
+  color: rgba(255, 255, 255, 0.64);
 
   font-size: 13px;
+
   font-weight: 600;
 }
 
 .hero-actions {
   display: flex;
+
   flex-wrap: wrap;
 
   gap: 12px;
@@ -437,6 +502,7 @@ p {
   display: inline-flex;
 
   align-items: center;
+
   justify-content: center;
 
   min-height: 48px;
@@ -446,6 +512,7 @@ p {
   border-radius: 999px;
 
   font-size: 13px;
+
   font-weight: 700;
 
   transition:
@@ -461,32 +528,34 @@ p {
 
 .button.primary {
   background: var(--accent);
-  color: #132832;
 
-  box-shadow:
-    0 8px 22px rgba(197, 150, 82, 0.20);
+  color: var(--deep-teal);
 }
 
 .button.primary:hover {
-  background: #ddb36f;
+  background: var(--accent-light);
 }
 
 .button.secondary {
-  border: 1px solid rgba(255, 255, 255, 0.30);
+  border:
+    1px solid rgba(255, 255, 255, 0.28);
 
-  background: rgba(255, 255, 255, 0.07);
+  background:
+    rgba(255, 255, 255, 0.07);
 
   color: var(--white);
 }
 
 .button.secondary:hover {
-  border-color: rgba(255, 255, 255, 0.60);
+  border-color: rgba(255, 255, 255, 0.55);
 
-  background: rgba(255, 255, 255, 0.14);
+  background:
+    rgba(255, 255, 255, 0.14);
 }
 
 .quick-stats {
   display: flex;
+
   flex-wrap: wrap;
 
   gap: 34px;
@@ -504,15 +573,17 @@ p {
   color: var(--white);
 
   font-size: 27px;
+
   line-height: 1;
 
   font-weight: 700;
 }
 
 .quick-stats span {
-  color: rgba(255, 255, 255, 0.58);
+  color: rgba(255, 255, 255, 0.60);
 
   font-size: 10px;
+
   line-height: 1.35;
 
   font-weight: 700;
@@ -525,8 +596,7 @@ p {
 
 /* =========================================================
    HERO PHOTO / PANEL
-   PHOTO POSITION PRESERVED
-   ========================================================= */
+========================================================= */
 
 .hero-panel {
   position: relative;
@@ -534,6 +604,7 @@ p {
   min-height: 590px;
 
   display: flex;
+
   flex-direction: column;
 
   align-items: center;
@@ -543,13 +614,14 @@ p {
 
 
 /* =========================================================
-   HERO GOLD ORB
-   ========================================================= */
+   HERO ORB
+========================================================= */
 
 .orb {
   position: absolute;
 
   top: 35px;
+
   left: 50%;
 
   width: 405px;
@@ -562,11 +634,14 @@ p {
   background:
     radial-gradient(
       circle,
-      rgba(226, 189, 125, 0.25),
-      rgba(197, 150, 82, 0.13) 42%,
-      rgba(197, 150, 82, 0.05) 68%,
+      rgba(216, 183, 126, 0.24),
+      rgba(184, 137, 77, 0.13) 42%,
+      rgba(184, 137, 77, 0.045) 68%,
       transparent 72%
     );
+
+  box-shadow:
+    0 0 90px rgba(216, 183, 126, 0.08);
 
   z-index: 1;
 
@@ -575,9 +650,9 @@ p {
 
 
 /* =========================================================
-   PHOTO FRAME
-   POSITION AND STRUCTURE PRESERVED
-   ========================================================= */
+   HERO PHOTO FRAME
+   POSITION RETAINED
+========================================================= */
 
 .hero-photo {
   position: relative;
@@ -593,22 +668,18 @@ p {
 
   overflow: hidden;
 
-  border: 10px solid var(--white);
+  border:
+    10px solid rgba(255, 255, 255, 0.96);
 
   border-radius: 50%;
 
   background:
-    radial-gradient(
-      circle at 30% 25%,
-      rgba(255, 255, 255, 0.98),
-      rgba(238, 242, 240, 0.92) 48%,
-      rgba(197, 150, 82, 0.14) 100%
-    );
+    #f5f2e9;
 
   box-shadow:
-    0 20px 50px rgba(0, 0, 0, 0.28),
-    0 0 0 1px rgba(226, 189, 125, 0.32),
-    0 0 45px rgba(226, 189, 125, 0.14);
+    0 20px 50px rgba(3, 18, 24, 0.32),
+    0 0 0 1px rgba(216, 183, 126, 0.35),
+    0 0 55px rgba(216, 183, 126, 0.13);
 
   transform: none;
 }
@@ -616,7 +687,7 @@ p {
 
 /* =========================================================
    PROFILE PHOTO
-   ========================================================= */
+========================================================= */
 
 .profile-photo {
   display: block;
@@ -635,8 +706,8 @@ p {
 
 
 /* =========================================================
-   RESEARCH CARD
-   ========================================================= */
+   HERO RESEARCH CARD
+========================================================= */
 
 .research-card {
   position: relative;
@@ -648,27 +719,25 @@ p {
   width: min(350px, 88%);
 
   margin-top: 14px;
+
   margin-right: -30px;
 
   padding: 23px 25px;
 
-  border: 1px solid rgba(255, 255, 255, 0.62);
+  border:
+    1px solid rgba(255, 255, 255, 0.50);
 
   border-radius: var(--radius-md);
 
   background:
-    linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.98),
-      rgba(247, 245, 239, 0.97)
-    );
+    rgba(255, 255, 255, 0.96);
 
   box-shadow:
-    0 18px 45px rgba(0, 0, 0, 0.20),
-    0 0 30px rgba(226, 189, 125, 0.08);
+    0 18px 45px rgba(3, 18, 24, 0.22);
 
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(14px);
+
+  -webkit-backdrop-filter: blur(14px);
 }
 
 .research-card > span {
@@ -679,6 +748,7 @@ p {
   color: var(--accent-dark);
 
   font-size: 10px;
+
   line-height: 1.4;
 
   font-weight: 700;
@@ -708,13 +778,14 @@ p {
   color: var(--ink-soft);
 
   font-size: 12px;
+
   line-height: 1.55;
 }
 
 
 /* =========================================================
    TAGS
-   ========================================================= */
+========================================================= */
 
 .tags {
   display: flex;
@@ -731,38 +802,38 @@ p {
 
   padding: 5px 9px;
 
-  border: 1px solid rgba(16, 42, 53, 0.12);
+  border:
+    1px solid rgba(16, 37, 43, 0.12);
 
   border-radius: 999px;
 
   color: var(--ink-soft);
 
   font-size: 10px;
+
   line-height: 1.2;
 
   font-weight: 600;
 
-  background: rgba(255, 255, 255, 0.70);
+  background: #f7f8f6;
 }
 
 
 /* =========================================================
    TICKER
-   ========================================================= */
+========================================================= */
 
 .ticker {
   overflow: hidden;
 
-  border-top: 1px solid rgba(16, 42, 53, 0.10);
-  border-bottom: 1px solid rgba(16, 42, 53, 0.10);
+  border-top:
+    1px solid rgba(16, 37, 43, 0.10);
+
+  border-bottom:
+    1px solid rgba(16, 37, 43, 0.10);
 
   background:
-    linear-gradient(
-      90deg,
-      #f4f0e8,
-      #ffffff,
-      #edf3f3
-    );
+    #ffffff;
 }
 
 .ticker-inner {
@@ -776,7 +847,7 @@ p {
 
   gap: 30px;
 
-  color: var(--ink-soft);
+  color: var(--muted);
 
   font-size: 10px;
 
@@ -788,7 +859,7 @@ p {
 
 /* =========================================================
    GENERAL SECTIONS
-   ========================================================= */
+========================================================= */
 
 .section {
   position: relative;
@@ -799,60 +870,44 @@ p {
 }
 
 
-/* =========================================================
-   RESEARCH SECTION
-   COOL BLUE / TEAL
-   ========================================================= */
+/* Light neutral section */
 
 .section.soft {
   background:
-    radial-gradient(
-      circle at 8% 12%,
-      rgba(41, 125, 139, 0.10),
-      transparent 28%
-    ),
-    radial-gradient(
-      circle at 92% 85%,
-      rgba(197, 150, 82, 0.09),
-      transparent 30%
-    ),
     linear-gradient(
       135deg,
-      #edf5f5 0%,
-      #f4f7f6 52%,
-      #eaf2f4 100%
+      #f2f6f4 0%,
+      #faf9f5 52%,
+      #f0f4f3 100%
     );
 }
 
 
-/* =========================================================
-   DARK SECTIONS
-   ========================================================= */
+/* Dark research/project section */
 
 .section.dark {
   background:
     radial-gradient(
       circle at 85% 15%,
-      rgba(197, 150, 82, 0.15),
+      rgba(216, 183, 126, 0.12),
       transparent 30%
     ),
     radial-gradient(
       circle at 10% 85%,
-      rgba(38, 117, 168, 0.12),
+      rgba(48, 122, 143, 0.12),
       transparent 28%
     ),
     linear-gradient(
       135deg,
-      #0a202b 0%,
-      #102d38 55%,
-      #0c202c 100%
+      #0d242c,
+      #122f38
     );
 }
 
 
 /* =========================================================
    SECTION HEADING
-   ========================================================= */
+========================================================= */
 
 .section-heading {
   display: grid;
@@ -883,10 +938,6 @@ p {
   color: var(--white);
 }
 
-.section-heading.light p {
-  color: rgba(255, 255, 255, 0.70);
-}
-
 .section-heading.light .eyebrow {
   color: var(--accent-light);
 }
@@ -894,7 +945,7 @@ p {
 
 /* =========================================================
    RESEARCH GRID
-   ========================================================= */
+========================================================= */
 
 .research-grid {
   display: grid;
@@ -909,7 +960,8 @@ p {
 
   padding: 30px;
 
-  border: 1px solid rgba(16, 42, 53, 0.10);
+  border:
+    1px solid rgba(16, 37, 43, 0.09);
 
   border-radius: var(--radius-md);
 
@@ -917,18 +969,22 @@ p {
     linear-gradient(
       145deg,
       #ffffff,
-      #f7faf9
+      #f8f8f5
     );
 
   box-shadow: var(--shadow-soft);
 
   transition:
     transform 0.3s ease,
-    box-shadow 0.3s ease;
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .theme-card:hover {
   transform: translateY(-5px);
+
+  border-color:
+    rgba(184, 137, 77, 0.28);
 
   box-shadow: var(--shadow-card);
 }
@@ -937,9 +993,12 @@ p {
   background:
     linear-gradient(
       145deg,
-      #12313c,
-      #174451
+      #143840,
+      #0d2930
     );
+
+  border-color:
+    rgba(216, 183, 126, 0.18);
 }
 
 .theme-card .number {
@@ -987,10 +1046,6 @@ p {
   color: var(--white);
 }
 
-.theme-card.featured p {
-  color: rgba(255, 255, 255, 0.72);
-}
-
 .theme-card a {
   color: var(--accent-dark);
 
@@ -1006,10 +1061,11 @@ p {
 
 /* =========================================================
    PROJECTS
-   ========================================================= */
+========================================================= */
 
 .project-list {
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  border-top:
+    1px solid rgba(255, 255, 255, 0.14);
 }
 
 .project {
@@ -1021,7 +1077,8 @@ p {
 
   padding: 40px 0;
 
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.14);
 }
 
 .project-no {
@@ -1071,7 +1128,7 @@ p {
 
 /* =========================================================
    RESEARCH AT A GLANCE
-   ========================================================= */
+========================================================= */
 
 .research-glance {
   display: grid;
@@ -1088,19 +1145,16 @@ p {
 
   padding: 25px 24px;
 
-  border: 1px solid rgba(16, 42, 53, 0.09);
+  border:
+    1px solid rgba(16, 37, 43, 0.09);
 
   border-radius: var(--radius-md);
 
   background:
-    linear-gradient(
-      145deg,
-      #ffffff,
-      #f4f8f7
-    );
+    #ffffff;
 
   box-shadow:
-    0 8px 25px rgba(16, 42, 53, 0.05);
+    0 8px 25px rgba(16, 37, 43, 0.05);
 }
 
 .research-glance .glance-card span {
@@ -1149,39 +1203,14 @@ p {
 
 
 /* =========================================================
-   PUBLICATIONS
-   WARM IVORY BACKGROUND
-   ========================================================= */
-
-#publications {
-  background:
-    radial-gradient(
-      circle at 90% 15%,
-      rgba(197, 150, 82, 0.10),
-      transparent 28%
-    ),
-    radial-gradient(
-      circle at 8% 90%,
-      rgba(112, 85, 160, 0.06),
-      transparent 30%
-    ),
-    linear-gradient(
-      135deg,
-      #fbf8f1,
-      #f8f6f0 55%,
-      #f2f5f2
-    );
-}
-
-
-/* =========================================================
    PUBLICATION PROFILE
-   ========================================================= */
+========================================================= */
 
 .pub-feature {
   padding: 38px;
 
-  border: 1px solid rgba(197, 150, 82, 0.22);
+  border:
+    1px solid rgba(184, 137, 77, 0.20);
 
   border-radius: var(--radius-lg);
 
@@ -1189,11 +1218,11 @@ p {
     linear-gradient(
       135deg,
       #fffdf8,
-      #f4f6f3
+      #f5f7f5
     );
 
   box-shadow:
-    0 14px 34px rgba(16, 42, 53, 0.06);
+    0 12px 30px rgba(16, 37, 43, 0.05);
 }
 
 .publication-intro {
@@ -1243,7 +1272,7 @@ p {
 
 /* =========================================================
    PUBLICATION SEARCH / FILTER
-   ========================================================= */
+========================================================= */
 
 .publication-controls {
   display: grid;
@@ -1266,7 +1295,8 @@ p {
 
   padding: 10px 14px;
 
-  border: 1px solid rgba(16, 42, 53, 0.15);
+  border:
+    1px solid rgba(16, 37, 43, 0.13);
 
   border-radius: 8px;
 
@@ -1292,13 +1322,13 @@ p {
   border-color: var(--accent);
 
   box-shadow:
-    0 0 0 3px rgba(197, 150, 82, 0.11);
+    0 0 0 3px rgba(184, 137, 77, 0.10);
 }
 
 
 /* =========================================================
    PUBLICATION COUNT
-   ========================================================= */
+========================================================= */
 
 .publication-count {
   display: flex;
@@ -1313,7 +1343,8 @@ p {
 
   padding-bottom: 14px;
 
-  border-bottom: 1px solid rgba(16, 42, 53, 0.13);
+  border-bottom:
+    1px solid rgba(16, 37, 43, 0.10);
 }
 
 .publication-count-main {
@@ -1333,7 +1364,7 @@ p {
 
 /* =========================================================
    PUBLICATION LIST
-   ========================================================= */
+========================================================= */
 
 .pub-list {
   margin-top: 0;
@@ -1348,7 +1379,8 @@ p {
 
   padding: 26px 0;
 
-  border-bottom: 1px solid rgba(16, 42, 53, 0.12);
+  border-bottom:
+    1px solid rgba(16, 37, 43, 0.10);
 }
 
 .publication-number {
@@ -1376,7 +1408,7 @@ p {
 
   border-radius: 999px;
 
-  background: rgba(16, 42, 53, 0.065);
+  background: #eef2f1;
 
   color: var(--muted);
 
@@ -1454,23 +1486,7 @@ p {
 
 /* =========================================================
    ACADEMIC CONTRIBUTIONS
-   COOL BLUE-GREY
-   ========================================================= */
-
-#academic-contributions {
-  background:
-    radial-gradient(
-      circle at 85% 15%,
-      rgba(83, 105, 174, 0.09),
-      transparent 30%
-    ),
-    linear-gradient(
-      135deg,
-      #edf3f8,
-      #f4f6f8 55%,
-      #eaf0f4
-    );
-}
+========================================================= */
 
 .academic-grid {
   display: grid;
@@ -1483,7 +1499,8 @@ p {
 .academic-grid article {
   padding: 32px;
 
-  border: 1px solid rgba(16, 42, 53, 0.10);
+  border:
+    1px solid rgba(16, 37, 43, 0.09);
 
   border-radius: var(--radius-md);
 
@@ -1491,11 +1508,21 @@ p {
     linear-gradient(
       145deg,
       #ffffff,
-      #f4f7f8
+      #f7f5ef
     );
 
   box-shadow:
-    0 8px 25px rgba(16, 42, 53, 0.055);
+    0 8px 25px rgba(16, 37, 43, 0.05);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.academic-grid article:hover {
+  transform: translateY(-4px);
+
+  box-shadow: var(--shadow-card);
 }
 
 .academic-grid article > span {
@@ -1503,7 +1530,7 @@ p {
 
   margin-bottom: 35px;
 
-  color: var(--accent-programme);
+  color: var(--accent-dark);
 
   font-size: 10px;
 
@@ -1535,8 +1562,7 @@ p {
 
 /* =========================================================
    ABOUT
-   WARM SAND / IVORY
-   ========================================================= */
+========================================================= */
 
 .about {
   position: relative;
@@ -1544,19 +1570,18 @@ p {
   background:
     radial-gradient(
       circle at 90% 20%,
-      rgba(38, 117, 168, 0.075),
+      rgba(37, 108, 152, 0.07),
       transparent 28%
     ),
     radial-gradient(
       circle at 10% 80%,
-      rgba(197, 150, 82, 0.11),
+      rgba(184, 137, 77, 0.07),
       transparent 30%
     ),
     linear-gradient(
       135deg,
-      #faf6ed,
-      #f4f3ed 52%,
-      #edf2f0 100%
+      #f8f7f3,
+      #edf3f1
     );
 }
 
@@ -1589,7 +1614,7 @@ p {
 
 /* =========================================================
    ACADEMIC PROFILES
-   ========================================================= */
+========================================================= */
 
 .profiles {
   position: relative;
@@ -1599,19 +1624,19 @@ p {
   background:
     radial-gradient(
       circle at 15% 20%,
-      rgba(83, 103, 180, 0.12),
+      rgba(78, 95, 168, 0.08),
       transparent 30%
     ),
     radial-gradient(
       circle at 88% 78%,
-      rgba(118, 86, 168, 0.10),
+      rgba(102, 80, 154, 0.07),
       transparent 32%
     ),
     linear-gradient(
       135deg,
-      var(--profile-bg-1) 0%,
-      var(--profile-bg-2) 52%,
-      var(--profile-bg-3) 100%
+      #f2f5f8 0%,
+      #f4f2f8 52%,
+      #f8f6f1 100%
     );
 }
 
@@ -1631,7 +1656,7 @@ p {
   background:
     radial-gradient(
       circle,
-      rgba(83, 103, 180, 0.10),
+      rgba(78, 95, 168, 0.08),
       transparent 70%
     );
 
@@ -1654,7 +1679,7 @@ p {
   background:
     radial-gradient(
       circle,
-      rgba(118, 86, 168, 0.08),
+      rgba(102, 80, 154, 0.06),
       transparent 70%
     );
 
@@ -1682,19 +1707,16 @@ p {
 
   padding: 28px;
 
-  border: 1px solid rgba(83, 103, 180, 0.14);
+  border:
+    1px solid rgba(78, 95, 168, 0.12);
 
   border-radius: var(--radius-md);
 
   background:
-    linear-gradient(
-      145deg,
-      #ffffff,
-      #f8f8fc
-    );
+    rgba(255, 255, 255, 0.92);
 
   box-shadow:
-    0 10px 30px rgba(67, 70, 110, 0.07);
+    0 10px 30px rgba(67, 70, 110, 0.06);
 
   transition:
     transform 0.25s ease,
@@ -1705,10 +1727,11 @@ p {
 .profile-card:hover {
   transform: translateY(-4px);
 
-  border-color: rgba(83, 103, 180, 0.40);
+  border-color:
+    rgba(78, 95, 168, 0.32);
 
   box-shadow:
-    0 16px 38px rgba(67, 70, 110, 0.12);
+    0 16px 38px rgba(67, 70, 110, 0.11);
 }
 
 .profile-number {
@@ -1788,7 +1811,7 @@ p {
 
 /* =========================================================
    CONTACT
-   ========================================================= */
+========================================================= */
 
 .contact {
   padding: 105px 0;
@@ -1796,18 +1819,18 @@ p {
   background:
     radial-gradient(
       circle at 80% 20%,
-      rgba(197, 150, 82, 0.18),
+      rgba(216, 183, 126, 0.12),
       transparent 28%
     ),
     radial-gradient(
-      circle at 15% 90%,
-      rgba(40, 111, 158, 0.13),
+      circle at 10% 90%,
+      rgba(42, 118, 139, 0.10),
       transparent 30%
     ),
     linear-gradient(
       135deg,
-      #0a202b,
-      #12313c
+      #0b222a,
+      #102d36
     );
 }
 
@@ -1839,7 +1862,7 @@ p {
 .contact-email {
   margin-top: 15px;
 
-  color: rgba(255, 255, 255, 0.56) !important;
+  color: rgba(255, 255, 255, 0.55) !important;
 
   font-size: 11px !important;
 }
@@ -1847,17 +1870,18 @@ p {
 
 /* =========================================================
    FOOTER
-   ========================================================= */
+========================================================= */
 
 footer {
   background:
     linear-gradient(
       135deg,
-      #071820,
-      #0b202b
+      #07171f,
+      #0b222a
     );
 
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top:
+    1px solid rgba(255, 255, 255, 0.08);
 }
 
 .footer-inner {
@@ -1881,7 +1905,7 @@ footer {
 
 /* =========================================================
    TABLET
-   ========================================================= */
+========================================================= */
 
 @media (max-width: 1000px) {
 
@@ -1953,7 +1977,7 @@ footer {
 
 /* =========================================================
    MOBILE
-   ========================================================= */
+========================================================= */
 
 @media (max-width: 720px) {
 
@@ -1987,11 +2011,13 @@ footer {
 
     padding: 10px;
 
-    border: 1px solid rgba(16, 42, 53, 0.12);
+    border:
+      1px solid rgba(16, 37, 43, 0.10);
 
     border-radius: 12px;
 
-    background: rgba(255, 255, 255, 0.98);
+    background:
+      rgba(255, 255, 255, 0.98);
 
     box-shadow: var(--shadow-card);
   }
@@ -2010,6 +2036,9 @@ footer {
     text-align: center;
   }
 
+
+  /* Hero mobile */
+
   .hero {
     padding: 75px 0 70px;
   }
@@ -2022,7 +2051,7 @@ footer {
     font-size: 42px;
   }
 
-  .lead {
+  .hero .lead {
     font-size: 16px;
   }
 
@@ -2186,7 +2215,7 @@ footer {
 
 /* =========================================================
    VERY SMALL SCREENS
-   ========================================================= */
+========================================================= */
 
 @media (max-width: 420px) {
 
