@@ -2641,3 +2641,100 @@ footer {
   }
 }
 ```
+/* =========================================================
+   MOBILE FONT-COLOR CONSISTENCY — SAFE OVERRIDE
+   Desktop colors are completely untouched.
+========================================================= */
+
+@media screen and (max-width: 720px) {
+
+  /* Normal light-section body text */
+  .section:not(.dark) p {
+    color: var(--ink-soft);
+  }
+
+  /* Light-section headings */
+  .section:not(.dark) h2,
+  .section:not(.dark) h3 {
+    color: var(--ink);
+  }
+
+  /* Publication text */
+  #publications .publication-content h3 {
+    color: #0b1726;
+  }
+
+  #publications .publication-journal {
+    color: #56616d;
+  }
+
+  #publications .publication-doi {
+    color: #0b1726;
+  }
+
+  #publications .publication-count-main {
+    color: var(--ink);
+  }
+
+  #publications .publication-count-sub {
+    color: var(--muted);
+  }
+
+  /* Publication badges retain their individual colors */
+  #publications .publication-meta span:first-child {
+    color: #8a6416;
+  }
+
+  #publications .publication-meta span:nth-child(2) {
+    color: #176b68;
+  }
+
+  #publications .publication-meta span:nth-child(3) {
+    color: #5d467c;
+  }
+
+  #publications .publication-number {
+    color: var(--accent);
+  }
+
+  /* Keep hero text white */
+  .hero h1 {
+    color: var(--white);
+  }
+
+  .hero .lead {
+    color: rgba(255, 255, 255, 0.84);
+  }
+
+  .hero-affiliation {
+    color: rgba(255, 255, 255, 0.64);
+  }
+
+  .quick-stats strong {
+    color: var(--white);
+  }
+
+  .quick-stats span {
+    color: rgba(255, 255, 255, 0.60);
+  }
+
+  /* Keep dark research/project section text white */
+  .section.dark h2,
+  .section.dark h3 {
+    color: var(--white);
+  }
+
+  .section.dark p {
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  /* Contact */
+  .contact h2,
+  .contact p {
+    color: var(--white);
+  }
+
+  .contact-email {
+    color: rgba(255, 255, 255, 0.55) !important;
+  }
+}
