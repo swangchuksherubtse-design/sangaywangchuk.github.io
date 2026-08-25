@@ -2836,3 +2836,226 @@ footer {
     scroll-behavior: auto !important;
   }
 }
+/* =========================================================
+   GRANTS & RESEARCH SUPPORT
+   Improved contrast and visual separation
+========================================================= */
+
+#grants {
+  background:
+    radial-gradient(
+      circle at 88% 12%,
+      rgba(43, 113, 134, 0.08),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 8% 88%,
+      rgba(184, 137, 77, 0.07),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #eef5f3 0%,
+      #f7f7f2 52%,
+      #f1f5f3 100%
+    );
+}
+
+
+/* Grants section heading */
+
+#grants h2 {
+  color: var(--ink);
+}
+
+#grants h2 em {
+  color: var(--research-teal);
+}
+
+#grants .section-heading > p {
+  color: var(--ink-soft);
+}
+
+
+/* Grants cards */
+
+#grants .academic-grid {
+  gap: 18px;
+}
+
+#grants .academic-grid article {
+  position: relative;
+
+  padding: 32px;
+
+  border:
+    1px solid rgba(20, 125, 123, 0.16);
+
+  border-radius: var(--radius-md);
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff 0%,
+      #f5faf8 100%
+    );
+
+  box-shadow:
+    0 10px 28px rgba(16, 37, 43, 0.07);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+#grants .academic-grid article:hover {
+  transform: translateY(-4px);
+
+  border-color:
+    rgba(184, 137, 77, 0.35);
+
+  box-shadow:
+    0 16px 38px rgba(16, 37, 43, 0.12);
+}
+
+
+/* Grant number */
+
+#grants .academic-grid article > span {
+  margin-bottom: 30px;
+
+  color: var(--research-teal);
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+
+  text-transform: uppercase;
+}
+
+
+/* Grant title */
+
+#grants .academic-grid h3 {
+  margin-bottom: 13px;
+
+  color: var(--ink);
+
+  font-family: "Playfair Display", serif;
+
+  font-size: 26px;
+
+  line-height: 1.3;
+
+  font-weight: 500;
+}
+
+
+/* Grant description */
+
+#grants .academic-grid p {
+  margin-bottom: 18px;
+
+  color: var(--ink-soft);
+
+  font-size: 13px;
+
+  line-height: 1.72;
+}
+
+
+/* =========================================================
+   GRANT METADATA
+   Makes NSRF / ACRG / PI / funding information visible
+========================================================= */
+
+#grants .academic-grid article strong,
+#grants .academic-grid article small,
+#grants .academic-grid article .grant-meta {
+  color: var(--ink);
+}
+
+
+/* If metadata is rendered as inline text */
+
+#grants .academic-grid article strong {
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   GRANT TAGS
+   Handles metadata such as:
+   NSRF
+   Electrochemical Sensors
+   Co-PI
+   Nu. 200,000
+========================================================= */
+
+#grants .tags {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 7px;
+
+  margin-top: 18px;
+}
+
+#grants .tags span {
+  padding: 6px 10px;
+
+  border:
+    1px solid rgba(20, 125, 123, 0.18);
+
+  border-radius: 999px;
+
+  background:
+    rgba(20, 125, 123, 0.07);
+
+  color: #185f5e;
+
+  font-size: 10px;
+
+  line-height: 1.25;
+
+  font-weight: 700;
+
+  letter-spacing: 0.2px;
+}
+
+
+/* Funding amount gets stronger emphasis */
+
+#grants .tags span:last-child {
+  background:
+    rgba(184, 137, 77, 0.10);
+
+  border-color:
+    rgba(184, 137, 77, 0.25);
+
+  color: var(--accent-dark);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 720px) {
+
+  #grants .academic-grid article {
+    padding: 25px 22px;
+  }
+
+  #grants .academic-grid h3 {
+    font-size: 24px;
+  }
+
+  #grants .academic-grid p {
+    font-size: 13px;
+  }
+}
