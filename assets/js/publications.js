@@ -1,10 +1,24 @@
 /* =========================================================
    PUBLICATIONS
+   =========================================================
    Automatically loaded from:
    data/cv/publications.json
+
+   IMPORTANT:
+   - Do NOT manually enter publications here.
+   - The CV → JSON extraction is the source of truth.
+   - When publications.json changes, this section updates
+     automatically after the website reloads.
+========================================================= */
+
+
+/* =========================================================
+   GLOBAL PUBLICATION DATA
 ========================================================= */
 
 let publications = [];
+
+let publicationFiltersInitialized = false;
 
 
 /* =========================================================
@@ -30,13 +44,26 @@ async function loadPublications() {
       }
     );
 
+
     if (!response.ok) {
+
       throw new Error(
         `HTTP ${response.status}: Unable to load publication data.`
       );
+
     }
 
-    const data = await response.json();
+
+    const data =
+      await response.json();
+
+
+    /*
+     * The Python CV extractor stores the journal articles
+     * inside:
+     *
+     * peer_reviewed_journal_articles
+     */
 
     const articles =
       Array.isArray(
@@ -47,153 +74,217 @@ async function loadPublications() {
 
 
     /*
-     * Convert the CV extraction format into the
-     * display format used by the website.
-     */
-
-    publications = articles.map(
-      article => {
-
-        const citation =
-          String(
-            article.citation || ""
-          ).trim();
-
-        const year =
-          Number(article.year) || "";
-
-        const doi =
-          String(
-            article.doi || ""
-          ).trim();
-
-
-        const title =
-          extractPublicationTitle(
-            citation
-          );
-
-
-        const journal =
-          extractJournal(
-            citation
-          );
-
-
-        const quartile =
-          extractQuartile(
-            citation
-          );
-
-
-        const impactFactor =
-          extractImpactFactor(
-            citation
-          );
-
-
-        /*
-         * The current CV JSON does not yet contain
-         * a dedicated JCR year field.
-         *
-         * For now, use the publication year as a
-         * fallback. This will be refined later when
-         * the Python extractor is upgraded.
-         */
-
-        const metricYear =
-          extractMetricYear(
-            citation
-          ) || "";
-
-
-        const category =
-          determinePublicationCategory(
-            title,
-            citation
-          );
-
-
-        return {
-
-          year,
-
-          category,
-
-          title,
-
-          journal,
-
-          quartile,
-
-          impactFactor,
-
-          metricYear,
-
-          doi,
-
-          citation
-
-        };
-
-      }
-    );
-
-
-    /*
-     * Remove accidental empty records.
+     * Convert extracted CV records into the format
+     * required by the website.
      */
 
     publications =
-      publications.filter(
-        publication =>
-          publication.title ||
-          publication.citation
-      );
+      articles
+        .map(
+          article => {
 
+            const citation =
+              String(
+                article.citation || ""
+              ).trim();
+
+
+            const year =
+              Number(article.year) ||
+              extractPublicationYear(
+                citation
+              ) ||
+              "";
+
+
+            const doi =
+              String(
+                article.doi || ""
+              ).trim();
+
+
+            /*
+             * If the extractor is upgraded in the future
+             * to provide these fields directly, the website
+             * will use them automatically.
+             */
+
+            const title =
+              String(
+                article.title ||
+                extractPublicationTitle(
+                  citation
+                ) ||
+                ""
+              ).trim();
+
+
+            const journal =
+              String(
+                article.journal ||
+                extractJournal(
+                  citation
+                ) ||
+                ""
+              ).trim();
+
+
+            const quartile =
+              String(
+                article.quartile ||
+                extractQuartile(
+                  citation
+                ) ||
+                ""
+              ).trim();
+
+
+            const impactFactor =
+              String(
+                article.impactFactor ||
+                extractImpactFactor(
+                  citation
+                ) ||
+                ""
+              ).trim();
+
+
+            const metricYear =
+              String(
+                article.metricYear ||
+                extractMetricYear(
+                  citation
+                ) ||
+                ""
+              ).trim();
+
+
+            const details =
+              String(
+                article.details ||
+                extractPublicationDetails(
+                  citation,
+                  journal
+                ) ||
+                ""
+              ).trim();
+
+
+            const category =
+              String(
+                article.category ||
+                determinePublicationCategory(
+                  title,
+                  citation
+                ) ||
+                "Electrochemical Research"
+              ).trim();
+
+
+            return {
+
+              year,
+
+              category,
+
+              title,
+
+              journal,
+
+              quartile,
+
+              impactFactor,
+
+              metricYear,
+
+              details,
+
+              doi,
+
+              citation
+
+            };
+
+          }
+        )
+
+
+        /*
+         * Remove records that contain no useful
+         * publication information.
+         */
+
+        .filter(
+          publication =>
+            publication.title ||
+            publication.citation
+        );
+
+
+    /* =====================================================
+       VALIDATION
+    ===================================================== */
 
     console.log(
-      `✓ Publications loaded from CV: ${publications.length}`
+      "=========================================="
     );
 
+    console.log(
+      `✓ Publications loaded from CV JSON: ${publications.length}`
+    );
 
-    /*
-     * Validate against the article count generated
-     * by the Python CV extraction script.
-     */
 
     if (
       Number.isFinite(
         Number(data.article_count)
-      ) &&
-      Number(data.article_count) !==
-        publications.length
+      )
     ) {
 
-      console.warn(
-        `Publication count mismatch: JSON reports ${data.article_count}, ` +
-        `but ${publications.length} records were loaded.`
-      );
+      const expected =
+        Number(
+          data.article_count
+        );
 
-    } else {
 
-      console.log(
-        `✓ Publication validation PASSED: ${publications.length} articles detected.`
-      );
+      if (
+        expected ===
+        publications.length
+      ) {
+
+        console.log(
+          `✓ Publication validation PASSED: ${publications.length} articles detected.`
+        );
+
+      } else {
+
+        console.warn(
+          `⚠ Publication count mismatch: JSON reports ${expected}, ` +
+          `but ${publications.length} records were loaded.`
+        );
+
+      }
 
     }
 
 
+    console.log(
+      "=========================================="
+    );
+
+
     /*
-     * Initialize the publication interface only
-     * after the data has successfully loaded.
+     * Initialize the interface only after the
+     * publication data has successfully loaded.
      */
 
     setupPublicationFilters();
+
     renderPublications();
 
 
-  } catch (error) {
+  }
+
+  catch (error) {
 
     console.error(
       "Publication data loading failed:",
@@ -223,7 +314,9 @@ async function loadPublications() {
           </p>
 
           <p>
-            Please try refreshing the page.
+            Please check that
+            <strong>data/cv/publications.json</strong>
+            exists in the website repository.
           </p>
 
         </div>
@@ -233,6 +326,32 @@ async function loadPublications() {
     }
 
   }
+
+}
+
+
+/* =========================================================
+   EXTRACT PUBLICATION YEAR
+========================================================= */
+
+function extractPublicationYear(
+  citation
+) {
+
+  if (!citation) {
+    return "";
+  }
+
+
+  const match =
+    citation.match(
+      /\((20\d{2})\)/
+    );
+
+
+  return match
+    ? Number(match[1])
+    : "";
 
 }
 
@@ -251,7 +370,7 @@ function extractPublicationTitle(
 
 
   /*
-   * First remove the DOI and trailing metadata.
+   * Remove DOI.
    */
 
   let text =
@@ -264,7 +383,9 @@ function extractPublicationTitle(
 
 
   /*
-   * Remove quartile / IF information.
+   * Remove final journal metadata such as:
+   *
+   * (Q1, IF 5.1)
    */
 
   text =
@@ -275,12 +396,12 @@ function extractPublicationTitle(
 
 
   /*
-   * Find the year and take everything after it.
+   * Find the publication year.
    */
 
   const yearMatch =
     text.match(
-      /\(\d{4}\)\.\s*/
+      /\((20\d{2})\)\.\s*/
     );
 
 
@@ -288,6 +409,12 @@ function extractPublicationTitle(
     return text;
   }
 
+
+  /*
+   * Everything after the year is:
+   *
+   * Title. Journal, volume...
+   */
 
   text =
     text.substring(
@@ -297,40 +424,40 @@ function extractPublicationTitle(
 
 
   /*
-   * Known journal names appearing in the CV.
+   * Known journals in the CV.
    *
-   * This helps separate article titles from
-   * journal names without needing manual entry.
+   * Longest/specific names are included first.
    */
 
   const journals = [
 
     "Journal of Environmental Chemical Engineering",
 
+    "Journal of The Electrochemical Society",
+
+    "Journal of Electroanalytical Chemistry",
+
+    "Bhutan Journal of Research and Development",
+
     "ACS Applied Nano Materials",
-
-    "Microchemical Journal",
-
-    "Talanta",
 
     "Materials Today Chemistry",
 
-    "ACS Omega",
+    "Microchemical Journal",
 
     "Electrochimica Acta",
 
     "Food Chemistry",
 
-    "Journal of The Electrochemical Society",
+    "ACS Omega",
 
-    "Journal of Electroanalytical Chemistry",
-
-    "Bhutan Journal of Research and Development"
+    "Talanta"
 
   ];
 
 
-  let journalPosition = -1;
+  let journalPosition =
+    -1;
 
 
   journals.forEach(
@@ -361,7 +488,9 @@ function extractPublicationTitle(
   );
 
 
-  if (journalPosition !== -1) {
+  if (
+    journalPosition !== -1
+  ) {
 
     text =
       text.substring(
@@ -373,7 +502,7 @@ function extractPublicationTitle(
 
 
   /*
-   * Clean trailing punctuation.
+   * Remove trailing punctuation.
    */
 
   text =
@@ -407,25 +536,25 @@ function extractJournal(
 
     "Journal of Environmental Chemical Engineering",
 
+    "Journal of The Electrochemical Society",
+
+    "Journal of Electroanalytical Chemistry",
+
+    "Bhutan Journal of Research and Development",
+
     "ACS Applied Nano Materials",
-
-    "Microchemical Journal",
-
-    "Talanta",
 
     "Materials Today Chemistry",
 
-    "ACS Omega",
+    "Microchemical Journal",
 
     "Electrochimica Acta",
 
     "Food Chemistry",
 
-    "Journal of The Electrochemical Society",
+    "ACS Omega",
 
-    "Journal of Electroanalytical Chemistry",
-
-    "Bhutan Journal of Research and Development"
+    "Talanta"
 
   ];
 
@@ -464,6 +593,11 @@ function extractQuartile(
   citation
 ) {
 
+  if (!citation) {
+    return "";
+  }
+
+
   const match =
     citation.match(
       /\((Q[1-4])\b/i
@@ -484,6 +618,11 @@ function extractQuartile(
 function extractImpactFactor(
   citation
 ) {
+
+  if (!citation) {
+    return "";
+  }
+
 
   const match =
     citation.match(
@@ -506,12 +645,17 @@ function extractMetricYear(
   citation
 ) {
 
+  if (!citation) {
+    return "";
+  }
+
+
   /*
-   * At present, the CV citation does not explicitly
-   * identify the JCR year separately.
+   * Looks for explicit references such as:
    *
-   * This function is intentionally prepared so the
-   * Python extractor can later provide it.
+   * JCR 2024
+   * JCR year: 2024
+   * JCR Year - 2024
    */
 
   const match =
@@ -523,6 +667,56 @@ function extractMetricYear(
   return match
     ? match[1]
     : "";
+
+}
+
+
+/* =========================================================
+   EXTRACT ADDITIONAL PUBLICATION DETAILS
+========================================================= */
+
+function extractPublicationDetails(
+  citation,
+  journal
+) {
+
+  if (!citation) {
+    return "";
+  }
+
+
+  /*
+   * The website currently does not need to display
+   * volume/page information separately because the
+   * citation itself is retained.
+   *
+   * However, Bhutan Journal of Research and Development
+   * currently contains:
+   *
+   * 11(1)
+   *
+   * so preserve this when detected.
+   */
+
+  if (
+    journal ===
+    "Bhutan Journal of Research and Development"
+  ) {
+
+    const match =
+      citation.match(
+        /,\s*(\d+\(\d+\))/
+      );
+
+
+    if (match) {
+      return match[1];
+    }
+
+  }
+
+
+  return "";
 
 }
 
@@ -542,7 +736,9 @@ function determinePublicationCategory(
 
 
   /*
-   * Forensic electrochemistry
+   * -------------------------------------------------------
+   * FORENSIC ELECTROCHEMISTRY
+   * -------------------------------------------------------
    */
 
   if (
@@ -557,11 +753,13 @@ function determinePublicationCategory(
 
 
   /*
-   * Food analysis
+   * -------------------------------------------------------
+   * FOOD ANALYSIS
+   * -------------------------------------------------------
    */
 
   if (
-    /food|turmeric|curcumin|adulterant|animal feed|food supplements/.test(
+    /food|turmeric|curcumin|adulterant|animal feed|food supplement/.test(
       text
     )
   ) {
@@ -572,7 +770,9 @@ function determinePublicationCategory(
 
 
   /*
-   * Biomedical / biosensors
+   * -------------------------------------------------------
+   * BIOMEDICAL / BIOSENSORS
+   * -------------------------------------------------------
    */
 
   if (
@@ -587,7 +787,9 @@ function determinePublicationCategory(
 
 
   /*
-   * Environmental monitoring
+   * -------------------------------------------------------
+   * ENVIRONMENTAL MONITORING
+   * -------------------------------------------------------
    */
 
   if (
@@ -602,11 +804,13 @@ function determinePublicationCategory(
 
 
   /*
-   * Sustainable nanomaterials
+   * -------------------------------------------------------
+   * SUSTAINABLE NANOMATERIALS
+   * -------------------------------------------------------
    */
 
   if (
-    /laser-induced graphene|graphene|carbon nanotube|nanocomposite|nanoparticle|porous carbon/.test(
+    /laser-induced graphene|graphene|carbon nanotube|nanocomposite|nanoparticle|porous carbon|biomass/.test(
       text
     )
   ) {
@@ -617,7 +821,9 @@ function determinePublicationCategory(
 
 
   /*
-   * Electrocatalysis
+   * -------------------------------------------------------
+   * ELECTROCATALYSIS
+   * -------------------------------------------------------
    */
 
   if (
@@ -631,23 +837,31 @@ function determinePublicationCategory(
   }
 
 
+  /*
+   * -------------------------------------------------------
+   * DEFAULT
+   * -------------------------------------------------------
+   */
+
   return "Electrochemical Research";
 
 }
 
 
 /* =========================================================
-   PUBLICATION UTILITIES
+   PUBLICATION YEAR RANGE
 ========================================================= */
 
 function getPublicationYears() {
 
   const years =
     publications
+
       .map(
         pub =>
           Number(pub.year)
       )
+
       .filter(
         year =>
           Number.isFinite(year)
@@ -657,8 +871,11 @@ function getPublicationYears() {
   if (!years.length) {
 
     return {
+
       newest: "",
+
       oldest: ""
+
     };
 
   }
@@ -812,6 +1029,7 @@ function updatePublicationCount(
         "div"
       );
 
+
     counter.className =
       "publication-count";
 
@@ -835,14 +1053,18 @@ function updatePublicationCount(
         controls
       );
 
-    } else if (publicationList) {
+    }
+
+    else if (publicationList) {
 
       publicationList.parentNode.insertBefore(
         counter,
         publicationList
       );
 
-    } else {
+    }
+
+    else {
 
       section.appendChild(
         counter
@@ -868,7 +1090,9 @@ function updatePublicationCount(
     getPublicationYears();
 
 
-  if (showing === total) {
+  if (
+    showing === total
+  ) {
 
     counter.innerHTML = `
 
@@ -887,7 +1111,9 @@ function updatePublicationCount(
 
     `;
 
-  } else {
+  }
+
+  else {
 
     counter.innerHTML = `
 
@@ -1039,12 +1265,14 @@ function renderPublications(
                 class="publication-number"
                 aria-hidden="true"
               >
+
                 ${String(
                   index + 1
                 ).padStart(
                   2,
                   "0"
                 )}
+
               </div>
 
 
@@ -1152,6 +1380,20 @@ function renderPublications(
 
 function setupPublicationFilters() {
 
+  /*
+   * Prevent duplicate event listeners if this function
+   * is called more than once.
+   */
+
+  if (
+    publicationFiltersInitialized
+  ) {
+
+    return;
+
+  }
+
+
   const section =
     document.querySelector(
       "#publications"
@@ -1170,8 +1412,8 @@ function setupPublicationFilters() {
 
 
   /*
-   * Prevent duplicate controls if this function
-   * is accidentally called more than once.
+   * Create controls only if they do not already
+   * exist in the HTML.
    */
 
   if (!controls) {
@@ -1281,7 +1523,9 @@ function setupPublicationFilters() {
         publicationList
       );
 
-    } else {
+    }
+
+    else {
 
       section.appendChild(
         controls
@@ -1350,10 +1594,10 @@ function setupPublicationFilters() {
       )
     ]
 
-    .sort(
-      (a, b) =>
-        b - a
-    );
+      .sort(
+        (a, b) =>
+          b - a
+      );
 
 
   years.forEach(
@@ -1398,7 +1642,7 @@ function setupPublicationFilters() {
 
 
   /* =======================================================
-     CATEGORIES
+     RESEARCH CATEGORIES
   ======================================================= */
 
   const categories =
@@ -1415,10 +1659,10 @@ function setupPublicationFilters() {
       )
     ]
 
-    .sort(
-      (a, b) =>
-        a.localeCompare(b)
-    );
+      .sort(
+        (a, b) =>
+          a.localeCompare(b)
+      );
 
 
   categories.forEach(
@@ -1487,6 +1731,11 @@ function setupPublicationFilters() {
     const filtered =
       publications.filter(
         pub => {
+
+          /*
+           * Search across all useful publication fields,
+           * including the complete CV citation.
+           */
 
           const searchableText = [
 
@@ -1567,7 +1816,7 @@ function setupPublicationFilters() {
 
 
   /* =======================================================
-     EVENTS
+     EVENT LISTENERS
   ======================================================= */
 
   search.addEventListener(
@@ -1613,6 +1862,10 @@ function setupPublicationFilters() {
     );
 
   }
+
+
+  publicationFiltersInitialized =
+    true;
 
 }
 
