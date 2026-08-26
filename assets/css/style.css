@@ -459,7 +459,7 @@ select:focus-visible {
   position: relative;
   overflow: hidden;
 
-  padding: 105px 0 95px;
+  padding: 75px 0 80px;
 
   background:
     radial-gradient(
@@ -745,7 +745,7 @@ select:focus-visible {
     0 0 0 1px rgba(216, 183, 126, 0.35),
     0 0 55px rgba(216, 183, 126, 0.13);
 
-  transform: translateY(57px);
+  transform: translateY(35px);
 }
 
 
@@ -2730,7 +2730,7 @@ footer {
 
     border-width: 9px;
 
-    transform: translateY(57px);
+    transform: translateY(35px);
   }
 
   .profile-photo {
@@ -2971,7 +2971,7 @@ footer {
 
     border-width: 8px;
 
-    transform: translateY(57px);
+    transform: translateY(38px);
   }
 
 
@@ -3265,7 +3265,7 @@ footer {
 
     border-width: 8px;
 
-    transform: translateY(57px);
+    transform: translateY(38px);
   }
 
 
