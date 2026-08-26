@@ -5,6 +5,8 @@ on:
     paths:
       - "cv/Sangay Wangchuk CV (complete).docx"
       - ".github/workflows/update-cv.yml"
+      - "scripts/extract_cv.py"
+
   workflow_dispatch:
 
 permissions:
@@ -15,33 +17,148 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+      # =====================================================
+      # CHECKOUT REPOSITORY
+      # =====================================================
+
       - name: Checkout repository
         uses: actions/checkout@v4
+
+
+      # =====================================================
+      # SET UP PYTHON
+      # =====================================================
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
+
+      # =====================================================
+      # INSTALL DEPENDENCIES
+      # =====================================================
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install python-docx
 
+
+      # =====================================================
+      # VERIFY CV FILE
+      # =====================================================
+
+      - name: Verify CV file
+        run: |
+          if [ ! -f "cv/Sangay Wangchuk CV (complete).docx" ]; then
+            echo "ERROR: CV file was not found."
+            exit 1
+          fi
+
+          echo "✓ CV file found."
+
+
+      # =====================================================
+      # EXTRACT CV DATA
+      # =====================================================
+
       - name: Extract CV data
         run: |
           python scripts/extract_cv.py
 
+
+      # =====================================================
+      # VERIFY GENERATED DATA FILES
+      # =====================================================
+
+      - name: Verify generated CV data
+        run: |
+
+          echo "Checking generated CV data files..."
+
+          required_files=(
+            "data/cv/cv_text.json"
+            "data/cv/profile.json"
+            "data/cv/publications.json"
+            "data/cv/research.json"
+          )
+
+          for file in "${required_files[@]}"; do
+            if [ ! -f "$file" ]; then
+              echo "ERROR: Missing generated file: $file"
+              exit 1
+            fi
+
+            echo "✓ Found: $file"
+          done
+
+
+      # =====================================================
+      # VALIDATE PUBLICATIONS
+      # =====================================================
+
+      - name: Validate publication data
+        run: |
+
+          python - <<'PY'
+
+          import json
+          import sys
+
+          path = "data/cv/publications.json"
+
+          with open(path, "r", encoding="utf-8") as f:
+              data = json.load(f)
+
+          articles = data.get(
+              "peer_reviewed_journal_articles",
+              []
+          )
+
+          count = len(articles)
+
+          print(f"Detected peer-reviewed journal articles: {count}")
+
+          if count != 30:
+              print(
+                  f"ERROR: Expected 30 journal articles, "
+                  f"but detected {count}."
+              )
+              sys.exit(1)
+
+          print(
+              "✓ Publication validation PASSED: "
+              "30 articles detected."
+          )
+
+          PY
+
+
+      # =====================================================
+      # COMMIT UPDATED WEBSITE DATA
+      # =====================================================
+
       - name: Commit updated CV data
         run: |
+
           git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
 
           git add data/cv/
 
           if git diff --cached --quiet; then
+
             echo "No CV data changes detected."
+
           else
-            git commit -m "Auto-update website data from CV"
+
+            git commit \
+              -m "Auto-update website data from CV"
+
             git push
+
           fi
