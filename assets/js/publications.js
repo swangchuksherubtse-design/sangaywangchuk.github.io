@@ -4,6 +4,17 @@
    Automatically loaded from:
    data/cv/publications.json
 
+   DATA FLOW:
+   MS Word CV
+        ↓
+   Python CV extractor
+        ↓
+   data/cv/publications.json
+        ↓
+   publications.js
+        ↓
+   Website Publications section
+
    IMPORTANT:
    - Do NOT manually enter publications here.
    - The CV → JSON extraction is the source of truth.
@@ -37,12 +48,13 @@ async function loadPublications() {
 
   try {
 
-    const response = await fetch(
-      PUBLICATIONS_DATA_URL,
-      {
-        cache: "no-store"
-      }
-    );
+    const response =
+      await fetch(
+        PUBLICATIONS_DATA_URL,
+        {
+          cache: "no-store"
+        }
+      );
 
 
     if (!response.ok) {
@@ -56,6 +68,22 @@ async function loadPublications() {
 
     const data =
       await response.json();
+
+
+    /*
+     * Validate the basic JSON structure.
+     */
+
+    if (
+      !data ||
+      typeof data !== "object"
+    ) {
+
+      throw new Error(
+        "Publication JSON is empty or invalid."
+      );
+
+    }
 
 
     /*
@@ -80,8 +108,23 @@ async function loadPublications() {
 
     publications =
       articles
+
         .map(
           article => {
+
+            /*
+             * Protect against malformed/null records.
+             */
+
+            if (
+              !article ||
+              typeof article !== "object"
+            ) {
+
+              return null;
+
+            }
+
 
             const citation =
               String(
@@ -97,10 +140,25 @@ async function loadPublications() {
               "";
 
 
+            /*
+             * Normalize DOI.
+             *
+             * This allows the JSON to contain either:
+             *
+             * 10.xxxx/xxxxx
+             *
+             * or:
+             *
+             * https://doi.org/10.xxxx/xxxxx
+             */
+
             const doi =
-              String(
-                article.doi || ""
-              ).trim();
+              normalizeDOI(
+                article.doi ||
+                extractDOI(
+                  citation
+                )
+              );
 
 
             /*
@@ -210,14 +268,17 @@ async function loadPublications() {
 
 
         /*
-         * Remove records that contain no useful
-         * publication information.
+         * Remove malformed records and records that contain
+         * no useful publication information.
          */
 
         .filter(
           publication =>
-            publication.title ||
-            publication.citation
+            publication &&
+            (
+              publication.title ||
+              publication.citation
+            )
         );
 
 
@@ -229,10 +290,21 @@ async function loadPublications() {
       "=========================================="
     );
 
+
+    console.log(
+      "✓ CV publication database loaded successfully."
+    );
+
+
     console.log(
       `✓ Publications loaded from CV JSON: ${publications.length}`
     );
 
+
+    /*
+     * Validate against article_count when supplied
+     * by the Python extractor.
+     */
 
     if (
       Number.isFinite(
@@ -255,7 +327,9 @@ async function loadPublications() {
           `✓ Publication validation PASSED: ${publications.length} articles detected.`
         );
 
-      } else {
+      }
+
+      else {
 
         console.warn(
           `⚠ Publication count mismatch: JSON reports ${expected}, ` +
@@ -263,6 +337,29 @@ async function loadPublications() {
         );
 
       }
+
+    }
+
+
+    /*
+     * Report incomplete records without stopping the website.
+     */
+
+    const incompleteRecords =
+      publications.filter(
+        publication =>
+          !publication.title ||
+          !publication.year
+      );
+
+
+    if (
+      incompleteRecords.length > 0
+    ) {
+
+      console.warn(
+        `⚠ ${incompleteRecords.length} publication record(s) contain incomplete information.`
+      );
 
     }
 
@@ -302,7 +399,9 @@ async function loadPublications() {
 
       container.innerHTML = `
 
-        <div class="publication-empty">
+        <div
+          class="publication-empty"
+        >
 
           <h3>
             Unable to load publications
@@ -315,8 +414,15 @@ async function loadPublications() {
 
           <p>
             Please check that
-            <strong>data/cv/publications.json</strong>
+            <strong>
+              data/cv/publications.json
+            </strong>
             exists in the website repository.
+          </p>
+
+          <p class="publication-error-note">
+            The website remains functional, but the
+            publication database could not be displayed.
           </p>
 
         </div>
@@ -331,6 +437,109 @@ async function loadPublications() {
 
 
 /* =========================================================
+   EXTRACT DOI
+========================================================= */
+
+function extractDOI(
+  citation
+) {
+
+  if (!citation) {
+
+    return "";
+
+  }
+
+
+  const match =
+    citation.match(
+      /(?:https?:\/\/doi\.org\/|doi:\s*)?(10\.\d{4,9}\/[-._;()/:A-Z0-9]+)/i
+    );
+
+
+  return match
+    ? match[1]
+    : "";
+
+}
+
+
+/* =========================================================
+   NORMALIZE DOI
+========================================================= */
+
+function normalizeDOI(
+  doi
+) {
+
+  if (!doi) {
+
+    return "";
+
+  }
+
+
+  let value =
+    String(
+      doi
+    )
+      .trim();
+
+
+  /*
+   * Remove common DOI prefixes.
+   */
+
+  value =
+    value.replace(
+      /^https?:\/\/(dx\.)?doi\.org\//i,
+      ""
+    );
+
+
+  value =
+    value.replace(
+      /^doi:\s*/i,
+      ""
+    );
+
+
+  /*
+   * Remove accidental surrounding punctuation.
+   */
+
+  value =
+    value
+      .replace(
+        /^[\s<>"']+/,
+        ""
+      )
+      .replace(
+        /[\s<>"']+$/,
+        ""
+      );
+
+
+  if (
+    !/^10\.\d{4,9}\//i.test(
+      value
+    )
+  ) {
+
+    return "";
+
+  }
+
+
+  return (
+    "https://doi.org/" +
+    value
+  );
+
+}
+
+
+/* =========================================================
    EXTRACT PUBLICATION YEAR
 ========================================================= */
 
@@ -339,7 +548,9 @@ function extractPublicationYear(
 ) {
 
   if (!citation) {
+
     return "";
+
   }
 
 
@@ -365,7 +576,9 @@ function extractPublicationTitle(
 ) {
 
   if (!citation) {
+
     return "";
+
   }
 
 
@@ -376,7 +589,7 @@ function extractPublicationTitle(
   let text =
     citation
       .replace(
-        /\s*https:\/\/doi\.org\/\S+/gi,
+        /\s*(?:https?:\/\/)?doi\.org\/\S+/gi,
         ""
       )
       .trim();
@@ -406,7 +619,9 @@ function extractPublicationTitle(
 
 
   if (!yearMatch) {
+
     return text;
+
   }
 
 
@@ -528,7 +743,9 @@ function extractJournal(
 ) {
 
   if (!citation) {
+
     return "";
+
   }
 
 
@@ -594,7 +811,9 @@ function extractQuartile(
 ) {
 
   if (!citation) {
+
     return "";
+
   }
 
 
@@ -620,7 +839,9 @@ function extractImpactFactor(
 ) {
 
   if (!citation) {
+
     return "";
+
   }
 
 
@@ -646,7 +867,9 @@ function extractMetricYear(
 ) {
 
   if (!citation) {
+
     return "";
+
   }
 
 
@@ -681,7 +904,9 @@ function extractPublicationDetails(
 ) {
 
   if (!citation) {
+
     return "";
+
   }
 
 
@@ -710,7 +935,9 @@ function extractPublicationDetails(
 
 
     if (match) {
+
       return match[1];
+
     }
 
   }
@@ -1012,7 +1239,9 @@ function updatePublicationCount(
 
 
   if (!section) {
+
     return;
+
   }
 
 
@@ -1152,7 +1381,9 @@ function renderPublications(
 
 
   if (!container) {
+
     return;
+
   }
 
 
@@ -1401,7 +1632,9 @@ function setupPublicationFilters() {
 
 
   if (!section) {
+
     return;
+
   }
 
 
