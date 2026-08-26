@@ -1,335 +1,639 @@
-const publications = [
-  {
-    year: 2026,
-    category: "Environmental Monitoring",
-    title: "A smartphone-assisted NFC-enabled microfluidic electrochemical sensor for on-site monitoring of residual free chlorine in water.",
-    journal: "Journal of Environmental Chemical Engineering",
-    quartile: "Q1",
-    impactFactor: "7.5",
-    metricYear: "2025",
-    doi: "https://doi.org/10.1016/j.jece.2026.123838"
-  },
+/* =========================================================
+   PUBLICATIONS
+   Automatically loaded from:
+   data/cv/publications.json
+========================================================= */
 
-  {
-    year: 2026,
-    category: "Biomedical / Wearable Sensors",
-    title: "Ammonium Ion-Sensing Skin Patch Based on Three-Dimensional Nanoarchitecture of Polystyrenesulfonate:Polyaniline/Copper Microflowers Deposited on Flexible Graphene Electrodes.",
-    journal: "ACS Applied Nano Materials",
-    quartile: "Q1",
-    impactFactor: "5.5",
-    metricYear: "2024",
-    doi: "https://doi.org/10.1021/acsanm.5c05854"
-  },
+let publications = [];
 
-  {
-    year: 2026,
-    category: "Forensic Electrochemistry",
-    title: "Electrochemical clonazepam sensor based on B-doped laser-induced graphene for on-site forensic analysis.",
-    journal: "Microchemical Journal",
-    quartile: "Q1",
-    impactFactor: "5.1",
-    metricYear: "2024",
-    doi: "https://doi.org/10.1016/j.microc.2026.117476"
-  },
 
-  {
-    year: 2025,
-    category: "Forensic Electrochemistry",
-    title: "N-doped porous laser-induced graphene applied for forensic electrochemical sensing of xylazine.",
-    journal: "Microchemical Journal",
-    quartile: "Q1",
-    impactFactor: "5.1",
-    metricYear: "2024",
-    doi: "https://doi.org/10.1016/j.microc.2025.114935"
-  },
+/* =========================================================
+   PUBLICATION DATA SOURCE
+========================================================= */
 
-  {
-    year: 2025,
-    category: "Forensic Electrochemistry",
-    title: "One-step laser fabrication of a P-doped 3D porous graphene electrode for on-site detection of promethazine.",
-    journal: "Talanta",
-    quartile: "Q1",
-    impactFactor: "6.1",
-    metricYear: "2024",
-    doi: "https://doi.org/10.1016/j.talanta.2025.128715"
-  },
+const PUBLICATIONS_DATA_URL =
+  "data/cv/publications.json";
 
-  {
-    year: 2025,
-    category: "Sustainable Nanomaterials",
-    title: "Revolutionizing oil palm biomass into laser-induced graphene for sustainable and high-performance electrochemical sensors.",
-    journal: "Materials Today Chemistry",
-    quartile: "Q1",
-    impactFactor: "6.7",
-    metricYear: "2024",
-    doi: "https://doi.org/10.1016/j.mtchem.2025.102872"
-  },
 
-  {
-    year: 2025,
-    category: "Forensic Electrochemistry",
-    title: "Sustainable Paper-Derived Laser-Induced Graphene Electrochemical Platform for Ultra-Sensitive Diazepam Detection in Forensic Investigations.",
-    journal: "ACS Omega",
-    quartile: "Q1",
-    impactFactor: "4.3",
-    metricYear: "2024",
-    doi: "https://doi.org/10.1021/acsomega.5c03662"
-  },
+/* =========================================================
+   LOAD PUBLICATIONS FROM CV JSON
+========================================================= */
 
-  {
-    year: 2025,
-    category: "Environmental / Food Analysis",
-    title: "Smartphone-enabled detection of urea in animal feed based on a disposable electrode modified with silver nanoparticles decorated on nitrogen-doped graphene nanoplatelets.",
-    journal: "Talanta",
-    quartile: "Q1",
-    impactFactor: "6.1",
-    metricYear: "2024",
-    doi: "https://doi.org/10.1016/j.talanta.2025.128431"
-  },
+async function loadPublications() {
 
-  {
-    year: 2025,
-    category: "Environmental Analysis",
-    title: "A disposable dual-mode electrochemical/colorimetric paper-based analytical device for simultaneous detection of hydroquinone and mercury ion.",
-    journal: "Talanta",
-    quartile: "Q1",
-    impactFactor: "6.1",
-    metricYear: "2024",
-    doi: "https://doi.org/10.1016/j.talanta.2025.128166"
-  },
+  try {
 
-  {
-    year: 2025,
-    category: "Biomedical / Glucose Sensing",
-    title: "Portable NFC potentiostat integrated with a 3D paper-based microfluidic electrochemical device for glucose detection in whole blood using PEDOT:PSS/DMSO/GOx sensitive film.",
-    journal: "Microchemical Journal",
-    quartile: "Q1",
-    impactFactor: "5.1",
-    metricYear: "2024",
-    doi: "https://doi.org/10.1016/j.microc.2025.113623"
-  },
+    const response = await fetch(
+      PUBLICATIONS_DATA_URL,
+      {
+        cache: "no-store"
+      }
+    );
 
-  {
-    year: 2025,
-    category: "Environmental Analysis",
-    title: "A β-cyclodextrin/porous graphene ink electrode for smartphone-assisted electrochemical Hg²⁺ sensing.",
-    journal: "Talanta",
-    quartile: "Q1",
-    impactFactor: "6.1",
-    metricYear: "2024",
-    doi: "https://doi.org/10.1016/j.talanta.2025.127776"
-  },
+    if (!response.ok) {
+      throw new Error(
+        `HTTP ${response.status}: Unable to load publication data.`
+      );
+    }
 
-  {
-    year: 2025,
-    category: "Food / Electrochemical Analysis",
-    title: "NS Dual-Doped 3D Porous Laser-Induced Graphene Electrode for Curcumin Determination in Turmeric.",
-    journal: "Talanta",
-    quartile: "Q1",
-    impactFactor: "6.1",
-    metricYear: "2024",
-    doi: "https://doi.org/10.1016/j.talanta.2025.127722"
-  },
+    const data = await response.json();
 
-  {
-    year: 2025,
-    category: "Environmental Monitoring",
-    title: "Cuprous oxide-functionalized activated porous carbon-modified screen-printed carbon electrode integrated with a smartphone for portable electrochemical nitrate detection.",
-    journal: "Talanta",
-    quartile: "Q1",
-    impactFactor: "6.1",
-    metricYear: "2024",
-    doi: "https://doi.org/10.1016/j.talanta.2025.127581"
-  },
+    const articles =
+      Array.isArray(
+        data.peer_reviewed_journal_articles
+      )
+        ? data.peer_reviewed_journal_articles
+        : [];
 
-  {
-    year: 2025,
-    category: "Food / Forensic Analysis",
-    title: "Portable unibody semi-flow injection voltammetric sensor for on-site screening of illegal additive sibutramine in food supplements.",
-    journal: "Talanta",
-    quartile: "Q1",
-    impactFactor: "6.1",
-    metricYear: "2024",
-    doi: "https://doi.org/10.1016/j.talanta.2024.127123"
-  },
 
-  {
-    year: 2024,
-    category: "Biomedical Analysis",
-    title: "A disposable metal-free electrochemical sensor uses a boron/nitrogen co-doped multi-walled carbon nanotubes electrocatalyst to determine the anticancer drug flutamide.",
-    journal: "Microchemical Journal",
-    quartile: "Q1",
-    impactFactor: "5.1",
-    metricYear: "2024",
-    doi: "https://doi.org/10.1016/j.microc.2024.112217"
-  },
+    /*
+     * Convert the CV extraction format into the
+     * display format used by the website.
+     */
 
-  {
-    year: 2024,
-    category: "Biomedical Analysis",
-    title: "A portable disposable metal-free electrochemical sensor for uric acid measurement in human blood serum.",
-    journal: "Microchemical Journal",
-    quartile: "Q1",
-    impactFactor: "5.1",
-    metricYear: "2024",
-    doi: "https://doi.org/10.1016/j.microc.2024.112216"
-  },
+    publications = articles.map(
+      article => {
 
-  {
-    year: 2024,
-    category: "Biosensors",
-    title: "Bio-functionalized conductive poly(acrylic acid):poly(3,4-ethylenedioxythiophene)-Prussian blue hybrid transducer for biosensors and bioelectronics interfaces.",
-    journal: "Materials Today Chemistry",
-    quartile: "Q1",
-    impactFactor: "6.7",
-    metricYear: "2024",
-    doi: "https://doi.org/10.1016/j.mtchem.2024.102271"
-  },
+        const citation =
+          String(
+            article.citation || ""
+          ).trim();
 
-  {
-    year: 2024,
-    category: "Environmental Monitoring",
-    title: "Electrode modified with CO₂ laser-reduced graphene oxide-silver nanoparticles for determination of nitrite in water.",
-    journal: "Microchemical Journal",
-    quartile: "Q1",
-    impactFactor: "5.1",
-    metricYear: "2024",
-    doi: "https://doi.org/10.1016/j.microc.2024.111100"
-  },
+        const year =
+          Number(article.year) || "";
 
-  {
-    year: 2024,
-    category: "Environmental Monitoring",
-    title: "Single-drop electrodeposition of nanoneedle-like bismuth on disposable graphene electrode for on-site electrochemical detection of cadmium and lead.",
-    journal: "Talanta",
-    quartile: "Q1",
-    impactFactor: "6.1",
-    metricYear: "2024",
-    doi: "https://doi.org/10.1016/j.talanta.2024.126179"
-  },
+        const doi =
+          String(
+            article.doi || ""
+          ).trim();
 
-  {
-    year: 2024,
-    category: "Biomedical / Glucose Sensing",
-    title: "Smartphone-interfaced flow injection amperometric system for enzyme-free glucose detection using a palladium-PANI/carbon microsphere@carbon nanotubes modified electrode.",
-    journal: "Electrochimica Acta",
-    quartile: "Q1",
-    impactFactor: "5.6",
-    metricYear: "2024",
-    doi: "https://doi.org/10.1016/j.electacta.2024.144292"
-  },
 
-  {
-    year: 2024,
-    category: "Food / Environmental Analysis",
-    title: "Nano-palladium-decorated bismuth sulfide microspheres on a disposable electrode integrated with smartphone-based electrochemical detection of nitrite in food samples.",
-    journal: "Food Chemistry",
-    quartile: "Q1",
-    impactFactor: "9.8",
-    metricYear: "2024",
-    doi: "https://doi.org/10.1016/j.foodchem.2024.138987"
-  },
+        const title =
+          extractPublicationTitle(
+            citation
+          );
 
-  {
-    year: 2024,
-    category: "Forensic Analysis",
-    title: "A novel 3D-printed portable electroplating device enhances latent fingerprints on metal substrates.",
-    journal: "Talanta",
-    quartile: "Q1",
-    impactFactor: "6.1",
-    metricYear: "2024",
-    doi: "https://doi.org/10.1016/j.talanta.2024.125822"
-  },
 
-  {
-    year: 2024,
-    category: "Environmental Analysis",
-    title: "Electropolymerization of poly(phenol red) on laser-induced graphene electrode enhanced adsorption of zinc for electrochemical detection.",
-    journal: "Talanta",
-    quartile: "Q1",
-    impactFactor: "6.1",
-    metricYear: "2024",
-    doi: "https://doi.org/10.1016/j.talanta.2024.125751"
-  },
+        const journal =
+          extractJournal(
+            citation
+          );
 
-  {
-    year: 2023,
-    category: "Forensic Electrochemistry",
-    title: "A Ternary Nanocomposite Based on Nano-Bimetallic Platinum/Nickel Decorated on Multi-Walled Carbon Nanotubes for Flow Injection Amperometric Detection of Promethazine.",
-    journal: "Journal of The Electrochemical Society",
-    quartile: "Q1",
-    impactFactor: "3.1",
-    metricYear: "2023",
-    doi: "https://doi.org/10.1149/1945-7111/acdb9d"
-  },
 
-  {
-    year: 2023,
-    category: "Forensic / Food Analysis",
-    title: "Sibutramine detection in weight-loss products using a sodium/phosphorus dual-doped carbon nanotubes modified electrode.",
-    journal: "Microchemical Journal",
-    quartile: "Q1",
-    impactFactor: "4.9",
-    metricYear: "2023",
-    doi: "https://doi.org/10.1016/j.microc.2023.108668"
-  },
+        const quartile =
+          extractQuartile(
+            citation
+          );
 
-  {
-    year: 2023,
-    category: "Biomedical / Biosensors",
-    title: "Novel biosensor platform for glucose monitoring via smartphone based on battery-less NFC potentiostat.",
-    journal: "Talanta",
-    quartile: "Q1",
-    impactFactor: "5.6",
-    metricYear: "2023",
-    doi: "https://doi.org/10.1016/j.talanta.2023.124266"
-  },
 
-  {
-    year: 2023,
-    category: "Electrocatalysis",
-    title: "Polyaniline-coated glassy carbon microspheres decorated with nano-palladium as a new electrocatalyst for methanol oxidation.",
-    journal: "Journal of Electroanalytical Chemistry",
-    quartile: "Q1",
-    impactFactor: "4.5",
-    metricYear: "2023",
-    doi: "https://doi.org/10.1016/j.jelechem.2022.116995"
-  },
+        const impactFactor =
+          extractImpactFactor(
+            citation
+          );
 
-  {
-    year: 2022,
-    category: "Forensic Electrochemistry",
-    title: "New electrode material integrates silver nanoprisms with phosphorus-doped carbon nanotubes for forensic detection of nitrite.",
-    journal: "Electrochimica Acta",
-    quartile: "Q1",
-    impactFactor: "6.6",
-    metricYear: "2022",
-    doi: "https://doi.org/10.1016/j.electacta.2022.141439"
-  },
 
-  {
-    year: 2022,
-    category: "Environmental Analysis",
-    title: "A poly(neutral red)/porous graphene modified electrode for a voltammetric hydroquinone sensor.",
-    journal: "Electrochimica Acta",
-    quartile: "Q1",
-    impactFactor: "6.6",
-    metricYear: "2022",
-    doi: "https://doi.org/10.1016/j.electacta.2022.141272"
-  },
+        /*
+         * The current CV JSON does not yet contain
+         * a dedicated JCR year field.
+         *
+         * For now, use the publication year as a
+         * fallback. This will be refined later when
+         * the Python extractor is upgraded.
+         */
 
-  {
-    year: 2022,
-    category: "Food Analysis / Bhutan",
-    title: "Detection of adulterants in some common food items available in the Bhutanese market.",
-    journal: "Bhutan Journal of Research and Development",
-    quartile: "",
-    impactFactor: "",
-    metricYear: "",
-    details: "11(1)",
-    doi: "https://doi.org/10.17102/bjrd.rub.11.1.026"
+        const metricYear =
+          extractMetricYear(
+            citation
+          ) || "";
+
+
+        const category =
+          determinePublicationCategory(
+            title,
+            citation
+          );
+
+
+        return {
+
+          year,
+
+          category,
+
+          title,
+
+          journal,
+
+          quartile,
+
+          impactFactor,
+
+          metricYear,
+
+          doi,
+
+          citation
+
+        };
+
+      }
+    );
+
+
+    /*
+     * Remove accidental empty records.
+     */
+
+    publications =
+      publications.filter(
+        publication =>
+          publication.title ||
+          publication.citation
+      );
+
+
+    console.log(
+      `✓ Publications loaded from CV: ${publications.length}`
+    );
+
+
+    /*
+     * Validate against the article count generated
+     * by the Python CV extraction script.
+     */
+
+    if (
+      Number.isFinite(
+        Number(data.article_count)
+      ) &&
+      Number(data.article_count) !==
+        publications.length
+    ) {
+
+      console.warn(
+        `Publication count mismatch: JSON reports ${data.article_count}, ` +
+        `but ${publications.length} records were loaded.`
+      );
+
+    } else {
+
+      console.log(
+        `✓ Publication validation PASSED: ${publications.length} articles detected.`
+      );
+
+    }
+
+
+    /*
+     * Initialize the publication interface only
+     * after the data has successfully loaded.
+     */
+
+    setupPublicationFilters();
+    renderPublications();
+
+
+  } catch (error) {
+
+    console.error(
+      "Publication data loading failed:",
+      error
+    );
+
+
+    const container =
+      document.querySelector(
+        ".pub-list"
+      );
+
+
+    if (container) {
+
+      container.innerHTML = `
+
+        <div class="publication-empty">
+
+          <h3>
+            Unable to load publications
+          </h3>
+
+          <p>
+            Publication data could not be loaded
+            from the CV database.
+          </p>
+
+          <p>
+            Please try refreshing the page.
+          </p>
+
+        </div>
+
+      `;
+
+    }
+
   }
-];
+
+}
+
+
+/* =========================================================
+   EXTRACT PUBLICATION TITLE
+========================================================= */
+
+function extractPublicationTitle(
+  citation
+) {
+
+  if (!citation) {
+    return "";
+  }
+
+
+  /*
+   * First remove the DOI and trailing metadata.
+   */
+
+  let text =
+    citation
+      .replace(
+        /\s*https:\/\/doi\.org\/\S+/gi,
+        ""
+      )
+      .trim();
+
+
+  /*
+   * Remove quartile / IF information.
+   */
+
+  text =
+    text.replace(
+      /\s*\(Q[1-4][^)]*\)\.?\s*$/i,
+      ""
+    );
+
+
+  /*
+   * Find the year and take everything after it.
+   */
+
+  const yearMatch =
+    text.match(
+      /\(\d{4}\)\.\s*/
+    );
+
+
+  if (!yearMatch) {
+    return text;
+  }
+
+
+  text =
+    text.substring(
+      yearMatch.index +
+      yearMatch[0].length
+    );
+
+
+  /*
+   * Known journal names appearing in the CV.
+   *
+   * This helps separate article titles from
+   * journal names without needing manual entry.
+   */
+
+  const journals = [
+
+    "Journal of Environmental Chemical Engineering",
+
+    "ACS Applied Nano Materials",
+
+    "Microchemical Journal",
+
+    "Talanta",
+
+    "Materials Today Chemistry",
+
+    "ACS Omega",
+
+    "Electrochimica Acta",
+
+    "Food Chemistry",
+
+    "Journal of The Electrochemical Society",
+
+    "Journal of Electroanalytical Chemistry",
+
+    "Bhutan Journal of Research and Development"
+
+  ];
+
+
+  let journalPosition = -1;
+
+
+  journals.forEach(
+    journal => {
+
+      const position =
+        text
+          .toLowerCase()
+          .indexOf(
+            journal.toLowerCase()
+          );
+
+
+      if (
+        position !== -1 &&
+        (
+          journalPosition === -1 ||
+          position < journalPosition
+        )
+      ) {
+
+        journalPosition =
+          position;
+
+      }
+
+    }
+  );
+
+
+  if (journalPosition !== -1) {
+
+    text =
+      text.substring(
+        0,
+        journalPosition
+      );
+
+  }
+
+
+  /*
+   * Clean trailing punctuation.
+   */
+
+  text =
+    text
+      .replace(
+        /[\s.]+$/,
+        ""
+      )
+      .trim();
+
+
+  return text;
+
+}
+
+
+/* =========================================================
+   EXTRACT JOURNAL
+========================================================= */
+
+function extractJournal(
+  citation
+) {
+
+  if (!citation) {
+    return "";
+  }
+
+
+  const journals = [
+
+    "Journal of Environmental Chemical Engineering",
+
+    "ACS Applied Nano Materials",
+
+    "Microchemical Journal",
+
+    "Talanta",
+
+    "Materials Today Chemistry",
+
+    "ACS Omega",
+
+    "Electrochimica Acta",
+
+    "Food Chemistry",
+
+    "Journal of The Electrochemical Society",
+
+    "Journal of Electroanalytical Chemistry",
+
+    "Bhutan Journal of Research and Development"
+
+  ];
+
+
+  const lowerCitation =
+    citation.toLowerCase();
+
+
+  for (
+    const journal of journals
+  ) {
+
+    if (
+      lowerCitation.includes(
+        journal.toLowerCase()
+      )
+    ) {
+
+      return journal;
+
+    }
+
+  }
+
+
+  return "";
+
+}
+
+
+/* =========================================================
+   EXTRACT QUARTILE
+========================================================= */
+
+function extractQuartile(
+  citation
+) {
+
+  const match =
+    citation.match(
+      /\((Q[1-4])\b/i
+    );
+
+
+  return match
+    ? match[1].toUpperCase()
+    : "";
+
+}
+
+
+/* =========================================================
+   EXTRACT IMPACT FACTOR
+========================================================= */
+
+function extractImpactFactor(
+  citation
+) {
+
+  const match =
+    citation.match(
+      /IF\s*([0-9]+(?:\.[0-9]+)?)/i
+    );
+
+
+  return match
+    ? match[1]
+    : "";
+
+}
+
+
+/* =========================================================
+   EXTRACT JCR / METRIC YEAR
+========================================================= */
+
+function extractMetricYear(
+  citation
+) {
+
+  /*
+   * At present, the CV citation does not explicitly
+   * identify the JCR year separately.
+   *
+   * This function is intentionally prepared so the
+   * Python extractor can later provide it.
+   */
+
+  const match =
+    citation.match(
+      /JCR\s*(?:year)?\s*[:\-]?\s*(20\d{2})/i
+    );
+
+
+  return match
+    ? match[1]
+    : "";
+
+}
+
+
+/* =========================================================
+   DETERMINE RESEARCH CATEGORY
+========================================================= */
+
+function determinePublicationCategory(
+  title,
+  citation
+) {
+
+  const text =
+    `${title} ${citation}`
+      .toLowerCase();
+
+
+  /*
+   * Forensic electrochemistry
+   */
+
+  if (
+    /forensic|clonazepam|diazepam|xylazine|promethazine|fingerprint/.test(
+      text
+    )
+  ) {
+
+    return "Forensic Electrochemistry";
+
+  }
+
+
+  /*
+   * Food analysis
+   */
+
+  if (
+    /food|turmeric|curcumin|adulterant|animal feed|food supplements/.test(
+      text
+    )
+  ) {
+
+    return "Food Analysis";
+
+  }
+
+
+  /*
+   * Biomedical / biosensors
+   */
+
+  if (
+    /glucose|uric acid|flutamide|biosensor|blood serum|ammonium ion|skin patch/.test(
+      text
+    )
+  ) {
+
+    return "Biomedical / Biosensors";
+
+  }
+
+
+  /*
+   * Environmental monitoring
+   */
+
+  if (
+    /water|chlorine|nitrate|nitrite|mercury|cadmium|lead|zinc|hydroquinone/.test(
+      text
+    )
+  ) {
+
+    return "Environmental Monitoring";
+
+  }
+
+
+  /*
+   * Sustainable nanomaterials
+   */
+
+  if (
+    /laser-induced graphene|graphene|carbon nanotube|nanocomposite|nanoparticle|porous carbon/.test(
+      text
+    )
+  ) {
+
+    return "Sustainable Nanomaterials";
+
+  }
+
+
+  /*
+   * Electrocatalysis
+   */
+
+  if (
+    /methanol oxidation|electrocatalyst/.test(
+      text
+    )
+  ) {
+
+    return "Electrocatalysis";
+
+  }
+
+
+  return "Electrochemical Research";
+
+}
 
 
 /* =========================================================
@@ -337,21 +641,39 @@ const publications = [
 ========================================================= */
 
 function getPublicationYears() {
-  const years = publications
-    .map(pub => Number(pub.year))
-    .filter(year => Number.isFinite(year));
+
+  const years =
+    publications
+      .map(
+        pub =>
+          Number(pub.year)
+      )
+      .filter(
+        year =>
+          Number.isFinite(year)
+      );
+
 
   if (!years.length) {
+
     return {
       newest: "",
       oldest: ""
     };
+
   }
 
+
   return {
-    newest: Math.max(...years),
-    oldest: Math.min(...years)
+
+    newest:
+      Math.max(...years),
+
+    oldest:
+      Math.min(...years)
+
   };
+
 }
 
 
@@ -359,13 +681,39 @@ function getPublicationYears() {
    ESCAPE HTML
 ========================================================= */
 
-function escapeHTML(value) {
-  return String(value ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+function escapeHTML(
+  value
+) {
+
+  return String(
+    value ?? ""
+  )
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
 }
 
 
@@ -373,28 +721,62 @@ function escapeHTML(value) {
    PUBLICATION DETAILS
 ========================================================= */
 
-function getPublicationDetails(pub) {
+function getPublicationDetails(
+  pub
+) {
+
   const parts = [];
 
+
   if (pub.quartile) {
-    parts.push(pub.quartile);
+
+    parts.push(
+      escapeHTML(
+        pub.quartile
+      )
+    );
+
   }
+
 
   if (pub.impactFactor) {
+
+    let impactText =
+      `IF ${pub.impactFactor}`;
+
+
+    if (pub.metricYear) {
+
+      impactText +=
+        ` (JCR ${pub.metricYear})`;
+
+    }
+
+
     parts.push(
-      `IF ${escapeHTML(pub.impactFactor)}${
-        pub.metricYear
-          ? ` (JCR ${escapeHTML(pub.metricYear)})`
-          : ""
-      }`
+      escapeHTML(
+        impactText
+      )
     );
+
   }
+
 
   if (pub.details) {
-    parts.push(escapeHTML(pub.details));
+
+    parts.push(
+      escapeHTML(
+        pub.details
+      )
+    );
+
   }
 
-  return parts.join(" · ");
+
+  return parts.join(
+    " · "
+  );
+
 }
 
 
@@ -402,54 +784,130 @@ function getPublicationDetails(pub) {
    PUBLICATION COUNT
 ========================================================= */
 
-function updatePublicationCount(list = publications) {
-  const section = document.querySelector("#publications");
+function updatePublicationCount(
+  list = publications
+) {
 
-  if (!section) return;
+  const section =
+    document.querySelector(
+      "#publications"
+    );
 
-  let counter = section.querySelector(".publication-count");
 
-  if (!counter) {
-    counter = document.createElement("div");
-    counter.className = "publication-count";
-
-    const controls = section.querySelector(".publication-controls");
-    const publicationList = section.querySelector(".pub-list");
-
-    if (controls) {
-      controls.parentNode.insertBefore(counter, controls);
-    } else if (publicationList) {
-      publicationList.parentNode.insertBefore(counter, publicationList);
-    } else {
-      section.appendChild(counter);
-    }
+  if (!section) {
+    return;
   }
 
-  const total = publications.length;
-  const showing = list.length;
-  const { newest, oldest } = getPublicationYears();
+
+  let counter =
+    section.querySelector(
+      ".publication-count"
+    );
+
+
+  if (!counter) {
+
+    counter =
+      document.createElement(
+        "div"
+      );
+
+    counter.className =
+      "publication-count";
+
+
+    const controls =
+      section.querySelector(
+        ".publication-controls"
+      );
+
+
+    const publicationList =
+      section.querySelector(
+        ".pub-list"
+      );
+
+
+    if (controls) {
+
+      controls.parentNode.insertBefore(
+        counter,
+        controls
+      );
+
+    } else if (publicationList) {
+
+      publicationList.parentNode.insertBefore(
+        counter,
+        publicationList
+      );
+
+    } else {
+
+      section.appendChild(
+        counter
+      );
+
+    }
+
+  }
+
+
+  const total =
+    publications.length;
+
+
+  const showing =
+    list.length;
+
+
+  const {
+    newest,
+    oldest
+  } =
+    getPublicationYears();
+
 
   if (showing === total) {
+
     counter.innerHTML = `
+
       <div>
-        <strong>${total} Publications</strong>
+
+        <strong>
+          ${total} Publications
+        </strong>
+
       </div>
 
       <span>
-        Peer-reviewed research articles · ${oldest}–${newest}
+        Peer-reviewed research articles
+        · ${oldest}–${newest}
       </span>
+
     `;
+
   } else {
+
     counter.innerHTML = `
+
       <div>
-        <strong>Showing ${showing} of ${total} Publications</strong>
+
+        <strong>
+          Showing ${showing}
+          of ${total} Publications
+        </strong>
+
       </div>
 
       <span>
         Filtered research results
       </span>
+
     `;
+
   }
+
 }
 
 
@@ -457,113 +915,234 @@ function updatePublicationCount(list = publications) {
    RENDER PUBLICATIONS
 ========================================================= */
 
-function renderPublications(list = publications) {
-  const container = document.querySelector(".pub-list");
+function renderPublications(
+  list = publications
+) {
 
-  if (!container) return;
+  const container =
+    document.querySelector(
+      ".pub-list"
+    );
 
-  const sortedList = [...list].sort((a, b) => {
-    const yearDifference =
-      Number(b.year) - Number(a.year);
 
-    if (yearDifference !== 0) {
-      return yearDifference;
-    }
-
-    return a.title.localeCompare(b.title);
-  });
-
-  updatePublicationCount(sortedList);
-
-  if (sortedList.length === 0) {
-    container.innerHTML = `
-      <div class="publication-empty">
-        <h3>No publications found</h3>
-
-        <p>
-          Try another search term, year, or research area.
-        </p>
-      </div>
-    `;
-
+  if (!container) {
     return;
   }
 
-  container.innerHTML = sortedList
-    .map((pub, index) => {
-      const title = escapeHTML(pub.title);
-      const journal = escapeHTML(pub.journal);
-      const category = escapeHTML(pub.category);
-      const year = escapeHTML(pub.year);
-      const details = getPublicationDetails(pub);
 
-      return `
-        <article
-          class="publication-item"
-          data-year="${year}"
-          data-category="${category}"
-        >
+  const sortedList =
+    [...list].sort(
+      (a, b) => {
 
-          <div
-            class="publication-number"
-            aria-hidden="true"
-          >
-            ${String(index + 1).padStart(2, "0")}
-          </div>
+        const yearDifference =
+          Number(b.year) -
+          Number(a.year);
 
-          <div class="publication-content">
 
-            <div class="publication-meta">
+        if (
+          yearDifference !== 0
+        ) {
 
-              <span>${year}</span>
+          return yearDifference;
 
-              <span>${category}</span>
+        }
 
-              ${
-                details
-                  ? `<span>${details}</span>`
-                  : ""
-              }
 
-            </div>
+        return (
+          a.title || ""
+        ).localeCompare(
+          b.title || ""
+        );
 
-            <h3>
-              ${title}
-            </h3>
+      }
+    );
 
-            <p class="publication-journal">
-              ${journal}
-            </p>
 
-            ${
-              pub.doi
-                ? `
-                  <a
-                    class="publication-doi"
-                    href="${escapeHTML(pub.doi)}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Open DOI for ${title}"
-                  >
-                    View DOI →
-                  </a>
-                `
-                : `
-                  <span
-                    class="publication-doi"
-                    aria-disabled="true"
-                  >
-                    DOI unavailable
+  updatePublicationCount(
+    sortedList
+  );
+
+
+  if (
+    sortedList.length === 0
+  ) {
+
+    container.innerHTML = `
+
+      <div
+        class="publication-empty"
+      >
+
+        <h3>
+          No publications found
+        </h3>
+
+        <p>
+          Try another search term,
+          year, or research area.
+        </p>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    sortedList
+
+      .map(
+        (pub, index) => {
+
+          const title =
+            escapeHTML(
+              pub.title
+            );
+
+
+          const journal =
+            escapeHTML(
+              pub.journal
+            );
+
+
+          const category =
+            escapeHTML(
+              pub.category
+            );
+
+
+          const year =
+            escapeHTML(
+              pub.year
+            );
+
+
+          const details =
+            getPublicationDetails(
+              pub
+            );
+
+
+          return `
+
+            <article
+              class="publication-item"
+              data-year="${year}"
+              data-category="${category}"
+            >
+
+              <div
+                class="publication-number"
+                aria-hidden="true"
+              >
+                ${String(
+                  index + 1
+                ).padStart(
+                  2,
+                  "0"
+                )}
+              </div>
+
+
+              <div
+                class="publication-content"
+              >
+
+                <div
+                  class="publication-meta"
+                >
+
+                  <span>
+                    ${year}
                   </span>
-                `
-            }
 
-          </div>
 
-        </article>
-      `;
-    })
-    .join("");
+                  ${
+                    category
+                      ? `
+                        <span>
+                          ${category}
+                        </span>
+                      `
+                      : ""
+                  }
+
+
+                  ${
+                    details
+                      ? `
+                        <span>
+                          ${details}
+                        </span>
+                      `
+                      : ""
+                  }
+
+                </div>
+
+
+                <h3>
+                  ${title}
+                </h3>
+
+
+                ${
+                  journal
+                    ? `
+                      <p
+                        class="publication-journal"
+                      >
+                        ${journal}
+                      </p>
+                    `
+                    : ""
+                }
+
+
+                ${
+                  pub.doi
+                    ? `
+
+                      <a
+                        class="publication-doi"
+                        href="${escapeHTML(
+                          pub.doi
+                        )}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Open DOI for ${title}"
+                      >
+                        View DOI →
+                      </a>
+
+                    `
+                    : `
+
+                      <span
+                        class="publication-doi"
+                        aria-disabled="true"
+                      >
+                        DOI unavailable
+                      </span>
+
+                    `
+                }
+
+              </div>
+
+            </article>
+
+          `;
+
+        }
+      )
+
+      .join("");
+
 }
 
 
@@ -572,18 +1151,46 @@ function renderPublications(list = publications) {
 ========================================================= */
 
 function setupPublicationFilters() {
-  const section = document.querySelector("#publications");
 
-  if (!section) return;
+  const section =
+    document.querySelector(
+      "#publications"
+    );
 
-  let controls = section.querySelector(".publication-controls");
+
+  if (!section) {
+    return;
+  }
+
+
+  let controls =
+    section.querySelector(
+      ".publication-controls"
+    );
+
+
+  /*
+   * Prevent duplicate controls if this function
+   * is accidentally called more than once.
+   */
 
   if (!controls) {
-    controls = document.createElement("div");
-    controls.className = "publication-controls";
+
+    controls =
+      document.createElement(
+        "div"
+      );
+
+
+    controls.className =
+      "publication-controls";
+
 
     controls.innerHTML = `
-      <div class="publication-search-wrap">
+
+      <div
+        class="publication-search-wrap"
+      >
 
         <label
           for="publication-search"
@@ -591,6 +1198,7 @@ function setupPublicationFilters() {
         >
           Search publications
         </label>
+
 
         <input
           type="search"
@@ -603,7 +1211,9 @@ function setupPublicationFilters() {
       </div>
 
 
-      <div class="publication-filter-wrap">
+      <div
+        class="publication-filter-wrap"
+      >
 
         <label
           for="publication-year"
@@ -612,13 +1222,16 @@ function setupPublicationFilters() {
           Filter by year
         </label>
 
+
         <select
           id="publication-year"
           aria-label="Filter publications by year"
         >
+
           <option value="all">
             All years
           </option>
+
         </select>
 
 
@@ -629,13 +1242,16 @@ function setupPublicationFilters() {
           Filter by research area
         </label>
 
+
         <select
           id="publication-category"
           aria-label="Filter publications by research area"
         >
+
           <option value="all">
             All research areas
           </option>
+
         </select>
 
 
@@ -648,33 +1264,56 @@ function setupPublicationFilters() {
         </button>
 
       </div>
+
     `;
 
+
     const publicationList =
-      section.querySelector(".pub-list");
+      section.querySelector(
+        ".pub-list"
+      );
+
 
     if (publicationList) {
+
       publicationList.parentNode.insertBefore(
         controls,
         publicationList
       );
+
     } else {
-      section.appendChild(controls);
+
+      section.appendChild(
+        controls
+      );
+
     }
+
   }
 
 
   const search =
-    controls.querySelector("#publication-search");
+    controls.querySelector(
+      "#publication-search"
+    );
+
 
   const yearSelect =
-    controls.querySelector("#publication-year");
+    controls.querySelector(
+      "#publication-year"
+    );
+
 
   const categorySelect =
-    controls.querySelector("#publication-category");
+    controls.querySelector(
+      "#publication-category"
+    );
+
 
   const resetButton =
-    controls.querySelector("#publication-reset");
+    controls.querySelector(
+      "#publication-reset"
+    );
 
 
   if (
@@ -682,146 +1321,266 @@ function setupPublicationFilters() {
     !yearSelect ||
     !categorySelect
   ) {
+
     return;
+
   }
 
 
-  /* -------------------------------------------------------
+  /* =======================================================
      YEARS
-  ------------------------------------------------------- */
+  ======================================================= */
 
-  const years = [
-    ...new Set(
-      publications
-        .map(pub => Number(pub.year))
-        .filter(year => Number.isFinite(year))
-    )
-  ].sort((a, b) => b - a);
+  const years =
+    [
+      ...new Set(
+        publications
+
+          .map(
+            pub =>
+              Number(pub.year)
+          )
+
+          .filter(
+            year =>
+              Number.isFinite(
+                year
+              )
+          )
+      )
+    ]
+
+    .sort(
+      (a, b) =>
+        b - a
+    );
 
 
-  years.forEach(year => {
-    if (
-      ![
-        ...yearSelect.options
-      ].some(option => option.value === String(year))
-    ) {
-      const option = document.createElement("option");
+  years.forEach(
+    year => {
 
-      option.value = String(year);
-      option.textContent = String(year);
+      const value =
+        String(year);
 
-      yearSelect.appendChild(option);
+
+      if (
+        ![
+          ...yearSelect.options
+        ].some(
+          option =>
+            option.value ===
+            value
+        )
+      ) {
+
+        const option =
+          document.createElement(
+            "option"
+          );
+
+
+        option.value =
+          value;
+
+
+        option.textContent =
+          value;
+
+
+        yearSelect.appendChild(
+          option
+        );
+
+      }
+
     }
-  });
+  );
 
 
-  /* -------------------------------------------------------
+  /* =======================================================
      CATEGORIES
-  ------------------------------------------------------- */
+  ======================================================= */
 
-  const categories = [
-    ...new Set(
-      publications
-        .map(pub => pub.category)
-        .filter(Boolean)
-    )
-  ].sort((a, b) => a.localeCompare(b));
+  const categories =
+    [
+      ...new Set(
+        publications
+
+          .map(
+            pub =>
+              pub.category
+          )
+
+          .filter(Boolean)
+      )
+    ]
+
+    .sort(
+      (a, b) =>
+        a.localeCompare(b)
+    );
 
 
-  categories.forEach(category => {
-    if (
-      ![
-        ...categorySelect.options
-      ].some(option => option.value === category)
-    ) {
-      const option = document.createElement("option");
+  categories.forEach(
+    category => {
 
-      option.value = category;
-      option.textContent = category;
+      if (
+        ![
+          ...categorySelect.options
+        ].some(
+          option =>
+            option.value ===
+            category
+        )
+      ) {
 
-      categorySelect.appendChild(option);
+        const option =
+          document.createElement(
+            "option"
+          );
+
+
+        option.value =
+          category;
+
+
+        option.textContent =
+          category;
+
+
+        categorySelect.appendChild(
+          option
+        );
+
+      }
+
     }
-  });
+  );
 
 
-  /* -------------------------------------------------------
+  /* =======================================================
      FILTER FUNCTION
-  ------------------------------------------------------- */
+  ======================================================= */
 
   function filterPublications() {
+
     const searchTerms =
       search.value
+
         .toLowerCase()
+
         .trim()
+
         .split(/\s+/)
+
         .filter(Boolean);
+
 
     const selectedYear =
       yearSelect.value;
+
 
     const selectedCategory =
       categorySelect.value;
 
 
-    const filtered = publications.filter(pub => {
+    const filtered =
+      publications.filter(
+        pub => {
 
-      const searchableText = [
-        pub.title,
-        pub.journal,
-        pub.category,
-        pub.year,
-        pub.quartile,
-        pub.impactFactor,
-        pub.metricYear,
-        pub.details
-      ]
-        .filter(Boolean)
-        .join(" ")
-        .toLowerCase();
+          const searchableText = [
+
+            pub.title,
+
+            pub.journal,
+
+            pub.category,
+
+            pub.year,
+
+            pub.quartile,
+
+            pub.impactFactor,
+
+            pub.metricYear,
+
+            pub.details,
+
+            pub.citation
+
+          ]
+
+            .filter(Boolean)
+
+            .join(" ")
+
+            .toLowerCase();
 
 
-      const matchesSearch =
-        searchTerms.length === 0 ||
-        searchTerms.every(term =>
-          searchableText.includes(term)
-        );
+          const matchesSearch =
+
+            searchTerms.length === 0 ||
+
+            searchTerms.every(
+              term =>
+                searchableText.includes(
+                  term
+                )
+            );
 
 
-      const matchesYear =
-        selectedYear === "all" ||
-        String(pub.year) === selectedYear;
+          const matchesYear =
+
+            selectedYear === "all" ||
+
+            String(pub.year) ===
+              selectedYear;
 
 
-      const matchesCategory =
-        selectedCategory === "all" ||
-        pub.category === selectedCategory;
+          const matchesCategory =
+
+            selectedCategory === "all" ||
+
+            pub.category ===
+              selectedCategory;
 
 
-      return (
-        matchesSearch &&
-        matchesYear &&
-        matchesCategory
+          return (
+
+            matchesSearch &&
+
+            matchesYear &&
+
+            matchesCategory
+
+          );
+
+        }
       );
-    });
 
 
-    renderPublications(filtered);
+    renderPublications(
+      filtered
+    );
+
   }
 
 
-  /* -------------------------------------------------------
+  /* =======================================================
      EVENTS
-  ------------------------------------------------------- */
+  ======================================================= */
 
   search.addEventListener(
     "input",
     filterPublications
   );
 
+
   yearSelect.addEventListener(
     "change",
     filterPublications
   );
+
 
   categorySelect.addEventListener(
     "change",
@@ -830,19 +1589,31 @@ function setupPublicationFilters() {
 
 
   if (resetButton) {
+
     resetButton.addEventListener(
       "click",
       () => {
-        search.value = "";
-        yearSelect.value = "all";
-        categorySelect.value = "all";
+
+        search.value =
+          "";
+
+        yearSelect.value =
+          "all";
+
+        categorySelect.value =
+          "all";
+
 
         filterPublications();
 
+
         search.focus();
+
       }
     );
+
   }
+
 }
 
 
@@ -853,7 +1624,8 @@ function setupPublicationFilters() {
 document.addEventListener(
   "DOMContentLoaded",
   () => {
-    setupPublicationFilters();
-    renderPublications();
+
+    loadPublications();
+
   }
 );
