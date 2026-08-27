@@ -216,7 +216,7 @@ PUBLICATION_METADATA = {
 
     "10.1021/acsanm.5c05854": {
         "category": "Biomedical / Wearable Sensors",
-        "quartile": "Q1",
+        "quartile": "Q2",
         "impactFactor": "5.5",
         "metricYear": "2024"
     },
