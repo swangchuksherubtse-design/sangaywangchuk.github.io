@@ -17,7 +17,9 @@ OUTPUT_DIR = Path("data/cv")
 # =========================================================
 
 def clean_text(text):
-    """Normalize whitespace and remove empty/placeholder content."""
+    """
+    Normalize whitespace and remove empty/placeholder content.
+    """
 
     text = re.sub(r"\s+", " ", text).strip()
 
@@ -33,11 +35,14 @@ def clean_text(text):
 # =========================================================
 
 def extract_paragraphs(document):
-    """Extract non-empty paragraphs from the Word document."""
+    """
+    Extract non-empty paragraphs from the Word document.
+    """
 
     paragraphs = []
 
     for paragraph in document.paragraphs:
+
         text = clean_text(paragraph.text)
 
         if text:
@@ -51,7 +56,9 @@ def extract_paragraphs(document):
 # =========================================================
 
 def extract_tables(document):
-    """Extract non-empty table contents."""
+    """
+    Extract non-empty table contents.
+    """
 
     tables = []
 
@@ -114,15 +121,17 @@ def extract_section(paragraphs, start_heading, end_headings):
 # =========================================================
 # PUBLICATION METADATA
 # =========================================================
-
-# Existing website metadata.
 #
-# These values preserve the information already prepared
-# for the current 30 publications.
+# This metadata provides the structured publication
+# information used by the website.
 #
-# Future publications extracted from the CV will receive
-# blank values for fields that cannot be reliably obtained
-# from the CV itself.
+# The DOI is used as the unique identifier.
+#
+# IMPORTANT:
+# Q1, Impact Factor and JCR year are stored separately.
+# They are NOT repeated inside the "details" field.
+#
+# =========================================================
 
 PUBLICATION_METADATA = {
 
@@ -339,6 +348,111 @@ PUBLICATION_METADATA = {
 
 
 # =========================================================
+# CLEAN PUBLICATION DETAILS
+# =========================================================
+
+def clean_publication_details(details):
+    """
+    Remove duplicated Q1 / Impact Factor information from
+    the publication details.
+
+    Examples removed:
+
+        (Q1, IF 5.1)
+        (Q1, IF 5. 1)
+        (Q1, IF 6.1).
+        Q1, IF 5.1
+
+    The structured fields quartile, impactFactor and
+    metricYear remain responsible for displaying this
+    information on the website.
+    """
+
+    if not details:
+        return ""
+
+    # Normalize spaces inside IF values
+    details = re.sub(
+        r"IF\s+(\d+)\s*\.\s*(\d+)",
+        r"IF \1.\2",
+        details,
+        flags=re.IGNORECASE
+    )
+
+    # Remove parenthetical Q1/IF metadata
+    details = re.sub(
+        r"\(\s*Q\d\s*,\s*IF\s+\d+(?:\.\s*\d+)?\s*\)",
+        "",
+        details,
+        flags=re.IGNORECASE
+    )
+
+    # Remove standalone Q1 / IF metadata if present
+    details = re.sub(
+        r"\bQ\d\s*,\s*IF\s+\d+(?:\.\s*\d+)?",
+        "",
+        details,
+        flags=re.IGNORECASE
+    )
+
+    # Remove any remaining standalone IF statement
+    details = re.sub(
+        r"\bIF\s+\d+(?:\.\s*\d+)?",
+        "",
+        details,
+        flags=re.IGNORECASE
+    )
+
+    # Remove redundant punctuation and whitespace
+    details = re.sub(
+        r"\s+",
+        " ",
+        details
+    ).strip()
+
+    details = re.sub(
+        r"\(\s*\)",
+        "",
+        details
+    ).strip()
+
+    details = re.sub(
+        r"\s+\.",
+        ".",
+        details
+    )
+
+    details = details.strip(" .")
+
+    return details
+
+
+# =========================================================
+# DOI EXTRACTION
+# =========================================================
+
+def extract_doi(text):
+    """
+    Extract DOI from a citation.
+    """
+
+    match = re.search(
+        r"https://doi\.org/([^\s]+)",
+        text,
+        flags=re.IGNORECASE
+    )
+
+    if not match:
+        return ""
+
+    doi_suffix = match.group(1).rstrip(
+        ".,;:)"
+    )
+
+    return "https://doi.org/" + doi_suffix
+
+
+# =========================================================
 # PUBLICATION PARSER
 # =========================================================
 
@@ -364,11 +478,17 @@ def parse_publications(paragraphs):
 
     for article in articles:
 
+        # -------------------------------------------------
         # Ignore repeated subsection headings
+        # -------------------------------------------------
+
         if article.lower() == "peer-reviewed journal articles":
             continue
 
+        # -------------------------------------------------
         # Publication must contain a four-digit year
+        # -------------------------------------------------
+
         year_match = re.search(
             r"\((\d{4})\)",
             article
@@ -379,52 +499,42 @@ def parse_publications(paragraphs):
 
         year = int(year_match.group(1))
 
-        # -----------------------------------------------------
+        # -------------------------------------------------
         # DOI
-        # -----------------------------------------------------
+        # -------------------------------------------------
 
-        doi_match = re.search(
-            r"https://doi\.org/([^\s]+)",
-            article,
-            flags=re.IGNORECASE
-        )
-
-        doi = ""
-
-        if doi_match:
-            doi = (
-                "https://doi.org/"
-                + doi_match.group(1).rstrip(".")
-            )
+        doi = extract_doi(article)
 
         doi_key = ""
 
         if doi:
+
             doi_key = doi.replace(
                 "https://doi.org/",
                 ""
             ).lower()
 
-        # -----------------------------------------------------
+        # -------------------------------------------------
         # Remove DOI from citation
-        # -----------------------------------------------------
+        # -------------------------------------------------
 
         citation_without_doi = article
 
+        doi_match = re.search(
+            r"https://doi\.org/[^\s]+",
+            article,
+            flags=re.IGNORECASE
+        )
+
         if doi_match:
+
             citation_without_doi = article[
                 :doi_match.start()
             ].rstrip(" .")
 
-        # -----------------------------------------------------
-        # Extract citation structure
-        # -----------------------------------------------------
-
-        # Expected general structure:
-        #
-        # Authors (Year). Title. Journal. Details.
-        #
-        # We first remove the year portion.
+        # -------------------------------------------------
+        # Extract text before and after publication year
+        # -------------------------------------------------
 
         before_year = citation_without_doi[
             :year_match.start()
@@ -441,24 +551,32 @@ def parse_publications(paragraphs):
             after_year
         )
 
-        # -----------------------------------------------------
+        # -------------------------------------------------
         # Authors
-        # -----------------------------------------------------
+        # -------------------------------------------------
 
         authors = before_year.rstrip(" .")
 
-        # -----------------------------------------------------
-        # Title and journal
-        # -----------------------------------------------------
+        # -------------------------------------------------
+        # Title / Journal / Details
+        # -------------------------------------------------
 
         title = ""
         journal = ""
         details = ""
 
-        # Split remaining citation into sentence-like parts.
+        # Split citation into sentence-like sections.
+        #
+        # Standard CV format:
+        #
+        # Authors (Year). Title. Journal. Volume/pages/details.
+        #
         parts = [
             part.strip()
-            for part in after_year.split(".")
+            for part in re.split(
+                r"\.\s+",
+                after_year
+            )
             if part.strip()
         ]
 
@@ -471,17 +589,37 @@ def parse_publications(paragraphs):
         if len(parts) >= 3:
             details = ". ".join(parts[2:])
 
-        # -----------------------------------------------------
-        # Clean obvious trailing punctuation
-        # -----------------------------------------------------
+        # -------------------------------------------------
+        # Clean title
+        # -------------------------------------------------
 
-        title = title.rstrip(" .")
-        journal = journal.rstrip(" .")
-        details = details.rstrip(" .")
+        title = re.sub(
+            r"\s+",
+            " ",
+            title
+        ).strip(" .")
 
-        # -----------------------------------------------------
-        # Existing metadata
-        # -----------------------------------------------------
+        # -------------------------------------------------
+        # Clean journal
+        # -------------------------------------------------
+
+        journal = re.sub(
+            r"\s+",
+            " ",
+            journal
+        ).strip(" .")
+
+        # -------------------------------------------------
+        # Clean publication details
+        # -------------------------------------------------
+
+        details = clean_publication_details(
+            details
+        )
+
+        # -------------------------------------------------
+        # Existing structured metadata
+        # -------------------------------------------------
 
         metadata = PUBLICATION_METADATA.get(
             doi_key,
@@ -508,9 +646,9 @@ def parse_publications(paragraphs):
             ""
         )
 
-        # -----------------------------------------------------
-        # Create structured record
-        # -----------------------------------------------------
+        # -------------------------------------------------
+        # Create structured publication record
+        # -------------------------------------------------
 
         publication = {
             "year": year,
@@ -536,7 +674,9 @@ def parse_publications(paragraphs):
 # =========================================================
 
 def parse_submitted_manuscript(paragraphs):
-    """Extract submitted manuscripts."""
+    """
+    Extract submitted manuscripts.
+    """
 
     manuscripts = extract_section(
         paragraphs,
@@ -561,7 +701,9 @@ def parse_submitted_manuscript(paragraphs):
 # =========================================================
 
 def parse_thesis(paragraphs):
-    """Extract PhD thesis information."""
+    """
+    Extract PhD thesis information.
+    """
 
     return extract_section(
         paragraphs,
@@ -579,7 +721,9 @@ def parse_thesis(paragraphs):
 # =========================================================
 
 def parse_research_reports(paragraphs):
-    """Extract research reports."""
+    """
+    Extract research reports.
+    """
 
     return extract_section(
         paragraphs,
@@ -596,7 +740,10 @@ def parse_research_reports(paragraphs):
 # =========================================================
 
 def parse_research_projects(paragraphs):
-    """Extract research projects and professional research activities."""
+    """
+    Extract research projects and professional research
+    activities.
+    """
 
     section = extract_section(
         paragraphs,
@@ -635,7 +782,9 @@ def parse_research_projects(paragraphs):
 # =========================================================
 
 def parse_profile(paragraphs):
-    """Extract selected professional profile information."""
+    """
+    Extract selected professional profile information.
+    """
 
     return extract_section(
         paragraphs,
@@ -654,7 +803,9 @@ def parse_profile(paragraphs):
 # =========================================================
 
 def parse_awards(paragraphs):
-    """Extract awards and scholarships."""
+    """
+    Extract awards and scholarships.
+    """
 
     return extract_section(
         paragraphs,
@@ -672,20 +823,42 @@ def parse_awards(paragraphs):
 
 def main():
 
+    # -----------------------------------------------------
+    # Verify CV
+    # -----------------------------------------------------
+
     if not CV_FILE.exists():
+
         raise FileNotFoundError(
             f"CV file not found: {CV_FILE}"
         )
+
+    # -----------------------------------------------------
+    # Create output directory
+    # -----------------------------------------------------
 
     OUTPUT_DIR.mkdir(
         parents=True,
         exist_ok=True
     )
 
+    # -----------------------------------------------------
+    # Load Word document
+    # -----------------------------------------------------
+
     document = Document(CV_FILE)
 
-    paragraphs = extract_paragraphs(document)
-    tables = extract_tables(document)
+    # -----------------------------------------------------
+    # Extract raw content
+    # -----------------------------------------------------
+
+    paragraphs = extract_paragraphs(
+        document
+    )
+
+    tables = extract_tables(
+        document
+    )
 
     # =====================================================
     # RAW CV EXTRACTION
@@ -742,7 +915,7 @@ def main():
     )
 
     # =====================================================
-    # THESIS
+    # PHD THESIS
     # =====================================================
 
     thesis = parse_thesis(
@@ -854,15 +1027,66 @@ def main():
     )
 
     # =====================================================
-    # IMPORTANT VALIDATION
+    # PUBLICATION VALIDATION
     # =====================================================
 
     if len(publications) == 30:
-        print("✓ Publication validation PASSED: 30 articles detected.")
+
+        print(
+            "✓ Publication validation PASSED: "
+            "30 articles detected."
+        )
+
     else:
+
         print(
             "⚠ Publication validation WARNING: "
-            f"{len(publications)} articles detected; expected 30."
+            f"{len(publications)} articles detected; "
+            "expected 30."
+        )
+
+    # =====================================================
+    # METADATA VALIDATION
+    # =====================================================
+
+    metadata_missing = []
+
+    for publication in publications:
+
+        doi = publication.get(
+            "doi",
+            ""
+        )
+
+        doi_key = doi.replace(
+            "https://doi.org/",
+            ""
+        ).lower()
+
+        if doi_key and doi_key not in PUBLICATION_METADATA:
+
+            metadata_missing.append(
+                doi_key
+            )
+
+    if metadata_missing:
+
+        print(
+            "⚠ Metadata warning: "
+            f"{len(metadata_missing)} publication(s) "
+            "do not have predefined metadata."
+        )
+
+        for doi in metadata_missing:
+
+            print(
+                f"  - {doi}"
+            )
+
+    else:
+
+        print(
+            "✓ Publication metadata validation PASSED."
         )
 
     print("==========================================")
