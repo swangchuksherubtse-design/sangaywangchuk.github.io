@@ -39,7 +39,7 @@ async function loadPublications() {
 
     const response =
       await fetch(
-        `${PUBLICATIONS_DATA_URL}?v=${Date.now()}`,
+        PUBLICATIONS_DATA_URL,
         {
           cache: "no-store"
         }
@@ -202,22 +202,40 @@ async function loadPublications() {
 
             /* =================================================
                RESEARCH CATEGORY
+            =================================================
+               The JSON category is accepted first.
+
+               It is then passed through normalizeCategory()
+               so that variations such as:
+
+               Environmental Analysis
+               Environmental / Food Analysis
+               Food / Environmental Analysis
+
+               can be presented consistently on the website.
             ================================================= */
 
             const category =
-              String(
+              normalizeCategory(
                 article.category ||
                 determinePublicationCategory(
                   title,
                   citation
                 ) ||
-                "Electrochemical Research"
-              ).trim();
+                "Electrochemical Research",
+                title,
+                citation
+              );
 
 
             return {
 
               year,
+
+              authors:
+                String(
+                  article.authors || ""
+                ).trim(),
 
               category,
 
@@ -307,6 +325,23 @@ async function loadPublications() {
 
 
     /*
+     * Show the standardized categories in the console.
+     */
+
+    console.log(
+      "Publication categories:",
+      [
+        ...new Set(
+          publications.map(
+            publication =>
+              publication.category
+          )
+        )
+      ]
+    );
+
+
+    /*
      * Initialize the interface only after the
      * publication data has successfully loaded.
      */
@@ -360,6 +395,143 @@ async function loadPublications() {
     }
 
   }
+
+}
+
+
+/* =========================================================
+   NORMALIZE RESEARCH CATEGORY
+========================================================= */
+
+function normalizeCategory(
+  category,
+  title = "",
+  citation = ""
+) {
+
+  const original =
+    String(
+      category || ""
+    ).trim();
+
+
+  const text =
+    `${original} ${title} ${citation}`
+      .toLowerCase();
+
+
+  /*
+   * -------------------------------------------------------
+   * FORENSIC ELECTROCHEMISTRY
+   * -------------------------------------------------------
+   */
+
+  if (
+    /forensic|clonazepam|diazepam|xylazine|promethazine/.test(
+      text
+    )
+  ) {
+
+    return "Forensic Electrochemistry";
+
+  }
+
+
+  /*
+   * -------------------------------------------------------
+   * ELECTROCATALYSIS
+   * -------------------------------------------------------
+   */
+
+  if (
+    /methanol oxidation|electrocatalyst/.test(
+      text
+    )
+  ) {
+
+    return "Electrocatalysis";
+
+  }
+
+
+  /*
+   * -------------------------------------------------------
+   * FOOD ANALYSIS
+   * -------------------------------------------------------
+   *
+   * Food-related publications are placed here unless
+   * their primary purpose is clearly forensic.
+   */
+
+  if (
+    /food|turmeric|curcumin|adulterant|animal feed|food supplement|sibutramine/.test(
+      text
+    )
+  ) {
+
+    return "Food Analysis";
+
+  }
+
+
+  /*
+   * -------------------------------------------------------
+   * BIOMEDICAL / BIOSENSORS
+   * -------------------------------------------------------
+   */
+
+  if (
+    /glucose|uric acid|flutamide|biosensor|blood serum|ammonium ion|skin patch|bioelectronics/.test(
+      text
+    )
+  ) {
+
+    return "Biomedical / Biosensors";
+
+  }
+
+
+  /*
+   * -------------------------------------------------------
+   * ENVIRONMENTAL MONITORING
+   * -------------------------------------------------------
+   */
+
+  if (
+    /water|chlorine|nitrate|nitrite|mercury|cadmium|lead|zinc|hydroquinone/.test(
+      text
+    )
+  ) {
+
+    return "Environmental Monitoring";
+
+  }
+
+
+  /*
+   * -------------------------------------------------------
+   * SUSTAINABLE NANOMATERIALS
+   * -------------------------------------------------------
+   */
+
+  if (
+    /laser-induced graphene|graphene|carbon nanotube|nanocomposite|nanoparticle|porous carbon|biomass/.test(
+      text
+    )
+  ) {
+
+    return "Sustainable Nanomaterials";
+
+  }
+
+
+  /*
+   * -------------------------------------------------------
+   * DEFAULT CATEGORY
+   * -------------------------------------------------------
+   */
+
+  return "Electrochemical Research";
 
 }
 
@@ -584,11 +756,6 @@ function extractPublicationTitle(
 
   if (!yearMatch) {
 
-    /*
-     * Fallback if the year does not follow
-     * the exact expected format.
-     */
-
     const fallbackYear =
       text.match(
         /\b20\d{2}\b/
@@ -625,8 +792,6 @@ function extractPublicationTitle(
 
   /*
    * Known journals in the CV.
-   *
-   * More specific / longer names are listed first.
    */
 
   const journals = [
@@ -725,27 +890,15 @@ function cleanPublicationTitle(
     text
   )
 
-    /*
-     * Remove DOI
-     */
-
     .replace(
       /https?:\/\/(?:dx\.)?doi\.org\/\S+/gi,
       ""
     )
 
-    /*
-     * Remove repeated spaces
-     */
-
     .replace(
       /\s+/g,
       " "
     )
-
-    /*
-     * Remove leading/trailing punctuation
-     */
 
     .replace(
       /^[\s.:;-]+/,
@@ -867,15 +1020,6 @@ function extractImpactFactor(
   }
 
 
-  /*
-   * Supports:
-   *
-   * IF 5.1
-   * IF: 5.1
-   * IF-5.1
-   * Impact Factor 5.1
-   */
-
   const match =
     citation.match(
       /(?:IF|Impact\s*Factor)\s*[:\-]?\s*([0-9]+(?:\.[0-9]+)?)/i
@@ -901,15 +1045,6 @@ function extractMetricYear(
     return "";
   }
 
-
-  /*
-   * Looks for:
-   *
-   * JCR 2024
-   * JCR year: 2024
-   * JCR Year - 2024
-   * JCR Year 2024
-   */
 
   const match =
     citation.match(
@@ -942,10 +1077,6 @@ function extractPublicationDetails(
    * Preserve volume/issue information for:
    *
    * Bhutan Journal of Research and Development
-   *
-   * Example:
-   *
-   * 11(1)
    */
 
   if (
@@ -1076,10 +1207,6 @@ function determinePublicationCategory(
 
   }
 
-
-  /*
-   * DEFAULT
-   */
 
   return "Electrochemical Research";
 
@@ -1344,11 +1471,7 @@ function updatePublicationCount(
 
       <span>
         Peer-reviewed research articles
-        ${
-          oldest && newest
-            ? ` · ${oldest}–${newest}`
-            : ""
-        }
+        ${oldest && newest ? ` · ${oldest}–${newest}` : ""}
       </span>
 
     `;
@@ -1995,6 +2118,8 @@ function setupPublicationFilters() {
           const searchableText = [
 
             pub.title,
+
+            pub.authors,
 
             pub.journal,
 
