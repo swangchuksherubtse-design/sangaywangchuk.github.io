@@ -4,17 +4,6 @@
    Automatically loaded from:
    data/cv/publications.json
 
-   DATA FLOW:
-   MS Word CV
-        ↓
-   Python CV extractor
-        ↓
-   data/cv/publications.json
-        ↓
-   publications.js
-        ↓
-   Website Publications section
-
    IMPORTANT:
    - Do NOT manually enter publications here.
    - The CV → JSON extraction is the source of truth.
@@ -71,24 +60,7 @@ async function loadPublications() {
 
 
     /*
-     * Validate the basic JSON structure.
-     */
-
-    if (
-      !data ||
-      typeof data !== "object"
-    ) {
-
-      throw new Error(
-        "Publication JSON is empty or invalid."
-      );
-
-    }
-
-
-    /*
-     * The Python CV extractor stores the journal articles
-     * inside:
+     * The CV extractor stores journal articles inside:
      *
      * peer_reviewed_journal_articles
      */
@@ -112,25 +84,15 @@ async function loadPublications() {
         .map(
           article => {
 
-            /*
-             * Protect against malformed/null records.
-             */
-
-            if (
-              !article ||
-              typeof article !== "object"
-            ) {
-
-              return null;
-
-            }
-
-
             const citation =
               String(
                 article.citation || ""
               ).trim();
 
+
+            /*
+             * Publication year
+             */
 
             const year =
               Number(article.year) ||
@@ -141,15 +103,7 @@ async function loadPublications() {
 
 
             /*
-             * Normalize DOI.
-             *
-             * This allows the JSON to contain either:
-             *
-             * 10.xxxx/xxxxx
-             *
-             * or:
-             *
-             * https://doi.org/10.xxxx/xxxxx
+             * DOI
              */
 
             const doi =
@@ -162,9 +116,7 @@ async function loadPublications() {
 
 
             /*
-             * If the extractor is upgraded in the future
-             * to provide these fields directly, the website
-             * will use them automatically.
+             * Publication title
              */
 
             const title =
@@ -177,6 +129,10 @@ async function loadPublications() {
               ).trim();
 
 
+            /*
+             * Journal
+             */
+
             const journal =
               String(
                 article.journal ||
@@ -186,6 +142,10 @@ async function loadPublications() {
                 ""
               ).trim();
 
+
+            /*
+             * Journal quartile
+             */
 
             const quartile =
               String(
@@ -197,6 +157,10 @@ async function loadPublications() {
               ).trim();
 
 
+            /*
+             * Impact factor
+             */
+
             const impactFactor =
               String(
                 article.impactFactor ||
@@ -206,6 +170,10 @@ async function loadPublications() {
                 ""
               ).trim();
 
+
+            /*
+             * JCR / metric year
+             */
 
             const metricYear =
               String(
@@ -217,6 +185,10 @@ async function loadPublications() {
               ).trim();
 
 
+            /*
+             * Additional publication details
+             */
+
             const details =
               String(
                 article.details ||
@@ -227,6 +199,10 @@ async function loadPublications() {
                 ""
               ).trim();
 
+
+            /*
+             * Research category
+             */
 
             const category =
               String(
@@ -268,17 +244,14 @@ async function loadPublications() {
 
 
         /*
-         * Remove malformed records and records that contain
-         * no useful publication information.
+         * Remove records that contain no useful
+         * publication information.
          */
 
         .filter(
           publication =>
-            publication &&
-            (
-              publication.title ||
-              publication.citation
-            )
+            publication.title ||
+            publication.citation
         );
 
 
@@ -290,21 +263,10 @@ async function loadPublications() {
       "=========================================="
     );
 
-
-    console.log(
-      "✓ CV publication database loaded successfully."
-    );
-
-
     console.log(
       `✓ Publications loaded from CV JSON: ${publications.length}`
     );
 
-
-    /*
-     * Validate against article_count when supplied
-     * by the Python extractor.
-     */
 
     if (
       Number.isFinite(
@@ -327,9 +289,7 @@ async function loadPublications() {
           `✓ Publication validation PASSED: ${publications.length} articles detected.`
         );
 
-      }
-
-      else {
+      } else {
 
         console.warn(
           `⚠ Publication count mismatch: JSON reports ${expected}, ` +
@@ -337,29 +297,6 @@ async function loadPublications() {
         );
 
       }
-
-    }
-
-
-    /*
-     * Report incomplete records without stopping the website.
-     */
-
-    const incompleteRecords =
-      publications.filter(
-        publication =>
-          !publication.title ||
-          !publication.year
-      );
-
-
-    if (
-      incompleteRecords.length > 0
-    ) {
-
-      console.warn(
-        `⚠ ${incompleteRecords.length} publication record(s) contain incomplete information.`
-      );
 
     }
 
@@ -399,9 +336,7 @@ async function loadPublications() {
 
       container.innerHTML = `
 
-        <div
-          class="publication-empty"
-        >
+        <div class="publication-empty">
 
           <h3>
             Unable to load publications
@@ -414,15 +349,8 @@ async function loadPublications() {
 
           <p>
             Please check that
-            <strong>
-              data/cv/publications.json
-            </strong>
+            <strong>data/cv/publications.json</strong>
             exists in the website repository.
-          </p>
-
-          <p class="publication-error-note">
-            The website remains functional, but the
-            publication database could not be displayed.
           </p>
 
         </div>
@@ -437,6 +365,79 @@ async function loadPublications() {
 
 
 /* =========================================================
+   NORMALIZE DOI
+========================================================= */
+
+function normalizeDOI(
+  value
+) {
+
+  if (!value) {
+    return "";
+  }
+
+
+  let doi =
+    String(
+      value
+    ).trim();
+
+
+  /*
+   * Remove common DOI prefixes.
+   */
+
+  doi =
+    doi.replace(
+      /^doi:\s*/i,
+      ""
+    );
+
+
+  doi =
+    doi.replace(
+      /^https?:\/\/(dx\.)?doi\.org\//i,
+      ""
+    );
+
+
+  /*
+   * Remove accidental spaces.
+   */
+
+  doi =
+    doi.replace(
+      /\s+/g,
+      ""
+    );
+
+
+  /*
+   * Remove trailing punctuation.
+   */
+
+  doi =
+    doi.replace(
+      /[.,;]+$/,
+      ""
+    );
+
+
+  if (!doi) {
+    return "";
+  }
+
+
+  /*
+   * Return the complete DOI URL.
+   */
+
+  return `https://doi.org/${doi}`;
+
+}
+
+
+/* =========================================================
    EXTRACT DOI
 ========================================================= */
 
@@ -445,96 +446,21 @@ function extractDOI(
 ) {
 
   if (!citation) {
-
     return "";
-
   }
 
 
   const match =
     citation.match(
-      /(?:https?:\/\/doi\.org\/|doi:\s*)?(10\.\d{4,9}\/[-._;()/:A-Z0-9]+)/i
+      /(?:https?:\/\/)?(?:dx\.)?doi\.org\/(10\.\d{4,9}\/[-._;()/:A-Z0-9]+)/i
     );
 
 
   return match
-    ? match[1]
-    : "";
-
-}
-
-
-/* =========================================================
-   NORMALIZE DOI
-========================================================= */
-
-function normalizeDOI(
-  doi
-) {
-
-  if (!doi) {
-
-    return "";
-
-  }
-
-
-  let value =
-    String(
-      doi
-    )
-      .trim();
-
-
-  /*
-   * Remove common DOI prefixes.
-   */
-
-  value =
-    value.replace(
-      /^https?:\/\/(dx\.)?doi\.org\//i,
-      ""
-    );
-
-
-  value =
-    value.replace(
-      /^doi:\s*/i,
-      ""
-    );
-
-
-  /*
-   * Remove accidental surrounding punctuation.
-   */
-
-  value =
-    value
-      .replace(
-        /^[\s<>"']+/,
-        ""
+    ? normalizeDOI(
+        match[1]
       )
-      .replace(
-        /[\s<>"']+$/,
-        ""
-      );
-
-
-  if (
-    !/^10\.\d{4,9}\//i.test(
-      value
-    )
-  ) {
-
-    return "";
-
-  }
-
-
-  return (
-    "https://doi.org/" +
-    value
-  );
+    : "";
 
 }
 
@@ -548,15 +474,40 @@ function extractPublicationYear(
 ) {
 
   if (!citation) {
-
     return "";
+  }
+
+
+  /*
+   * First look for the standard:
+   *
+   * (2024)
+   */
+
+  let match =
+    citation.match(
+      /\((20\d{2})\)/
+    );
+
+
+  if (match) {
+
+    return Number(
+      match[1]
+    );
 
   }
 
 
-  const match =
+  /*
+   * Fallback:
+   *
+   * 2024
+   */
+
+  match =
     citation.match(
-      /\((20\d{2})\)/
+      /\b(20\d{2})\b/
     );
 
 
@@ -576,9 +527,7 @@ function extractPublicationTitle(
 ) {
 
   if (!citation) {
-
     return "";
-
   }
 
 
@@ -589,16 +538,31 @@ function extractPublicationTitle(
   let text =
     citation
       .replace(
-        /\s*(?:https?:\/\/)?doi\.org\/\S+/gi,
+        /https?:\/\/(?:dx\.)?doi\.org\/\S+/gi,
         ""
       )
       .trim();
 
 
   /*
+   * Remove DOI written as:
+   *
+   * doi:10.xxxx/xxxxx
+   */
+
+  text =
+    text.replace(
+      /\bdoi:\s*10\.\S+/gi,
+      ""
+    );
+
+
+  /*
    * Remove final journal metadata such as:
    *
    * (Q1, IF 5.1)
+   *
+   * (Q2)
    */
 
   text =
@@ -620,7 +584,24 @@ function extractPublicationTitle(
 
   if (!yearMatch) {
 
-    return text;
+    /*
+     * Fallback if the year does not follow
+     * the exact expected format.
+     */
+
+    const fallbackYear =
+      text.match(
+        /\b20\d{2}\b/
+      );
+
+
+    if (!fallbackYear) {
+
+      return cleanPublicationTitle(
+        text
+      );
+
+    }
 
   }
 
@@ -631,17 +612,21 @@ function extractPublicationTitle(
    * Title. Journal, volume...
    */
 
-  text =
-    text.substring(
-      yearMatch.index +
-      yearMatch[0].length
-    );
+  if (yearMatch) {
+
+    text =
+      text.substring(
+        yearMatch.index +
+        yearMatch[0].length
+      );
+
+  }
 
 
   /*
    * Known journals in the CV.
    *
-   * Longest/specific names are included first.
+   * More specific / longer names are listed first.
    */
 
   const journals = [
@@ -716,20 +701,63 @@ function extractPublicationTitle(
   }
 
 
-  /*
-   * Remove trailing punctuation.
-   */
-
-  text =
+  return cleanPublicationTitle(
     text
-      .replace(
-        /[\s.]+$/,
-        ""
-      )
-      .trim();
+  );
+
+}
 
 
-  return text;
+/* =========================================================
+   CLEAN PUBLICATION TITLE
+========================================================= */
+
+function cleanPublicationTitle(
+  text
+) {
+
+  if (!text) {
+    return "";
+  }
+
+
+  return String(
+    text
+  )
+
+    /*
+     * Remove DOI
+     */
+
+    .replace(
+      /https?:\/\/(?:dx\.)?doi\.org\/\S+/gi,
+      ""
+    )
+
+    /*
+     * Remove repeated spaces
+     */
+
+    .replace(
+      /\s+/g,
+      " "
+    )
+
+    /*
+     * Remove leading/trailing punctuation
+     */
+
+    .replace(
+      /^[\s.:;-]+/,
+      ""
+    )
+
+    .replace(
+      /[\s.]+$/,
+      ""
+    )
+
+    .trim();
 
 }
 
@@ -743,9 +771,7 @@ function extractJournal(
 ) {
 
   if (!citation) {
-
     return "";
-
   }
 
 
@@ -811,9 +837,7 @@ function extractQuartile(
 ) {
 
   if (!citation) {
-
     return "";
-
   }
 
 
@@ -839,15 +863,22 @@ function extractImpactFactor(
 ) {
 
   if (!citation) {
-
     return "";
-
   }
 
 
+  /*
+   * Supports:
+   *
+   * IF 5.1
+   * IF: 5.1
+   * IF-5.1
+   * Impact Factor 5.1
+   */
+
   const match =
     citation.match(
-      /IF\s*([0-9]+(?:\.[0-9]+)?)/i
+      /(?:IF|Impact\s*Factor)\s*[:\-]?\s*([0-9]+(?:\.[0-9]+)?)/i
     );
 
 
@@ -867,18 +898,17 @@ function extractMetricYear(
 ) {
 
   if (!citation) {
-
     return "";
-
   }
 
 
   /*
-   * Looks for explicit references such as:
+   * Looks for:
    *
    * JCR 2024
    * JCR year: 2024
    * JCR Year - 2024
+   * JCR Year 2024
    */
 
   const match =
@@ -904,23 +934,18 @@ function extractPublicationDetails(
 ) {
 
   if (!citation) {
-
     return "";
-
   }
 
 
   /*
-   * The website currently does not need to display
-   * volume/page information separately because the
-   * citation itself is retained.
+   * Preserve volume/issue information for:
    *
-   * However, Bhutan Journal of Research and Development
-   * currently contains:
+   * Bhutan Journal of Research and Development
+   *
+   * Example:
    *
    * 11(1)
-   *
-   * so preserve this when detected.
    */
 
   if (
@@ -1239,9 +1264,7 @@ function updatePublicationCount(
 
 
   if (!section) {
-
     return;
-
   }
 
 
@@ -1335,7 +1358,7 @@ function updatePublicationCount(
 
       <span>
         Peer-reviewed research articles
-        · ${oldest}–${newest}
+        ${oldest && newest ? ` · ${oldest}–${newest}` : ""}
       </span>
 
     `;
@@ -1381,11 +1404,16 @@ function renderPublications(
 
 
   if (!container) {
-
     return;
-
   }
 
+
+  /*
+   * Sort newest → oldest.
+   *
+   * If two publications have the same year,
+   * sort alphabetically by title.
+   */
 
   const sortedList =
     [...list].sort(
@@ -1484,6 +1512,14 @@ function renderPublications(
             );
 
 
+          const safeDOI =
+            pub.doi
+              ? escapeHTML(
+                  pub.doi
+                )
+              : "";
+
+
           return `
 
             <article
@@ -1563,14 +1599,12 @@ function renderPublications(
 
 
                 ${
-                  pub.doi
+                  safeDOI
                     ? `
 
                       <a
                         class="publication-doi"
-                        href="${escapeHTML(
-                          pub.doi
-                        )}"
+                        href="${safeDOI}"
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="Open DOI for ${title}"
@@ -1632,9 +1666,7 @@ function setupPublicationFilters() {
 
 
   if (!section) {
-
     return;
-
   }
 
 
@@ -1988,6 +2020,8 @@ function setupPublicationFilters() {
 
             pub.details,
 
+            pub.doi,
+
             pub.citation
 
           ]
@@ -1998,6 +2032,17 @@ function setupPublicationFilters() {
 
             .toLowerCase();
 
+
+          /*
+           * Every search word must be present.
+           *
+           * Example:
+           *
+           * "uric acid sensor"
+           *
+           * will find publications containing all
+           * three terms.
+           */
 
           const matchesSearch =
 
