@@ -138,9 +138,11 @@ def load_verified_metrics():
         - Quartile
         - Impact Factor
         - Metric/JCR year
+        - Verification status
 
-    These verified values take precedence over information
-    appearing in the CV or legacy metadata.
+    IMPORTANT:
+    Only records explicitly marked with
+    "verified": true are treated as authoritative.
     """
 
     if not METRICS_FILE.exists():
@@ -150,7 +152,7 @@ def load_verified_metrics():
         )
 
         print(
-            "The parser will use legacy metadata where available."
+            "No journal metrics will be treated as verified."
         )
 
         return {}
@@ -175,7 +177,7 @@ def load_verified_metrics():
             return {}
 
         print(
-            f"✓ Loaded verified journal metrics: "
+            f"✓ Loaded journal metrics database: "
             f"{len(data)} DOI record(s)."
         )
 
@@ -196,13 +198,17 @@ def load_verified_metrics():
 # LEGACY PUBLICATION METADATA
 # =========================================================
 #
-# This serves as a fallback for category information and
-# for legacy metric values when journal_metrics.json does
-# not contain a DOI.
+# Used primarily for publication categories.
 #
-# IMPORTANT:
-# Verified values from journal_metrics.json always take
-# precedence over these values.
+# Metric values are retained only as historical reference.
+# They are NOT authoritative.
+#
+# journal_metrics.json controls displayed:
+#
+#   Quartile
+#   Impact Factor
+#   Metric/JCR year
+#
 # =========================================================
 
 PUBLICATION_METADATA = {
@@ -453,7 +459,7 @@ def clean_publication_details(details):
 
     # Remove parenthetical combinations.
     details = re.sub(
-        r"\(\s*Q\d\s*,\s*IF\s+\d+(?:\.\s*\d+)?\s*\)",
+        r"\(\s*Q[1-4]\s*,\s*IF\s+\d+(?:\.\s*\d+)?\s*\)",
         "",
         details,
         flags=re.IGNORECASE
@@ -461,13 +467,13 @@ def clean_publication_details(details):
 
     # Remove standalone combinations.
     details = re.sub(
-        r"\bQ\d\s*,\s*IF\s+\d+(?:\.\s*\d+)?",
+        r"\bQ[1-4]\s*,\s*IF\s+\d+(?:\.\s*\d+)?",
         "",
         details,
         flags=re.IGNORECASE
     )
 
-    # Remove standalone Q1/Q2/Q3/Q4.
+    # Remove standalone quartiles.
     details = re.sub(
         r"\bQ[1-4]\b",
         "",
@@ -549,8 +555,14 @@ def parse_publications(paragraphs, verified_metrics):
     Extract peer-reviewed journal articles and convert
     them into structured publication records.
 
-    Verified journal metrics take precedence over
-    metadata contained in the CV.
+    IMPORTANT:
+
+    Journal metrics are taken ONLY from verified
+    journal_metrics.json records.
+
+    CV/legacy metric values are NOT used as a fallback.
+    This prevents incorrect CV metrics from being
+    automatically displayed on the website.
     """
 
     articles = extract_section(
@@ -679,7 +691,7 @@ def parse_publications(paragraphs, verified_metrics):
             )
 
         # -------------------------------------------------
-        # Clean fields
+        # Clean title
         # -------------------------------------------------
 
         title = re.sub(
@@ -688,19 +700,27 @@ def parse_publications(paragraphs, verified_metrics):
             title
         ).strip(" .")
 
+        # -------------------------------------------------
+        # Clean journal
+        # -------------------------------------------------
+
         journal = re.sub(
             r"\s+",
             " ",
             journal
         ).strip(" .")
 
+        # -------------------------------------------------
+        # Clean publication details
+        # -------------------------------------------------
+
         details = clean_publication_details(
             details
         )
 
-        # -------------------------------------------------
+        # =================================================
         # METADATA
-        # -------------------------------------------------
+        # =================================================
 
         legacy_metadata = PUBLICATION_METADATA.get(
             doi_key,
@@ -713,11 +733,15 @@ def parse_publications(paragraphs, verified_metrics):
         )
 
         # -------------------------------------------------
-        # Category
+        # Only explicitly verified records are trusted.
         # -------------------------------------------------
-        #
-        # Category is retained from the local metadata.
-        # Journal metrics are handled separately.
+
+        if verified_metadata.get("verified") is not True:
+
+            verified_metadata = {}
+
+        # -------------------------------------------------
+        # Category
         # -------------------------------------------------
 
         category = legacy_metadata.get(
@@ -726,31 +750,22 @@ def parse_publications(paragraphs, verified_metrics):
         )
 
         # -------------------------------------------------
-        # VERIFIED METRICS TAKE PRIORITY
+        # VERIFIED METRICS ONLY
         # -------------------------------------------------
 
         quartile = verified_metadata.get(
             "quartile",
-            legacy_metadata.get(
-                "quartile",
-                ""
-            )
+            ""
         )
 
         impact_factor = verified_metadata.get(
             "impactFactor",
-            legacy_metadata.get(
-                "impactFactor",
-                ""
-            )
+            ""
         )
 
         metric_year = verified_metadata.get(
             "metricYear",
-            legacy_metadata.get(
-                "metricYear",
-                ""
-            )
+            ""
         )
 
         # -------------------------------------------------
@@ -927,17 +942,17 @@ def parse_awards(paragraphs):
 
 def validate_metadata(publications, verified_metrics):
     """
-    Compare publication metrics against the verified
+    Validate publication metrics against the verified
     journal metrics database.
-
-    The verified database is authoritative.
     """
 
+    print("")
     print("------------------------------------------")
     print("JOURNAL METRICS VALIDATION")
     print("------------------------------------------")
 
     missing_verified = []
+    unverified_records = []
     mismatches = []
 
     for publication in publications:
@@ -959,6 +974,10 @@ def validate_metadata(publications, verified_metrics):
             doi_key
         )
 
+        # -------------------------------------------------
+        # No metrics record
+        # -------------------------------------------------
+
         if not verified:
 
             missing_verified.append(
@@ -968,7 +987,19 @@ def validate_metadata(publications, verified_metrics):
             continue
 
         # -------------------------------------------------
-        # Compare structured output with verified database
+        # Metrics record exists but is not verified
+        # -------------------------------------------------
+
+        if verified.get("verified") is not True:
+
+            unverified_records.append(
+                doi_key
+            )
+
+            continue
+
+        # -------------------------------------------------
+        # Compare verified fields
         # -------------------------------------------------
 
         for field in [
@@ -1002,15 +1033,15 @@ def validate_metadata(publications, verified_metrics):
                     )
                 )
 
-    # -----------------------------------------------------
-    # Missing metrics
-    # -----------------------------------------------------
+    # =====================================================
+    # MISSING VERIFIED RECORDS
+    # =====================================================
 
     if missing_verified:
 
         print(
             f"⚠ {len(missing_verified)} publication(s) "
-            "do not have verified metrics:"
+            "do not have a metrics record:"
         )
 
         for doi in missing_verified:
@@ -1023,12 +1054,35 @@ def validate_metadata(publications, verified_metrics):
 
         print(
             "✓ All DOI-linked publications have "
-            "verified metrics."
+            "a metrics record."
         )
 
-    # -----------------------------------------------------
-    # Mismatches
-    # -----------------------------------------------------
+    # =====================================================
+    # UNVERIFIED RECORDS
+    # =====================================================
+
+    if unverified_records:
+
+        print(
+            f"⚠ {len(unverified_records)} metrics record(s) "
+            "are not marked verified:"
+        )
+
+        for doi in unverified_records:
+
+            print(
+                f"   - {doi}"
+            )
+
+    else:
+
+        print(
+            "✓ All available metrics records are verified."
+        )
+
+    # =====================================================
+    # MISMATCHES
+    # =====================================================
 
     if mismatches:
 
@@ -1054,6 +1108,7 @@ def validate_metadata(publications, verified_metrics):
 
     return (
         missing_verified,
+        unverified_records,
         mismatches
     )
 
@@ -1387,7 +1442,13 @@ def main():
     )
 
     print(
-        "✓ Verified metrics take precedence over CV data."
+        "✓ CV metric values cannot override "
+        "verified journal metrics."
+    )
+
+    print(
+        "✓ Unverified metrics are not treated "
+        "as authoritative."
     )
 
     print("==========================================")
