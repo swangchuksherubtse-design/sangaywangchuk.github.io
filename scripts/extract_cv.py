@@ -10,6 +10,7 @@ import re
 
 CV_FILE = Path("cv/Sangay Wangchuk CV (complete).docx")
 OUTPUT_DIR = Path("data/cv")
+METRICS_FILE = OUTPUT_DIR / "journal_metrics.json"
 
 
 # =========================================================
@@ -95,6 +96,8 @@ def extract_section(paragraphs, start_heading, end_headings):
     section = []
     collecting = False
 
+    start_heading_upper = start_heading.upper()
+
     end_headings_upper = [
         heading.upper()
         for heading in end_headings
@@ -102,14 +105,18 @@ def extract_section(paragraphs, start_heading, end_headings):
 
     for paragraph in paragraphs:
 
-        if paragraph.upper() == start_heading.upper():
+        paragraph_upper = paragraph.upper()
+
+        if paragraph_upper == start_heading_upper:
+
             collecting = True
             continue
 
         if (
             collecting
-            and paragraph.upper() in end_headings_upper
+            and paragraph_upper in end_headings_upper
         ):
+
             break
 
         if collecting:
@@ -119,18 +126,83 @@ def extract_section(paragraphs, start_heading, end_headings):
 
 
 # =========================================================
-# PUBLICATION METADATA
+# VERIFIED JOURNAL METRICS
+# =========================================================
+
+def load_verified_metrics():
+    """
+    Load verified journal metrics from journal_metrics.json.
+
+    journal_metrics.json is the authoritative source for:
+
+        - Quartile
+        - Impact Factor
+        - Metric/JCR year
+
+    These verified values take precedence over information
+    appearing in the CV or legacy metadata.
+    """
+
+    if not METRICS_FILE.exists():
+
+        print(
+            "WARNING: journal_metrics.json not found."
+        )
+
+        print(
+            "The parser will use legacy metadata where available."
+        )
+
+        return {}
+
+    try:
+
+        with open(
+            METRICS_FILE,
+            "r",
+            encoding="utf-8"
+        ) as file:
+
+            data = json.load(file)
+
+        if not isinstance(data, dict):
+
+            print(
+                "WARNING: journal_metrics.json does not contain "
+                "a valid JSON object."
+            )
+
+            return {}
+
+        print(
+            f"✓ Loaded verified journal metrics: "
+            f"{len(data)} DOI record(s)."
+        )
+
+        return data
+
+    except Exception as error:
+
+        print(
+            "WARNING: Could not load journal_metrics.json:"
+        )
+
+        print(error)
+
+        return {}
+
+
+# =========================================================
+# LEGACY PUBLICATION METADATA
 # =========================================================
 #
-# This metadata provides the structured publication
-# information used by the website.
-#
-# The DOI is used as the unique identifier.
+# This serves as a fallback for category information and
+# for legacy metric values when journal_metrics.json does
+# not contain a DOI.
 #
 # IMPORTANT:
-# Q1, Impact Factor and JCR year are stored separately.
-# They are NOT repeated inside the "details" field.
-#
+# Verified values from journal_metrics.json always take
+# precedence over these values.
 # =========================================================
 
 PUBLICATION_METADATA = {
@@ -353,33 +425,33 @@ PUBLICATION_METADATA = {
 
 def clean_publication_details(details):
     """
-    Remove duplicated Q1 / Impact Factor information from
-    the publication details.
+    Remove duplicated journal metric information from
+    publication details.
 
     Examples removed:
 
         (Q1, IF 5.1)
         (Q1, IF 5. 1)
-        (Q1, IF 6.1).
+        (Q1, IF 6.1)
         Q1, IF 5.1
+        IF 5.1
 
-    The structured fields quartile, impactFactor and
-    metricYear remain responsible for displaying this
-    information on the website.
+    Structured fields are responsible for displaying
+    quartile and impact factor.
     """
 
     if not details:
         return ""
 
-    # Normalize spaces inside IF values
+    # Normalize spaces inside IF values.
     details = re.sub(
-        r"IF\s+(\d+)\s*\.\s*(\d+)",
+        r"\bIF\s+(\d+)\s*\.\s*(\d+)",
         r"IF \1.\2",
         details,
         flags=re.IGNORECASE
     )
 
-    # Remove parenthetical Q1/IF metadata
+    # Remove parenthetical combinations.
     details = re.sub(
         r"\(\s*Q\d\s*,\s*IF\s+\d+(?:\.\s*\d+)?\s*\)",
         "",
@@ -387,7 +459,7 @@ def clean_publication_details(details):
         flags=re.IGNORECASE
     )
 
-    # Remove standalone Q1 / IF metadata if present
+    # Remove standalone combinations.
     details = re.sub(
         r"\bQ\d\s*,\s*IF\s+\d+(?:\.\s*\d+)?",
         "",
@@ -395,7 +467,15 @@ def clean_publication_details(details):
         flags=re.IGNORECASE
     )
 
-    # Remove any remaining standalone IF statement
+    # Remove standalone Q1/Q2/Q3/Q4.
+    details = re.sub(
+        r"\bQ[1-4]\b",
+        "",
+        details,
+        flags=re.IGNORECASE
+    )
+
+    # Remove standalone IF values.
     details = re.sub(
         r"\bIF\s+\d+(?:\.\s*\d+)?",
         "",
@@ -403,22 +483,30 @@ def clean_publication_details(details):
         flags=re.IGNORECASE
     )
 
-    # Remove redundant punctuation and whitespace
+    # Remove empty parentheses.
+    details = re.sub(
+        r"\(\s*\)",
+        "",
+        details
+    )
+
+    # Normalize whitespace.
     details = re.sub(
         r"\s+",
         " ",
         details
     ).strip()
 
-    details = re.sub(
-        r"\(\s*\)",
-        "",
-        details
-    ).strip()
-
+    # Clean spaces before punctuation.
     details = re.sub(
         r"\s+\.",
         ".",
+        details
+    )
+
+    details = re.sub(
+        r"\s+,",
+        ",",
         details
     )
 
@@ -456,10 +544,13 @@ def extract_doi(text):
 # PUBLICATION PARSER
 # =========================================================
 
-def parse_publications(paragraphs):
+def parse_publications(paragraphs, verified_metrics):
     """
     Extract peer-reviewed journal articles and convert
     them into structured publication records.
+
+    Verified journal metrics take precedence over
+    metadata contained in the CV.
     """
 
     articles = extract_section(
@@ -497,7 +588,9 @@ def parse_publications(paragraphs):
         if not year_match:
             continue
 
-        year = int(year_match.group(1))
+        year = int(
+            year_match.group(1)
+        )
 
         # -------------------------------------------------
         # DOI
@@ -544,7 +637,7 @@ def parse_publications(paragraphs):
             year_match.end():
         ].strip()
 
-        # Remove leading punctuation after year
+        # Remove leading punctuation after year.
         after_year = re.sub(
             r"^[\s\.\-–—:]+",
             "",
@@ -565,12 +658,6 @@ def parse_publications(paragraphs):
         journal = ""
         details = ""
 
-        # Split citation into sentence-like sections.
-        #
-        # Standard CV format:
-        #
-        # Authors (Year). Title. Journal. Volume/pages/details.
-        #
         parts = [
             part.strip()
             for part in re.split(
@@ -587,10 +674,12 @@ def parse_publications(paragraphs):
             journal = parts[1]
 
         if len(parts) >= 3:
-            details = ". ".join(parts[2:])
+            details = ". ".join(
+                parts[2:]
+            )
 
         # -------------------------------------------------
-        # Clean title
+        # Clean fields
         # -------------------------------------------------
 
         title = re.sub(
@@ -599,72 +688,103 @@ def parse_publications(paragraphs):
             title
         ).strip(" .")
 
-        # -------------------------------------------------
-        # Clean journal
-        # -------------------------------------------------
-
         journal = re.sub(
             r"\s+",
             " ",
             journal
         ).strip(" .")
 
-        # -------------------------------------------------
-        # Clean publication details
-        # -------------------------------------------------
-
         details = clean_publication_details(
             details
         )
 
         # -------------------------------------------------
-        # Existing structured metadata
+        # METADATA
         # -------------------------------------------------
 
-        metadata = PUBLICATION_METADATA.get(
+        legacy_metadata = PUBLICATION_METADATA.get(
             doi_key,
             {}
         )
 
-        category = metadata.get(
+        verified_metadata = verified_metrics.get(
+            doi_key,
+            {}
+        )
+
+        # -------------------------------------------------
+        # Category
+        # -------------------------------------------------
+        #
+        # Category is retained from the local metadata.
+        # Journal metrics are handled separately.
+        # -------------------------------------------------
+
+        category = legacy_metadata.get(
             "category",
             "Research Publication"
         )
 
-        quartile = metadata.get(
+        # -------------------------------------------------
+        # VERIFIED METRICS TAKE PRIORITY
+        # -------------------------------------------------
+
+        quartile = verified_metadata.get(
             "quartile",
-            ""
+            legacy_metadata.get(
+                "quartile",
+                ""
+            )
         )
 
-        impact_factor = metadata.get(
+        impact_factor = verified_metadata.get(
             "impactFactor",
-            ""
+            legacy_metadata.get(
+                "impactFactor",
+                ""
+            )
         )
 
-        metric_year = metadata.get(
+        metric_year = verified_metadata.get(
             "metricYear",
-            ""
+            legacy_metadata.get(
+                "metricYear",
+                ""
+            )
         )
 
         # -------------------------------------------------
-        # Create structured publication record
+        # Create structured record
         # -------------------------------------------------
 
         publication = {
+
             "year": year,
+
             "authors": authors,
+
             "title": title,
+
             "journal": journal,
+
             "category": category,
+
             "quartile": quartile,
+
             "impactFactor": impact_factor,
+
             "metricYear": metric_year,
+
             "details": details,
+
             "doi": doi,
+
             "citation": article
         }
 
-        publications.append(publication)
+        publications.append(
+            publication
+        )
 
     return publications
 
@@ -674,9 +794,6 @@ def parse_publications(paragraphs):
 # =========================================================
 
 def parse_submitted_manuscript(paragraphs):
-    """
-    Extract submitted manuscripts.
-    """
 
     manuscripts = extract_section(
         paragraphs,
@@ -701,9 +818,6 @@ def parse_submitted_manuscript(paragraphs):
 # =========================================================
 
 def parse_thesis(paragraphs):
-    """
-    Extract PhD thesis information.
-    """
 
     return extract_section(
         paragraphs,
@@ -721,9 +835,6 @@ def parse_thesis(paragraphs):
 # =========================================================
 
 def parse_research_reports(paragraphs):
-    """
-    Extract research reports.
-    """
 
     return extract_section(
         paragraphs,
@@ -740,10 +851,6 @@ def parse_research_reports(paragraphs):
 # =========================================================
 
 def parse_research_projects(paragraphs):
-    """
-    Extract research projects and professional research
-    activities.
-    """
 
     section = extract_section(
         paragraphs,
@@ -772,7 +879,10 @@ def parse_research_projects(paragraphs):
             keyword.lower() in paragraph.lower()
             for keyword in research_keywords
         ):
-            projects.append(paragraph)
+
+            projects.append(
+                paragraph
+            )
 
     return projects
 
@@ -782,9 +892,6 @@ def parse_research_projects(paragraphs):
 # =========================================================
 
 def parse_profile(paragraphs):
-    """
-    Extract selected professional profile information.
-    """
 
     return extract_section(
         paragraphs,
@@ -803,9 +910,6 @@ def parse_profile(paragraphs):
 # =========================================================
 
 def parse_awards(paragraphs):
-    """
-    Extract awards and scholarships.
-    """
 
     return extract_section(
         paragraphs,
@@ -814,6 +918,143 @@ def parse_awards(paragraphs):
             "SKILLS AND COMPETENCIES",
             "RESEARCH PUBLICATIONS"
         ]
+    )
+
+
+# =========================================================
+# METADATA VALIDATION
+# =========================================================
+
+def validate_metadata(publications, verified_metrics):
+    """
+    Compare publication metrics against the verified
+    journal metrics database.
+
+    The verified database is authoritative.
+    """
+
+    print("------------------------------------------")
+    print("JOURNAL METRICS VALIDATION")
+    print("------------------------------------------")
+
+    missing_verified = []
+    mismatches = []
+
+    for publication in publications:
+
+        doi = publication.get(
+            "doi",
+            ""
+        )
+
+        if not doi:
+            continue
+
+        doi_key = doi.replace(
+            "https://doi.org/",
+            ""
+        ).lower()
+
+        verified = verified_metrics.get(
+            doi_key
+        )
+
+        if not verified:
+
+            missing_verified.append(
+                doi_key
+            )
+
+            continue
+
+        # -------------------------------------------------
+        # Compare structured output with verified database
+        # -------------------------------------------------
+
+        for field in [
+            "quartile",
+            "impactFactor",
+            "metricYear"
+        ]:
+
+            expected = str(
+                verified.get(
+                    field,
+                    ""
+                )
+            ).strip()
+
+            actual = str(
+                publication.get(
+                    field,
+                    ""
+                )
+            ).strip()
+
+            if expected != actual:
+
+                mismatches.append(
+                    (
+                        doi_key,
+                        field,
+                        expected,
+                        actual
+                    )
+                )
+
+    # -----------------------------------------------------
+    # Missing metrics
+    # -----------------------------------------------------
+
+    if missing_verified:
+
+        print(
+            f"⚠ {len(missing_verified)} publication(s) "
+            "do not have verified metrics:"
+        )
+
+        for doi in missing_verified:
+
+            print(
+                f"   - {doi}"
+            )
+
+    else:
+
+        print(
+            "✓ All DOI-linked publications have "
+            "verified metrics."
+        )
+
+    # -----------------------------------------------------
+    # Mismatches
+    # -----------------------------------------------------
+
+    if mismatches:
+
+        print(
+            "⚠ Metric mismatches detected:"
+        )
+
+        for doi, field, expected, actual in mismatches:
+
+            print(
+                f"   - {doi}: {field} "
+                f"(verified={expected}, "
+                f"output={actual})"
+            )
+
+    else:
+
+        print(
+            "✓ Verified journal metrics validation PASSED."
+        )
+
+    print("------------------------------------------")
+
+    return (
+        missing_verified,
+        mismatches
     )
 
 
@@ -843,10 +1084,18 @@ def main():
     )
 
     # -----------------------------------------------------
+    # Load verified journal metrics
+    # -----------------------------------------------------
+
+    verified_metrics = load_verified_metrics()
+
+    # -----------------------------------------------------
     # Load Word document
     # -----------------------------------------------------
 
-    document = Document(CV_FILE)
+    document = Document(
+        CV_FILE
+    )
 
     # -----------------------------------------------------
     # Extract raw content
@@ -886,7 +1135,8 @@ def main():
     # =====================================================
 
     publications = parse_publications(
-        paragraphs
+        paragraphs,
+        verified_metrics
     )
 
     with open(
@@ -898,7 +1148,9 @@ def main():
         json.dump(
             {
                 "source": str(CV_FILE),
+
                 "peer_reviewed_journal_articles": publications,
+
                 "article_count": len(publications)
             },
             file,
@@ -947,9 +1199,13 @@ def main():
         json.dump(
             {
                 "source": str(CV_FILE),
+
                 "projects": research_projects,
+
                 "reports": reports,
+
                 "submitted_manuscripts": manuscripts,
+
                 "phd_thesis": thesis
             },
             file,
@@ -978,7 +1234,9 @@ def main():
         json.dump(
             {
                 "source": str(CV_FILE),
+
                 "professional_services": profile,
+
                 "awards_and_scholarships": awards
             },
             file,
@@ -990,8 +1248,9 @@ def main():
     # VALIDATION / REPORT
     # =====================================================
 
+    print("")
     print("==========================================")
-    print("CV extraction completed successfully.")
+    print("CV EXTRACTION COMPLETED")
     print("==========================================")
 
     print(
@@ -1027,8 +1286,13 @@ def main():
     )
 
     # =====================================================
-    # PUBLICATION VALIDATION
+    # PUBLICATION COUNT VALIDATION
     # =====================================================
+
+    print("")
+    print("------------------------------------------")
+    print("PUBLICATION COUNT VALIDATION")
+    print("------------------------------------------")
 
     if len(publications) == 30:
 
@@ -1046,48 +1310,85 @@ def main():
         )
 
     # =====================================================
-    # METADATA VALIDATION
+    # DOI VALIDATION
     # =====================================================
 
-    metadata_missing = []
+    print("")
+    print("------------------------------------------")
+    print("DOI VALIDATION")
+    print("------------------------------------------")
+
+    publications_without_doi = []
 
     for publication in publications:
 
-        doi = publication.get(
-            "doi",
-            ""
-        )
+        if not publication.get("doi"):
 
-        doi_key = doi.replace(
-            "https://doi.org/",
-            ""
-        ).lower()
-
-        if doi_key and doi_key not in PUBLICATION_METADATA:
-
-            metadata_missing.append(
-                doi_key
+            publications_without_doi.append(
+                publication.get(
+                    "title",
+                    "Untitled publication"
+                )
             )
 
-    if metadata_missing:
+    if publications_without_doi:
 
         print(
-            "⚠ Metadata warning: "
-            f"{len(metadata_missing)} publication(s) "
-            "do not have predefined metadata."
+            f"⚠ {len(publications_without_doi)} "
+            "publication(s) have no DOI."
         )
 
-        for doi in metadata_missing:
+        for title in publications_without_doi:
 
             print(
-                f"  - {doi}"
+                f"   - {title}"
             )
 
     else:
 
         print(
-            "✓ Publication metadata validation PASSED."
+            "✓ DOI validation PASSED: "
+            "all publications contain DOI information."
         )
+
+    # =====================================================
+    # JOURNAL METRICS VALIDATION
+    # =====================================================
+
+    validate_metadata(
+        publications,
+        verified_metrics
+    )
+
+    # =====================================================
+    # FINAL REPORT
+    # =====================================================
+
+    print("")
+    print("==========================================")
+    print("FINAL VALIDATION COMPLETE")
+    print("==========================================")
+
+    print(
+        "✓ CV extraction is complete."
+    )
+
+    print(
+        "✓ Structured publication data generated."
+    )
+
+    print(
+        "✓ Verified journal metrics applied."
+    )
+
+    print(
+        "✓ Duplicate Q1/IF information removed "
+        "from publication details."
+    )
+
+    print(
+        "✓ Verified metrics take precedence over CV data."
+    )
 
     print("==========================================")
 
