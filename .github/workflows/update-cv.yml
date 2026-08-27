@@ -52,12 +52,29 @@ jobs:
 
       - name: Verify CV file
         run: |
+
           if [ ! -f "cv/Sangay Wangchuk CV (complete).docx" ]; then
             echo "ERROR: CV file was not found."
             exit 1
           fi
 
           echo "✓ CV file found."
+
+
+      # =====================================================
+      # VERIFY VERIFIED METRICS FILE
+      # =====================================================
+
+      - name: Verify journal metrics file
+        run: |
+
+          if [ ! -f "data/cv/journal_metrics.json" ]; then
+            echo "ERROR: journal_metrics.json was not found."
+            echo "This file contains the verified journal metrics."
+            exit 1
+          fi
+
+          echo "✓ journal_metrics.json found."
 
 
       # =====================================================
@@ -83,15 +100,18 @@ jobs:
             "data/cv/profile.json"
             "data/cv/publications.json"
             "data/cv/research.json"
+            "data/cv/journal_metrics.json"
           )
 
           for file in "${required_files[@]}"; do
+
             if [ ! -f "$file" ]; then
               echo "ERROR: Missing generated file: $file"
               exit 1
             fi
 
             echo "✓ Found: $file"
+
           done
 
 
@@ -119,19 +139,346 @@ jobs:
 
           count = len(articles)
 
-          print(f"Detected peer-reviewed journal articles: {count}")
+          print(
+              f"Detected peer-reviewed journal articles: {count}"
+          )
 
           if count != 30:
+
               print(
                   f"ERROR: Expected 30 journal articles, "
                   f"but detected {count}."
               )
+
               sys.exit(1)
 
           print(
               "✓ Publication validation PASSED: "
               "30 articles detected."
           )
+
+          PY
+
+
+      # =====================================================
+      # VALIDATE DOI AND VERIFIED METRICS
+      # =====================================================
+
+      - name: Validate publication metrics
+        run: |
+
+          python - <<'PY'
+
+          import json
+          import sys
+
+          publications_path = "data/cv/publications.json"
+          metrics_path = "data/cv/journal_metrics.json"
+
+          # -------------------------------------------------
+          # LOAD PUBLICATIONS
+          # -------------------------------------------------
+
+          with open(
+              publications_path,
+              "r",
+              encoding="utf-8"
+          ) as f:
+
+              publication_data = json.load(f)
+
+          articles = publication_data.get(
+              "peer_reviewed_journal_articles",
+              []
+          )
+
+          # -------------------------------------------------
+          # LOAD VERIFIED METRICS
+          # -------------------------------------------------
+
+          with open(
+              metrics_path,
+              "r",
+              encoding="utf-8"
+          ) as f:
+
+              metrics = json.load(f)
+
+          print("==========================================")
+          print("VALIDATING VERIFIED JOURNAL METRICS")
+          print("==========================================")
+
+          print(
+              f"Publication records: {len(articles)}"
+          )
+
+          print(
+              f"Verified DOI records: {len(metrics)}"
+          )
+
+          # -------------------------------------------------
+          # CHECK EACH PUBLICATION
+          # -------------------------------------------------
+
+          missing_doi = []
+          missing_metrics = []
+
+          for index, article in enumerate(
+              articles,
+              start=1
+          ):
+
+              doi = article.get(
+                  "doi",
+                  ""
+              ).strip()
+
+              title = article.get(
+                  "title",
+                  "Untitled publication"
+              )
+
+              # ---------------------------------------------
+              # DOI CHECK
+              # ---------------------------------------------
+
+              if not doi:
+
+                  missing_doi.append(
+                      f"{index}. {title}"
+                  )
+
+                  continue
+
+              # ---------------------------------------------
+              # NORMALIZE DOI
+              # ---------------------------------------------
+
+              doi_key = doi.replace(
+                  "https://doi.org/",
+                  ""
+              ).strip().lower()
+
+              # ---------------------------------------------
+              # VERIFIED METRICS CHECK
+              # ---------------------------------------------
+
+              if doi_key not in metrics:
+
+                  missing_metrics.append(
+                      f"{index}. {doi_key} — {title}"
+                  )
+
+          # -------------------------------------------------
+          # REPORT MISSING DOI
+          # -------------------------------------------------
+
+          if missing_doi:
+
+              print("")
+              print(
+                  "WARNING: The following publications "
+                  "do not contain a DOI:"
+              )
+
+              for item in missing_doi:
+                  print(
+                      f"  - {item}"
+                  )
+
+          # -------------------------------------------------
+          # REPORT MISSING VERIFIED METRICS
+          # -------------------------------------------------
+
+          if missing_metrics:
+
+              print("")
+              print(
+                  "WARNING: The following publications "
+                  "do not have verified journal metrics:"
+              )
+
+              for item in missing_metrics:
+                  print(
+                      f"  - {item}"
+                  )
+
+              print("")
+              print(
+                  "These publications require manual "
+                  "metric verification before their "
+                  "Q1/Q2/Impact Factor information is "
+                  "considered verified."
+              )
+
+          else:
+
+              print(
+                  "✓ All DOI-bearing publications have "
+                  "verified metric records."
+              )
+
+          # -------------------------------------------------
+          # IMPORTANT:
+          #
+          # Do NOT fail the complete website update simply
+          # because a NEW publication has been added.
+          #
+          # Instead, report it clearly so its metrics can
+          # be verified and added to journal_metrics.json.
+          # -------------------------------------------------
+
+          print("")
+          print(
+              "Metric verification scan completed."
+          )
+
+          PY
+
+
+      # =====================================================
+      # PROTECT VERIFIED ACS METRICS
+      # =====================================================
+
+      - name: Verify ACS Applied Nano Materials metrics
+        run: |
+
+          python - <<'PY'
+
+          import json
+          import sys
+
+          path = "data/cv/journal_metrics.json"
+
+          with open(
+              path,
+              "r",
+              encoding="utf-8"
+          ) as f:
+
+              metrics = json.load(f)
+
+          doi = "10.1021/acsanm.5c05854"
+
+          if doi not in metrics:
+
+              print(
+                  "ERROR: ACS Applied Nano Materials "
+                  "record is missing from journal_metrics.json."
+              )
+
+              sys.exit(1)
+
+          record = metrics[doi]
+
+          expected_quartile = "Q2"
+          expected_if = "5.5"
+          expected_year = "2024"
+
+          actual_quartile = str(
+              record.get("quartile", "")
+          )
+
+          actual_if = str(
+              record.get("impactFactor", "")
+          )
+
+          actual_year = str(
+              record.get("metricYear", "")
+          )
+
+          if actual_quartile != expected_quartile:
+
+              print(
+                  "ERROR: ACS Applied Nano Materials "
+                  f"quartile is {actual_quartile}; "
+                  f"expected {expected_quartile}."
+              )
+
+              sys.exit(1)
+
+          if actual_if != expected_if:
+
+              print(
+                  "ERROR: ACS Applied Nano Materials "
+                  f"Impact Factor is {actual_if}; "
+                  f"expected {expected_if}."
+              )
+
+              sys.exit(1)
+
+          if actual_year != expected_year:
+
+              print(
+                  "ERROR: ACS Applied Nano Materials "
+                  f"metric year is {actual_year}; "
+                  f"expected {expected_year}."
+              )
+
+              sys.exit(1)
+
+          print(
+              "✓ ACS Applied Nano Materials verified: "
+              "Q2 · IF 5.5 (JCR 2024)"
+          )
+
+          PY
+
+
+      # =====================================================
+      # CHECK VERIFIED METRIC RECORD COUNT
+      # =====================================================
+
+      - name: Check verified metrics count
+        run: |
+
+          python - <<'PY'
+
+          import json
+
+          path = "data/cv/journal_metrics.json"
+
+          with open(
+              path,
+              "r",
+              encoding="utf-8"
+          ) as f:
+
+              metrics = json.load(f)
+
+          count = len(metrics)
+
+          print(
+              f"Verified journal metric records: {count}"
+          )
+
+          if count == 30:
+
+              print(
+                  "✓ All 30 current publications "
+                  "have metric records available."
+              )
+
+          elif count < 30:
+
+              print(
+                  "⚠ Fewer than 30 verified metric records "
+                  "are currently stored."
+              )
+
+              print(
+                  "New publications should be verified "
+                  "before adding their metrics."
+
+              )
+
+          else:
+
+              print(
+                  "✓ More than 30 metric records found. "
+                  "This is allowed for previously published "
+                  "or additional records."
+              )
 
           PY
 
