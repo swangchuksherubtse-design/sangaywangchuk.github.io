@@ -39,7 +39,7 @@ async function loadPublications() {
 
     const response =
       await fetch(
-        PUBLICATIONS_DATA_URL,
+        `${PUBLICATIONS_DATA_URL}?v=${Date.now()}`,
         {
           cache: "no-store"
         }
@@ -90,9 +90,9 @@ async function loadPublications() {
               ).trim();
 
 
-            /*
-             * Publication year
-             */
+            /* =================================================
+               PUBLICATION YEAR
+            ================================================= */
 
             const year =
               Number(article.year) ||
@@ -102,9 +102,9 @@ async function loadPublications() {
               "";
 
 
-            /*
-             * DOI
-             */
+            /* =================================================
+               DOI
+            ================================================= */
 
             const doi =
               normalizeDOI(
@@ -115,9 +115,9 @@ async function loadPublications() {
               );
 
 
-            /*
-             * Publication title
-             */
+            /* =================================================
+               PUBLICATION TITLE
+            ================================================= */
 
             const title =
               String(
@@ -129,9 +129,9 @@ async function loadPublications() {
               ).trim();
 
 
-            /*
-             * Journal
-             */
+            /* =================================================
+               JOURNAL
+            ================================================= */
 
             const journal =
               String(
@@ -143,9 +143,9 @@ async function loadPublications() {
               ).trim();
 
 
-            /*
-             * Journal quartile
-             */
+            /* =================================================
+               JOURNAL QUARTILE
+            ================================================= */
 
             const quartile =
               String(
@@ -157,9 +157,9 @@ async function loadPublications() {
               ).trim();
 
 
-            /*
-             * Impact factor
-             */
+            /* =================================================
+               IMPACT FACTOR
+            ================================================= */
 
             const impactFactor =
               String(
@@ -171,9 +171,9 @@ async function loadPublications() {
               ).trim();
 
 
-            /*
-             * JCR / metric year
-             */
+            /* =================================================
+               JCR / METRIC YEAR
+            ================================================= */
 
             const metricYear =
               String(
@@ -185,9 +185,9 @@ async function loadPublications() {
               ).trim();
 
 
-            /*
-             * Additional publication details
-             */
+            /* =================================================
+               ADDITIONAL PUBLICATION DETAILS
+            ================================================= */
 
             const details =
               String(
@@ -200,9 +200,9 @@ async function loadPublications() {
               ).trim();
 
 
-            /*
-             * Research category
-             */
+            /* =================================================
+               RESEARCH CATEGORY
+            ================================================= */
 
             const category =
               String(
@@ -479,7 +479,7 @@ function extractPublicationYear(
 
 
   /*
-   * First look for the standard:
+   * First look for:
    *
    * (2024)
    */
@@ -988,9 +988,7 @@ function determinePublicationCategory(
 
 
   /*
-   * -------------------------------------------------------
    * FORENSIC ELECTROCHEMISTRY
-   * -------------------------------------------------------
    */
 
   if (
@@ -1005,9 +1003,7 @@ function determinePublicationCategory(
 
 
   /*
-   * -------------------------------------------------------
    * FOOD ANALYSIS
-   * -------------------------------------------------------
    */
 
   if (
@@ -1022,9 +1018,7 @@ function determinePublicationCategory(
 
 
   /*
-   * -------------------------------------------------------
    * BIOMEDICAL / BIOSENSORS
-   * -------------------------------------------------------
    */
 
   if (
@@ -1039,9 +1033,7 @@ function determinePublicationCategory(
 
 
   /*
-   * -------------------------------------------------------
    * ENVIRONMENTAL MONITORING
-   * -------------------------------------------------------
    */
 
   if (
@@ -1056,9 +1048,7 @@ function determinePublicationCategory(
 
 
   /*
-   * -------------------------------------------------------
    * SUSTAINABLE NANOMATERIALS
-   * -------------------------------------------------------
    */
 
   if (
@@ -1073,9 +1063,7 @@ function determinePublicationCategory(
 
 
   /*
-   * -------------------------------------------------------
    * ELECTROCATALYSIS
-   * -------------------------------------------------------
    */
 
   if (
@@ -1090,9 +1078,7 @@ function determinePublicationCategory(
 
 
   /*
-   * -------------------------------------------------------
    * DEFAULT
-   * -------------------------------------------------------
    */
 
   return "Electrochemical Research";
@@ -1358,7 +1344,11 @@ function updatePublicationCount(
 
       <span>
         Peer-reviewed research articles
-        ${oldest && newest ? ` · ${oldest}–${newest}` : ""}
+        ${
+          oldest && newest
+            ? ` · ${oldest}–${newest}`
+            : ""
+        }
       </span>
 
     `;
@@ -2035,13 +2025,6 @@ function setupPublicationFilters() {
 
           /*
            * Every search word must be present.
-           *
-           * Example:
-           *
-           * "uric acid sensor"
-           *
-           * will find publications containing all
-           * three terms.
            */
 
           const matchesSearch =
