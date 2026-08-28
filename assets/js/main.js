@@ -1,3 +1,4 @@
+javascript
 /* =========================================================
    main.js
    Sangay Wangchuk Academic Profile
@@ -311,16 +312,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 /* =========================================================
+   DATA PATH HELPER
+   ========================================================= */
+
+function getCVDataURL(filename) {
+
+    /*
+     * GitHub Pages project-site safe path.
+     *
+     * index.html is at:
+     * /sangaywangchuk.github.io/
+     *
+     * Data files are at:
+     * /sangaywangchuk.github.io/data/cv/
+     */
+
+    return new URL(
+        `data/cv/${filename}`,
+        document.baseURI
+    ).href;
+}
+
+
+/* =========================================================
    11. CV PROFILE DATA LOADER
    ========================================================= */
 
 async function loadCVData() {
 
     const profileURL =
-        new URL(
-            "data/cv/profile.json",
-            document.baseURI
-        ).href;
+        getCVDataURL("profile.json");
 
     console.log(
         "Loading CV profile:",
@@ -331,7 +352,7 @@ async function loadCVData() {
 
         const response =
             await fetch(
-                profileURL,
+                `${profileURL}?v=${Date.now()}`,
                 {
                     cache: "no-store"
                 }
@@ -531,10 +552,7 @@ async function loadResearchProjects() {
 
 
     const researchURL =
-        new URL(
-            "data/cv/research.json",
-            document.baseURI
-        ).href;
+        getCVDataURL("research.json");
 
     console.log(
         "Loading research data:",
@@ -546,7 +564,7 @@ async function loadResearchProjects() {
 
         const response =
             await fetch(
-                researchURL,
+                `${researchURL}?v=${Date.now()}`,
                 {
                     cache: "no-store"
                 }
@@ -831,10 +849,7 @@ async function loadResearchGrants() {
 
 
     const profileURL =
-        new URL(
-            "data/cv/profile.json",
-            document.baseURI
-        ).href;
+        getCVDataURL("profile.json");
 
 
     console.log(
@@ -847,7 +862,7 @@ async function loadResearchGrants() {
 
         const response =
             await fetch(
-                profileURL,
+                `${profileURL}?v=${Date.now()}`,
                 {
                     cache: "no-store"
                 }
@@ -874,8 +889,13 @@ async function loadResearchGrants() {
 
         /*
          * =================================================
-         * SUPPORT ALL CURRENT AUTOMATION NAMES
+         * PRIMARY AUTOMATION FIELD
          * =================================================
+         *
+         * Current CV automation stores grants in:
+         *
+         * profile.json
+         * → research_grants
          */
 
         let grants = [];
@@ -1010,8 +1030,6 @@ function renderResearchGrants(
          * =================================================
          * PLAIN STRING GRANT
          * =================================================
-         *
-         * Current CV automation stores grants as strings.
          */
 
         if (
@@ -1295,3 +1313,4 @@ window.renderResearchProjects =
 
 window.renderResearchGrants =
     renderResearchGrants;
+
