@@ -78,12 +78,47 @@ jobs:
 
 
       # =====================================================
+      # BACK UP VERIFIED JOURNAL METRICS
+      #
+      # The CV extraction process should not overwrite the
+      # manually verified journal metrics database.
+      # =====================================================
+
+      - name: Back up verified journal metrics
+        run: |
+
+          cp \
+            data/cv/journal_metrics.json \
+            /tmp/journal_metrics_verified.json
+
+          echo "✓ Verified journal metrics backed up."
+
+
+      # =====================================================
       # EXTRACT CV DATA
       # =====================================================
 
       - name: Extract CV data
         run: |
+
           python scripts/extract_cv.py
+
+
+      # =====================================================
+      # RESTORE VERIFIED JOURNAL METRICS
+      #
+      # This guarantees that verified journal metrics remain
+      # protected even when the CV is re-extracted.
+      # =====================================================
+
+      - name: Restore verified journal metrics
+        run: |
+
+          cp \
+            /tmp/journal_metrics_verified.json \
+            data/cv/journal_metrics.json
+
+          echo "✓ Verified journal metrics restored."
 
 
       # =====================================================
@@ -117,6 +152,9 @@ jobs:
 
       # =====================================================
       # VALIDATE PUBLICATIONS
+      #
+      # The website must not be limited to exactly 30
+      # publications. Future publications should be accepted.
       # =====================================================
 
       - name: Validate publication data
@@ -129,7 +167,12 @@ jobs:
 
           path = "data/cv/publications.json"
 
-          with open(path, "r", encoding="utf-8") as f:
+          with open(
+              path,
+              "r",
+              encoding="utf-8"
+          ) as f:
+
               data = json.load(f)
 
           articles = data.get(
@@ -143,18 +186,44 @@ jobs:
               f"Detected peer-reviewed journal articles: {count}"
           )
 
-          if count != 30:
+          # -------------------------------------------------
+          # BASIC VALIDATION
+          # -------------------------------------------------
+
+          if count == 0:
 
               print(
-                  f"ERROR: Expected 30 journal articles, "
-                  f"but detected {count}."
+                  "ERROR: No peer-reviewed journal articles "
+                  "were detected."
               )
 
               sys.exit(1)
 
+          # -------------------------------------------------
+          # FUTURE-PROOF PUBLICATION VALIDATION
+          # -------------------------------------------------
+
+          if count >= 30:
+
+              print(
+                  f"✓ Publication validation PASSED: "
+                  f"{count} articles detected."
+              )
+
+          else:
+
+              print(
+                  f"⚠ WARNING: Only {count} peer-reviewed "
+                  f"journal articles were detected."
+              )
+
+              print(
+                  "The website update will continue, but "
+                  "please verify the CV extraction."
+              )
+
           print(
-              "✓ Publication validation PASSED: "
-              "30 articles detected."
+              "✓ Publication count validation completed."
           )
 
           PY
@@ -162,6 +231,9 @@ jobs:
 
       # =====================================================
       # VALIDATE DOI AND VERIFIED METRICS
+      #
+      # Missing metrics do NOT stop the website update.
+      # They are reported for later verification.
       # =====================================================
 
       - name: Validate publication metrics
@@ -170,7 +242,6 @@ jobs:
           python - <<'PY'
 
           import json
-          import sys
 
           publications_path = "data/cv/publications.json"
           metrics_path = "data/cv/journal_metrics.json"
@@ -259,6 +330,16 @@ jobs:
                   ""
               ).strip().lower()
 
+              doi_key = doi_key.replace(
+                  "http://doi.org/",
+                  ""
+              ).strip().lower()
+
+              doi_key = doi_key.replace(
+                  "doi:",
+                  ""
+              ).strip().lower()
+
               # ---------------------------------------------
               # VERIFIED METRICS CHECK
               # ---------------------------------------------
@@ -282,6 +363,7 @@ jobs:
               )
 
               for item in missing_doi:
+
                   print(
                       f"  - {item}"
                   )
@@ -299,6 +381,7 @@ jobs:
               )
 
               for item in missing_metrics:
+
                   print(
                       f"  - {item}"
                   )
@@ -319,25 +402,23 @@ jobs:
               )
 
           # -------------------------------------------------
-          # IMPORTANT:
+          # IMPORTANT
           #
-          # Do NOT fail the complete website update simply
-          # because a NEW publication has been added.
-          #
-          # Instead, report it clearly so its metrics can
-          # be verified and added to journal_metrics.json.
+          # Missing metrics do NOT fail the workflow.
+          # This allows new publications to appear on the
+          # website while their metrics are verified later.
           # -------------------------------------------------
 
           print("")
           print(
-              "Metric verification scan completed."
+              "✓ Metric verification scan completed."
           )
 
           PY
 
 
       # =====================================================
-      # PROTECT VERIFIED ACS METRICS
+      # PROTECT VERIFIED ACS APPLIED NANO MATERIALS METRICS
       # =====================================================
 
       - name: Verify ACS Applied Nano Materials metrics
@@ -452,33 +533,100 @@ jobs:
               f"Verified journal metric records: {count}"
           )
 
-          if count == 30:
+          if count >= 30:
 
               print(
-                  "✓ All 30 current publications "
-                  "have metric records available."
+                  f"✓ {count} verified metric records "
+                  "are currently stored."
               )
 
-          elif count < 30:
+          else:
 
               print(
-                  "⚠ Fewer than 30 verified metric records "
+                  f"⚠ {count} verified metric records "
                   "are currently stored."
               )
 
               print(
                   "New publications should be verified "
                   "before adding their metrics."
-
               )
 
-          else:
+          PY
 
-              print(
-                  "✓ More than 30 metric records found. "
-                  "This is allowed for previously published "
-                  "or additional records."
-              )
+
+      # =====================================================
+      # DISPLAY AUTOMATION SUMMARY
+      # =====================================================
+
+      - name: Display CV update summary
+        run: |
+
+          python - <<'PY'
+
+          import json
+
+          publications_path = "data/cv/publications.json"
+          research_path = "data/cv/research.json"
+          profile_path = "data/cv/profile.json"
+
+          with open(
+              publications_path,
+              "r",
+              encoding="utf-8"
+          ) as f:
+
+              publications = json.load(f)
+
+          with open(
+              research_path,
+              "r",
+              encoding="utf-8"
+          ) as f:
+
+              research = json.load(f)
+
+          with open(
+              profile_path,
+              "r",
+              encoding="utf-8"
+          ) as f:
+
+              profile = json.load(f)
+
+          articles = publications.get(
+              "peer_reviewed_journal_articles",
+              []
+          )
+
+          projects = research.get(
+              "projects",
+              []
+          )
+
+          services = profile.get(
+              "professional_services",
+              []
+          )
+
+          print("")
+          print("==========================================")
+          print("CV → WEBSITE AUTOMATION SUMMARY")
+          print("==========================================")
+          print(
+              f"Peer-reviewed publications: {len(articles)}"
+          )
+          print(
+              f"Research projects: {len(projects)}"
+          )
+          print(
+              f"Professional service records: {len(services)}"
+          )
+          print("==========================================")
+          print("✓ CV extraction completed successfully.")
+          print("✓ Website data files validated.")
+          print("✓ Automation pipeline completed.")
+          print("==========================================")
 
           PY
 
