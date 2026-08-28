@@ -1,3 +1,4 @@
+```javascript
 /* =========================================================
    main.js
    Sangay Wangchuk Academic Profile
@@ -5,6 +6,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
     "use strict";
+
 
     /* =====================================================
        1. MOBILE NAVIGATION
@@ -14,24 +16,35 @@ document.addEventListener("DOMContentLoaded", () => {
     const navLinks = document.querySelector(".nav-links");
 
     if (menuToggle && navLinks) {
+
         menuToggle.addEventListener("click", () => {
+
             navLinks.classList.toggle("active");
             menuToggle.classList.toggle("active");
+
             menuToggle.setAttribute(
                 "aria-expanded",
                 navLinks.classList.contains("active")
             );
         });
 
+
         // Close mobile menu after clicking a navigation link
         navLinks.querySelectorAll("a").forEach((link) => {
+
             link.addEventListener("click", () => {
+
                 navLinks.classList.remove("active");
                 menuToggle.classList.remove("active");
-                menuToggle.setAttribute("aria-expanded", "false");
+
+                menuToggle.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
             });
         });
     }
+
 
 
     /* =====================================================
@@ -39,17 +52,23 @@ document.addEventListener("DOMContentLoaded", () => {
        ===================================================== */
 
     document.querySelectorAll('a[href^="#"]').forEach((link) => {
+
         link.addEventListener("click", function (event) {
+
             const targetId = this.getAttribute("href");
 
-            if (!targetId || targetId === "#") return;
+            if (!targetId || targetId === "#") {
+                return;
+            }
 
             const target = document.querySelector(targetId);
 
             if (target) {
+
                 event.preventDefault();
 
                 const header = document.querySelector("header");
+
                 const headerHeight = header
                     ? header.offsetHeight
                     : 0;
@@ -65,160 +84,249 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
 
                 // Update URL without jumping
-                history.replaceState(null, "", targetId);
+                history.replaceState(
+                    null,
+                    "",
+                    targetId
+                );
             }
         });
     });
+
 
 
     /* =====================================================
        3. ACTIVE NAVIGATION LINK ON SCROLL
        ===================================================== */
 
-    const sections = document.querySelectorAll("section[id]");
-    const navigationLinks = document.querySelectorAll(
-        '.nav-links a[href^="#"]'
-    );
+    const sections =
+        document.querySelectorAll("section[id]");
+
+    const navigationLinks =
+        document.querySelectorAll(
+            '.nav-links a[href^="#"]'
+        );
+
 
     const updateActiveNavigation = () => {
+
         let currentSection = "";
 
         sections.forEach((section) => {
-            const sectionTop = section.offsetTop - 160;
-            const sectionHeight = section.offsetHeight;
+
+            const sectionTop =
+                section.offsetTop - 160;
+
+            const sectionHeight =
+                section.offsetHeight;
 
             if (
                 window.scrollY >= sectionTop &&
-                window.scrollY < sectionTop + sectionHeight
+                window.scrollY <
+                    sectionTop + sectionHeight
             ) {
-                currentSection = section.getAttribute("id");
+                currentSection =
+                    section.getAttribute("id");
             }
         });
 
+
         navigationLinks.forEach((link) => {
+
             link.classList.remove("active");
 
-            const href = link.getAttribute("href");
+            const href =
+                link.getAttribute("href");
 
-            if (href === `#${currentSection}`) {
+            if (
+                href === `#${currentSection}`
+            ) {
                 link.classList.add("active");
             }
         });
     };
 
-    window.addEventListener("scroll", updateActiveNavigation);
+
+    window.addEventListener(
+        "scroll",
+        updateActiveNavigation
+    );
+
     updateActiveNavigation();
+
 
 
     /* =====================================================
        4. HEADER SHADOW / SCROLL EFFECT
        ===================================================== */
 
-    const header = document.querySelector("header");
+    const header =
+        document.querySelector("header");
+
 
     const updateHeader = () => {
-        if (!header) return;
+
+        if (!header) {
+            return;
+        }
 
         if (window.scrollY > 30) {
+
             header.classList.add("scrolled");
+
         } else {
+
             header.classList.remove("scrolled");
         }
     };
 
-    window.addEventListener("scroll", updateHeader);
+
+    window.addEventListener(
+        "scroll",
+        updateHeader
+    );
+
     updateHeader();
+
 
 
     /* =====================================================
        5. BACK TO TOP BUTTON
        ===================================================== */
 
-    const backToTop = document.querySelector(
-        "#backToTop, .back-to-top"
-    );
+    const backToTop =
+        document.querySelector(
+            "#backToTop, .back-to-top"
+        );
+
 
     if (backToTop) {
+
         const toggleBackToTop = () => {
+
             if (window.scrollY > 500) {
+
                 backToTop.classList.add("show");
+
             } else {
+
                 backToTop.classList.remove("show");
             }
         };
 
-        window.addEventListener("scroll", toggleBackToTop);
+
+        window.addEventListener(
+            "scroll",
+            toggleBackToTop
+        );
+
         toggleBackToTop();
 
-        backToTop.addEventListener("click", () => {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-        });
+
+        backToTop.addEventListener(
+            "click",
+            () => {
+
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            }
+        );
     }
+
 
 
     /* =====================================================
        6. FADE-IN ANIMATION
        ===================================================== */
 
-    const animatedElements = document.querySelectorAll(
-        ".fade-in, .reveal, .animate-on-scroll"
-    );
-
-    if ("IntersectionObserver" in window && animatedElements.length) {
-        const observer = new IntersectionObserver(
-            (entries, observerInstance) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add("visible");
-                        observerInstance.unobserve(entry.target);
-                    }
-                });
-            },
-            {
-                threshold: 0.12
-            }
+    const animatedElements =
+        document.querySelectorAll(
+            ".fade-in, .reveal, .animate-on-scroll"
         );
+
+
+    if (
+        "IntersectionObserver" in window &&
+        animatedElements.length
+    ) {
+
+        const observer =
+            new IntersectionObserver(
+                (entries, observerInstance) => {
+
+                    entries.forEach((entry) => {
+
+                        if (
+                            entry.isIntersecting
+                        ) {
+
+                            entry.target.classList.add(
+                                "visible"
+                            );
+
+                            observerInstance.unobserve(
+                                entry.target
+                            );
+                        }
+                    });
+                },
+                {
+                    threshold: 0.12
+                }
+            );
+
 
         animatedElements.forEach((element) => {
             observer.observe(element);
         });
+
+
     } else {
+
         animatedElements.forEach((element) => {
+
             element.classList.add("visible");
         });
     }
+
 
 
     /* =====================================================
        7. CURRENT YEAR
        ===================================================== */
 
-    const currentYear = new Date().getFullYear();
+    const currentYear =
+        new Date().getFullYear();
+
 
     document.querySelectorAll(
         "#currentYear, .current-year"
     ).forEach((element) => {
-        element.textContent = currentYear;
+
+        element.textContent =
+            currentYear;
     });
 
 
+
     /* =====================================================
-       8. CV / RESEARCH DATA LOADER
+       8. CV / PROFILE DATA LOADER
        
-       Loads automatically generated JSON data created
-       from the Word CV.
+       The automated CV system currently generates:
        
-       Expected location:
-       data/cv/cv_data.json
+       data/cv/profile.json
+       data/cv/publications.json
+       data/cv/research.json
+       data/cv/cv_text.json
+       data/cv/journal_metrics.json
        
-       If the file is unavailable, the website continues
-       functioning normally.
+       There is no cv_data.json.
        ===================================================== */
 
     loadCVData();
+
 
 
     /* =====================================================
@@ -226,41 +334,72 @@ document.addEventListener("DOMContentLoaded", () => {
        ===================================================== */
 
     loadResearchProjects();
+
 });
 
 
+
 /* =========================================================
-   CV DATA LOADER
+   CV / PROFILE DATA LOADER
    ========================================================= */
 
 async function loadCVData() {
+
     try {
-        const response = await fetch(
-            "data/cv/cv_data.json",
-            {
-                cache: "no-store"
-            }
-        );
+
+        /*
+         * The current automation generates profile.json,
+         * not cv_data.json.
+         */
+
+        const response =
+            await fetch(
+                "data/cv/profile.json",
+                {
+                    cache: "no-store"
+                }
+            );
+
 
         if (!response.ok) {
+
             throw new Error(
-                `CV data request failed: ${response.status}`
+                `Profile data request failed: ${response.status}`
             );
         }
 
-        const cvData = await response.json();
 
-        console.log("CV data loaded successfully.");
+        const profileData =
+            await response.json();
 
-        updateCVContent(cvData);
+
+        console.log(
+            "CV profile data loaded successfully."
+        );
+
+
+        updateCVContent(
+            profileData
+        );
+
 
     } catch (error) {
+
+        /*
+         * This is intentionally non-fatal.
+         *
+         * The website should continue displaying its
+         * existing static content if profile.json
+         * cannot be loaded.
+         */
+
         console.warn(
-            "CV data could not be loaded. Static website content will remain active.",
+            "CV profile data could not be loaded. Static website content will remain active.",
             error
         );
     }
 }
+
 
 
 /* =========================================================
@@ -268,40 +407,55 @@ async function loadCVData() {
    ========================================================= */
 
 function updateCVContent(data) {
-    if (!data || typeof data !== "object") {
+
+    if (
+        !data ||
+        typeof data !== "object"
+    ) {
         return;
     }
 
+
     /*
-     * This function intentionally updates only elements
-     * that have been given explicit data attributes.
+     * Update only elements that explicitly request
+     * CV-driven content through data-cv-field.
      *
-     * This prevents the CV automation from accidentally
-     * replacing manually designed website content.
+     * This protects the existing website design.
      */
 
+    document
+        .querySelectorAll("[data-cv-field]")
+        .forEach((element) => {
 
-    /* -----------------------------------------------------
-       TEXT FIELDS
-       ----------------------------------------------------- */
+            const field =
+                element.getAttribute(
+                    "data-cv-field"
+                );
 
-    document.querySelectorAll("[data-cv-field]").forEach(
-        (element) => {
-            const field = element.getAttribute("data-cv-field");
 
-            if (!field) return;
+            if (!field) {
+                return;
+            }
 
-            const value = getNestedValue(data, field);
+
+            const value =
+                getNestedValue(
+                    data,
+                    field
+                );
+
 
             if (
                 value !== undefined &&
                 value !== null &&
                 typeof value !== "object"
             ) {
-                element.textContent = value;
+
+                element.textContent =
+                    value;
             }
-        }
-    );
+        });
+
 
 
     /* -----------------------------------------------------
@@ -317,6 +471,7 @@ function updateCVContent(data) {
         ]
     );
 
+
     updateStatistic(
         data,
         "research_project_count",
@@ -325,49 +480,56 @@ function updateCVContent(data) {
             "#projectCount"
         ]
     );
-
-
-    /* -----------------------------------------------------
-       PUBLICATION DATA
-       ----------------------------------------------------- */
-
-    if (
-        Array.isArray(data.peer_reviewed_journal_articles) &&
-        typeof window.renderPublicationsFromCV === "function"
-    ) {
-        window.renderPublicationsFromCV(
-            data.peer_reviewed_journal_articles
-        );
-    }
 }
+
 
 
 /* =========================================================
    NESTED VALUE HELPER
    ========================================================= */
 
-function getNestedValue(object, path) {
+function getNestedValue(
+    object,
+    path
+) {
+
     return path
         .split(".")
-        .reduce((current, key) => {
-            if (
-                current === undefined ||
-                current === null
-            ) {
-                return undefined;
-            }
+        .reduce(
+            (current, key) => {
 
-            return current[key];
-        }, object);
+                if (
+                    current === undefined ||
+                    current === null
+                ) {
+                    return undefined;
+                }
+
+                return current[key];
+
+            },
+            object
+        );
 }
+
 
 
 /* =========================================================
    UPDATE STATISTIC
    ========================================================= */
 
-function updateStatistic(data, key, selectors) {
-    const value = getNestedValue(data, key);
+function updateStatistic(
+    data,
+    key,
+    selectors
+) {
+
+    const value =
+        getNestedValue(
+            data,
+            key
+        );
+
 
     if (
         value === undefined ||
@@ -376,14 +538,19 @@ function updateStatistic(data, key, selectors) {
         return;
     }
 
+
     selectors.forEach((selector) => {
-        document.querySelectorAll(selector).forEach(
-            (element) => {
-                element.textContent = value;
-            }
-        );
+
+        document
+            .querySelectorAll(selector)
+            .forEach((element) => {
+
+                element.textContent =
+                    value;
+            });
     });
 }
+
 
 
 /* =========================================================
@@ -391,79 +558,144 @@ function updateStatistic(data, key, selectors) {
    ========================================================= */
 
 async function loadResearchProjects() {
-    const projectContainer = document.querySelector(
-        "#researchProjects"
-    );
+
+    const projectContainer =
+        document.querySelector(
+            "#researchProjects"
+        );
+
 
     /*
-     * If the page does not contain the research-project
-     * container, there is nothing to load.
+     * If the Research Projects container does not
+     * exist on the page, stop safely.
      */
 
     if (!projectContainer) {
+
+        console.warn(
+            "Research project container #researchProjects was not found."
+        );
+
         return;
     }
 
+
+
     /*
-     * Prevent duplicate loading if another script has
-     * already populated the section.
+     * Prevent duplicate loading.
      */
 
     if (
-        projectContainer.dataset.loaded === "true"
+        projectContainer.dataset.loaded ===
+        "true"
     ) {
+
         return;
     }
 
+
+
+    /*
+     * Remove an existing loading indicator only
+     * when we are ready to process the actual data.
+     */
+
     try {
+
         /*
-         * Primary automatically generated research data.
+         * IMPORTANT:
+         *
+         * The actual automatically generated file is:
+         *
+         * data/cv/research.json
+         *
+         * NOT:
+         *
+         * data/cv/research_projects.json
          */
 
-        const response = await fetch(
-            "data/cv/research_projects.json",
-            {
-                cache: "no-store"
-            }
-        );
+        const response =
+            await fetch(
+                "data/cv/research.json",
+                {
+                    cache: "no-store"
+                }
+            );
+
 
         if (!response.ok) {
+
             throw new Error(
-                `Research project request failed: ${response.status}`
+                `Research data request failed: ${response.status}`
             );
         }
 
-        const projects = await response.json();
 
-        if (!Array.isArray(projects)) {
+        const researchData =
+            await response.json();
+
+
+        /*
+         * research.json has this structure:
+         *
+         * {
+         *   "source": "...",
+         *   "projects": [...],
+         *   "reports": [...],
+         *   "submitted_manuscripts": [...],
+         *   "phd_thesis": [...]
+         * }
+         *
+         * Therefore we must use:
+         *
+         * researchData.projects
+         */
+
+        const projects =
+            Array.isArray(
+                researchData.projects
+            )
+                ? researchData.projects
+                : [];
+
+
+        if (!projects.length) {
+
             throw new Error(
-                "Research project data is not an array."
+                "research.json was loaded, but no projects were found."
             );
         }
+
 
         renderResearchProjects(
             projects,
             projectContainer
         );
 
-        projectContainer.dataset.loaded = "true";
+
+        projectContainer.dataset.loaded =
+            "true";
+
+
+        console.log(
+            `Successfully loaded ${projects.length} research projects from data/cv/research.json.`
+        );
+
 
     } catch (error) {
-        console.warn(
-            "Automatically generated research project data could not be loaded.",
+
+        console.error(
+            "Unable to load research projects:",
             error
         );
 
-        /*
-         * IMPORTANT:
-         * Do not leave the page permanently showing
-         * "Loading research projects..." if the JSON
-         * file is unavailable.
-         */
 
-        showResearchFallback(projectContainer);
+        showResearchFallback(
+            projectContainer
+        );
     }
 }
+
 
 
 /* =========================================================
@@ -474,116 +706,202 @@ function renderResearchProjects(
     projects,
     container
 ) {
-    if (!projects.length) {
-        showResearchFallback(container);
+
+    if (
+        !Array.isArray(projects) ||
+        !projects.length
+    ) {
+
+        showResearchFallback(
+            container
+        );
+
         return;
     }
 
+
+
+    /*
+     * Clear the existing loading message/content
+     * before rendering the automatically generated
+     * project cards.
+     */
+
     container.innerHTML = "";
 
-    projects.forEach((project) => {
-        const card = document.createElement("article");
 
-        card.className = "project-card";
+
+    projects.forEach((project) => {
+
+        const card =
+            document.createElement(
+                "article"
+            );
+
+
+        card.className =
+            "project-card";
+
+
 
         /*
-         * Safely read project fields.
+         * These are the EXACT field names contained
+         * in research.json.
          */
 
         const title =
-            project.title ||
-            project.name ||
+            project.project_entity ||
             "Research Project";
+
+
+        const role =
+            project.role ||
+            "";
+
 
         const description =
             project.description ||
-            project.summary ||
             "";
+
+
+        const funder =
+            project.funder ||
+            "";
+
 
         const year =
             project.year ||
-            project.date ||
             "";
 
-        const area =
-            project.research_area ||
-            project.area ||
-            "";
+
 
         card.innerHTML = `
+
             <div class="project-card-content">
 
                 ${
                     year
-                        ? `<span class="project-year">${escapeHTML(year)}</span>`
+                        ? `
+                            <span class="project-year">
+                                ${escapeHTML(year)}
+                            </span>
+                          `
                         : ""
                 }
 
-                <h3>${escapeHTML(title)}</h3>
+
+                <h3>
+                    ${escapeHTML(title)}
+                </h3>
+
 
                 ${
-                    area
-                        ? `<p class="project-area">${escapeHTML(area)}</p>`
+                    role
+                        ? `
+                            <p class="project-role">
+                                <strong>
+                                    ${escapeHTML(role)}
+                                </strong>
+                            </p>
+                          `
                         : ""
                 }
+
 
                 ${
                     description
-                        ? `<p>${escapeHTML(description)}</p>`
+                        ? `
+                            <p>
+                                ${escapeHTML(description)}
+                            </p>
+                          `
+                        : ""
+                }
+
+
+                ${
+                    funder
+                        ? `
+                            <p class="project-funder">
+                                <strong>Funder:</strong>
+                                ${escapeHTML(funder)}
+                            </p>
+                          `
                         : ""
                 }
 
             </div>
         `;
 
-        container.appendChild(card);
+
+        container.appendChild(
+            card
+        );
     });
 }
+
 
 
 /* =========================================================
    RESEARCH FALLBACK
    ========================================================= */
 
-function showResearchFallback(container) {
+function showResearchFallback(
+    container
+) {
+
     /*
-     * Do not destroy existing manually written research
-     * projects.
-     *
-     * If the container already contains actual project
-     * cards/content, simply remove the loading message.
+     * Remove common loading indicators.
      */
 
-    const loadingMessage = container.querySelector(
-        ".loading-message, .loading"
-    );
+    const loadingMessage =
+        container.querySelector(
+            ".loading-message, .loading"
+        );
+
 
     if (loadingMessage) {
+
         loadingMessage.remove();
     }
 
+
+
     /*
-     * If there is already meaningful content, keep it.
+     * If there is already meaningful content,
+     * preserve it.
      */
 
     if (
         container.children.length > 0 &&
         container.textContent.trim().length > 0
     ) {
+
         return;
     }
 
+
+
     /*
-     * Otherwise provide a clean message instead of leaving
-     * the user with an infinite loading indicator.
+     * If the JSON cannot be loaded, do NOT leave
+     * the page permanently saying:
+     *
+     * "Loading research projects..."
      */
 
     container.innerHTML = `
+
         <div class="research-status">
-            <p>Research projects are currently being updated.</p>
+
+            <p>
+                Research projects are currently being updated.
+            </p>
+
         </div>
+
     `;
 }
+
 
 
 /* =========================================================
@@ -591,27 +909,58 @@ function showResearchFallback(container) {
    ========================================================= */
 
 function escapeHTML(value) {
-    if (value === undefined || value === null) {
+
+    if (
+        value === undefined ||
+        value === null
+    ) {
+
         return "";
     }
 
+
     return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 }
+
 
 
 /* =========================================================
    PUBLIC API
-   =========================================================
-   
-   These functions can be used by publications.js or
-   other scripts if needed.
    ========================================================= */
 
-window.loadCVData = loadCVData;
-window.loadResearchProjects = loadResearchProjects;
-window.renderResearchProjects = renderResearchProjects;
+window.loadCVData =
+    loadCVData;
+
+
+window.loadResearchProjects =
+    loadResearchProjects;
+
+
+window.renderResearchProjects =
+    renderResearchProjects;
+```
