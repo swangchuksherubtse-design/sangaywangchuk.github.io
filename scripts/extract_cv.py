@@ -1,3 +1,4 @@
+```python
 from docx import Document
 from pathlib import Path
 import json
@@ -24,7 +25,6 @@ def clean_text(text):
 
     text = re.sub(r"\s+", " ", text).strip()
 
-    # Remove accidental placeholder text
     if text.lower() in {"q", "qq"}:
         return ""
 
@@ -133,13 +133,6 @@ def load_verified_metrics():
     """
     Load verified journal metrics from journal_metrics.json.
 
-    journal_metrics.json is the authoritative source for:
-
-        - Quartile
-        - Impact Factor
-        - Metric/JCR year
-        - Verification status
-
     Only records explicitly marked with
     "verified": true are treated as authoritative.
     """
@@ -194,232 +187,129 @@ def load_verified_metrics():
 
 
 # =========================================================
-# LEGACY PUBLICATION METADATA
-# =========================================================
-#
-# Used primarily for publication categories.
-#
-# Metric values are retained only as historical reference.
-# They are NOT authoritative.
-#
-# journal_metrics.json controls displayed:
-#
-#   Quartile
-#   Impact Factor
-#   Metric/JCR year
-#
+# PUBLICATION METADATA
 # =========================================================
 
 PUBLICATION_METADATA = {
 
     "10.1016/j.jece.2026.123838": {
-        "category": "Environmental Monitoring",
-        "quartile": "Q1",
-        "impactFactor": "7.5",
-        "metricYear": "2025"
+        "category": "Environmental Monitoring"
     },
 
     "10.1021/acsanm.5c05854": {
-        "category": "Biomedical / Wearable Sensors",
-        "quartile": "Q2",
-        "impactFactor": "5.5",
-        "metricYear": "2024"
+        "category": "Biomedical / Wearable Sensors"
     },
 
     "10.1016/j.microc.2026.117476": {
-        "category": "Forensic Electrochemistry",
-        "quartile": "Q1",
-        "impactFactor": "5.1",
-        "metricYear": "2024"
+        "category": "Forensic Electrochemistry"
     },
 
     "10.1016/j.microc.2025.114935": {
-        "category": "Forensic Electrochemistry",
-        "quartile": "Q1",
-        "impactFactor": "5.1",
-        "metricYear": "2024"
+        "category": "Forensic Electrochemistry"
     },
 
     "10.1016/j.talanta.2025.128715": {
-        "category": "Forensic Electrochemistry",
-        "quartile": "Q1",
-        "impactFactor": "6.1",
-        "metricYear": "2024"
+        "category": "Forensic Electrochemistry"
     },
 
     "10.1016/j.mtchem.2025.102872": {
-        "category": "Sustainable Nanomaterials",
-        "quartile": "Q1",
-        "impactFactor": "6.7",
-        "metricYear": "2024"
+        "category": "Sustainable Nanomaterials"
     },
 
     "10.1021/acsomega.5c03662": {
-        "category": "Forensic Electrochemistry",
-        "quartile": "Q1",
-        "impactFactor": "4.3",
-        "metricYear": "2024"
+        "category": "Forensic Electrochemistry"
     },
 
     "10.1016/j.talanta.2025.128431": {
-        "category": "Environmental / Food Analysis",
-        "quartile": "Q1",
-        "impactFactor": "6.1",
-        "metricYear": "2024"
+        "category": "Environmental / Food Analysis"
     },
 
     "10.1016/j.talanta.2025.128166": {
-        "category": "Environmental Analysis",
-        "quartile": "Q1",
-        "impactFactor": "6.1",
-        "metricYear": "2024"
+        "category": "Environmental Analysis"
     },
 
     "10.1016/j.microc.2025.113623": {
-        "category": "Biomedical / Glucose Sensing",
-        "quartile": "Q1",
-        "impactFactor": "5.1",
-        "metricYear": "2024"
+        "category": "Biomedical / Glucose Sensing"
     },
 
     "10.1016/j.talanta.2025.127776": {
-        "category": "Environmental Analysis",
-        "quartile": "Q1",
-        "impactFactor": "6.1",
-        "metricYear": "2024"
+        "category": "Environmental Analysis"
     },
 
     "10.1016/j.talanta.2025.127722": {
-        "category": "Food / Electrochemical Analysis",
-        "quartile": "Q1",
-        "impactFactor": "6.1",
-        "metricYear": "2024"
+        "category": "Food / Electrochemical Analysis"
     },
 
     "10.1016/j.talanta.2025.127581": {
-        "category": "Environmental Monitoring",
-        "quartile": "Q1",
-        "impactFactor": "6.1",
-        "metricYear": "2024"
+        "category": "Environmental Monitoring"
     },
 
     "10.1016/j.talanta.2024.127123": {
-        "category": "Food / Forensic Analysis",
-        "quartile": "Q1",
-        "impactFactor": "6.1",
-        "metricYear": "2024"
+        "category": "Food / Forensic Analysis"
     },
 
     "10.1016/j.microc.2024.112217": {
-        "category": "Biomedical Analysis",
-        "quartile": "Q1",
-        "impactFactor": "5.1",
-        "metricYear": "2024"
+        "category": "Biomedical Analysis"
     },
 
     "10.1016/j.microc.2024.112216": {
-        "category": "Biomedical Analysis",
-        "quartile": "Q1",
-        "impactFactor": "5.1",
-        "metricYear": "2024"
+        "category": "Biomedical Analysis"
     },
 
     "10.1016/j.mtchem.2024.102271": {
-        "category": "Biosensors",
-        "quartile": "Q1",
-        "impactFactor": "6.7",
-        "metricYear": "2024"
+        "category": "Biosensors"
     },
 
     "10.1016/j.microc.2024.111100": {
-        "category": "Environmental Monitoring",
-        "quartile": "Q1",
-        "impactFactor": "5.1",
-        "metricYear": "2024"
+        "category": "Environmental Monitoring"
     },
 
     "10.1016/j.talanta.2024.126179": {
-        "category": "Environmental Monitoring",
-        "quartile": "Q1",
-        "impactFactor": "6.1",
-        "metricYear": "2024"
+        "category": "Environmental Monitoring"
     },
 
     "10.1016/j.electacta.2024.144292": {
-        "category": "Biomedical / Glucose Sensing",
-        "quartile": "Q1",
-        "impactFactor": "5.6",
-        "metricYear": "2024"
+        "category": "Biomedical / Glucose Sensing"
     },
 
     "10.1016/j.foodchem.2024.138987": {
-        "category": "Food / Environmental Analysis",
-        "quartile": "Q1",
-        "impactFactor": "9.8",
-        "metricYear": "2024"
+        "category": "Food / Environmental Analysis"
     },
 
     "10.1016/j.talanta.2024.125822": {
-        "category": "Forensic Analysis",
-        "quartile": "Q1",
-        "impactFactor": "6.1",
-        "metricYear": "2024"
+        "category": "Forensic Analysis"
     },
 
     "10.1016/j.talanta.2024.125751": {
-        "category": "Environmental Analysis",
-        "quartile": "Q1",
-        "impactFactor": "6.1",
-        "metricYear": "2024"
+        "category": "Environmental Analysis"
     },
 
     "10.1149/1945-7111/acdb9d": {
-        "category": "Forensic Electrochemistry",
-        "quartile": "Q1",
-        "impactFactor": "3.1",
-        "metricYear": "2023"
+        "category": "Forensic Electrochemistry"
     },
 
     "10.1016/j.microc.2023.108668": {
-        "category": "Forensic / Food Analysis",
-        "quartile": "Q1",
-        "impactFactor": "4.9",
-        "metricYear": "2023"
+        "category": "Forensic / Food Analysis"
     },
 
     "10.1016/j.talanta.2023.124266": {
-        "category": "Biomedical / Biosensors",
-        "quartile": "Q1",
-        "impactFactor": "5.6",
-        "metricYear": "2023"
+        "category": "Biomedical / Biosensors"
     },
 
     "10.1016/j.jelechem.2022.116995": {
-        "category": "Electrocatalysis",
-        "quartile": "Q1",
-        "impactFactor": "4.5",
-        "metricYear": "2023"
+        "category": "Electrocatalysis"
     },
 
     "10.1016/j.electacta.2022.141439": {
-        "category": "Forensic Electrochemistry",
-        "quartile": "Q1",
-        "impactFactor": "6.6",
-        "metricYear": "2022"
+        "category": "Forensic Electrochemistry"
     },
 
     "10.1016/j.electacta.2022.141272": {
-        "category": "Environmental Analysis",
-        "quartile": "Q1",
-        "impactFactor": "6.6",
-        "metricYear": "2022"
+        "category": "Environmental Analysis"
     },
 
     "10.17102/bjrd.rub.11.1.026": {
-        "category": "Food Analysis / Bhutan",
-        "quartile": "",
-        "impactFactor": "",
-        "metricYear": ""
+        "category": "Food Analysis / Bhutan"
     }
 }
 
@@ -429,10 +319,6 @@ PUBLICATION_METADATA = {
 # =========================================================
 
 def clean_publication_details(details):
-    """
-    Remove duplicated journal metric information from
-    publication details.
-    """
 
     if not details:
         return ""
@@ -496,9 +382,7 @@ def clean_publication_details(details):
         details
     )
 
-    details = details.strip(" .")
-
-    return details
+    return details.strip(" .")
 
 
 # =========================================================
@@ -506,9 +390,6 @@ def clean_publication_details(details):
 # =========================================================
 
 def extract_doi(text):
-    """
-    Extract DOI from a citation.
-    """
 
     match = re.search(
         r"https://doi\.org/([^\s]+)",
@@ -531,10 +412,6 @@ def extract_doi(text):
 # =========================================================
 
 def parse_publications(paragraphs, verified_metrics):
-    """
-    Extract peer-reviewed journal articles and convert
-    them into structured publication records.
-    """
 
     articles = extract_section(
         paragraphs,
@@ -563,9 +440,7 @@ def parse_publications(paragraphs, verified_metrics):
         if not year_match:
             continue
 
-        year = int(
-            year_match.group(1)
-        )
+        year = int(year_match.group(1))
 
         doi = extract_doi(article)
 
@@ -628,9 +503,7 @@ def parse_publications(paragraphs, verified_metrics):
             journal = parts[1]
 
         if len(parts) >= 3:
-            details = ". ".join(
-                parts[2:]
-            )
+            details = ". ".join(parts[2:])
 
         title = re.sub(
             r"\s+",
@@ -644,9 +517,7 @@ def parse_publications(paragraphs, verified_metrics):
             journal
         ).strip(" .")
 
-        details = clean_publication_details(
-            details
-        )
+        details = clean_publication_details(details)
 
         legacy_metadata = PUBLICATION_METADATA.get(
             doi_key,
@@ -666,21 +537,6 @@ def parse_publications(paragraphs, verified_metrics):
             "Research Publication"
         )
 
-        quartile = verified_metadata.get(
-            "quartile",
-            ""
-        )
-
-        impact_factor = verified_metadata.get(
-            "impactFactor",
-            ""
-        )
-
-        metric_year = verified_metadata.get(
-            "metricYear",
-            ""
-        )
-
         publication = {
 
             "year": year,
@@ -693,11 +549,20 @@ def parse_publications(paragraphs, verified_metrics):
 
             "category": category,
 
-            "quartile": quartile,
+            "quartile": verified_metadata.get(
+                "quartile",
+                ""
+            ),
 
-            "impactFactor": impact_factor,
+            "impactFactor": verified_metadata.get(
+                "impactFactor",
+                ""
+            ),
 
-            "metricYear": metric_year,
+            "metricYear": verified_metadata.get(
+                "metricYear",
+                ""
+            ),
 
             "details": details,
 
@@ -771,26 +636,10 @@ def parse_research_reports(paragraphs):
 
 
 # =========================================================
-# RESEARCH PROJECTS
+# STRUCTURED RESEARCH PROJECT PARSER
 # =========================================================
 
 def parse_research_projects(paragraphs):
-    """
-    Extract research projects from the PROFESSIONAL SERVICES
-    section.
-
-    Projects are kept separate from the RESEARCH GRANTS
-    section.
-
-    The project record remains as written in the CV so that
-    project title, role, funder, and year are preserved.
-
-    Important:
-    - DGPC remains the funder for the Dorjilung project.
-    - DHPP/Dorjilung Hydropower Project Limited remains the
-      project/client entity.
-    - Grant records are NOT duplicated here.
-    """
 
     section = extract_section(
         paragraphs,
@@ -803,25 +652,203 @@ def parse_research_projects(paragraphs):
         ]
     )
 
-    project_keywords = [
-        "Principal Investigator:",
-        "Co-principal Investigator:",
-        "Co-PI of the research project:",
-        "Core Member of the research project:"
-    ]
-
     projects = []
 
     for paragraph in section:
 
-        if any(
-            keyword.lower() in paragraph.lower()
-            for keyword in project_keywords
+        text = paragraph.strip()
+
+        lower_text = text.lower()
+
+        # -------------------------------------------------
+        # Principal Investigator
+        # -------------------------------------------------
+
+        if lower_text.startswith(
+            "principal investigator:"
         ):
 
-            projects.append(
-                paragraph
-            )
+            project = {
+                "role": "Principal Investigator",
+                "description": text,
+                "project_entity": "",
+                "funder": "",
+                "year": ""
+            }
+
+            # Specific handling for Dorjilung project.
+            if "dorjilung" in lower_text:
+
+                project["project_entity"] = (
+                    "Dorjilung Hydropower Project Limited (DHPP)"
+                )
+
+                project["funder"] = (
+                    "Druk Green Power Corporation (DGPC)"
+                )
+
+                project["year"] = "2026"
+
+            elif "400 kv" in lower_text:
+
+                project["project_entity"] = (
+                    "400 kV D/C East–West Transmission Line Project"
+                )
+
+                project["funder"] = (
+                    "Bhutan Power Corporation (BPC)"
+                )
+
+                project["year"] = "2025"
+
+            elif "132 kv" in lower_text:
+
+                project["project_entity"] = (
+                    "132 kV D/C Gamri I & II Transmission Line Projects"
+                )
+
+                project["funder"] = (
+                    "Bhutan Power Corporation (BPC)"
+                )
+
+                project["year"] = "2025"
+
+            projects.append(project)
+
+        # -------------------------------------------------
+        # Co-principal Investigator
+        # -------------------------------------------------
+
+        elif lower_text.startswith(
+            "co-principal investigator:"
+        ):
+
+            project = {
+                "role": "Co-Principal Investigator",
+                "description": text,
+                "project_entity": "",
+                "funder": "",
+                "year": ""
+            }
+
+            if "real-time monitoring" in lower_text:
+
+                project["project_entity"] = (
+                    "Real-Time Monitoring of Drinking Water Quality "
+                    "at Sherubtse College Using IoT Sensors and "
+                    "Laboratory Validation"
+                )
+
+                project["funder"] = (
+                    "Sherubtse College Annual Research Grant (STLRG)"
+                )
+
+                project["year"] = "2025–2026"
+
+            projects.append(project)
+
+        # -------------------------------------------------
+        # Co-PI
+        # -------------------------------------------------
+
+        elif lower_text.startswith(
+            "co-pi of the research project:"
+        ):
+
+            project = {
+                "role": "Co-Principal Investigator",
+                "description": text,
+                "project_entity": "",
+                "funder": "",
+                "year": ""
+            }
+
+            if "adulterants" in lower_text:
+
+                project["project_entity"] = (
+                    "Detection of Adulterants in Common Food Items "
+                    "Available in the Bhutanese Market"
+                )
+
+                project["funder"] = (
+                    "Annual College Research Grant, Sherubtse College, "
+                    "Royal University of Bhutan"
+                )
+
+                project["year"] = "2020–2021"
+
+            projects.append(project)
+
+        # -------------------------------------------------
+        # Core Member
+        # -------------------------------------------------
+
+        elif lower_text.startswith(
+            "core member of the research project:"
+        ):
+
+            project = {
+                "role": "Core Member",
+                "description": text,
+                "project_entity": "",
+                "funder": "",
+                "year": ""
+            }
+
+            if "20 mw yungichhu" in lower_text:
+
+                project["project_entity"] = (
+                    "Water Quality and Aquatic Ecology Assessment "
+                    "for the 20 MW Yungichhu Hydropower Project"
+                )
+
+                project["funder"] = (
+                    "Druk Green Power Corporation (DGPC)"
+                )
+
+                project["year"] = "2021"
+
+            elif "8 mw thungdiri" in lower_text:
+
+                project["project_entity"] = (
+                    "Water Quality and Aquatic Ecology Assessment "
+                    "for the 8 MW Thungdiri Hydropower Project"
+                )
+
+                project["funder"] = (
+                    "Druk Green Power Corporation (DGPC)"
+                )
+
+                project["year"] = "2021"
+
+            elif "south asian nitrogen hub" in lower_text:
+
+                project["project_entity"] = (
+                    "South Asian Nitrogen Hub (SANH) – WP3.1: "
+                    "Role of Nitrogen Air Pollution on Forest "
+                    "Ecosystem Services"
+                )
+
+                project["funder"] = (
+                    "UKRI-GCRF"
+                )
+
+                project["year"] = "2020–2021"
+
+            elif "hydrograph separation" in lower_text:
+
+                project["project_entity"] = (
+                    "Hydrograph Separation of Streamflow Using "
+                    "Geochemical Tracers in Paa Chu Basin"
+                )
+
+                project["funder"] = (
+                    "World Bank"
+                )
+
+                project["year"] = "2019–2020"
+
+            projects.append(project)
 
     return projects
 
@@ -849,25 +876,6 @@ def parse_profile(paragraphs):
 # =========================================================
 
 def parse_research_grants(paragraphs):
-    """
-    Extract all entries under the RESEARCH GRANTS section.
-
-    Every non-empty paragraph between:
-
-        RESEARCH GRANTS
-
-    and:
-
-        AWARDS AND SCHOLARSHIPS/FINANCIAL SUPPORT
-
-    is treated as a research grant record.
-
-    This intentionally does NOT filter by keywords such as
-    'Secured', 'Nu', or 'Ngultrum'.
-
-    Therefore, new grants added to the CV will automatically
-    be captured without modifying this script.
-    """
 
     grants = extract_section(
         paragraphs,
@@ -991,10 +999,7 @@ def validate_metadata(publications, verified_metrics):
         )
 
         for doi in missing_verified:
-
-            print(
-                f"   - {doi}"
-            )
+            print(f"   - {doi}")
 
     else:
 
@@ -1011,10 +1016,7 @@ def validate_metadata(publications, verified_metrics):
         )
 
         for doi in unverified_records:
-
-            print(
-                f"   - {doi}"
-            )
+            print(f"   - {doi}")
 
     else:
 
@@ -1230,13 +1232,6 @@ def main():
         paragraphs
     )
 
-    # =====================================================
-    # PROFILE JSON
-    #
-    # NEW:
-    # "research_grants": research_grants
-    # =====================================================
-
     with open(
         OUTPUT_DIR / "profile.json",
         "w",
@@ -1259,7 +1254,7 @@ def main():
         )
 
     # =====================================================
-    # VALIDATION / REPORT
+    # VALIDATION REPORT
     # =====================================================
 
     print("")
@@ -1304,6 +1299,55 @@ def main():
     )
 
     # =====================================================
+    # PROJECT VALIDATION
+    # =====================================================
+
+    print("")
+    print("------------------------------------------")
+    print("RESEARCH PROJECT VALIDATION")
+    print("------------------------------------------")
+
+    if research_projects:
+
+        print(
+            f"✓ Research project extraction PASSED: "
+            f"{len(research_projects)} project(s) detected."
+        )
+
+        for index, project in enumerate(
+            research_projects,
+            start=1
+        ):
+
+            print("")
+            print(
+                f"   {index}. {project['role']}"
+            )
+
+            print(
+                f"      Project: "
+                f"{project['project_entity']}"
+            )
+
+            print(
+                f"      Funder: "
+                f"{project['funder']}"
+            )
+
+            print(
+                f"      Year: "
+                f"{project['year']}"
+            )
+
+    else:
+
+        print(
+            "⚠ No research projects detected."
+        )
+
+    print("------------------------------------------")
+
+    # =====================================================
     # RESEARCH GRANT VALIDATION
     # =====================================================
 
@@ -1318,18 +1362,6 @@ def main():
             f"✓ Research grant extraction PASSED: "
             f"{len(research_grants)} grant(s) detected."
         )
-
-        print("")
-        print("Detected research grants:")
-
-        for index, grant in enumerate(
-            research_grants,
-            start=1
-        ):
-
-            print(
-                f"   {index}. {grant}"
-            )
 
     else:
 
@@ -1432,6 +1464,10 @@ def main():
     )
 
     print(
+        "✓ Structured research project data generated."
+    )
+
+    print(
         "✓ Research grants extracted into profile.json."
     )
 
@@ -1440,18 +1476,13 @@ def main():
     )
 
     print(
-        "✓ Duplicate Q1/IF information removed "
-        "from publication details."
-    )
-
-    print(
         "✓ CV metric values cannot override "
         "verified journal metrics."
     )
 
     print(
-        "✓ Unverified metrics are not treated "
-        "as authoritative."
+        "✓ Project funders and project entities "
+        "are kept separate."
     )
 
     print("==========================================")
@@ -1463,3 +1494,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+```
