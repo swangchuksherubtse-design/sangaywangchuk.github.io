@@ -1,15 +1,69 @@
 {
   "source": "cv/Sangay Wangchuk CV (complete).docx",
   "projects": [
-    "Principal Investigator: PI of a research project on Water Source Sampling and Water Quality Testing for Dorjilung Hydropower Project Limited, funded by the Druk Green Power Corporation (DGPC, 2026).",
-    "Principal Investigator: PI of a research project on Environmental Assessments for the 400 kV D/C East–West Transmission Line project, funded by the Bhutan Power Corporation (BPC, 2025).",
-    "Principal Investigator: PI of a research project on Environmental Assessments for the 132 kV D/C Gamri I & II Transmission Line projects, funded by the Bhutan Power Corporation (BPC, 2025).",
-    "Co-principal Investigator: Co-PI of a research project on Real-Time Monitoring of Drinking Water Quality at Sherubtse College Using IoT Sensors and Laboratory Validation (STLRG, 2025-2026).",
-    "Co-PI of the research project: Detection of Adulterants in Common Food Items Available in the Bhutanese Market, funded by the Annual College Research Grant, Sherubtse College, Royal University of Bhutan (2020-2021)",
-    "Core Member of the research project: Water Quality and Aquatic Ecology Assessment for the 20 MW Yungichhu Hydropower Project, funded by DGPC (2021)",
-    "Core Member of the research project: Water Quality and Aquatic Ecology Assessment for the 8 MW Thungdiri Hydropower Project, funded by DGPC (2021)",
-    "Core Member of the research project: South Asian Nitrogen Hub (SANH)-WP3.1: Role of Nitrogen Air Pollution on Forest Ecosystem Services, funded by UKRI-GCRF (2020-2021)",
-    "Core Member of the research project: Hydrograph Separation of Streamflow Using Geochemical Tracers in Paa Chu Basin, funded by the World Bank (2019-2020)"
+    {
+      "role": "Principal Investigator",
+      "description": "Principal Investigator: PI of a research project on Water Source Sampling and Water Quality Testing for Dorjilung Hydropower Project Limited, funded by the Druk Green Power Corporation (DGPC, 2026).",
+      "project_entity": "Dorjilung Hydropower Project Limited (DHPP)",
+      "funder": "Druk Green Power Corporation (DGPC)",
+      "year": "2026"
+    },
+    {
+      "role": "Principal Investigator",
+      "description": "Principal Investigator: PI of a research project on Environmental Assessments for the 400 kV D/C East–West Transmission Line project, funded by the Bhutan Power Corporation (BPC, 2025).",
+      "project_entity": "400 kV D/C East–West Transmission Line Project",
+      "funder": "Bhutan Power Corporation (BPC)",
+      "year": "2025"
+    },
+    {
+      "role": "Principal Investigator",
+      "description": "Principal Investigator: PI of a research project on Environmental Assessments for the 132 kV D/C Gamri I & II Transmission Line projects, funded by the Bhutan Power Corporation (BPC, 2025).",
+      "project_entity": "132 kV D/C Gamri I & II Transmission Line Projects",
+      "funder": "Bhutan Power Corporation (BPC)",
+      "year": "2025"
+    },
+    {
+      "role": "Co-Principal Investigator",
+      "description": "Co-principal Investigator: Co-PI of a research project on Real-Time Monitoring of Drinking Water Quality at Sherubtse College Using IoT Sensors and Laboratory Validation (STLRG, 2025-2026).",
+      "project_entity": "Real-Time Monitoring of Drinking Water Quality at Sherubtse College Using IoT Sensors and Laboratory Validation",
+      "funder": "Sherubtse College Annual Research Grant (STLRG)",
+      "year": "2025–2026"
+    },
+    {
+      "role": "Co-Principal Investigator",
+      "description": "Co-PI of the research project: Detection of Adulterants in Common Food Items Available in the Bhutanese Market, funded by the Annual College Research Grant, Sherubtse College, Royal University of Bhutan (2020-2021)",
+      "project_entity": "Detection of Adulterants in Common Food Items Available in the Bhutanese Market",
+      "funder": "Annual College Research Grant, Sherubtse College, Royal University of Bhutan",
+      "year": "2020–2021"
+    },
+    {
+      "role": "Core Member",
+      "description": "Core Member of the research project: Water Quality and Aquatic Ecology Assessment for the 20 MW Yungichhu Hydropower Project, funded by DGPC (2021)",
+      "project_entity": "Water Quality and Aquatic Ecology Assessment for the 20 MW Yungichhu Hydropower Project",
+      "funder": "Druk Green Power Corporation (DGPC)",
+      "year": "2021"
+    },
+    {
+      "role": "Core Member",
+      "description": "Core Member of the research project: Water Quality and Aquatic Ecology Assessment for the 8 MW Thungdiri Hydropower Project, funded by DGPC (2021)",
+      "project_entity": "Water Quality and Aquatic Ecology Assessment for the 8 MW Thungdiri Hydropower Project",
+      "funder": "Druk Green Power Corporation (DGPC)",
+      "year": "2021"
+    },
+    {
+      "role": "Core Member",
+      "description": "Core Member of the research project: South Asian Nitrogen Hub (SANH)-WP3.1: Role of Nitrogen Air Pollution on Forest Ecosystem Services, funded by UKRI-GCRF (2020-2021)",
+      "project_entity": "South Asian Nitrogen Hub (SANH) – WP3.1: Role of Nitrogen Air Pollution on Forest Ecosystem Services",
+      "funder": "UKRI-GCRF",
+      "year": "2020–2021"
+    },
+    {
+      "role": "Core Member",
+      "description": "Core Member of the research project: Hydrograph Separation of Streamflow Using Geochemical Tracers in Paa Chu Basin, funded by the World Bank (2019-2020)",
+      "project_entity": "Hydrograph Separation of Streamflow Using Geochemical Tracers in Paa Chu Basin",
+      "funder": "World Bank",
+      "year": "2019–2020"
+    }
   ],
   "reports": [
     "Wangchuk, S. Report: Water Source Sampling and Water Quality Testing for Dorjilung Hydropower Project Limited. An exclusive technical report and research project funded by the Dorjilung Hydropower Project Limited (DHPP, 2026).",
