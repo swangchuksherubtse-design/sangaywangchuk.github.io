@@ -1,4 +1,3 @@
-javascript
 /* =========================================================
    MAIN WEBSITE JAVASCRIPT
    Dr. Sangay Wangchuk — Academic Website
@@ -138,13 +137,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* =======================================================
      AUTOMATIC CV DATA LOADING
-     
+
      Source:
        data/cv/profile.json
-       data/cv/research.json
 
-     These files are generated automatically by
+     The profile.json file is generated automatically by
      scripts/extract_cv.py from the Word CV.
+
+     It contains:
+       - projects
+       - research_grants
+       - reports
+       - submitted_manuscripts
+       - phd_thesis
   ======================================================= */
 
   loadCVResearchData();
@@ -153,56 +158,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 /* =========================================================
-   LOAD ALL CV RESEARCH DATA
+   LOAD CV RESEARCH DATA
 ========================================================= */
 
 async function loadCVResearchData() {
 
   try {
 
-    const [profileResponse, researchResponse] =
-      await Promise.all([
-
-        fetch(
-          "data/cv/profile.json",
-          {
-            cache: "no-cache"
-          }
-        ),
-
-        fetch(
-          "data/cv/research.json",
-          {
-            cache: "no-cache"
-          }
-        )
-
-      ]);
+    const response =
+      await fetch(
+        "data/cv/profile.json",
+        {
+          cache: "no-cache"
+        }
+      );
 
 
-    if (!profileResponse.ok) {
+    /* -----------------------------------------------------
+       CHECK RESPONSE
+    ----------------------------------------------------- */
+
+    if (!response.ok) {
 
       throw new Error(
-        `Unable to load profile.json: ${profileResponse.status}`
+        `Unable to load profile.json: ${response.status}`
       );
 
     }
 
 
-    if (!researchResponse.ok) {
-
-      throw new Error(
-        `Unable to load research.json: ${researchResponse.status}`
-      );
-
-    }
-
+    /* -----------------------------------------------------
+       READ JSON
+    ----------------------------------------------------- */
 
     const profile =
-      await profileResponse.json();
-
-    const research =
-      await researchResponse.json();
+      await response.json();
 
 
     /* -----------------------------------------------------
@@ -210,7 +200,9 @@ async function loadCVResearchData() {
     ----------------------------------------------------- */
 
     const grants =
-      profile.research_grants || [];
+      Array.isArray(profile.research_grants)
+        ? profile.research_grants
+        : [];
 
     renderResearchGrants(grants);
 
@@ -220,10 +212,16 @@ async function loadCVResearchData() {
     ----------------------------------------------------- */
 
     const projects =
-      research.projects || [];
+      Array.isArray(profile.projects)
+        ? profile.projects
+        : [];
 
     renderResearchProjects(projects);
 
+
+    /* -----------------------------------------------------
+       SUCCESS MESSAGE
+    ----------------------------------------------------- */
 
     console.log(
       "✓ CV research data loaded successfully."
@@ -252,22 +250,25 @@ async function loadCVResearchData() {
 
 
 /* =========================================================
-   LOAD RESEARCH GRANTS
+   RENDER RESEARCH GRANTS
 ========================================================= */
 
 function renderResearchGrants(grants) {
 
   /*
-     The function looks for:
+     Looks for:
 
        #research-grants-list
 
      If the container does not exist, the rest of the
-     Research section remains unchanged.
+     website remains unchanged.
   */
 
   const container =
-    document.getElementById("research-grants-list");
+    document.getElementById(
+      "research-grants-list"
+    );
+
 
   if (!container) {
 
@@ -282,14 +283,14 @@ function renderResearchGrants(grants) {
 
 
   /* -------------------------------------------------------
-     Clear existing automatically generated content
+     CLEAR EXISTING CONTENT
   ------------------------------------------------------- */
 
   container.innerHTML = "";
 
 
   /* -------------------------------------------------------
-     No grants found
+     NO GRANTS
   ------------------------------------------------------- */
 
   if (
@@ -309,7 +310,7 @@ function renderResearchGrants(grants) {
 
 
   /* -------------------------------------------------------
-     Create each research grant
+     CREATE EACH GRANT
   ------------------------------------------------------- */
 
   grants.forEach((grant, index) => {
@@ -321,6 +322,10 @@ function renderResearchGrants(grants) {
       "research-grant-item";
 
 
+    /* -----------------------------------------------------
+       NUMBER
+    ----------------------------------------------------- */
+
     const number =
       document.createElement("span");
 
@@ -331,6 +336,10 @@ function renderResearchGrants(grants) {
       String(index + 1).padStart(2, "0");
 
 
+    /* -----------------------------------------------------
+       CONTENT
+    ----------------------------------------------------- */
+
     const content =
       document.createElement("div");
 
@@ -338,12 +347,20 @@ function renderResearchGrants(grants) {
       "research-grant-content";
 
 
+    /* -----------------------------------------------------
+       TEXT
+    ----------------------------------------------------- */
+
     const text =
       document.createElement("p");
 
     text.textContent =
       grant;
 
+
+    /* -----------------------------------------------------
+       ASSEMBLE
+    ----------------------------------------------------- */
 
     content.appendChild(text);
 
@@ -359,22 +376,25 @@ function renderResearchGrants(grants) {
 
 
 /* =========================================================
-   LOAD RESEARCH PROJECTS
+   RENDER RESEARCH PROJECTS
 ========================================================= */
 
 function renderResearchProjects(projects) {
 
   /*
-     The function looks for:
+     Looks for:
 
        #research-projects-list
 
-     If the container does not exist, nothing else on the
-     website is changed.
+     The project records are generated directly from the
+     projects array in data/cv/profile.json.
   */
 
   const container =
-    document.getElementById("research-projects-list");
+    document.getElementById(
+      "research-projects-list"
+    );
+
 
   if (!container) {
 
@@ -389,14 +409,14 @@ function renderResearchProjects(projects) {
 
 
   /* -------------------------------------------------------
-     Clear existing automatically generated content
+     CLEAR EXISTING CONTENT
   ------------------------------------------------------- */
 
   container.innerHTML = "";
 
 
   /* -------------------------------------------------------
-     No projects found
+     NO PROJECTS
   ------------------------------------------------------- */
 
   if (
@@ -416,7 +436,7 @@ function renderResearchProjects(projects) {
 
 
   /* -------------------------------------------------------
-     Create each research project
+     CREATE EACH PROJECT
   ------------------------------------------------------- */
 
   projects.forEach((project, index) => {
@@ -425,36 +445,76 @@ function renderResearchProjects(projects) {
       document.createElement("article");
 
     projectItem.className =
-      "research-project-item";
+      "project";
 
 
     /* -----------------------------------------------------
-       Project number
+       PROJECT NUMBER
     ----------------------------------------------------- */
 
     const number =
-      document.createElement("span");
+      document.createElement("div");
 
     number.className =
-      "research-project-number";
+      "project-no";
 
     number.textContent =
       String(index + 1).padStart(2, "0");
 
 
     /* -----------------------------------------------------
-       Project content
+       PROJECT CONTENT
     ----------------------------------------------------- */
 
     const content =
       document.createElement("div");
 
-    content.className =
-      "research-project-content";
+
+    /* -----------------------------------------------------
+       PROJECT KICKER
+    ----------------------------------------------------- */
+
+    const kicker =
+      document.createElement("p");
+
+    kicker.className =
+      "project-kicker";
+
+    const role =
+      project.role || "";
+
+    const year =
+      project.year || "";
+
+    const funder =
+      project.funder || "";
+
+    const kickerParts = [];
+
+    if (role) {
+      kickerParts.push(
+        role.toUpperCase()
+      );
+    }
+
+    if (funder) {
+      kickerParts.push(
+        funder.toUpperCase()
+      );
+    }
+
+    if (year) {
+      kickerParts.push(
+        year
+      );
+    }
+
+    kicker.textContent =
+      kickerParts.join(" · ");
 
 
     /* -----------------------------------------------------
-       Project title
+       PROJECT TITLE
     ----------------------------------------------------- */
 
     const title =
@@ -466,86 +526,123 @@ function renderResearchProjects(projects) {
 
 
     /* -----------------------------------------------------
-       Role
-    ----------------------------------------------------- */
-
-    const role =
-      document.createElement("span");
-
-    role.className =
-      "research-project-role";
-
-    role.textContent =
-      project.role ||
-      "";
-
-
-    /* -----------------------------------------------------
-       Description
+       PROJECT DESCRIPTION
     ----------------------------------------------------- */
 
     const description =
       document.createElement("p");
 
+    let descriptionText =
+      project.description || "";
+
+
+    /*
+       The extracted CV description may already begin
+       with "Principal Investigator:" or "Co-PI:".
+
+       Since the role is displayed separately in the
+       project kicker, remove the repeated role prefix
+       for a cleaner presentation.
+    */
+
+    descriptionText =
+      descriptionText.replace(
+        /^Principal Investigator:\s*/i,
+        ""
+      );
+
+    descriptionText =
+      descriptionText.replace(
+        /^Co-Principal Investigator:\s*/i,
+        ""
+      );
+
+    descriptionText =
+      descriptionText.replace(
+        /^Co-PI:\s*/i,
+        ""
+      );
+
+    descriptionText =
+      descriptionText.replace(
+        /^Core Member:\s*/i,
+        ""
+      );
+
     description.textContent =
-      project.description ||
-      "";
+      descriptionText;
 
 
     /* -----------------------------------------------------
-       Funder
+       TAGS
     ----------------------------------------------------- */
 
-    const funder =
-      document.createElement("p");
+    const tags =
+      document.createElement("div");
 
-    funder.className =
-      "research-project-funder";
+    tags.className =
+      "tags";
 
-    if (project.funder) {
 
-      funder.innerHTML =
-        `<strong>Funder:</strong> ${escapeHTML(project.funder)}`;
+    /* ROLE TAG */
+
+    if (role) {
+
+      const roleTag =
+        document.createElement("span");
+
+      roleTag.textContent =
+        role;
+
+      tags.appendChild(roleTag);
+
+    }
+
+
+    /* FUNDER TAG */
+
+    if (funder) {
+
+      const funderTag =
+        document.createElement("span");
+
+      funderTag.textContent =
+        funder;
+
+      tags.appendChild(funderTag);
+
+    }
+
+
+    /* YEAR TAG */
+
+    if (year) {
+
+      const yearTag =
+        document.createElement("span");
+
+      yearTag.textContent =
+        year;
+
+      tags.appendChild(yearTag);
 
     }
 
 
     /* -----------------------------------------------------
-       Year
+       ASSEMBLE PROJECT
     ----------------------------------------------------- */
 
-    const year =
-      document.createElement("p");
-
-    year.className =
-      "research-project-year";
-
-    if (project.year) {
-
-      year.innerHTML =
-        `<strong>Year:</strong> ${escapeHTML(project.year)}`;
-
-    }
-
-
-    /* -----------------------------------------------------
-       Assemble project
-    ----------------------------------------------------- */
+    content.appendChild(kicker);
 
     content.appendChild(title);
 
-    if (role.textContent) {
-      content.appendChild(role);
+    if (descriptionText) {
+      content.appendChild(description);
     }
 
-    content.appendChild(description);
-
-    if (project.funder) {
-      content.appendChild(funder);
-    }
-
-    if (project.year) {
-      content.appendChild(year);
+    if (tags.children.length > 0) {
+      content.appendChild(tags);
     }
 
 
