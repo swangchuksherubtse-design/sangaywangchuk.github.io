@@ -1,12 +1,11 @@
-```javascript
 /* =========================================================
    main.js
    Sangay Wangchuk Academic Profile
+   CV AUTOMATION + NAVIGATION + RESEARCH PROJECTS + GRANTS
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
     "use strict";
-
 
     /* =====================================================
        1. MOBILE NAVIGATION
@@ -28,8 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         });
 
-
-        // Close mobile menu after clicking a navigation link
         navLinks.querySelectorAll("a").forEach((link) => {
 
             link.addEventListener("click", () => {
@@ -44,7 +41,6 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     }
-
 
 
     /* =====================================================
@@ -67,11 +63,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 event.preventDefault();
 
-                const header = document.querySelector("header");
+                const header =
+                    document.querySelector("header");
 
-                const headerHeight = header
-                    ? header.offsetHeight
-                    : 0;
+                const headerHeight =
+                    header ? header.offsetHeight : 0;
 
                 const targetPosition =
                     target.getBoundingClientRect().top +
@@ -83,7 +79,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     behavior: "smooth"
                 });
 
-                // Update URL without jumping
                 history.replaceState(
                     null,
                     "",
@@ -92,7 +87,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     });
-
 
 
     /* =====================================================
@@ -106,7 +100,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll(
             '.nav-links a[href^="#"]'
         );
-
 
     const updateActiveNavigation = () => {
 
@@ -123,13 +116,12 @@ document.addEventListener("DOMContentLoaded", () => {
             if (
                 window.scrollY >= sectionTop &&
                 window.scrollY <
-                    sectionTop + sectionHeight
+                sectionTop + sectionHeight
             ) {
                 currentSection =
                     section.getAttribute("id");
             }
         });
-
 
         navigationLinks.forEach((link) => {
 
@@ -146,7 +138,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-
     window.addEventListener(
         "scroll",
         updateActiveNavigation
@@ -155,14 +146,12 @@ document.addEventListener("DOMContentLoaded", () => {
     updateActiveNavigation();
 
 
-
     /* =====================================================
-       4. HEADER SHADOW / SCROLL EFFECT
+       4. HEADER SCROLL EFFECT
        ===================================================== */
 
     const header =
         document.querySelector("header");
-
 
     const updateHeader = () => {
 
@@ -171,15 +160,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (window.scrollY > 30) {
-
             header.classList.add("scrolled");
-
         } else {
-
             header.classList.remove("scrolled");
         }
     };
-
 
     window.addEventListener(
         "scroll",
@@ -187,7 +172,6 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     updateHeader();
-
 
 
     /* =====================================================
@@ -199,21 +183,16 @@ document.addEventListener("DOMContentLoaded", () => {
             "#backToTop, .back-to-top"
         );
 
-
     if (backToTop) {
 
         const toggleBackToTop = () => {
 
             if (window.scrollY > 500) {
-
                 backToTop.classList.add("show");
-
             } else {
-
                 backToTop.classList.remove("show");
             }
         };
-
 
         window.addEventListener(
             "scroll",
@@ -221,7 +200,6 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
         toggleBackToTop();
-
 
         backToTop.addEventListener(
             "click",
@@ -236,7 +214,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-
     /* =====================================================
        6. FADE-IN ANIMATION
        ===================================================== */
@@ -245,7 +222,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll(
             ".fade-in, .reveal, .animate-on-scroll"
         );
-
 
     if (
         "IntersectionObserver" in window &&
@@ -277,20 +253,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             );
 
-
         animatedElements.forEach((element) => {
             observer.observe(element);
         });
 
-
     } else {
 
         animatedElements.forEach((element) => {
-
             element.classList.add("visible");
         });
     }
-
 
 
     /* =====================================================
@@ -299,7 +271,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const currentYear =
         new Date().getFullYear();
-
 
     document.querySelectorAll(
         "#currentYear, .current-year"
@@ -310,33 +281,27 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
-
     /* =====================================================
-       8. CV / PROFILE DATA LOADER
-       
-       The automated CV system currently generates:
-       
-       data/cv/profile.json
-       data/cv/publications.json
-       data/cv/research.json
-       data/cv/cv_text.json
-       data/cv/journal_metrics.json
-       
-       There is no cv_data.json.
+       8. LOAD CV PROFILE DATA
        ===================================================== */
 
     loadCVData();
 
 
-
     /* =====================================================
-       9. INITIALISE RESEARCH PROJECTS
+       9. LOAD RESEARCH PROJECTS
        ===================================================== */
 
     loadResearchProjects();
 
-});
 
+    /* =====================================================
+       10. LOAD RESEARCH GRANTS
+       ===================================================== */
+
+    loadResearchGrants();
+
+});
 
 
 /* =========================================================
@@ -347,11 +312,6 @@ async function loadCVData() {
 
     try {
 
-        /*
-         * The current automation generates profile.json,
-         * not cv_data.json.
-         */
-
         const response =
             await fetch(
                 "data/cv/profile.json",
@@ -360,7 +320,6 @@ async function loadCVData() {
                 }
             );
 
-
         if (!response.ok) {
 
             throw new Error(
@@ -368,30 +327,16 @@ async function loadCVData() {
             );
         }
 
-
         const profileData =
             await response.json();
-
 
         console.log(
             "CV profile data loaded successfully."
         );
 
-
-        updateCVContent(
-            profileData
-        );
-
+        updateCVContent(profileData);
 
     } catch (error) {
-
-        /*
-         * This is intentionally non-fatal.
-         *
-         * The website should continue displaying its
-         * existing static content if profile.json
-         * cannot be loaded.
-         */
 
         console.warn(
             "CV profile data could not be loaded. Static website content will remain active.",
@@ -399,7 +344,6 @@ async function loadCVData() {
         );
     }
 }
-
 
 
 /* =========================================================
@@ -416,12 +360,9 @@ function updateCVContent(data) {
     }
 
 
-    /*
-     * Update only elements that explicitly request
-     * CV-driven content through data-cv-field.
-     *
-     * This protects the existing website design.
-     */
+    /* -----------------------------------------------------
+       DATA-CV-FIELD ELEMENTS
+       ----------------------------------------------------- */
 
     document
         .querySelectorAll("[data-cv-field]")
@@ -432,18 +373,15 @@ function updateCVContent(data) {
                     "data-cv-field"
                 );
 
-
             if (!field) {
                 return;
             }
-
 
             const value =
                 getNestedValue(
                     data,
                     field
                 );
-
 
             if (
                 value !== undefined &&
@@ -457,9 +395,8 @@ function updateCVContent(data) {
         });
 
 
-
     /* -----------------------------------------------------
-       COUNTS / STATISTICS
+       PUBLICATION COUNT
        ----------------------------------------------------- */
 
     updateStatistic(
@@ -472,6 +409,10 @@ function updateCVContent(data) {
     );
 
 
+    /* -----------------------------------------------------
+       PROJECT COUNT
+       ----------------------------------------------------- */
+
     updateStatistic(
         data,
         "research_project_count",
@@ -483,7 +424,6 @@ function updateCVContent(data) {
 }
 
 
-
 /* =========================================================
    NESTED VALUE HELPER
    ========================================================= */
@@ -492,6 +432,13 @@ function getNestedValue(
     object,
     path
 ) {
+
+    if (
+        !object ||
+        !path
+    ) {
+        return undefined;
+    }
 
     return path
         .split(".")
@@ -513,7 +460,6 @@ function getNestedValue(
 }
 
 
-
 /* =========================================================
    UPDATE STATISTIC
    ========================================================= */
@@ -530,14 +476,12 @@ function updateStatistic(
             key
         );
 
-
     if (
         value === undefined ||
         value === null
     ) {
         return;
     }
-
 
     selectors.forEach((selector) => {
 
@@ -552,67 +496,44 @@ function updateStatistic(
 }
 
 
-
 /* =========================================================
-   RESEARCH PROJECT LOADER
+   11. RESEARCH PROJECT LOADER
    ========================================================= */
 
 async function loadResearchProjects() {
 
+    /*
+     * IMPORTANT:
+     *
+     * This MUST match index.html:
+     *
+     * id="research-projects-list"
+     */
+
     const projectContainer =
         document.querySelector(
-            "#researchProjects"
+            "#research-projects-list"
         );
-
-
-    /*
-     * If the Research Projects container does not
-     * exist on the page, stop safely.
-     */
 
     if (!projectContainer) {
 
         console.warn(
-            "Research project container #researchProjects was not found."
+            "Research project container #research-projects-list was not found."
         );
 
         return;
     }
 
-
-
-    /*
-     * Prevent duplicate loading.
-     */
 
     if (
         projectContainer.dataset.loaded ===
         "true"
     ) {
-
         return;
     }
 
 
-
-    /*
-     * Remove an existing loading indicator only
-     * when we are ready to process the actual data.
-     */
-
     try {
-
-        /*
-         * IMPORTANT:
-         *
-         * The actual automatically generated file is:
-         *
-         * data/cv/research.json
-         *
-         * NOT:
-         *
-         * data/cv/research_projects.json
-         */
 
         const response =
             await fetch(
@@ -621,7 +542,6 @@ async function loadResearchProjects() {
                     cache: "no-store"
                 }
             );
-
 
         if (!response.ok) {
 
@@ -635,8 +555,13 @@ async function loadResearchProjects() {
             await response.json();
 
 
+        console.log(
+            "research.json loaded successfully."
+        );
+
+
         /*
-         * research.json has this structure:
+         * Expected structure:
          *
          * {
          *   "source": "...",
@@ -645,10 +570,6 @@ async function loadResearchProjects() {
          *   "submitted_manuscripts": [...],
          *   "phd_thesis": [...]
          * }
-         *
-         * Therefore we must use:
-         *
-         * researchData.projects
          */
 
         const projects =
@@ -678,7 +599,7 @@ async function loadResearchProjects() {
 
 
         console.log(
-            `Successfully loaded ${projects.length} research projects from data/cv/research.json.`
+            `Successfully loaded ${projects.length} research projects.`
         );
 
 
@@ -697,9 +618,8 @@ async function loadResearchProjects() {
 }
 
 
-
 /* =========================================================
-   RENDER RESEARCH PROJECTS
+   12. RENDER RESEARCH PROJECTS
    ========================================================= */
 
 function renderResearchProjects(
@@ -720,37 +640,42 @@ function renderResearchProjects(
     }
 
 
-
-    /*
-     * Clear the existing loading message/content
-     * before rendering the automatically generated
-     * project cards.
-     */
-
     container.innerHTML = "";
 
 
-
-    projects.forEach((project) => {
+    projects.forEach((project, index) => {
 
         const card =
             document.createElement(
                 "article"
             );
 
+        /*
+         * Compatible with the existing CSS.
+         */
 
         card.className =
-            "project-card";
+            "project";
 
+
+        const number =
+            String(index + 1).padStart(
+                2,
+                "0"
+            );
 
 
         /*
-         * These are the EXACT field names contained
-         * in research.json.
+         * Main project title.
+         *
+         * Supports the current research.json
+         * field project_entity.
          */
 
         const title =
             project.project_entity ||
+            project.title ||
+            project.project ||
             "Research Project";
 
 
@@ -766,39 +691,43 @@ function renderResearchProjects(
 
         const funder =
             project.funder ||
+            project.funding_agency ||
+            project.client ||
             "";
 
 
         const year =
             project.year ||
+            project.date ||
             "";
-
 
 
         card.innerHTML = `
 
-            <div class="project-card-content">
+            <div class="project-no">
+                ${escapeHTML(number)}
+            </div>
+
+            <div>
 
                 ${
                     year
                         ? `
-                            <span class="project-year">
+                            <p class="project-kicker">
                                 ${escapeHTML(year)}
-                            </span>
+                            </p>
                           `
                         : ""
                 }
-
 
                 <h3>
                     ${escapeHTML(title)}
                 </h3>
 
-
                 ${
                     role
                         ? `
-                            <p class="project-role">
+                            <p>
                                 <strong>
                                     ${escapeHTML(role)}
                                 </strong>
@@ -806,7 +735,6 @@ function renderResearchProjects(
                           `
                         : ""
                 }
-
 
                 ${
                     description
@@ -818,12 +746,11 @@ function renderResearchProjects(
                         : ""
                 }
 
-
                 ${
                     funder
                         ? `
-                            <p class="project-funder">
-                                <strong>Funder:</strong>
+                            <p>
+                                <strong>Funder / Client:</strong>
                                 ${escapeHTML(funder)}
                             </p>
                           `
@@ -831,6 +758,7 @@ function renderResearchProjects(
                 }
 
             </div>
+
         `;
 
 
@@ -841,53 +769,18 @@ function renderResearchProjects(
 }
 
 
-
 /* =========================================================
-   RESEARCH FALLBACK
+   13. RESEARCH PROJECT FALLBACK
    ========================================================= */
 
 function showResearchFallback(
     container
 ) {
 
-    /*
-     * Remove common loading indicators.
-     */
-
-    const loadingMessage =
-        container.querySelector(
-            ".loading-message, .loading"
-        );
-
-
-    if (loadingMessage) {
-
-        loadingMessage.remove();
-    }
-
-
-
-    /*
-     * If there is already meaningful content,
-     * preserve it.
-     */
-
-    if (
-        container.children.length > 0 &&
-        container.textContent.trim().length > 0
-    ) {
-
+    if (!container) {
         return;
     }
 
-
-
-    /*
-     * If the JSON cannot be loaded, do NOT leave
-     * the page permanently saying:
-     *
-     * "Loading research projects..."
-     */
 
     container.innerHTML = `
 
@@ -903,9 +796,341 @@ function showResearchFallback(
 }
 
 
+/* =========================================================
+   14. RESEARCH GRANTS LOADER
+   ========================================================= */
+
+async function loadResearchGrants() {
+
+    /*
+     * This MUST match index.html:
+     *
+     * id="research-grants-list"
+     */
+
+    const grantContainer =
+        document.querySelector(
+            "#research-grants-list"
+        );
+
+    if (!grantContainer) {
+
+        console.warn(
+            "Research grant container #research-grants-list was not found."
+        );
+
+        return;
+    }
+
+
+    if (
+        grantContainer.dataset.loaded ===
+        "true"
+    ) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "data/cv/profile.json",
+                {
+                    cache: "no-store"
+                }
+            );
+
+        if (!response.ok) {
+
+            throw new Error(
+                `Profile data request failed: ${response.status}`
+            );
+        }
+
+
+        const profileData =
+            await response.json();
+
+
+        /*
+         * The automation may expose grants using
+         * one of several reasonable property names.
+         *
+         * We support all of them so that the website
+         * remains compatible with the generated JSON.
+         */
+
+        let grants = [];
+
+
+        if (
+            Array.isArray(
+                profileData.research_grants
+            )
+        ) {
+
+            grants =
+                profileData.research_grants;
+
+        } else if (
+            Array.isArray(
+                profileData.grants
+            )
+        ) {
+
+            grants =
+                profileData.grants;
+
+        } else if (
+            Array.isArray(
+                profileData.researchGrants
+            )
+        ) {
+
+            grants =
+                profileData.researchGrants;
+
+        } else if (
+            Array.isArray(
+                profileData.research_grant
+            )
+        ) {
+
+            grants =
+                profileData.research_grant;
+        }
+
+
+        if (!grants.length) {
+
+            throw new Error(
+                "profile.json was loaded, but no research grants were found."
+            );
+        }
+
+
+        renderResearchGrants(
+            grants,
+            grantContainer
+        );
+
+
+        grantContainer.dataset.loaded =
+            "true";
+
+
+        console.log(
+            `Successfully loaded ${grants.length} research grants.`
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Unable to load research grants:",
+            error
+        );
+
+
+        showGrantFallback(
+            grantContainer
+        );
+    }
+}
+
 
 /* =========================================================
-   HTML ESCAPE FUNCTION
+   15. RENDER RESEARCH GRANTS
+   ========================================================= */
+
+function renderResearchGrants(
+    grants,
+    container
+) {
+
+    if (
+        !Array.isArray(grants) ||
+        !grants.length
+    ) {
+
+        showGrantFallback(
+            container
+        );
+
+        return;
+    }
+
+
+    container.innerHTML = "";
+
+
+    grants.forEach((grant, index) => {
+
+        const card =
+            document.createElement(
+                "article"
+            );
+
+
+        card.className =
+            "project";
+
+
+        const number =
+            String(index + 1).padStart(
+                2,
+                "0"
+            );
+
+
+        const title =
+            grant.title ||
+            grant.project_entity ||
+            grant.project ||
+            grant.name ||
+            "Research Grant";
+
+
+        const description =
+            grant.description ||
+            "";
+
+
+        const role =
+            grant.role ||
+            grant.position ||
+            "";
+
+
+        const funder =
+            grant.funder ||
+            grant.funding_agency ||
+            grant.agency ||
+            grant.client ||
+            "";
+
+
+        const amount =
+            grant.amount ||
+            grant.value ||
+            grant.funding ||
+            "";
+
+
+        const year =
+            grant.year ||
+            grant.date ||
+            "";
+
+
+        card.innerHTML = `
+
+            <div class="project-no">
+                ${escapeHTML(number)}
+            </div>
+
+            <div>
+
+                ${
+                    year
+                        ? `
+                            <p class="project-kicker">
+                                ${escapeHTML(year)}
+                            </p>
+                          `
+                        : ""
+                }
+
+                <h3>
+                    ${escapeHTML(title)}
+                </h3>
+
+                ${
+                    role
+                        ? `
+                            <p>
+                                <strong>
+                                    ${escapeHTML(role)}
+                                </strong>
+                            </p>
+                          `
+                        : ""
+                }
+
+                ${
+                    description
+                        ? `
+                            <p>
+                                ${escapeHTML(description)}
+                            </p>
+                          `
+                        : ""
+                }
+
+                ${
+                    funder
+                        ? `
+                            <p>
+                                <strong>Funder:</strong>
+                                ${escapeHTML(funder)}
+                            </p>
+                          `
+                        : ""
+                }
+
+                ${
+                    amount
+                        ? `
+                            <p>
+                                <strong>Funding:</strong>
+                                ${escapeHTML(amount)}
+                            </p>
+                          `
+                        : ""
+                }
+
+            </div>
+
+        `;
+
+
+        container.appendChild(
+            card
+        );
+    });
+}
+
+
+/* =========================================================
+   16. RESEARCH GRANT FALLBACK
+   ========================================================= */
+
+function showGrantFallback(
+    container
+) {
+
+    if (!container) {
+        return;
+    }
+
+
+    container.innerHTML = `
+
+        <div class="research-status">
+
+            <p>
+                Research grants are currently being updated.
+            </p>
+
+        </div>
+
+    `;
+}
+
+
+/* =========================================================
+   17. HTML ESCAPE FUNCTION
    ========================================================= */
 
 function escapeHTML(value) {
@@ -914,7 +1139,6 @@ function escapeHTML(value) {
         value === undefined ||
         value === null
     ) {
-
         return "";
     }
 
@@ -948,19 +1172,21 @@ function escapeHTML(value) {
 }
 
 
-
 /* =========================================================
-   PUBLIC API
+   18. PUBLIC API
    ========================================================= */
 
 window.loadCVData =
     loadCVData;
 
-
 window.loadResearchProjects =
     loadResearchProjects;
 
+window.loadResearchGrants =
+    loadResearchGrants;
 
 window.renderResearchProjects =
     renderResearchProjects;
-```
+
+window.renderResearchGrants =
+    renderResearchGrants;
