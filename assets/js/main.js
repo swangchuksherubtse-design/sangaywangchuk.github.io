@@ -137,57 +137,112 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =======================================================
-     AUTOMATIC RESEARCH GRANTS LOADING
+     AUTOMATIC CV DATA LOADING
      
      Source:
        data/cv/profile.json
+       data/cv/research.json
 
-     The research_grants array is generated automatically
-     by extract_cv.py from the Word CV.
+     These files are generated automatically by
+     scripts/extract_cv.py from the Word CV.
   ======================================================= */
 
-  loadResearchGrants();
+  loadCVResearchData();
 
 });
 
 
 /* =========================================================
-   LOAD RESEARCH GRANTS FROM PROFILE.JSON
+   LOAD ALL CV RESEARCH DATA
 ========================================================= */
 
-async function loadResearchGrants() {
+async function loadCVResearchData() {
 
   try {
 
-    const response = await fetch(
-      "data/cv/profile.json",
-      {
-        cache: "no-cache"
-      }
-    );
+    const [profileResponse, researchResponse] =
+      await Promise.all([
 
-    if (!response.ok) {
+        fetch(
+          "data/cv/profile.json",
+          {
+            cache: "no-cache"
+          }
+        ),
+
+        fetch(
+          "data/cv/research.json",
+          {
+            cache: "no-cache"
+          }
+        )
+
+      ]);
+
+
+    if (!profileResponse.ok) {
 
       throw new Error(
-        `Unable to load profile.json: ${response.status}`
+        `Unable to load profile.json: ${profileResponse.status}`
       );
 
     }
 
+
+    if (!researchResponse.ok) {
+
+      throw new Error(
+        `Unable to load research.json: ${researchResponse.status}`
+      );
+
+    }
+
+
     const profile =
-      await response.json();
+      await profileResponse.json();
+
+    const research =
+      await researchResponse.json();
+
+
+    /* -----------------------------------------------------
+       LOAD RESEARCH GRANTS
+    ----------------------------------------------------- */
 
     const grants =
       profile.research_grants || [];
 
     renderResearchGrants(grants);
 
+
+    /* -----------------------------------------------------
+       LOAD RESEARCH PROJECTS
+    ----------------------------------------------------- */
+
+    const projects =
+      research.projects || [];
+
+    renderResearchProjects(projects);
+
+
+    console.log(
+      "✓ CV research data loaded successfully."
+    );
+
+    console.log(
+      `✓ Research projects: ${projects.length}`
+    );
+
+    console.log(
+      `✓ Research grants: ${grants.length}`
+    );
+
   }
 
   catch (error) {
 
     console.error(
-      "Research grants could not be loaded:",
+      "CV research data could not be loaded:",
       error
     );
 
@@ -197,16 +252,18 @@ async function loadResearchGrants() {
 
 
 /* =========================================================
-   RENDER RESEARCH GRANTS
+   LOAD RESEARCH GRANTS
 ========================================================= */
 
 function renderResearchGrants(grants) {
 
   /*
-     Look for an existing research-grants container.
+     The function looks for:
 
-     If the container does not yet exist, this function
-     will not modify the rest of the Research section.
+       #research-grants-list
+
+     If the container does not exist, the rest of the
+     Research section remains unchanged.
   */
 
   const container =
@@ -235,7 +292,10 @@ function renderResearchGrants(grants) {
      No grants found
   ------------------------------------------------------- */
 
-  if (!Array.isArray(grants) || grants.length === 0) {
+  if (
+    !Array.isArray(grants) ||
+    grants.length === 0
+  ) {
 
     container.innerHTML = `
       <p class="research-grants-empty">
@@ -294,6 +354,224 @@ function renderResearchGrants(grants) {
     container.appendChild(grantItem);
 
   });
+
+}
+
+
+/* =========================================================
+   LOAD RESEARCH PROJECTS
+========================================================= */
+
+function renderResearchProjects(projects) {
+
+  /*
+     The function looks for:
+
+       #research-projects-list
+
+     If the container does not exist, nothing else on the
+     website is changed.
+  */
+
+  const container =
+    document.getElementById("research-projects-list");
+
+  if (!container) {
+
+    console.warn(
+      "Research projects container #research-projects-list "
+      + "was not found in index.html."
+    );
+
+    return;
+
+  }
+
+
+  /* -------------------------------------------------------
+     Clear existing automatically generated content
+  ------------------------------------------------------- */
+
+  container.innerHTML = "";
+
+
+  /* -------------------------------------------------------
+     No projects found
+  ------------------------------------------------------- */
+
+  if (
+    !Array.isArray(projects) ||
+    projects.length === 0
+  ) {
+
+    container.innerHTML = `
+      <p class="research-projects-empty">
+        No research projects are currently listed.
+      </p>
+    `;
+
+    return;
+
+  }
+
+
+  /* -------------------------------------------------------
+     Create each research project
+  ------------------------------------------------------- */
+
+  projects.forEach((project, index) => {
+
+    const projectItem =
+      document.createElement("article");
+
+    projectItem.className =
+      "research-project-item";
+
+
+    /* -----------------------------------------------------
+       Project number
+    ----------------------------------------------------- */
+
+    const number =
+      document.createElement("span");
+
+    number.className =
+      "research-project-number";
+
+    number.textContent =
+      String(index + 1).padStart(2, "0");
+
+
+    /* -----------------------------------------------------
+       Project content
+    ----------------------------------------------------- */
+
+    const content =
+      document.createElement("div");
+
+    content.className =
+      "research-project-content";
+
+
+    /* -----------------------------------------------------
+       Project title
+    ----------------------------------------------------- */
+
+    const title =
+      document.createElement("h3");
+
+    title.textContent =
+      project.project_entity ||
+      "Research Project";
+
+
+    /* -----------------------------------------------------
+       Role
+    ----------------------------------------------------- */
+
+    const role =
+      document.createElement("span");
+
+    role.className =
+      "research-project-role";
+
+    role.textContent =
+      project.role ||
+      "";
+
+
+    /* -----------------------------------------------------
+       Description
+    ----------------------------------------------------- */
+
+    const description =
+      document.createElement("p");
+
+    description.textContent =
+      project.description ||
+      "";
+
+
+    /* -----------------------------------------------------
+       Funder
+    ----------------------------------------------------- */
+
+    const funder =
+      document.createElement("p");
+
+    funder.className =
+      "research-project-funder";
+
+    if (project.funder) {
+
+      funder.innerHTML =
+        `<strong>Funder:</strong> ${escapeHTML(project.funder)}`;
+
+    }
+
+
+    /* -----------------------------------------------------
+       Year
+    ----------------------------------------------------- */
+
+    const year =
+      document.createElement("p");
+
+    year.className =
+      "research-project-year";
+
+    if (project.year) {
+
+      year.innerHTML =
+        `<strong>Year:</strong> ${escapeHTML(project.year)}`;
+
+    }
+
+
+    /* -----------------------------------------------------
+       Assemble project
+    ----------------------------------------------------- */
+
+    content.appendChild(title);
+
+    if (role.textContent) {
+      content.appendChild(role);
+    }
+
+    content.appendChild(description);
+
+    if (project.funder) {
+      content.appendChild(funder);
+    }
+
+    if (project.year) {
+      content.appendChild(year);
+    }
+
+
+    projectItem.appendChild(number);
+
+    projectItem.appendChild(content);
+
+    container.appendChild(projectItem);
+
+  });
+
+}
+
+
+/* =========================================================
+   BASIC HTML ESCAPING
+========================================================= */
+
+function escapeHTML(value) {
+
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 
 }
 ```
