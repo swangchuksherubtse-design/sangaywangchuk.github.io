@@ -1,12 +1,17 @@
-javascript
 /* =========================================================
    main.js
    Sangay Wangchuk Academic Profile
-   CV AUTOMATION + NAVIGATION + RESEARCH PROJECTS + GRANTS
+
+   CV AUTOMATION
+   NAVIGATION
+   RESEARCH PROJECTS
+   RESEARCH GRANTS
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
     "use strict";
+
+    console.log("main.js started successfully.");
 
     /* =====================================================
        1. MOBILE NAVIGATION
@@ -128,9 +133,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
             link.classList.remove("active");
 
+            const href =
+                link.getAttribute("href");
+
             if (
-                link.getAttribute("href") ===
-                `#${currentSection}`
+                href === `#${currentSection}`
             ) {
                 link.classList.add("active");
             }
@@ -158,10 +165,11 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        header.classList.toggle(
-            "scrolled",
-            window.scrollY > 30
-        );
+        if (window.scrollY > 30) {
+            header.classList.add("scrolled");
+        } else {
+            header.classList.remove("scrolled");
+        }
     };
 
     window.addEventListener(
@@ -173,7 +181,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       5. BACK TO TOP BUTTON
+       5. BACK TO TOP
        ===================================================== */
 
     const backToTop =
@@ -185,10 +193,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const toggleBackToTop = () => {
 
-            backToTop.classList.toggle(
-                "show",
-                window.scrollY > 500
-            );
+            if (window.scrollY > 500) {
+                backToTop.classList.add("show");
+            } else {
+                backToTop.classList.remove("show");
+            }
         };
 
         window.addEventListener(
@@ -231,7 +240,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     entries.forEach((entry) => {
 
-                        if (entry.isIntersecting) {
+                        if (
+                            entry.isIntersecting
+                        ) {
 
                             entry.target.classList.add(
                                 "visible"
@@ -277,21 +288,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       8. LOAD CV PROFILE
+       8. START CV AUTOMATION
        ===================================================== */
 
     loadCVData();
 
 
     /* =====================================================
-       9. LOAD RESEARCH PROJECTS
+       9. START RESEARCH PROJECT LOADER
        ===================================================== */
 
     loadResearchProjects();
 
 
     /* =====================================================
-       10. LOAD RESEARCH GRANTS
+       10. START RESEARCH GRANT LOADER
        ===================================================== */
 
     loadResearchGrants();
@@ -300,16 +311,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 /* =========================================================
-   CV / PROFILE DATA LOADER
+   11. CV PROFILE DATA LOADER
    ========================================================= */
 
 async function loadCVData() {
+
+    const profileURL =
+        new URL(
+            "data/cv/profile.json",
+            document.baseURI
+        ).href;
+
+    console.log(
+        "Loading CV profile:",
+        profileURL
+    );
 
     try {
 
         const response =
             await fetch(
-                "data/cv/profile.json",
+                profileURL,
                 {
                     cache: "no-store"
                 }
@@ -318,7 +340,7 @@ async function loadCVData() {
         if (!response.ok) {
 
             throw new Error(
-                `Profile data request failed: ${response.status}`
+                `HTTP ${response.status} while loading profile.json`
             );
         }
 
@@ -326,15 +348,16 @@ async function loadCVData() {
             await response.json();
 
         console.log(
-            "CV profile data loaded successfully."
+            "CV profile data loaded successfully.",
+            profileData
         );
 
         updateCVContent(profileData);
 
     } catch (error) {
 
-        console.warn(
-            "CV profile data could not be loaded.",
+        console.error(
+            "CV profile data could not be loaded:",
             error
         );
     }
@@ -342,7 +365,7 @@ async function loadCVData() {
 
 
 /* =========================================================
-   UPDATE CV CONTENT
+   12. UPDATE CV CONTENT
    ========================================================= */
 
 function updateCVContent(data) {
@@ -407,37 +430,47 @@ function updateCVContent(data) {
 
 
 /* =========================================================
-   NESTED VALUE HELPER
+   13. NESTED VALUE HELPER
    ========================================================= */
 
 function getNestedValue(object, path) {
 
-    if (!object || !path) {
+    if (
+        !object ||
+        !path
+    ) {
         return undefined;
     }
 
     return path
         .split(".")
-        .reduce((current, key) => {
+        .reduce(
+            (current, key) => {
 
-            if (
-                current === undefined ||
-                current === null
-            ) {
-                return undefined;
-            }
+                if (
+                    current === undefined ||
+                    current === null
+                ) {
+                    return undefined;
+                }
 
-            return current[key];
+                return current[key];
 
-        }, object);
+            },
+            object
+        );
 }
 
 
 /* =========================================================
-   UPDATE STATISTIC
+   14. UPDATE STATISTIC
    ========================================================= */
 
-function updateStatistic(data, key, selectors) {
+function updateStatistic(
+    data,
+    key,
+    selectors
+) {
 
     const value =
         getNestedValue(
@@ -466,7 +499,7 @@ function updateStatistic(data, key, selectors) {
 
 
 /* =========================================================
-   11. RESEARCH PROJECT LOADER
+   15. RESEARCH PROJECT LOADER
    ========================================================= */
 
 async function loadResearchProjects() {
@@ -479,31 +512,64 @@ async function loadResearchProjects() {
     if (!projectContainer) {
 
         console.warn(
-            "Research project container not found."
+            "Research project container #research-projects-list was not found."
         );
 
         return;
     }
 
+    console.log(
+        "Research project container found."
+    );
+
+
+    projectContainer.innerHTML = `
+        <p class="research-projects-loading">
+            Loading research projects…
+        </p>
+    `;
+
+
+    const researchURL =
+        new URL(
+            "data/cv/research.json",
+            document.baseURI
+        ).href;
+
+    console.log(
+        "Loading research data:",
+        researchURL
+    );
+
+
     try {
 
         const response =
             await fetch(
-                "data/cv/research.json",
+                researchURL,
                 {
                     cache: "no-store"
                 }
             );
 
+
         if (!response.ok) {
 
             throw new Error(
-                `Research data request failed: ${response.status}`
+                `HTTP ${response.status} while loading research.json`
             );
         }
 
+
         const researchData =
             await response.json();
+
+
+        console.log(
+            "research.json loaded successfully.",
+            researchData
+        );
+
 
         const projects =
             Array.isArray(
@@ -512,24 +578,29 @@ async function loadResearchProjects() {
                 ? researchData.projects
                 : [];
 
+
         if (!projects.length) {
 
             throw new Error(
-                "No research projects found."
+                "research.json contains no projects array or the array is empty."
             );
         }
+
 
         renderResearchProjects(
             projects,
             projectContainer
         );
 
+
         projectContainer.dataset.loaded =
             "true";
 
+
         console.log(
-            `Successfully loaded ${projects.length} research projects.`
+            `Successfully rendered ${projects.length} research projects.`
         );
+
 
     } catch (error) {
 
@@ -538,15 +609,17 @@ async function loadResearchProjects() {
             error
         );
 
+
         showResearchFallback(
-            projectContainer
+            projectContainer,
+            error
         );
     }
 }
 
 
 /* =========================================================
-   12. RENDER RESEARCH PROJECTS
+   16. RENDER RESEARCH PROJECTS
    ========================================================= */
 
 function renderResearchProjects(
@@ -560,45 +633,65 @@ function renderResearchProjects(
     ) {
 
         showResearchFallback(container);
+
         return;
     }
 
+
     container.innerHTML = "";
+
 
     projects.forEach((project, index) => {
 
         const card =
-            document.createElement("article");
+            document.createElement(
+                "article"
+            );
 
-        card.className = "project";
+        card.className =
+            "project";
+
 
         const number =
-            String(index + 1).padStart(2, "0");
+            String(index + 1).padStart(
+                2,
+                "0"
+            );
+
 
         const title =
             project.project_entity ||
             project.title ||
             project.project ||
+            project.name ||
             "Research Project";
+
 
         const role =
             project.role ||
+            project.position ||
             "";
+
 
         const description =
             project.description ||
+            project.details ||
             "";
+
 
         const funder =
             project.funder ||
             project.funding_agency ||
             project.client ||
+            project.agency ||
             "";
+
 
         const year =
             project.year ||
             project.date ||
             "";
+
 
         card.innerHTML = `
 
@@ -648,7 +741,9 @@ function renderResearchProjects(
                     funder
                         ? `
                             <p>
-                                <strong>Funder / Client:</strong>
+                                <strong>
+                                    Funder / Client:
+                                </strong>
                                 ${escapeHTML(funder)}
                             </p>
                           `
@@ -656,7 +751,9 @@ function renderResearchProjects(
                 }
 
             </div>
+
         `;
+
 
         container.appendChild(card);
     });
@@ -664,95 +761,103 @@ function renderResearchProjects(
 
 
 /* =========================================================
-   13. PROJECT FALLBACK
+   17. PROJECT FALLBACK
    ========================================================= */
 
-function showResearchFallback(container) {
+function showResearchFallback(
+    container,
+    error
+) {
 
     if (!container) {
         return;
     }
 
+
     container.innerHTML = `
+
         <div class="research-status">
+
             <p>
-                Research projects are currently being updated.
+                Research projects could not be loaded.
             </p>
+
+            <small>
+                Please check the CV automation data file.
+            </small>
+
         </div>
+
     `;
+
+
+    console.error(
+        "Research project loading failed.",
+        error || ""
+    );
 }
 
 
 /* =========================================================
-   14. RESEARCH GRANTS LOADER
+   18. RESEARCH GRANT LOADER
    ========================================================= */
 
 async function loadResearchGrants() {
 
-    /*
-     * IMPORTANT:
-     *
-     * We support BOTH possible container IDs:
-     *
-     * #research-grants-list
-     * #researchGrants
-     *
-     * This prevents the HTML/JavaScript ID mismatch
-     * that can cause "Loading research grants..." to
-     * remain permanently visible.
-     */
-
     const grantContainer =
         document.querySelector(
             "#research-grants-list"
-        ) ||
-        document.querySelector(
-            "#researchGrants"
         );
 
     if (!grantContainer) {
 
-        console.error(
-            "GRANTS ERROR: Neither #research-grants-list nor #researchGrants was found."
+        console.warn(
+            "Research grant container #research-grants-list was not found."
         );
 
         return;
     }
 
+    console.log(
+        "Research grant container found."
+    );
 
-    /*
-     * Remove any existing loading message immediately.
-     */
 
-    removeGrantLoadingMessage(
-        grantContainer
+    grantContainer.innerHTML = `
+        <p class="research-grants-loading">
+            Loading research grants…
+        </p>
+    `;
+
+
+    const profileURL =
+        new URL(
+            "data/cv/profile.json",
+            document.baseURI
+        ).href;
+
+
+    console.log(
+        "Loading grant data:",
+        profileURL
     );
 
 
     try {
 
-        /*
-         * The current automation stores grants in:
-         *
-         * data/cv/profile.json
-         *
-         * property:
-         *
-         * research_grants
-         */
-
         const response =
             await fetch(
-                "data/cv/profile.json",
+                profileURL,
                 {
                     cache: "no-store"
                 }
             );
 
+
         if (!response.ok) {
 
             throw new Error(
-                `Profile data request failed: ${response.status}`
+                `HTTP ${response.status} while loading profile.json`
             );
         }
 
@@ -761,17 +866,16 @@ async function loadResearchGrants() {
             await response.json();
 
 
+        console.log(
+            "profile.json loaded for grants.",
+            profileData
+        );
+
+
         /*
-         * CURRENT JSON STRUCTURE:
-         *
-         * "research_grants": [
-         *     "Secured Ngultrum 522,588.00 ...",
-         *     "Secured Ngultrum 3,714,150.00 ...",
-         *     "Secured Ngultrum 1,027,950.00 ...",
-         *     "Secured Ngultrum 498239.00 ...",
-         *     "Secured Ngultrum 200,000 ...",
-         *     "Secured Nu 20000 Automation Test Entry ..."
-         * ]
+         * =================================================
+         * SUPPORT ALL CURRENT AUTOMATION NAMES
+         * =================================================
          */
 
         let grants = [];
@@ -816,7 +920,7 @@ async function loadResearchGrants() {
 
 
         console.log(
-            "Research grants found:",
+            "Detected research grants:",
             grants
         );
 
@@ -824,7 +928,7 @@ async function loadResearchGrants() {
         if (!grants.length) {
 
             throw new Error(
-                "profile.json contains no research_grants."
+                "No research grants were found in profile.json."
             );
         }
 
@@ -853,61 +957,15 @@ async function loadResearchGrants() {
 
 
         showGrantFallback(
-            grantContainer
+            grantContainer,
+            error
         );
     }
 }
 
 
 /* =========================================================
-   15. REMOVE GRANT LOADING MESSAGE
-   ========================================================= */
-
-function removeGrantLoadingMessage(container) {
-
-    if (!container) {
-        return;
-    }
-
-
-    /*
-     * Remove loading elements inside the grant container.
-     */
-
-    container
-        .querySelectorAll(
-            ".loading-message, .loading, .loading-grants, #loading-grants"
-        )
-        .forEach((element) => {
-
-            element.remove();
-        });
-
-
-    /*
-     * Also remove plain text loading messages that may
-     * have been inserted by the original HTML.
-     */
-
-    Array.from(
-        container.childNodes
-    ).forEach((node) => {
-
-        if (
-            node.nodeType === Node.TEXT_NODE &&
-            node.textContent
-                .toLowerCase()
-                .includes("loading research grants")
-        ) {
-
-            node.remove();
-        }
-    });
-}
-
-
-/* =========================================================
-   16. RENDER RESEARCH GRANTS
+   19. RENDER RESEARCH GRANTS
    ========================================================= */
 
 function renderResearchGrants(
@@ -921,25 +979,10 @@ function renderResearchGrants(
     ) {
 
         showGrantFallback(container);
+
         return;
     }
 
-
-    /*
-     * CRITICAL:
-     *
-     * Clear EVERYTHING currently inside the container.
-     *
-     * This removes:
-     *
-     * "01 Research Grant"
-     * "02 Research Grant"
-     * etc.
-     *
-     * and:
-     *
-     * "Loading research grants..."
-     */
 
     container.innerHTML = "";
 
@@ -947,7 +990,10 @@ function renderResearchGrants(
     grants.forEach((grant, index) => {
 
         const card =
-            document.createElement("article");
+            document.createElement(
+                "article"
+            );
+
 
         card.className =
             "project";
@@ -961,9 +1007,11 @@ function renderResearchGrants(
 
 
         /*
-         * CURRENT DATA:
+         * =================================================
+         * PLAIN STRING GRANT
+         * =================================================
          *
-         * Every grant is a STRING.
+         * Current CV automation stores grants as strings.
          */
 
         if (
@@ -979,7 +1027,7 @@ function renderResearchGrants(
                 <div>
 
                     <p class="project-kicker">
-                        Research Grant
+                        RESEARCH GRANT
                     </p>
 
                     <p>
@@ -991,19 +1039,29 @@ function renderResearchGrants(
             `;
 
 
-        } else {
+            container.appendChild(card);
 
-            /*
-             * Future-proof support for structured
-             * grant objects.
-             */
+            return;
+        }
+
+
+        /*
+         * =================================================
+         * STRUCTURED GRANT OBJECT
+         * =================================================
+         */
+
+        if (
+            grant &&
+            typeof grant === "object"
+        ) {
 
             const title =
                 grant.title ||
                 grant.project_entity ||
                 grant.project ||
                 grant.name ||
-                "Research Grant";
+                "";
 
 
             const description =
@@ -1057,9 +1115,15 @@ function renderResearchGrants(
                             : ""
                     }
 
-                    <h3>
-                        ${escapeHTML(title)}
-                    </h3>
+                    ${
+                        title
+                            ? `
+                                <h3>
+                                    ${escapeHTML(title)}
+                                </h3>
+                              `
+                            : ""
+                    }
 
                     ${
                         role
@@ -1087,7 +1151,9 @@ function renderResearchGrants(
                         funder
                             ? `
                                 <p>
-                                    <strong>Funder:</strong>
+                                    <strong>
+                                        Funder:
+                                    </strong>
                                     ${escapeHTML(funder)}
                                 </p>
                               `
@@ -1098,7 +1164,9 @@ function renderResearchGrants(
                         amount
                             ? `
                                 <p>
-                                    <strong>Funding:</strong>
+                                    <strong>
+                                        Funding:
+                                    </strong>
                                     ${escapeHTML(amount)}
                                 </p>
                               `
@@ -1106,8 +1174,41 @@ function renderResearchGrants(
                     }
 
                 </div>
+
             `;
+
+
+            container.appendChild(card);
+
+            return;
         }
+
+
+        /*
+         * =================================================
+         * UNKNOWN DATA TYPE
+         * =================================================
+         */
+
+        card.innerHTML = `
+
+            <div class="project-no">
+                ${escapeHTML(number)}
+            </div>
+
+            <div>
+
+                <p class="project-kicker">
+                    RESEARCH GRANT
+                </p>
+
+                <p>
+                    Grant information available in CV data.
+                </p>
+
+            </div>
+
+        `;
 
 
         container.appendChild(card);
@@ -1116,10 +1217,13 @@ function renderResearchGrants(
 
 
 /* =========================================================
-   17. GRANT FALLBACK
+   20. GRANT FALLBACK
    ========================================================= */
 
-function showGrantFallback(container) {
+function showGrantFallback(
+    container,
+    error
+) {
 
     if (!container) {
         return;
@@ -1131,17 +1235,27 @@ function showGrantFallback(container) {
         <div class="research-status">
 
             <p>
-                Research grants are currently being updated.
+                Research grants could not be loaded.
             </p>
+
+            <small>
+                Please check the CV automation data file.
+            </small>
 
         </div>
 
     `;
+
+
+    console.error(
+        "Research grant loading failed.",
+        error || ""
+    );
 }
 
 
 /* =========================================================
-   18. HTML ESCAPE
+   21. HTML ESCAPE
    ========================================================= */
 
 function escapeHTML(value) {
@@ -1153,6 +1267,7 @@ function escapeHTML(value) {
         return "";
     }
 
+
     return String(value)
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
@@ -1163,7 +1278,7 @@ function escapeHTML(value) {
 
 
 /* =========================================================
-   19. PUBLIC API
+   22. PUBLIC API
    ========================================================= */
 
 window.loadCVData =
@@ -1180,4 +1295,3 @@ window.renderResearchProjects =
 
 window.renderResearchGrants =
     renderResearchGrants;
-
