@@ -1,4 +1,4 @@
-```javascript
+javascript
 /* =========================================================
    main.js
    Sangay Wangchuk Academic Profile
@@ -7,6 +7,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
     "use strict";
+
 
     /* =====================================================
        1. MOBILE NAVIGATION
@@ -503,14 +504,6 @@ function updateStatistic(
 
 async function loadResearchProjects() {
 
-    /*
-     * IMPORTANT:
-     *
-     * This MUST match index.html:
-     *
-     * id="research-projects-list"
-     */
-
     const projectContainer =
         document.querySelector(
             "#research-projects-list"
@@ -560,18 +553,6 @@ async function loadResearchProjects() {
             "research.json loaded successfully."
         );
 
-
-        /*
-         * Expected structure:
-         *
-         * {
-         *   "source": "...",
-         *   "projects": [...],
-         *   "reports": [...],
-         *   "submitted_manuscripts": [...],
-         *   "phd_thesis": [...]
-         * }
-         */
 
         const projects =
             Array.isArray(
@@ -650,6 +631,7 @@ function renderResearchProjects(
             document.createElement(
                 "article"
             );
+
 
         card.className =
             "project";
@@ -792,12 +774,6 @@ function showResearchFallback(
 
 async function loadResearchGrants() {
 
-    /*
-     * This MUST match index.html:
-     *
-     * id="research-grants-list"
-     */
-
     const grantContainer =
         document.querySelector(
             "#research-grants-list"
@@ -823,6 +799,16 @@ async function loadResearchGrants() {
 
     try {
 
+        /*
+         * Grants are currently generated inside:
+         *
+         * data/cv/profile.json
+         *
+         * under:
+         *
+         * "research_grants": [...]
+         */
+
         const response =
             await fetch(
                 "data/cv/profile.json",
@@ -830,7 +816,6 @@ async function loadResearchGrants() {
                     cache: "no-store"
                 }
             );
-
 
         if (!response.ok) {
 
@@ -847,24 +832,56 @@ async function loadResearchGrants() {
         /*
          * IMPORTANT:
          *
-         * In the current profile.json,
-         * research_grants is an ARRAY OF STRINGS.
-         *
-         * Example:
+         * The current profile.json contains:
          *
          * "research_grants": [
-         *   "Secured Ngultrum 522,588.00 from ...",
-         *   "Secured Ngultrum 3,714,150.00 from ...",
-         *   ...
+         *     "Secured Ngultrum 522,588.00 ...",
+         *     "Secured Ngultrum 3,714,150.00 ...",
+         *     ...
          * ]
+         *
+         * These are STRINGS, not objects.
          */
 
-        const grants =
+        let grants = [];
+
+
+        if (
             Array.isArray(
                 profileData.research_grants
             )
-                ? profileData.research_grants
-                : [];
+        ) {
+
+            grants =
+                profileData.research_grants;
+
+        } else if (
+            Array.isArray(
+                profileData.grants
+            )
+        ) {
+
+            grants =
+                profileData.grants;
+
+        } else if (
+            Array.isArray(
+                profileData.researchGrants
+            )
+        ) {
+
+            grants =
+                profileData.researchGrants;
+
+        } else if (
+            Array.isArray(
+                profileData.research_grant
+            )
+        ) {
+
+            grants =
+                profileData.research_grant;
+        }
 
 
         if (!grants.length) {
@@ -886,7 +903,7 @@ async function loadResearchGrants() {
 
 
         console.log(
-            `Successfully loaded ${grants.length} research grants from profile.json.`
+            `Successfully loaded ${grants.length} research grants.`
         );
 
 
@@ -927,45 +944,16 @@ function renderResearchGrants(
     }
 
 
-    /*
-     * Clear the original:
-     *
-     * "Loading research grants…"
-     *
-     * message.
-     */
-
     container.innerHTML = "";
 
 
     grants.forEach((grant, index) => {
-
-        /*
-         * Each current grant is a plain string.
-         */
-
-        const grantText =
-            typeof grant === "string"
-                ? grant.trim()
-                : "";
-
-
-        if (!grantText) {
-            return;
-        }
-
 
         const card =
             document.createElement(
                 "article"
             );
 
-
-        /*
-         * Use the same project-card structure
-         * already used successfully by the
-         * Projects & Consultancy section.
-         */
 
         card.className =
             "project";
@@ -979,212 +967,225 @@ function renderResearchGrants(
 
 
         /*
-         * Extract the funding amount.
+         * =================================================
+         * IMPORTANT FIX
+         * =================================================
          *
-         * Supported formats:
+         * The current CV automation stores each grant
+         * as a plain STRING.
          *
-         * Ngultrum 522,588.00
-         * Ngultrum 3,714,150.00
-         * Nu 20000
+         * Example:
+         *
+         * "Secured Ngultrum 522,588.00 from Dorjilung
+         * Hydropower Project Limited..."
+         *
+         * Therefore:
+         *
+         * String  -> use directly
+         * Object  -> use structured fields
          */
 
-        const amountMatch =
-            grantText.match(
-                /(?:Ngultrum|Nu\.?)\s*[\d,]+(?:\.\d+)?/i
-            );
 
-
-        const amount =
-            amountMatch
-                ? amountMatch[0]
-                : "";
-
-
-        /*
-         * Extract the year / year range when
-         * present.
-         *
-         * Examples:
-         *
-         * 2025
-         * 2025-2026
-         * 2020-2021
-         */
-
-        const yearMatch =
-            grantText.match(
-                /\b20\d{2}(?:\s*[-–]\s*20\d{2})?\b/
-            );
-
-
-        const year =
-            yearMatch
-                ? yearMatch[0]
-                : "";
-
-
-        /*
-         * Determine the funding organisation
-         * from the wording of the CV entry.
-         */
-
+        let title = "";
+        let description = "";
+        let role = "";
         let funder = "";
+        let amount = "";
+        let year = "";
 
 
         if (
-            /Dorjilung Hydropower Project Limited/i
-                .test(grantText)
+            typeof grant === "string"
         ) {
 
-            funder =
-                "Dorjilung Hydropower Project Limited (DHPL)";
+            /*
+             * For a plain-string grant, preserve the
+             * complete original CV wording.
+             *
+             * This guarantees that no information
+             * from the CV is lost.
+             */
+
+            description =
+                grant;
 
         } else if (
-            /Bhutan Power Corporation/i
-                .test(grantText)
+            grant &&
+            typeof grant === "object"
         ) {
 
-            funder =
-                "Bhutan Power Corporation (BPC)";
+            title =
+                grant.title ||
+                grant.project_entity ||
+                grant.project ||
+                grant.name ||
+                "";
 
-        } else if (
-            /Sherubtse Thorim Lobdra Research Grant/i
-                .test(grantText)
-        ) {
 
-            funder =
-                "Sherubtse Thorim Lobdra Research Grant (STLRG)";
+            description =
+                grant.description ||
+                grant.details ||
+                "";
 
-        } else if (
-            /Annual College Research Grant/i
-                .test(grantText)
-        ) {
 
-            funder =
-                "Annual College Research Grant (ACRG)";
+            role =
+                grant.role ||
+                grant.position ||
+                "";
 
-        } else if (
-            /Automation Test Entry/i
-                .test(grantText)
-        ) {
 
             funder =
-                "CV-to-Website Synchronization Test";
+                grant.funder ||
+                grant.funding_agency ||
+                grant.agency ||
+                grant.client ||
+                "";
 
+
+            amount =
+                grant.amount ||
+                grant.value ||
+                grant.funding ||
+                "";
+
+
+            year =
+                grant.year ||
+                grant.date ||
+                "";
+
+
+            /*
+             * If an object has no title or description,
+             * convert it safely to text rather than showing
+             * "Research Grant".
+             */
+
+            if (
+                !title &&
+                !description
+            ) {
+
+                description =
+                    JSON.stringify(grant);
+            }
         }
 
 
         /*
-         * Create a clean grant description.
-         *
-         * The original CV sentence is retained so
-         * no substantive information is lost.
+         * If the grant is a string, display it as the
+         * actual grant record instead of the generic
+         * "Research Grant" title.
          */
 
-        const description =
-            grantText;
+        if (
+            typeof grant === "string"
+        ) {
 
+            card.innerHTML = `
 
-        card.innerHTML = `
+                <div class="project-no">
+                    ${escapeHTML(number)}
+                </div>
 
-            <div class="project-no">
-                ${escapeHTML(number)}
-            </div>
+                <div>
 
-            <div>
+                    <p class="project-kicker">
+                        Research Grant
+                    </p>
 
-                <p class="project-kicker">
-                    RESEARCH GRANT
+                    <p>
+                        ${escapeHTML(description)}
+                    </p>
+
+                </div>
+
+            `;
+
+        } else {
+
+            card.innerHTML = `
+
+                <div class="project-no">
+                    ${escapeHTML(number)}
+                </div>
+
+                <div>
+
                     ${
                         year
-                            ? ` · ${escapeHTML(year)}`
+                            ? `
+                                <p class="project-kicker">
+                                    ${escapeHTML(year)}
+                                </p>
+                              `
                             : ""
                     }
-                </p>
 
+                    ${
+                        title
+                            ? `
+                                <h3>
+                                    ${escapeHTML(title)}
+                                </h3>
+                              `
+                            : ""
+                    }
 
-                ${
-                    amount
-                        ? `
-                            <h3>
-                                ${escapeHTML(amount)}
-                            </h3>
-                          `
-                        : `
-                            <h3>
-                                Research Grant
-                            </h3>
-                          `
-                }
+                    ${
+                        role
+                            ? `
+                                <p>
+                                    <strong>
+                                        ${escapeHTML(role)}
+                                    </strong>
+                                </p>
+                              `
+                            : ""
+                    }
 
-
-                <p>
-                    ${escapeHTML(description)}
-                </p>
-
-
-                <div class="tags">
+                    ${
+                        description
+                            ? `
+                                <p>
+                                    ${escapeHTML(description)}
+                                </p>
+                              `
+                            : ""
+                    }
 
                     ${
                         funder
                             ? `
-                                <span>
+                                <p>
+                                    <strong>Funder:</strong>
                                     ${escapeHTML(funder)}
-                                </span>
-                              `
-                            : `
-                                <span>
-                                    Research Funding
-                                </span>
-                              `
-                    }
-
-
-                    ${
-                        amount
-                            ? `
-                                <span>
-                                    ${escapeHTML(amount)}
-                                </span>
+                                </p>
                               `
                             : ""
                     }
 
-
                     ${
-                        year
+                        amount
                             ? `
-                                <span>
-                                    ${escapeHTML(year)}
-                                </span>
+                                <p>
+                                    <strong>Funding:</strong>
+                                    ${escapeHTML(amount)}
+                                </p>
                               `
                             : ""
                     }
 
                 </div>
 
-            </div>
-
-        `;
+            `;
+        }
 
 
         container.appendChild(
             card
         );
     });
-
-
-    /*
-     * If no valid grant strings were found,
-     * display the fallback message.
-     */
-
-    if (!container.children.length) {
-
-        showGrantFallback(
-            container
-        );
-    }
 }
 
 
@@ -1276,4 +1277,4 @@ window.renderResearchProjects =
 
 window.renderResearchGrants =
     renderResearchGrants;
-```
+
