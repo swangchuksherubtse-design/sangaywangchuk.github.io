@@ -1,234 +1,148 @@
-```javascript
+javascript
 /* =========================================================
    main.js
    Sangay Wangchuk Academic Profile
-
-   CV AUTOMATION
-   + NAVIGATION
-   + RESEARCH PROJECTS
-   + GRANTS & RESEARCH SUPPORT
-   ========================================================= */
-
-
-/* =========================================================
-   1. DOM READY
+   CV AUTOMATION + NAVIGATION + RESEARCH PROJECTS + GRANTS
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
-
     "use strict";
 
-
     /* =====================================================
-       MOBILE NAVIGATION
+       1. MOBILE NAVIGATION
        ===================================================== */
 
-    const menuToggle =
-        document.querySelector(".menu-toggle");
-
-    const navLinks =
-        document.querySelector(".nav-links");
-
+    const menuToggle = document.querySelector(".menu-toggle");
+    const navLinks = document.querySelector(".nav-links");
 
     if (menuToggle && navLinks) {
 
         menuToggle.addEventListener("click", () => {
 
             navLinks.classList.toggle("active");
-
             menuToggle.classList.toggle("active");
 
             menuToggle.setAttribute(
                 "aria-expanded",
                 navLinks.classList.contains("active")
             );
-
         });
-
 
         navLinks.querySelectorAll("a").forEach((link) => {
 
             link.addEventListener("click", () => {
 
                 navLinks.classList.remove("active");
-
                 menuToggle.classList.remove("active");
 
                 menuToggle.setAttribute(
                     "aria-expanded",
                     "false"
                 );
-
             });
-
         });
-
     }
-
 
 
     /* =====================================================
        2. SMOOTH SCROLLING
        ===================================================== */
 
-    document
-        .querySelectorAll('a[href^="#"]')
-        .forEach((link) => {
+    document.querySelectorAll('a[href^="#"]').forEach((link) => {
 
-            link.addEventListener(
-                "click",
-                function (event) {
+        link.addEventListener("click", function (event) {
 
-                    const targetId =
-                        this.getAttribute("href");
+            const targetId = this.getAttribute("href");
 
+            if (!targetId || targetId === "#") {
+                return;
+            }
 
-                    if (
-                        !targetId ||
-                        targetId === "#"
-                    ) {
-                        return;
-                    }
+            const target = document.querySelector(targetId);
 
+            if (target) {
 
-                    const target =
-                        document.querySelector(
-                            targetId
-                        );
+                event.preventDefault();
 
+                const header =
+                    document.querySelector("header");
 
-                    if (target) {
+                const headerHeight =
+                    header ? header.offsetHeight : 0;
 
-                        event.preventDefault();
+                const targetPosition =
+                    target.getBoundingClientRect().top +
+                    window.pageYOffset -
+                    headerHeight;
 
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: "smooth"
+                });
 
-                        const header =
-                            document.querySelector(
-                                "header"
-                            );
-
-
-                        const headerHeight =
-                            header
-                                ? header.offsetHeight
-                                : 0;
-
-
-                        const targetPosition =
-                            target.getBoundingClientRect()
-                                .top +
-                            window.pageYOffset -
-                            headerHeight;
-
-
-                        window.scrollTo({
-
-                            top: targetPosition,
-
-                            behavior: "smooth"
-
-                        });
-
-
-                        history.replaceState(
-                            null,
-                            "",
-                            targetId
-                        );
-
-                    }
-
-                }
-            );
-
+                history.replaceState(
+                    null,
+                    "",
+                    targetId
+                );
+            }
         });
-
+    });
 
 
     /* =====================================================
-       3. ACTIVE NAVIGATION LINK
+       3. ACTIVE NAVIGATION LINK ON SCROLL
        ===================================================== */
 
     const sections =
-        document.querySelectorAll(
-            "section[id]"
-        );
-
+        document.querySelectorAll("section[id]");
 
     const navigationLinks =
         document.querySelectorAll(
             '.nav-links a[href^="#"]'
         );
 
-
     const updateActiveNavigation = () => {
 
         let currentSection = "";
-
 
         sections.forEach((section) => {
 
             const sectionTop =
                 section.offsetTop - 160;
 
-
             const sectionHeight =
                 section.offsetHeight;
-
 
             if (
                 window.scrollY >= sectionTop &&
                 window.scrollY <
                 sectionTop + sectionHeight
             ) {
-
                 currentSection =
-                    section.getAttribute(
-                        "id"
-                    );
-
+                    section.getAttribute("id");
             }
-
         });
-
 
         navigationLinks.forEach((link) => {
 
-            link.classList.remove(
-                "active"
-            );
-
-
-            const href =
-                link.getAttribute(
-                    "href"
-                );
-
+            link.classList.remove("active");
 
             if (
-                href ===
+                link.getAttribute("href") ===
                 `#${currentSection}`
             ) {
-
-                link.classList.add(
-                    "active"
-                );
-
+                link.classList.add("active");
             }
-
         });
-
     };
-
 
     window.addEventListener(
         "scroll",
         updateActiveNavigation
     );
 
-
     updateActiveNavigation();
-
 
 
     /* =====================================================
@@ -238,43 +152,28 @@ document.addEventListener("DOMContentLoaded", () => {
     const header =
         document.querySelector("header");
 
-
     const updateHeader = () => {
 
         if (!header) {
             return;
         }
 
-
-        if (window.scrollY > 30) {
-
-            header.classList.add(
-                "scrolled"
-            );
-
-        } else {
-
-            header.classList.remove(
-                "scrolled"
-            );
-
-        }
-
+        header.classList.toggle(
+            "scrolled",
+            window.scrollY > 30
+        );
     };
-
 
     window.addEventListener(
         "scroll",
         updateHeader
     );
 
-
     updateHeader();
 
 
-
     /* =====================================================
-       5. BACK TO TOP
+       5. BACK TO TOP BUTTON
        ===================================================== */
 
     const backToTop =
@@ -282,54 +181,34 @@ document.addEventListener("DOMContentLoaded", () => {
             "#backToTop, .back-to-top"
         );
 
-
     if (backToTop) {
 
         const toggleBackToTop = () => {
 
-            if (window.scrollY > 500) {
-
-                backToTop.classList.add(
-                    "show"
-                );
-
-            } else {
-
-                backToTop.classList.remove(
-                    "show"
-                );
-
-            }
-
+            backToTop.classList.toggle(
+                "show",
+                window.scrollY > 500
+            );
         };
-
 
         window.addEventListener(
             "scroll",
             toggleBackToTop
         );
 
-
         toggleBackToTop();
-
 
         backToTop.addEventListener(
             "click",
             () => {
 
                 window.scrollTo({
-
                     top: 0,
-
                     behavior: "smooth"
-
                 });
-
             }
         );
-
     }
-
 
 
     /* =====================================================
@@ -340,7 +219,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll(
             ".fade-in, .reveal, .animate-on-scroll"
         );
-
 
     if (
         "IntersectionObserver" in window &&
@@ -353,49 +231,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     entries.forEach((entry) => {
 
-                        if (
-                            entry.isIntersecting
-                        ) {
+                        if (entry.isIntersecting) {
 
                             entry.target.classList.add(
                                 "visible"
                             );
 
-
                             observerInstance.unobserve(
                                 entry.target
                             );
-
                         }
-
                     });
-
                 },
                 {
                     threshold: 0.12
                 }
             );
 
-
         animatedElements.forEach((element) => {
-
             observer.observe(element);
-
         });
-
 
     } else {
 
         animatedElements.forEach((element) => {
-
-            element.classList.add(
-                "visible"
-            );
-
+            element.classList.add("visible");
         });
-
     }
-
 
 
     /* =====================================================
@@ -405,18 +267,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const currentYear =
         new Date().getFullYear();
 
+    document.querySelectorAll(
+        "#currentYear, .current-year"
+    ).forEach((element) => {
 
-    document
-        .querySelectorAll(
-            "#currentYear, .current-year"
-        )
-        .forEach((element) => {
-
-            element.textContent =
-                currentYear;
-
-        });
-
+        element.textContent =
+            currentYear;
+    });
 
 
     /* =====================================================
@@ -426,13 +283,11 @@ document.addEventListener("DOMContentLoaded", () => {
     loadCVData();
 
 
-
     /* =====================================================
        9. LOAD RESEARCH PROJECTS
        ===================================================== */
 
     loadResearchProjects();
-
 
 
     /* =====================================================
@@ -442,7 +297,6 @@ document.addEventListener("DOMContentLoaded", () => {
     loadResearchGrants();
 
 });
-
 
 
 /* =========================================================
@@ -461,29 +315,21 @@ async function loadCVData() {
                 }
             );
 
-
         if (!response.ok) {
 
             throw new Error(
                 `Profile data request failed: ${response.status}`
             );
-
         }
-
 
         const profileData =
             await response.json();
-
 
         console.log(
             "CV profile data loaded successfully."
         );
 
-
-        updateCVContent(
-            profileData
-        );
-
+        updateCVContent(profileData);
 
     } catch (error) {
 
@@ -491,11 +337,8 @@ async function loadCVData() {
             "CV profile data could not be loaded.",
             error
         );
-
     }
-
 }
-
 
 
 /* =========================================================
@@ -508,16 +351,11 @@ function updateCVContent(data) {
         !data ||
         typeof data !== "object"
     ) {
-
         return;
-
     }
 
-
     document
-        .querySelectorAll(
-            "[data-cv-field]"
-        )
+        .querySelectorAll("[data-cv-field]")
         .forEach((element) => {
 
             const field =
@@ -525,18 +363,15 @@ function updateCVContent(data) {
                     "data-cv-field"
                 );
 
-
             if (!field) {
                 return;
             }
-
 
             const value =
                 getNestedValue(
                     data,
                     field
                 );
-
 
             if (
                 value !== undefined &&
@@ -546,14 +381,9 @@ function updateCVContent(data) {
 
                 element.textContent =
                     value;
-
             }
-
         });
 
-
-
-    /* PUBLICATIONS */
 
     updateStatistic(
         data,
@@ -565,9 +395,6 @@ function updateCVContent(data) {
     );
 
 
-
-    /* PROJECTS */
-
     updateStatistic(
         data,
         "research_project_count",
@@ -576,64 +403,41 @@ function updateCVContent(data) {
             "#projectCount"
         ]
     );
-
 }
-
 
 
 /* =========================================================
    NESTED VALUE HELPER
    ========================================================= */
 
-function getNestedValue(
-    object,
-    path
-) {
+function getNestedValue(object, path) {
 
-    if (
-        !object ||
-        !path
-    ) {
-
+    if (!object || !path) {
         return undefined;
-
     }
-
 
     return path
         .split(".")
-        .reduce(
-            (current, key) => {
+        .reduce((current, key) => {
 
-                if (
-                    current === undefined ||
-                    current === null
-                ) {
+            if (
+                current === undefined ||
+                current === null
+            ) {
+                return undefined;
+            }
 
-                    return undefined;
+            return current[key];
 
-                }
-
-
-                return current[key];
-
-            },
-            object
-        );
-
+        }, object);
 }
-
 
 
 /* =========================================================
    UPDATE STATISTIC
    ========================================================= */
 
-function updateStatistic(
-    data,
-    key,
-    selectors
-) {
+function updateStatistic(data, key, selectors) {
 
     const value =
         getNestedValue(
@@ -641,16 +445,12 @@ function updateStatistic(
             key
         );
 
-
     if (
         value === undefined ||
         value === null
     ) {
-
         return;
-
     }
-
 
     selectors.forEach((selector) => {
 
@@ -660,13 +460,9 @@ function updateStatistic(
 
                 element.textContent =
                     value;
-
             });
-
     });
-
 }
-
 
 
 /* =========================================================
@@ -675,45 +471,19 @@ function updateStatistic(
 
 async function loadResearchProjects() {
 
-    /*
-     * Supports the current ID:
-     *
-     * #research-projects-list
-     *
-     * and the previous ID:
-     *
-     * #researchProjects
-     */
-
     const projectContainer =
         document.querySelector(
             "#research-projects-list"
-        ) ||
-        document.querySelector(
-            "#researchProjects"
         );
-
 
     if (!projectContainer) {
 
         console.warn(
-            "Research project container was not found."
+            "Research project container not found."
         );
 
         return;
-
     }
-
-
-    if (
-        projectContainer.dataset.loaded ===
-        "true"
-    ) {
-
-        return;
-
-    }
-
 
     try {
 
@@ -725,19 +495,15 @@ async function loadResearchProjects() {
                 }
             );
 
-
         if (!response.ok) {
 
             throw new Error(
                 `Research data request failed: ${response.status}`
             );
-
         }
-
 
         const researchData =
             await response.json();
-
 
         const projects =
             Array.isArray(
@@ -746,30 +512,24 @@ async function loadResearchProjects() {
                 ? researchData.projects
                 : [];
 
-
         if (!projects.length) {
 
             throw new Error(
                 "No research projects found."
             );
-
         }
-
 
         renderResearchProjects(
             projects,
             projectContainer
         );
 
-
         projectContainer.dataset.loaded =
             "true";
-
 
         console.log(
             `Successfully loaded ${projects.length} research projects.`
         );
-
 
     } catch (error) {
 
@@ -778,15 +538,11 @@ async function loadResearchProjects() {
             error
         );
 
-
         showResearchFallback(
             projectContainer
         );
-
     }
-
 }
-
 
 
 /* =========================================================
@@ -803,67 +559,483 @@ function renderResearchProjects(
         !projects.length
     ) {
 
-        showResearchFallback(
-            container
+        showResearchFallback(container);
+        return;
+    }
+
+    container.innerHTML = "";
+
+    projects.forEach((project, index) => {
+
+        const card =
+            document.createElement("article");
+
+        card.className = "project";
+
+        const number =
+            String(index + 1).padStart(2, "0");
+
+        const title =
+            project.project_entity ||
+            project.title ||
+            project.project ||
+            "Research Project";
+
+        const role =
+            project.role ||
+            "";
+
+        const description =
+            project.description ||
+            "";
+
+        const funder =
+            project.funder ||
+            project.funding_agency ||
+            project.client ||
+            "";
+
+        const year =
+            project.year ||
+            project.date ||
+            "";
+
+        card.innerHTML = `
+
+            <div class="project-no">
+                ${escapeHTML(number)}
+            </div>
+
+            <div>
+
+                ${
+                    year
+                        ? `
+                            <p class="project-kicker">
+                                ${escapeHTML(year)}
+                            </p>
+                          `
+                        : ""
+                }
+
+                <h3>
+                    ${escapeHTML(title)}
+                </h3>
+
+                ${
+                    role
+                        ? `
+                            <p>
+                                <strong>
+                                    ${escapeHTML(role)}
+                                </strong>
+                            </p>
+                          `
+                        : ""
+                }
+
+                ${
+                    description
+                        ? `
+                            <p>
+                                ${escapeHTML(description)}
+                            </p>
+                          `
+                        : ""
+                }
+
+                ${
+                    funder
+                        ? `
+                            <p>
+                                <strong>Funder / Client:</strong>
+                                ${escapeHTML(funder)}
+                            </p>
+                          `
+                        : ""
+                }
+
+            </div>
+        `;
+
+        container.appendChild(card);
+    });
+}
+
+
+/* =========================================================
+   13. PROJECT FALLBACK
+   ========================================================= */
+
+function showResearchFallback(container) {
+
+    if (!container) {
+        return;
+    }
+
+    container.innerHTML = `
+        <div class="research-status">
+            <p>
+                Research projects are currently being updated.
+            </p>
+        </div>
+    `;
+}
+
+
+/* =========================================================
+   14. RESEARCH GRANTS LOADER
+   ========================================================= */
+
+async function loadResearchGrants() {
+
+    /*
+     * IMPORTANT:
+     *
+     * We support BOTH possible container IDs:
+     *
+     * #research-grants-list
+     * #researchGrants
+     *
+     * This prevents the HTML/JavaScript ID mismatch
+     * that can cause "Loading research grants..." to
+     * remain permanently visible.
+     */
+
+    const grantContainer =
+        document.querySelector(
+            "#research-grants-list"
+        ) ||
+        document.querySelector(
+            "#researchGrants"
+        );
+
+    if (!grantContainer) {
+
+        console.error(
+            "GRANTS ERROR: Neither #research-grants-list nor #researchGrants was found."
         );
 
         return;
-
     }
 
+
+    /*
+     * Remove any existing loading message immediately.
+     */
+
+    removeGrantLoadingMessage(
+        grantContainer
+    );
+
+
+    try {
+
+        /*
+         * The current automation stores grants in:
+         *
+         * data/cv/profile.json
+         *
+         * property:
+         *
+         * research_grants
+         */
+
+        const response =
+            await fetch(
+                "data/cv/profile.json",
+                {
+                    cache: "no-store"
+                }
+            );
+
+        if (!response.ok) {
+
+            throw new Error(
+                `Profile data request failed: ${response.status}`
+            );
+        }
+
+
+        const profileData =
+            await response.json();
+
+
+        /*
+         * CURRENT JSON STRUCTURE:
+         *
+         * "research_grants": [
+         *     "Secured Ngultrum 522,588.00 ...",
+         *     "Secured Ngultrum 3,714,150.00 ...",
+         *     "Secured Ngultrum 1,027,950.00 ...",
+         *     "Secured Ngultrum 498239.00 ...",
+         *     "Secured Ngultrum 200,000 ...",
+         *     "Secured Nu 20000 Automation Test Entry ..."
+         * ]
+         */
+
+        let grants = [];
+
+
+        if (
+            Array.isArray(
+                profileData.research_grants
+            )
+        ) {
+
+            grants =
+                profileData.research_grants;
+
+        } else if (
+            Array.isArray(
+                profileData.grants
+            )
+        ) {
+
+            grants =
+                profileData.grants;
+
+        } else if (
+            Array.isArray(
+                profileData.researchGrants
+            )
+        ) {
+
+            grants =
+                profileData.researchGrants;
+
+        } else if (
+            Array.isArray(
+                profileData.research_grant
+            )
+        ) {
+
+            grants =
+                profileData.research_grant;
+        }
+
+
+        console.log(
+            "Research grants found:",
+            grants
+        );
+
+
+        if (!grants.length) {
+
+            throw new Error(
+                "profile.json contains no research_grants."
+            );
+        }
+
+
+        renderResearchGrants(
+            grants,
+            grantContainer
+        );
+
+
+        grantContainer.dataset.loaded =
+            "true";
+
+
+        console.log(
+            `Successfully rendered ${grants.length} research grants.`
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Unable to load research grants:",
+            error
+        );
+
+
+        showGrantFallback(
+            grantContainer
+        );
+    }
+}
+
+
+/* =========================================================
+   15. REMOVE GRANT LOADING MESSAGE
+   ========================================================= */
+
+function removeGrantLoadingMessage(container) {
+
+    if (!container) {
+        return;
+    }
+
+
+    /*
+     * Remove loading elements inside the grant container.
+     */
+
+    container
+        .querySelectorAll(
+            ".loading-message, .loading, .loading-grants, #loading-grants"
+        )
+        .forEach((element) => {
+
+            element.remove();
+        });
+
+
+    /*
+     * Also remove plain text loading messages that may
+     * have been inserted by the original HTML.
+     */
+
+    Array.from(
+        container.childNodes
+    ).forEach((node) => {
+
+        if (
+            node.nodeType === Node.TEXT_NODE &&
+            node.textContent
+                .toLowerCase()
+                .includes("loading research grants")
+        ) {
+
+            node.remove();
+        }
+    });
+}
+
+
+/* =========================================================
+   16. RENDER RESEARCH GRANTS
+   ========================================================= */
+
+function renderResearchGrants(
+    grants,
+    container
+) {
+
+    if (
+        !Array.isArray(grants) ||
+        !grants.length
+    ) {
+
+        showGrantFallback(container);
+        return;
+    }
+
+
+    /*
+     * CRITICAL:
+     *
+     * Clear EVERYTHING currently inside the container.
+     *
+     * This removes:
+     *
+     * "01 Research Grant"
+     * "02 Research Grant"
+     * etc.
+     *
+     * and:
+     *
+     * "Loading research grants..."
+     */
 
     container.innerHTML = "";
 
 
-    projects.forEach(
-        (project, index) => {
+    grants.forEach((grant, index) => {
 
-            const card =
-                document.createElement(
-                    "article"
-                );
+        const card =
+            document.createElement("article");
 
-
-            card.className =
-                "project";
+        card.className =
+            "project";
 
 
-            const number =
-                String(
-                    index + 1
-                ).padStart(
-                    2,
-                    "0"
-                );
+        const number =
+            String(index + 1).padStart(
+                2,
+                "0"
+            );
 
+
+        /*
+         * CURRENT DATA:
+         *
+         * Every grant is a STRING.
+         */
+
+        if (
+            typeof grant === "string"
+        ) {
+
+            card.innerHTML = `
+
+                <div class="project-no">
+                    ${escapeHTML(number)}
+                </div>
+
+                <div>
+
+                    <p class="project-kicker">
+                        Research Grant
+                    </p>
+
+                    <p>
+                        ${escapeHTML(grant)}
+                    </p>
+
+                </div>
+
+            `;
+
+
+        } else {
+
+            /*
+             * Future-proof support for structured
+             * grant objects.
+             */
 
             const title =
-                project.project_entity ||
-                project.title ||
-                project.project ||
-                "Research Project";
-
-
-            const role =
-                project.role ||
-                "";
+                grant.title ||
+                grant.project_entity ||
+                grant.project ||
+                grant.name ||
+                "Research Grant";
 
 
             const description =
-                project.description ||
+                grant.description ||
+                grant.details ||
+                "";
+
+
+            const role =
+                grant.role ||
+                grant.position ||
                 "";
 
 
             const funder =
-                project.funder ||
-                project.funding_agency ||
-                project.client ||
+                grant.funder ||
+                grant.funding_agency ||
+                grant.agency ||
+                grant.client ||
+                "";
+
+
+            const amount =
+                grant.amount ||
+                grant.value ||
+                grant.funding ||
                 "";
 
 
             const year =
-                project.year ||
-                project.date ||
+                grant.year ||
+                grant.date ||
                 "";
 
 
@@ -915,558 +1087,39 @@ function renderResearchProjects(
                         funder
                             ? `
                                 <p>
-                                    <strong>
-                                        Funder / Client:
-                                    </strong>
+                                    <strong>Funder:</strong>
                                     ${escapeHTML(funder)}
                                 </p>
                               `
                             : ""
                     }
 
+                    ${
+                        amount
+                            ? `
+                                <p>
+                                    <strong>Funding:</strong>
+                                    ${escapeHTML(amount)}
+                                </p>
+                              `
+                            : ""
+                    }
+
                 </div>
-
             `;
-
-
-            container.appendChild(
-                card
-            );
-
         }
-    );
 
+
+        container.appendChild(card);
+    });
 }
 
 
-
 /* =========================================================
-   13. RESEARCH PROJECT FALLBACK
+   17. GRANT FALLBACK
    ========================================================= */
 
-function showResearchFallback(
-    container
-) {
-
-    if (!container) {
-        return;
-    }
-
-
-    container.innerHTML = `
-
-        <div class="research-status">
-
-            <p>
-                Research projects are currently being updated.
-            </p>
-
-        </div>
-
-    `;
-
-}
-
-
-
-/* =========================================================
-   14. RESEARCH GRANTS LOADER
-   ========================================================= */
-
-async function loadResearchGrants() {
-
-    /*
-     * IMPORTANT
-     * -----------------------------------------------------
-     *
-     * The current index.html may use either:
-     *
-     * #research-grants-list
-     *
-     * or:
-     *
-     * #researchGrants
-     *
-     * Therefore both are supported.
-     */
-
-    const grantContainer =
-        document.querySelector(
-            "#research-grants-list"
-        ) ||
-        document.querySelector(
-            "#researchGrants"
-        );
-
-
-    if (!grantContainer) {
-
-        console.warn(
-            "Research grant container was not found."
-        );
-
-        return;
-
-    }
-
-
-    /*
-     * Prevent duplicate loading.
-     */
-
-    if (
-        grantContainer.dataset.loaded ===
-        "true"
-    ) {
-
-        return;
-
-    }
-
-
-    /*
-     * IMPORTANT:
-     *
-     * Remove any old static loading message
-     * immediately.
-     *
-     * This prevents:
-     *
-     * "Loading research grants..."
-     *
-     * from remaining visible if an old
-     * static element exists inside the container.
-     */
-
-    const oldLoadingElements =
-        grantContainer.querySelectorAll(
-            ".loading-message, .loading, .research-loading"
-        );
-
-
-    oldLoadingElements.forEach(
-        (element) => {
-            element.remove();
-        }
-    );
-
-
-    try {
-
-        /*
-         * The current CV automation stores grants in:
-         *
-         * data/cv/profile.json
-         *
-         * under:
-         *
-         * "research_grants"
-         *
-         */
-
-        const response =
-            await fetch(
-                "data/cv/profile.json",
-                {
-                    cache: "no-store"
-                }
-            );
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                `Grant profile request failed: ${response.status}`
-            );
-
-        }
-
-
-        const profileData =
-            await response.json();
-
-
-        console.log(
-            "profile.json loaded for research grants."
-        );
-
-
-        /*
-         * =================================================
-         * FIND THE GRANT ARRAY
-         * =================================================
-         */
-
-        let grants = null;
-
-
-        if (
-            Array.isArray(
-                profileData.research_grants
-            )
-        ) {
-
-            grants =
-                profileData.research_grants;
-
-        } else if (
-            Array.isArray(
-                profileData.grants
-            )
-        ) {
-
-            grants =
-                profileData.grants;
-
-        } else if (
-            Array.isArray(
-                profileData.researchGrants
-            )
-        ) {
-
-            grants =
-                profileData.researchGrants;
-
-        } else if (
-            Array.isArray(
-                profileData.research_grant
-            )
-        ) {
-
-            grants =
-                profileData.research_grant;
-
-        }
-
-
-        /*
-         * Verify that actual grant records exist.
-         */
-
-        if (
-            !Array.isArray(grants) ||
-            !grants.length
-        ) {
-
-            throw new Error(
-                "profile.json was loaded, but no research_grants array was found."
-            );
-
-        }
-
-
-        /*
-         * =================================================
-         * RENDER ALL GRANTS
-         * =================================================
-         */
-
-        renderResearchGrants(
-            grants,
-            grantContainer
-        );
-
-
-        grantContainer.dataset.loaded =
-            "true";
-
-
-        console.log(
-            `Successfully loaded ${grants.length} research grants from profile.json.`
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            "Unable to load research grants:",
-            error
-        );
-
-
-        /*
-         * IMPORTANT:
-         *
-         * Never leave the user with:
-         *
-         * "Loading research grants..."
-         *
-         */
-
-        showGrantFallback(
-            grantContainer
-        );
-
-    }
-
-}
-
-
-
-/* =========================================================
-   15. RENDER RESEARCH GRANTS
-   ========================================================= */
-
-function renderResearchGrants(
-    grants,
-    container
-) {
-
-    if (
-        !container
-    ) {
-
-        return;
-
-    }
-
-
-    if (
-        !Array.isArray(grants) ||
-        !grants.length
-    ) {
-
-        showGrantFallback(
-            container
-        );
-
-        return;
-
-    }
-
-
-    /*
-     * Completely remove:
-     *
-     * 01 Research Grant
-     * 02 Research Grant
-     * 03 Research Grant
-     *
-     * and any other old static grant cards.
-     */
-
-    container.innerHTML = "";
-
-
-    grants.forEach(
-        (grant, index) => {
-
-            const card =
-                document.createElement(
-                    "article"
-                );
-
-
-            card.className =
-                "project";
-
-
-            const number =
-                String(
-                    index + 1
-                ).padStart(
-                    2,
-                    "0"
-                );
-
-
-            /*
-             * =================================================
-             * CURRENT CV STRUCTURE
-             * =================================================
-             *
-             * Each grant is currently a STRING.
-             *
-             * Example:
-             *
-             * "Secured Ngultrum 522,588.00 from Dorjilung
-             * Hydropower Project Limited..."
-             *
-             * Therefore the complete string is preserved.
-             */
-
-
-            if (
-                typeof grant === "string"
-            ) {
-
-                card.innerHTML = `
-
-                    <div class="project-no">
-                        ${escapeHTML(number)}
-                    </div>
-
-                    <div>
-
-                        <p class="project-kicker">
-                            Research Grant
-                        </p>
-
-                        <p>
-                            ${escapeHTML(grant)}
-                        </p>
-
-                    </div>
-
-                `;
-
-
-            } else if (
-                grant &&
-                typeof grant === "object"
-            ) {
-
-                /*
-                 * Future-proof support for structured
-                 * grant objects.
-                 */
-
-                const title =
-                    grant.title ||
-                    grant.project_entity ||
-                    grant.project ||
-                    grant.name ||
-                    "";
-
-
-                const description =
-                    grant.description ||
-                    grant.details ||
-                    "";
-
-
-                const role =
-                    grant.role ||
-                    grant.position ||
-                    "";
-
-
-                const funder =
-                    grant.funder ||
-                    grant.funding_agency ||
-                    grant.agency ||
-                    grant.client ||
-                    "";
-
-
-                const amount =
-                    grant.amount ||
-                    grant.value ||
-                    grant.funding ||
-                    "";
-
-
-                const year =
-                    grant.year ||
-                    grant.date ||
-                    "";
-
-
-                card.innerHTML = `
-
-                    <div class="project-no">
-                        ${escapeHTML(number)}
-                    </div>
-
-                    <div>
-
-                        ${
-                            year
-                                ? `
-                                    <p class="project-kicker">
-                                        ${escapeHTML(year)}
-                                    </p>
-                                  `
-                                : ""
-                        }
-
-                        ${
-                            title
-                                ? `
-                                    <h3>
-                                        ${escapeHTML(title)}
-                                    </h3>
-                                  `
-                                : `
-                                    <p class="project-kicker">
-                                        Research Grant
-                                    </p>
-                                  `
-                        }
-
-                        ${
-                            role
-                                ? `
-                                    <p>
-                                        <strong>
-                                            ${escapeHTML(role)}
-                                        </strong>
-                                    </p>
-                                  `
-                                : ""
-                        }
-
-                        ${
-                            description
-                                ? `
-                                    <p>
-                                        ${escapeHTML(description)}
-                                    </p>
-                                  `
-                                : ""
-                        }
-
-                        ${
-                            funder
-                                ? `
-                                    <p>
-                                        <strong>
-                                            Funder:
-                                        </strong>
-                                        ${escapeHTML(funder)}
-                                    </p>
-                                  `
-                                : ""
-                        }
-
-                        ${
-                            amount
-                                ? `
-                                    <p>
-                                        <strong>
-                                            Funding:
-                                        </strong>
-                                        ${escapeHTML(amount)}
-                                    </p>
-                                  `
-                                : ""
-                        }
-
-                    </div>
-
-                `;
-
-            }
-
-
-            container.appendChild(
-                card
-            );
-
-        }
-    );
-
-}
-
-
-
-/* =========================================================
-   16. RESEARCH GRANT FALLBACK
-   ========================================================= */
-
-function showGrantFallback(
-    container
-) {
+function showGrantFallback(container) {
 
     if (!container) {
         return;
@@ -1484,13 +1137,11 @@ function showGrantFallback(
         </div>
 
     `;
-
 }
 
 
-
 /* =========================================================
-   17. HTML ESCAPE
+   18. HTML ESCAPE
    ========================================================= */
 
 function escapeHTML(value) {
@@ -1499,63 +1150,34 @@ function escapeHTML(value) {
         value === undefined ||
         value === null
     ) {
-
         return "";
-
     }
 
-
     return String(value)
-
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-
-        .replace(
-            /</g,
-            "&lt;"
-        )
-
-        .replace(
-            />/g,
-            "&gt;"
-        )
-
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
 
 
-
 /* =========================================================
-   18. PUBLIC API
+   19. PUBLIC API
    ========================================================= */
 
 window.loadCVData =
     loadCVData;
 
-
 window.loadResearchProjects =
     loadResearchProjects;
-
 
 window.loadResearchGrants =
     loadResearchGrants;
 
-
 window.renderResearchProjects =
     renderResearchProjects;
 
-
 window.renderResearchGrants =
     renderResearchGrants;
-```
+
