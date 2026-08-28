@@ -1,4 +1,4 @@
-```javascript
+javascript
 /* =========================================================
    MAIN WEBSITE JAVASCRIPT
    Dr. Sangay Wangchuk — Academic Website
@@ -574,4 +574,3 @@ function escapeHTML(value) {
     .replace(/'/g, "&#039;");
 
 }
-```
