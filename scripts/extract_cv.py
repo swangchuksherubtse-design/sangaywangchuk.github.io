@@ -140,7 +140,6 @@ def load_verified_metrics():
         - Metric/JCR year
         - Verification status
 
-    IMPORTANT:
     Only records explicitly marked with
     "verified": true are treated as authoritative.
     """
@@ -433,23 +432,11 @@ def clean_publication_details(details):
     """
     Remove duplicated journal metric information from
     publication details.
-
-    Examples removed:
-
-        (Q1, IF 5.1)
-        (Q1, IF 5. 1)
-        (Q1, IF 6.1)
-        Q1, IF 5.1
-        IF 5.1
-
-    Structured fields are responsible for displaying
-    quartile and impact factor.
     """
 
     if not details:
         return ""
 
-    # Normalize spaces inside IF values.
     details = re.sub(
         r"\bIF\s+(\d+)\s*\.\s*(\d+)",
         r"IF \1.\2",
@@ -457,7 +444,6 @@ def clean_publication_details(details):
         flags=re.IGNORECASE
     )
 
-    # Remove parenthetical combinations.
     details = re.sub(
         r"\(\s*Q[1-4]\s*,\s*IF\s+\d+(?:\.\s*\d+)?\s*\)",
         "",
@@ -465,7 +451,6 @@ def clean_publication_details(details):
         flags=re.IGNORECASE
     )
 
-    # Remove standalone combinations.
     details = re.sub(
         r"\bQ[1-4]\s*,\s*IF\s+\d+(?:\.\s*\d+)?",
         "",
@@ -473,7 +458,6 @@ def clean_publication_details(details):
         flags=re.IGNORECASE
     )
 
-    # Remove standalone quartiles.
     details = re.sub(
         r"\bQ[1-4]\b",
         "",
@@ -481,7 +465,6 @@ def clean_publication_details(details):
         flags=re.IGNORECASE
     )
 
-    # Remove standalone IF values.
     details = re.sub(
         r"\bIF\s+\d+(?:\.\s*\d+)?",
         "",
@@ -489,21 +472,18 @@ def clean_publication_details(details):
         flags=re.IGNORECASE
     )
 
-    # Remove empty parentheses.
     details = re.sub(
         r"\(\s*\)",
         "",
         details
     )
 
-    # Normalize whitespace.
     details = re.sub(
         r"\s+",
         " ",
         details
     ).strip()
 
-    # Clean spaces before punctuation.
     details = re.sub(
         r"\s+\.",
         ".",
@@ -554,15 +534,6 @@ def parse_publications(paragraphs, verified_metrics):
     """
     Extract peer-reviewed journal articles and convert
     them into structured publication records.
-
-    IMPORTANT:
-
-    Journal metrics are taken ONLY from verified
-    journal_metrics.json records.
-
-    CV/legacy metric values are NOT used as a fallback.
-    This prevents incorrect CV metrics from being
-    automatically displayed on the website.
     """
 
     articles = extract_section(
@@ -581,16 +552,8 @@ def parse_publications(paragraphs, verified_metrics):
 
     for article in articles:
 
-        # -------------------------------------------------
-        # Ignore repeated subsection headings
-        # -------------------------------------------------
-
         if article.lower() == "peer-reviewed journal articles":
             continue
-
-        # -------------------------------------------------
-        # Publication must contain a four-digit year
-        # -------------------------------------------------
 
         year_match = re.search(
             r"\((\d{4})\)",
@@ -604,10 +567,6 @@ def parse_publications(paragraphs, verified_metrics):
             year_match.group(1)
         )
 
-        # -------------------------------------------------
-        # DOI
-        # -------------------------------------------------
-
         doi = extract_doi(article)
 
         doi_key = ""
@@ -618,10 +577,6 @@ def parse_publications(paragraphs, verified_metrics):
                 "https://doi.org/",
                 ""
             ).lower()
-
-        # -------------------------------------------------
-        # Remove DOI from citation
-        # -------------------------------------------------
 
         citation_without_doi = article
 
@@ -637,10 +592,6 @@ def parse_publications(paragraphs, verified_metrics):
                 :doi_match.start()
             ].rstrip(" .")
 
-        # -------------------------------------------------
-        # Extract text before and after publication year
-        # -------------------------------------------------
-
         before_year = citation_without_doi[
             :year_match.start()
         ].strip()
@@ -649,22 +600,13 @@ def parse_publications(paragraphs, verified_metrics):
             year_match.end():
         ].strip()
 
-        # Remove leading punctuation after year.
         after_year = re.sub(
             r"^[\s\.\-–—:]+",
             "",
             after_year
         )
 
-        # -------------------------------------------------
-        # Authors
-        # -------------------------------------------------
-
         authors = before_year.rstrip(" .")
-
-        # -------------------------------------------------
-        # Title / Journal / Details
-        # -------------------------------------------------
 
         title = ""
         journal = ""
@@ -690,19 +632,11 @@ def parse_publications(paragraphs, verified_metrics):
                 parts[2:]
             )
 
-        # -------------------------------------------------
-        # Clean title
-        # -------------------------------------------------
-
         title = re.sub(
             r"\s+",
             " ",
             title
         ).strip(" .")
-
-        # -------------------------------------------------
-        # Clean journal
-        # -------------------------------------------------
 
         journal = re.sub(
             r"\s+",
@@ -710,17 +644,9 @@ def parse_publications(paragraphs, verified_metrics):
             journal
         ).strip(" .")
 
-        # -------------------------------------------------
-        # Clean publication details
-        # -------------------------------------------------
-
         details = clean_publication_details(
             details
         )
-
-        # =================================================
-        # METADATA
-        # =================================================
 
         legacy_metadata = PUBLICATION_METADATA.get(
             doi_key,
@@ -732,26 +658,13 @@ def parse_publications(paragraphs, verified_metrics):
             {}
         )
 
-        # -------------------------------------------------
-        # Only explicitly verified records are trusted.
-        # -------------------------------------------------
-
         if verified_metadata.get("verified") is not True:
-
             verified_metadata = {}
-
-        # -------------------------------------------------
-        # Category
-        # -------------------------------------------------
 
         category = legacy_metadata.get(
             "category",
             "Research Publication"
         )
-
-        # -------------------------------------------------
-        # VERIFIED METRICS ONLY
-        # -------------------------------------------------
 
         quartile = verified_metadata.get(
             "quartile",
@@ -767,10 +680,6 @@ def parse_publications(paragraphs, verified_metrics):
             "metricYear",
             ""
         )
-
-        # -------------------------------------------------
-        # Create structured record
-        # -------------------------------------------------
 
         publication = {
 
@@ -921,6 +830,48 @@ def parse_profile(paragraphs):
 
 
 # =========================================================
+# RESEARCH GRANTS
+# =========================================================
+
+def parse_research_grants(paragraphs):
+    """
+    Extract all entries under the RESEARCH GRANTS section.
+
+    Every non-empty paragraph between:
+
+        RESEARCH GRANTS
+
+    and:
+
+        AWARDS AND SCHOLARSHIPS/FINANCIAL SUPPORT
+
+    is treated as a research grant record.
+
+    This intentionally does NOT filter by keywords such as
+    'Secured', 'Nu', or 'Ngultrum'.
+
+    Therefore, new grants added to the CV will automatically
+    be captured without modifying this script.
+    """
+
+    grants = extract_section(
+        paragraphs,
+        "RESEARCH GRANTS",
+        [
+            "AWARDS AND SCHOLARSHIPS/FINANCIAL SUPPORT",
+            "SKILLS AND COMPETENCIES",
+            "RESEARCH PUBLICATIONS"
+        ]
+    )
+
+    return [
+        grant
+        for grant in grants
+        if grant.strip()
+    ]
+
+
+# =========================================================
 # AWARDS
 # =========================================================
 
@@ -941,10 +892,6 @@ def parse_awards(paragraphs):
 # =========================================================
 
 def validate_metadata(publications, verified_metrics):
-    """
-    Validate publication metrics against the verified
-    journal metrics database.
-    """
 
     print("")
     print("------------------------------------------")
@@ -974,10 +921,6 @@ def validate_metadata(publications, verified_metrics):
             doi_key
         )
 
-        # -------------------------------------------------
-        # No metrics record
-        # -------------------------------------------------
-
         if not verified:
 
             missing_verified.append(
@@ -986,10 +929,6 @@ def validate_metadata(publications, verified_metrics):
 
             continue
 
-        # -------------------------------------------------
-        # Metrics record exists but is not verified
-        # -------------------------------------------------
-
         if verified.get("verified") is not True:
 
             unverified_records.append(
@@ -997,10 +936,6 @@ def validate_metadata(publications, verified_metrics):
             )
 
             continue
-
-        # -------------------------------------------------
-        # Compare verified fields
-        # -------------------------------------------------
 
         for field in [
             "quartile",
@@ -1033,10 +968,6 @@ def validate_metadata(publications, verified_metrics):
                     )
                 )
 
-    # =====================================================
-    # MISSING VERIFIED RECORDS
-    # =====================================================
-
     if missing_verified:
 
         print(
@@ -1057,10 +988,6 @@ def validate_metadata(publications, verified_metrics):
             "a metrics record."
         )
 
-    # =====================================================
-    # UNVERIFIED RECORDS
-    # =====================================================
-
     if unverified_records:
 
         print(
@@ -1079,10 +1006,6 @@ def validate_metadata(publications, verified_metrics):
         print(
             "✓ All available metrics records are verified."
         )
-
-    # =====================================================
-    # MISMATCHES
-    # =====================================================
 
     if mismatches:
 
@@ -1245,6 +1168,18 @@ def main():
         paragraphs
     )
 
+    # =====================================================
+    # RESEARCH GRANTS
+    # =====================================================
+
+    research_grants = parse_research_grants(
+        paragraphs
+    )
+
+    # =====================================================
+    # STRUCTURED RESEARCH DATA
+    # =====================================================
+
     with open(
         OUTPUT_DIR / "research.json",
         "w",
@@ -1280,6 +1215,13 @@ def main():
         paragraphs
     )
 
+    # =====================================================
+    # PROFILE JSON
+    #
+    # NEW:
+    # "research_grants": research_grants
+    # =====================================================
+
     with open(
         OUTPUT_DIR / "profile.json",
         "w",
@@ -1291,6 +1233,8 @@ def main():
                 "source": str(CV_FILE),
 
                 "professional_services": profile,
+
+                "research_grants": research_grants,
 
                 "awards_and_scholarships": awards
             },
@@ -1325,6 +1269,10 @@ def main():
     )
 
     print(
+        f"Research grants      : {len(research_grants)}"
+    )
+
+    print(
         f"Research reports     : {len(reports)}"
     )
 
@@ -1339,6 +1287,42 @@ def main():
     print(
         f"Awards/support       : {len(awards)}"
     )
+
+    # =====================================================
+    # RESEARCH GRANT VALIDATION
+    # =====================================================
+
+    print("")
+    print("------------------------------------------")
+    print("RESEARCH GRANT VALIDATION")
+    print("------------------------------------------")
+
+    if research_grants:
+
+        print(
+            f"✓ Research grant extraction PASSED: "
+            f"{len(research_grants)} grant(s) detected."
+        )
+
+        print("")
+        print("Detected research grants:")
+
+        for index, grant in enumerate(
+            research_grants,
+            start=1
+        ):
+
+            print(
+                f"   {index}. {grant}"
+            )
+
+    else:
+
+        print(
+            "⚠ No research grants detected."
+        )
+
+    print("------------------------------------------")
 
     # =====================================================
     # PUBLICATION COUNT VALIDATION
@@ -1430,6 +1414,10 @@ def main():
 
     print(
         "✓ Structured publication data generated."
+    )
+
+    print(
+        "✓ Research grants extracted into profile.json."
     )
 
     print(
