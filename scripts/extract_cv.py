@@ -775,6 +775,22 @@ def parse_research_reports(paragraphs):
 # =========================================================
 
 def parse_research_projects(paragraphs):
+    """
+    Extract research projects from the PROFESSIONAL SERVICES
+    section.
+
+    Projects are kept separate from the RESEARCH GRANTS
+    section.
+
+    The project record remains as written in the CV so that
+    project title, role, funder, and year are preserved.
+
+    Important:
+    - DGPC remains the funder for the Dorjilung project.
+    - DHPP/Dorjilung Hydropower Project Limited remains the
+      project/client entity.
+    - Grant records are NOT duplicated here.
+    """
 
     section = extract_section(
         paragraphs,
@@ -787,12 +803,11 @@ def parse_research_projects(paragraphs):
         ]
     )
 
-    research_keywords = [
-        "Principal Investigator",
-        "Co-principal Investigator",
-        "Co-PI",
-        "Core Member of the research project",
-        "research project"
+    project_keywords = [
+        "Principal Investigator:",
+        "Co-principal Investigator:",
+        "Co-PI of the research project:",
+        "Core Member of the research project:"
     ]
 
     projects = []
@@ -801,7 +816,7 @@ def parse_research_projects(paragraphs):
 
         if any(
             keyword.lower() in paragraph.lower()
-            for keyword in research_keywords
+            for keyword in project_keywords
         ):
 
             projects.append(
