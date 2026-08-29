@@ -1,23 +1,6 @@
 name: Update Website from CV
 
-# ============================================================
-# PREVENT SIMULTANEOUS CV UPDATE WORKFLOWS
-#
-# This prevents two automation runs from trying to push to
-# main at the same time.
-# ============================================================
-
-concurrency:
-  group: update-cv-main
-  cancel-in-progress: false
-
-
-# ============================================================
-# WORKFLOW TRIGGERS
-# ============================================================
-
 on:
-
   push:
     paths:
       - "cv/Sangay Wangchuk CV (complete).docx"
@@ -26,134 +9,101 @@ on:
 
   workflow_dispatch:
 
-
-# ============================================================
-# PERMISSIONS
-# ============================================================
-
 permissions:
   contents: write
 
-
-# ============================================================
-# JOB
-# ============================================================
+concurrency:
+  group: update-cv
+  cancel-in-progress: true
 
 jobs:
-
   update-cv-data:
-
     runs-on: ubuntu-latest
-
 
     steps:
 
-
-      # ======================================================
+      # =====================================================
       # CHECKOUT REPOSITORY
-      #
-      # fetch-depth: 0 is important because the workflow
-      # may need to rebase onto the latest main branch before
-      # pushing the generated CV data and PDF.
-      # ======================================================
+      # =====================================================
 
       - name: Checkout repository
-
         uses: actions/checkout@v4
-
         with:
           fetch-depth: 0
+          ref: main
 
 
-      # ======================================================
+      # =====================================================
       # SET UP PYTHON
-      # ======================================================
+      # =====================================================
 
       - name: Set up Python
-
         uses: actions/setup-python@v5
-
         with:
           python-version: "3.11"
 
 
-      # ======================================================
+      # =====================================================
       # INSTALL PYTHON DEPENDENCIES
-      # ======================================================
+      # =====================================================
 
       - name: Install Python dependencies
-
         run: |
-
           python -m pip install --upgrade pip
-
           pip install python-docx
 
 
-      # ======================================================
+      # =====================================================
       # INSTALL LIBREOFFICE
       #
-      # LibreOffice converts the current Word CV into PDF.
-      # ======================================================
+      # Used to convert the current Word CV into PDF.
+      # =====================================================
 
       - name: Install LibreOffice
-
         run: |
-
           sudo apt-get update
-
           sudo apt-get install -y libreoffice
 
 
-      # ======================================================
+      # =====================================================
       # VERIFY CV FILE
-      # ======================================================
+      # =====================================================
 
       - name: Verify CV file
-
         run: |
 
           if [ ! -f "cv/Sangay Wangchuk CV (complete).docx" ]; then
-
             echo "ERROR: CV file was not found."
-
             exit 1
-
           fi
 
           echo "✓ CV file found."
 
 
-      # ======================================================
-      # VERIFY VERIFIED METRICS FILE
-      # ======================================================
+      # =====================================================
+      # VERIFY VERIFIED JOURNAL METRICS
+      # =====================================================
 
       - name: Verify journal metrics file
-
         run: |
 
           if [ ! -f "data/cv/journal_metrics.json" ]; then
-
             echo "ERROR: journal_metrics.json was not found."
-
-            echo "This file contains the verified journal metrics."
-
+            echo "This file contains the manually verified journal metrics."
             exit 1
-
           fi
 
           echo "✓ journal_metrics.json found."
 
 
-      # ======================================================
+      # =====================================================
       # BACK UP VERIFIED JOURNAL METRICS
       #
       # The CV extraction process must not overwrite the
       # manually verified journal metrics database.
-      # ======================================================
+      # =====================================================
 
       - name: Back up verified journal metrics
-
         run: |
 
           cp \
@@ -163,23 +113,21 @@ jobs:
           echo "✓ Verified journal metrics backed up."
 
 
-      # ======================================================
+      # =====================================================
       # EXTRACT CV DATA
-      # ======================================================
+      # =====================================================
 
       - name: Extract CV data
-
         run: |
 
           python scripts/extract_cv.py
 
 
-      # ======================================================
+      # =====================================================
       # RESTORE VERIFIED JOURNAL METRICS
-      # ======================================================
+      # =====================================================
 
       - name: Restore verified journal metrics
-
         run: |
 
           cp \
@@ -189,96 +137,72 @@ jobs:
           echo "✓ Verified journal metrics restored."
 
 
-      # ======================================================
+      # =====================================================
       # GENERATE UPDATED PDF FROM WORD CV
       #
-      # The Word document is the MASTER CV.
+      # The Word CV is the master CV.
       #
-      # The latest DOCX is converted automatically into PDF.
-      #
-      # The generated PDF replaces the previous PDF.
-      # ======================================================
+      # LibreOffice converts the latest DOCX into PDF.
+      # =====================================================
 
       - name: Generate PDF from latest Word CV
-
         run: |
 
           echo "=========================================="
-
           echo "GENERATING PDF FROM CURRENT WORD CV"
-
           echo "=========================================="
-
 
           mkdir -p assets
 
+          PDF="assets/Sangay Wangchuk CV (complete).pdf"
 
-          # Remove previous generated PDF
+          # Remove any previous generated PDF
+          rm -f "$PDF"
 
-          rm -f "assets/Sangay Wangchuk CV (complete).pdf"
-
-
-          # Convert current Word CV to PDF
-
+          # Convert the current Word CV to PDF
           libreoffice \
             --headless \
             --convert-to pdf \
             --outdir assets \
             "cv/Sangay Wangchuk CV (complete).docx"
 
-
-          # Verify PDF generation
-
-          if [ ! -f "assets/Sangay Wangchuk CV (complete).pdf" ]; then
+          # Verify PDF was generated
+          if [ ! -f "$PDF" ]; then
 
             echo "ERROR: PDF generation failed."
-
             exit 1
 
           fi
 
-
           echo "✓ PDF generated successfully."
 
           echo ""
-
           echo "Generated PDF:"
+          ls -lh "$PDF"
 
-          ls -lh "assets/Sangay Wangchuk CV (complete).pdf"
 
-
-      # ======================================================
+      # =====================================================
       # VERIFY GENERATED DATA FILES
-      # ======================================================
+      # =====================================================
 
       - name: Verify generated CV data
-
         run: |
 
           echo "Checking generated CV data files..."
 
-
           required_files=(
-
             "data/cv/cv_text.json"
-
             "data/cv/profile.json"
-
             "data/cv/publications.json"
-
             "data/cv/research.json"
-
             "data/cv/journal_metrics.json"
-
           )
-
 
           for file in "${required_files[@]}"; do
 
             if [ ! -f "$file" ]; then
 
               echo "ERROR: Missing generated file: $file"
-
               exit 1
 
             fi
@@ -288,53 +212,44 @@ jobs:
           done
 
 
-      # ======================================================
+      # =====================================================
       # VERIFY GENERATED PDF
-      # ======================================================
+      # =====================================================
 
       - name: Verify generated PDF
-
         run: |
 
           PDF="assets/Sangay Wangchuk CV (complete).pdf"
 
-
           if [ ! -f "$PDF" ]; then
 
             echo "ERROR: Generated PDF was not found."
-
             exit 1
 
           fi
 
-
           PDF_SIZE=$(stat -c%s "$PDF")
 
-
           echo "Generated PDF size: ${PDF_SIZE} bytes"
-
 
           if [ "$PDF_SIZE" -lt 10000 ]; then
 
             echo "ERROR: Generated PDF appears to be invalid or empty."
-
             exit 1
 
           fi
 
-
           echo "✓ Generated PDF passed basic validation."
 
 
-      # ======================================================
-      # VALIDATE PUBLICATION DATA
+      # =====================================================
+      # VALIDATE PUBLICATIONS
       #
-      # The website is NOT limited to exactly 30 publications.
-      # Future publications are accepted automatically.
-      # ======================================================
+      # The website is not limited to exactly 30 publications.
+      # Future publications are automatically accepted.
+      # =====================================================
 
       - name: Validate publication data
-
         run: |
 
           python - <<'PY'
@@ -342,32 +257,25 @@ jobs:
           import json
           import sys
 
-
           path = "data/cv/publications.json"
-
 
           with open(
               path,
               "r",
               encoding="utf-8"
           ) as f:
-
               data = json.load(f)
-
 
           articles = data.get(
               "peer_reviewed_journal_articles",
               []
           )
 
-
           count = len(articles)
-
 
           print(
               f"Detected peer-reviewed journal articles: {count}"
           )
-
 
           if count == 0:
 
@@ -377,7 +285,6 @@ jobs:
               )
 
               sys.exit(1)
-
 
           if count >= 30:
 
@@ -398,7 +305,6 @@ jobs:
                   "please verify the CV extraction."
               )
 
-
           print(
               "✓ Publication count validation completed."
           )
@@ -406,83 +312,55 @@ jobs:
           PY
 
 
-      # ======================================================
+      # =====================================================
       # VALIDATE DOI AND VERIFIED METRICS
       #
-      # Missing metrics do NOT stop the website update.
-      # ======================================================
+      # Missing metrics do not stop the workflow.
+      # =====================================================
 
       - name: Validate publication metrics
-
         run: |
 
           python - <<'PY'
 
           import json
 
-
           publications_path = "data/cv/publications.json"
-
           metrics_path = "data/cv/journal_metrics.json"
-
-
-          # --------------------------------------------------
-          # LOAD PUBLICATIONS
-          # --------------------------------------------------
 
           with open(
               publications_path,
               "r",
               encoding="utf-8"
           ) as f:
-
               publication_data = json.load(f)
-
 
           articles = publication_data.get(
               "peer_reviewed_journal_articles",
               []
           )
 
-
-          # --------------------------------------------------
-          # LOAD VERIFIED METRICS
-          # --------------------------------------------------
-
           with open(
               metrics_path,
               "r",
               encoding="utf-8"
           ) as f:
-
               metrics = json.load(f)
 
-
           print("==========================================")
-
           print("VALIDATING VERIFIED JOURNAL METRICS")
-
           print("==========================================")
-
 
           print(
               f"Publication records: {len(articles)}"
           )
 
-
           print(
               f"Verified DOI records: {len(metrics)}"
           )
 
-
-          # --------------------------------------------------
-          # CHECK EACH PUBLICATION
-          # --------------------------------------------------
-
           missing_doi = []
-
           missing_metrics = []
-
 
           for index, article in enumerate(
               articles,
@@ -494,14 +372,10 @@ jobs:
                   ""
               ).strip()
 
-
               title = article.get(
                   "title",
                   "Untitled publication"
               )
-
-
-              # DOI check
 
               if not doi:
 
@@ -511,28 +385,20 @@ jobs:
 
                   continue
 
-
-              # Normalize DOI
-
               doi_key = doi.replace(
                   "https://doi.org/",
                   ""
               ).strip().lower()
-
 
               doi_key = doi_key.replace(
                   "http://doi.org/",
                   ""
               ).strip().lower()
 
-
               doi_key = doi_key.replace(
                   "doi:",
                   ""
               ).strip().lower()
-
-
-              # Check verified metrics
 
               if doi_key not in metrics:
 
@@ -540,56 +406,32 @@ jobs:
                       f"{index}. {doi_key} — {title}"
                   )
 
-
-          # --------------------------------------------------
-          # REPORT MISSING DOI
-          # --------------------------------------------------
-
           if missing_doi:
 
               print("")
-
               print(
                   "WARNING: The following publications "
                   "do not contain a DOI:"
               )
 
-
               for item in missing_doi:
-
-                  print(
-                      f"  - {item}"
-                  )
-
-
-          # --------------------------------------------------
-          # REPORT MISSING VERIFIED METRICS
-          # --------------------------------------------------
+                  print(f"  - {item}")
 
           if missing_metrics:
 
               print("")
-
               print(
                   "WARNING: The following publications "
                   "do not have verified journal metrics:"
               )
 
-
               for item in missing_metrics:
-
-                  print(
-                      f"  - {item}"
-                  )
-
+                  print(f"  - {item}")
 
               print("")
-
               print(
                   "These publications require manual "
-                  "metric verification before their "
-                  "Q1/Q2/Impact Factor information is "
-                  "considered verified."
+                  "metric verification."
               )
 
           else:
@@ -599,9 +441,7 @@ jobs:
                   "verified metric records."
               )
 
-
           print("")
-
           print(
               "✓ Metric verification scan completed."
           )
@@ -609,12 +449,11 @@ jobs:
           PY
 
 
-      # ======================================================
+      # =====================================================
       # PROTECT VERIFIED ACS APPLIED NANO MATERIALS METRICS
-      # ======================================================
+      # =====================================================
 
       - name: Verify ACS Applied Nano Materials metrics
-
         run: |
 
           python - <<'PY'
@@ -622,21 +461,16 @@ jobs:
           import json
           import sys
 
-
           path = "data/cv/journal_metrics.json"
-
 
           with open(
               path,
               "r",
               encoding="utf-8"
           ) as f:
-
               metrics = json.load(f)
 
-
           doi = "10.1021/acsanm.5c05854"
-
 
           if doi not in metrics:
 
@@ -647,31 +481,23 @@ jobs:
 
               sys.exit(1)
 
-
           record = metrics[doi]
 
-
           expected_quartile = "Q2"
-
           expected_if = "5.5"
-
           expected_year = "2024"
-
 
           actual_quartile = str(
               record.get("quartile", "")
           )
 
-
           actual_if = str(
               record.get("impactFactor", "")
           )
 
-
           actual_year = str(
               record.get("metricYear", "")
           )
-
 
           if actual_quartile != expected_quartile:
 
@@ -683,7 +509,6 @@ jobs:
 
               sys.exit(1)
 
-
           if actual_if != expected_if:
 
               print(
@@ -693,7 +518,6 @@ jobs:
               )
 
               sys.exit(1)
-
 
           if actual_year != expected_year:
 
@@ -705,7 +529,6 @@ jobs:
 
               sys.exit(1)
 
-
           print(
               "✓ ACS Applied Nano Materials verified: "
               "Q2 · IF 5.5 (JCR 2024)"
@@ -714,38 +537,31 @@ jobs:
           PY
 
 
-      # ======================================================
+      # =====================================================
       # CHECK VERIFIED METRIC RECORD COUNT
-      # ======================================================
+      # =====================================================
 
       - name: Check verified metrics count
-
         run: |
 
           python - <<'PY'
 
           import json
 
-
           path = "data/cv/journal_metrics.json"
-
 
           with open(
               path,
               "r",
               encoding="utf-8"
           ) as f:
-
               metrics = json.load(f)
 
-
           count = len(metrics)
-
 
           print(
               f"Verified journal metric records: {count}"
           )
-
 
           if count >= 30:
 
@@ -769,12 +585,11 @@ jobs:
           PY
 
 
-      # ======================================================
+      # =====================================================
       # DISPLAY AUTOMATION SUMMARY
-      # ======================================================
+      # =====================================================
 
       - name: Display CV update summary
-
         run: |
 
           python - <<'PY'
@@ -782,66 +597,49 @@ jobs:
           import json
           import os
 
-
           publications_path = "data/cv/publications.json"
-
           research_path = "data/cv/research.json"
-
           profile_path = "data/cv/profile.json"
-
 
           with open(
               publications_path,
               "r",
               encoding="utf-8"
           ) as f:
-
               publications = json.load(f)
-
 
           with open(
               research_path,
               "r",
               encoding="utf-8"
           ) as f:
-
               research = json.load(f)
-
 
           with open(
               profile_path,
               "r",
               encoding="utf-8"
           ) as f:
-
               profile = json.load(f)
-
 
           articles = publications.get(
               "peer_reviewed_journal_articles",
               []
           )
 
-
           projects = research.get(
               "projects",
               []
           )
-
 
           services = profile.get(
               "professional_services",
               []
           )
 
-
-          pdf_path = (
-              "assets/Sangay Wangchuk CV (complete).pdf"
-          )
-
+          pdf_path = "assets/Sangay Wangchuk CV (complete).pdf"
 
           pdf_exists = os.path.exists(pdf_path)
-
 
           pdf_size = (
               os.path.getsize(pdf_path)
@@ -849,190 +647,230 @@ jobs:
               else 0
           )
 
-
           print("")
-
           print("==========================================")
-
           print("CV → WEBSITE AUTOMATION SUMMARY")
-
           print("==========================================")
-
 
           print(
               f"Peer-reviewed publications: {len(articles)}"
           )
 
-
           print(
               f"Research projects: {len(projects)}"
           )
-
 
           print(
               f"Professional service records: {len(services)}"
           )
 
-
           print(
               f"Generated PDF: {pdf_exists}"
           )
-
 
           print(
               f"PDF size: {pdf_size} bytes"
           )
 
-
           print("==========================================")
-
           print("✓ CV extraction completed successfully.")
-
           print("✓ Website data files validated.")
-
           print("✓ Latest Word CV converted to PDF.")
-
           print("✓ PDF is ready for website deployment.")
-
-          print("✓ Automation pipeline completed.")
-
           print("==========================================")
-
 
           PY
 
 
-      # ======================================================
-      # CONFIGURE GIT
-      # ======================================================
+      # =====================================================
+      # SYNCHRONIZE WITH LATEST MAIN
+      #
+      # IMPORTANT:
+      #
+      # We DO NOT rebase the workflow's generated commit.
+      #
+      # We first fetch the latest main and then reset the
+      # local branch to that latest main.
+      #
+      # This prevents binary PDF merge/rebase conflicts.
+      # =====================================================
 
-      - name: Configure Git
-
+      - name: Synchronize with latest main
         run: |
+
+          echo "=========================================="
+          echo "SYNCHRONIZING WITH LATEST MAIN"
+          echo "=========================================="
+
+          git fetch origin main
+
+          echo "Current local commit:"
+          git rev-parse HEAD
+
+          echo "Latest remote main:"
+          git rev-parse origin/main
+
+          # Save all newly generated CV data and PDF
+          # outside the Git working tree.
+
+          mkdir -p /tmp/cv-generated
+
+          cp -R data/cv /tmp/cv-generated/
+
+          cp \
+            "assets/Sangay Wangchuk CV (complete).pdf" \
+            "/tmp/cv-generated/Sangay Wangchuk CV (complete).pdf"
+
+          # Reset the local repository to the latest remote main.
+          #
+          # This intentionally discards the local generated
+          # changes from the Git index/worktree only.
+          #
+          # The generated files are safely stored in /tmp and
+          # will be copied back immediately afterward.
+
+          git reset --hard origin/main
+
+          echo "✓ Local repository synchronized with latest main."
+
+
+      # =====================================================
+      # RESTORE GENERATED CV DATA AFTER SYNCHRONIZATION
+      # =====================================================
+
+      - name: Restore generated CV data
+        run: |
+
+          echo "Restoring newly generated CV data..."
+
+          rm -rf data/cv
+
+          cp -R /tmp/cv-generated/cv data/
+
+          mkdir -p assets
+
+          cp \
+            "/tmp/cv-generated/Sangay Wangchuk CV (complete).pdf" \
+            "assets/Sangay Wangchuk CV (complete).pdf"
+
+          echo "✓ Generated CV data restored."
+          echo "✓ Generated PDF restored."
+
+
+      # =====================================================
+      # FINAL VALIDATION AFTER SYNCHRONIZATION
+      # =====================================================
+
+      - name: Final validation
+        run: |
+
+          echo "=========================================="
+          echo "FINAL CV FILE VALIDATION"
+          echo "=========================================="
+
+          required_files=(
+            "data/cv/cv_text.json"
+            "data/cv/profile.json"
+            "data/cv/publications.json"
+            "data/cv/research.json"
+            "data/cv/journal_metrics.json"
+            "assets/Sangay Wangchuk CV (complete).pdf"
+          )
+
+          for file in "${required_files[@]}"; do
+
+            if [ ! -f "$file" ]; then
+
+              echo "ERROR: Required file missing: $file"
+              exit 1
+
+            fi
+
+            echo "✓ $file"
+
+          done
+
+          PDF_SIZE=$(stat -c%s \
+            "assets/Sangay Wangchuk CV (complete).pdf")
+
+          echo ""
+          echo "Final PDF size: ${PDF_SIZE} bytes"
+
+          if [ "$PDF_SIZE" -lt 10000 ]; then
+
+            echo "ERROR: Final PDF appears invalid."
+            exit 1
+
+          fi
+
+          echo ""
+          echo "✓ FINAL VALIDATION PASSED."
+
+
+      # =====================================================
+      # COMMIT UPDATED CV DATA + PDF
+      #
+      # The generated PDF replaces the old PDF.
+      #
+      # No PDF merge or rebase is performed.
+      # =====================================================
+
+      - name: Commit updated CV data and PDF
+        run: |
+
+          echo "=========================================="
+          echo "COMMITTING UPDATED CV DATA"
+          echo "=========================================="
 
           git config user.name "github-actions[bot]"
 
           git config user.email \
             "41898282+github-actions[bot]@users.noreply.github.com"
 
-
-      # ======================================================
-      # STAGE GENERATED FILES
-      # ======================================================
-
-      - name: Stage updated CV data and PDF
-
-        run: |
-
           git add data/cv/
 
-          git add "assets/Sangay Wangchuk CV (complete).pdf"
+          git add \
+            "assets/Sangay Wangchuk CV (complete).pdf"
 
-
-          echo "Files staged for automatic update:"
-
+          echo ""
+          echo "Files staged for commit:"
           git status --short
-
-
-      # ======================================================
-      # CREATE AUTOMATED COMMIT
-      # ======================================================
-
-      - name: Create automated CV update commit
-
-        run: |
 
           if git diff --cached --quiet; then
 
+            echo ""
             echo "No CV data or PDF changes detected."
 
-            exit 0
+          else
+
+            git commit \
+              -m "Auto-update website from CV"
+
+            echo ""
+            echo "Pushing updated CV data and PDF..."
+
+            git push origin HEAD:main
 
           fi
 
 
-          git commit \
-            -m "Auto-update website from CV"
+      # =====================================================
+      # COMPLETION MESSAGE
+      # =====================================================
 
-
-          echo "✓ Automated CV update commit created."
-
-
-      # ======================================================
-      # SYNCHRONIZE WITH LATEST MAIN
-      #
-      # IMPORTANT:
-      #
-      # Another GitHub action or manual change may have
-      # updated main while this workflow was running.
-      #
-      # We therefore fetch the newest main and rebase our
-      # automatic CV commit on top of it.
-      # ======================================================
-
-      - name: Synchronize with latest main branch
-
+      - name: Workflow completed
         run: |
 
-          echo "=========================================="
-
-          echo "SYNCHRONIZING WITH LATEST MAIN"
-
-          echo "=========================================="
-
-
-          git fetch origin main
-
-
-          echo "Current local commit:"
-
-          git rev-parse HEAD
-
-
           echo ""
-
-          echo "Latest remote main:"
-
-          git rev-parse origin/main
-
-
-          # Rebase automatic CV update on latest main
-
-          git rebase origin/main
-
-
-          echo ""
-
-          echo "✓ Repository synchronized with latest main."
-
-          echo "✓ Automatic CV commit rebased successfully."
-
-
-      # ======================================================
-      # PUSH UPDATED WEBSITE DATA AND PDF
-      # ======================================================
-
-      - name: Push updated CV data and PDF
-
-        run: |
-
           echo "=========================================="
-
-          echo "PUSHING CV UPDATE TO MAIN"
-
+          echo "CV WEBSITE AUTOMATION COMPLETED"
           echo "=========================================="
-
-
-          git push origin HEAD:main
-
-
-          echo ""
-
-          echo "✓ CV data pushed successfully."
-
-          echo "✓ Generated PDF pushed successfully."
-
-          echo "✓ Website deployment can now proceed."
-
+          echo "✓ Word CV processed"
+          echo "✓ CV data extracted"
+          echo "✓ Verified journal metrics protected"
+          echo "✓ Latest Word CV converted to PDF"
+          echo "✓ Generated PDF committed to repository"
+          echo "✓ Website data committed"
+          echo "✓ Changes pushed to main"
+          echo "✓ GitHub Pages can now deploy the update"
           echo "=========================================="
-
