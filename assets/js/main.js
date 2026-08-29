@@ -1,4 +1,3 @@
-javascript
 /* =========================================================
    main.js
    Sangay Wangchuk Academic Profile
