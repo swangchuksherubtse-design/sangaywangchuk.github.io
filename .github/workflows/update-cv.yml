@@ -6,6 +6,7 @@ on:
       - "cv/Sangay Wangchuk CV (complete).docx"
       - ".github/workflows/update-cv.yml"
       - "scripts/extract_cv.py"
+
   workflow_dispatch:
 
 permissions:
@@ -16,132 +17,253 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+      # =====================================================
+      # CHECKOUT REPOSITORY
+      # =====================================================
+
       - name: Checkout repository
         uses: actions/checkout@v4
+
+
+      # =====================================================
+      # SET UP PYTHON
+      # =====================================================
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
+
+      # =====================================================
+      # INSTALL PYTHON DEPENDENCIES
+      # =====================================================
+
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
           pip install python-docx
+
+
+      # =====================================================
+      # INSTALL LIBREOFFICE
+      #
+      # Used to convert the latest Word CV into PDF.
+      # =====================================================
 
       - name: Install LibreOffice
         run: |
           sudo apt-get update
           sudo apt-get install -y libreoffice
 
+
+      # =====================================================
+      # VERIFY CV FILE
+      # =====================================================
+
       - name: Verify CV file
         run: |
+
           if [ ! -f "cv/Sangay Wangchuk CV (complete).docx" ]; then
             echo "ERROR: CV file was not found."
             exit 1
           fi
 
-          echo "CV file found."
+          echo "✓ CV file found."
+
+
+      # =====================================================
+      # VERIFY VERIFIED METRICS FILE
+      # =====================================================
 
       - name: Verify journal metrics file
         run: |
+
           if [ ! -f "data/cv/journal_metrics.json" ]; then
             echo "ERROR: journal_metrics.json was not found."
+            echo "This file contains the verified journal metrics."
             exit 1
           fi
 
-          echo "journal_metrics.json found."
+          echo "✓ journal_metrics.json found."
+
+
+      # =====================================================
+      # BACK UP VERIFIED JOURNAL METRICS
+      #
+      # The CV extraction process must not overwrite the
+      # manually verified journal metrics database.
+      # =====================================================
 
       - name: Back up verified journal metrics
         run: |
+
           cp \
             data/cv/journal_metrics.json \
             /tmp/journal_metrics_verified.json
 
-          echo "Verified journal metrics backed up."
+          echo "✓ Verified journal metrics backed up."
+
+
+      # =====================================================
+      # EXTRACT CV DATA
+      # =====================================================
 
       - name: Extract CV data
         run: |
+
           python scripts/extract_cv.py
+
+
+      # =====================================================
+      # RESTORE VERIFIED JOURNAL METRICS
+      # =====================================================
 
       - name: Restore verified journal metrics
         run: |
+
           cp \
             /tmp/journal_metrics_verified.json \
             data/cv/journal_metrics.json
 
-          echo "Verified journal metrics restored."
+          echo "✓ Verified journal metrics restored."
+
 
       # =====================================================
-      # GENERATE CURRENT PDF FROM CURRENT WORD CV
+      # GENERATE UPDATED PDF FROM WORD CV
+      #
+      # The Word document is the master CV.
+      #
+      # LibreOffice converts the current DOCX into PDF.
+      #
+      # The generated PDF replaces the previous PDF.
       # =====================================================
 
-      - name: Generate updated CV PDF
+      - name: Generate PDF from latest Word CV
         run: |
-          PDF_DIR="assets"
-          CV_FILE="cv/Sangay Wangchuk CV (complete).docx"
-          PDF_FILE="assets/Sangay Wangchuk CV (complete).pdf"
 
-          mkdir -p "$PDF_DIR"
+          echo "=========================================="
+          echo "GENERATING PDF FROM CURRENT WORD CV"
+          echo "=========================================="
 
-          echo "Removing previous generated CV PDF..."
+          mkdir -p assets
 
-          rm -f "$PDF_FILE"
+          # Remove any previous generated PDF
+          rm -f "assets/Sangay Wangchuk CV (complete).pdf"
 
-          echo "Converting latest Word CV to PDF..."
-
+          # Convert the current Word CV to PDF
           libreoffice \
             --headless \
             --convert-to pdf \
-            --outdir "$PDF_DIR" \
-            "$CV_FILE"
+            --outdir assets \
+            "cv/Sangay Wangchuk CV (complete).docx"
 
-          if [ ! -f "$PDF_FILE" ]; then
-            echo "ERROR: PDF conversion failed."
+          # LibreOffice creates the PDF using the DOCX filename.
+          # Verify that it was successfully generated.
+
+          if [ ! -f "assets/Sangay Wangchuk CV (complete).pdf" ]; then
+
+            echo "ERROR: PDF generation failed."
+
             exit 1
+
           fi
 
-          echo "Updated CV PDF generated successfully."
+          echo "✓ PDF generated successfully."
+
+          echo ""
+          echo "Generated PDF:"
+          ls -lh "assets/Sangay Wangchuk CV (complete).pdf"
+
 
       # =====================================================
-      # VERIFY GENERATED FILES
+      # VERIFY GENERATED DATA FILES
       # =====================================================
 
       - name: Verify generated CV data
         run: |
+
+          echo "Checking generated CV data files..."
+
           required_files=(
             "data/cv/cv_text.json"
             "data/cv/profile.json"
             "data/cv/publications.json"
             "data/cv/research.json"
             "data/cv/journal_metrics.json"
-            "assets/Sangay Wangchuk CV (complete).pdf"
           )
 
-          echo "Checking generated files..."
-
           for file in "${required_files[@]}"; do
+
             if [ ! -f "$file" ]; then
+
               echo "ERROR: Missing generated file: $file"
+
               exit 1
+
             fi
 
-            echo "Found: $file"
+            echo "✓ Found: $file"
+
           done
+
+
+      # =====================================================
+      # VERIFY GENERATED PDF
+      # =====================================================
+
+      - name: Verify generated PDF
+        run: |
+
+          PDF="assets/Sangay Wangchuk CV (complete).pdf"
+
+          if [ ! -f "$PDF" ]; then
+
+            echo "ERROR: Generated PDF was not found."
+
+            exit 1
+
+          fi
+
+          PDF_SIZE=$(stat -c%s "$PDF")
+
+          echo "Generated PDF size: ${PDF_SIZE} bytes"
+
+          if [ "$PDF_SIZE" -lt 10000 ]; then
+
+            echo "ERROR: Generated PDF appears to be invalid or empty."
+
+            exit 1
+
+          fi
+
+          echo "✓ Generated PDF passed basic validation."
+
 
       # =====================================================
       # VALIDATE PUBLICATIONS
+      #
+      # The website must not be limited to exactly 30
+      # publications. Future publications are accepted.
       # =====================================================
 
       - name: Validate publication data
         run: |
+
           python - <<'PY'
+
           import json
           import sys
 
           path = "data/cv/publications.json"
 
-          with open(path, "r", encoding="utf-8") as f:
+          with open(
+              path,
+              "r",
+              encoding="utf-8"
+          ) as f:
+
               data = json.load(f)
 
           articles = data.get(
@@ -155,117 +277,227 @@ jobs:
               f"Detected peer-reviewed journal articles: {count}"
           )
 
+          # -------------------------------------------------
+          # BASIC VALIDATION
+          # -------------------------------------------------
+
           if count == 0:
+
               print(
                   "ERROR: No peer-reviewed journal articles "
                   "were detected."
               )
+
               sys.exit(1)
 
+          # -------------------------------------------------
+          # FUTURE-PROOF VALIDATION
+          # -------------------------------------------------
+
           if count >= 30:
+
               print(
-                  f"Publication validation PASSED: "
+                  f"✓ Publication validation PASSED: "
                   f"{count} articles detected."
               )
+
           else:
+
               print(
-                  f"WARNING: Only {count} peer-reviewed "
+                  f"⚠ WARNING: Only {count} peer-reviewed "
                   f"journal articles were detected."
               )
 
-          print("Publication count validation completed.")
+              print(
+                  "The website update will continue, but "
+                  "please verify the CV extraction."
+              )
+
+          print(
+              "✓ Publication count validation completed."
+          )
+
           PY
+
 
       # =====================================================
       # VALIDATE DOI AND VERIFIED METRICS
+      #
+      # Missing metrics do NOT stop the website update.
       # =====================================================
 
       - name: Validate publication metrics
         run: |
+
           python - <<'PY'
+
           import json
 
           publications_path = "data/cv/publications.json"
           metrics_path = "data/cv/journal_metrics.json"
 
-          with open(publications_path, "r", encoding="utf-8") as f:
-              publication_data = json.load(f)
+          # -------------------------------------------------
+          # LOAD PUBLICATIONS
+          # -------------------------------------------------
 
-          with open(metrics_path, "r", encoding="utf-8") as f:
-              metrics = json.load(f)
+          with open(
+              publications_path,
+              "r",
+              encoding="utf-8"
+          ) as f:
+
+              publication_data = json.load(f)
 
           articles = publication_data.get(
               "peer_reviewed_journal_articles",
               []
           )
 
+          # -------------------------------------------------
+          # LOAD VERIFIED METRICS
+          # -------------------------------------------------
+
+          with open(
+              metrics_path,
+              "r",
+              encoding="utf-8"
+          ) as f:
+
+              metrics = json.load(f)
+
           print("==========================================")
           print("VALIDATING VERIFIED JOURNAL METRICS")
           print("==========================================")
 
-          print(f"Publication records: {len(articles)}")
-          print(f"Verified DOI records: {len(metrics)}")
+          print(
+              f"Publication records: {len(articles)}"
+          )
+
+          print(
+              f"Verified DOI records: {len(metrics)}"
+          )
+
+          # -------------------------------------------------
+          # CHECK EACH PUBLICATION
+          # -------------------------------------------------
 
           missing_doi = []
           missing_metrics = []
 
-          for index, article in enumerate(articles, start=1):
+          for index, article in enumerate(
+              articles,
+              start=1
+          ):
 
-              doi = article.get("doi", "").strip()
+              doi = article.get(
+                  "doi",
+                  ""
+              ).strip()
+
               title = article.get(
                   "title",
                   "Untitled publication"
               )
 
+              # ---------------------------------------------
+              # DOI CHECK
+              # ---------------------------------------------
+
               if not doi:
+
                   missing_doi.append(
                       f"{index}. {title}"
                   )
+
                   continue
+
+              # ---------------------------------------------
+              # NORMALIZE DOI
+              # ---------------------------------------------
 
               doi_key = doi.replace(
                   "https://doi.org/",
                   ""
-              ).replace(
+              ).strip().lower()
+
+              doi_key = doi_key.replace(
                   "http://doi.org/",
                   ""
-              ).replace(
+              ).strip().lower()
+
+              doi_key = doi_key.replace(
                   "doi:",
                   ""
               ).strip().lower()
 
+              # ---------------------------------------------
+              # VERIFIED METRICS CHECK
+              # ---------------------------------------------
+
               if doi_key not in metrics:
+
                   missing_metrics.append(
                       f"{index}. {doi_key} — {title}"
                   )
 
+          # -------------------------------------------------
+          # REPORT MISSING DOI
+          # -------------------------------------------------
+
           if missing_doi:
+
               print("")
               print(
-                  "WARNING: Publications without DOI:"
+                  "WARNING: The following publications "
+                  "do not contain a DOI:"
               )
 
               for item in missing_doi:
-                  print(f"  - {item}")
+
+                  print(
+                      f"  - {item}"
+                  )
+
+          # -------------------------------------------------
+          # REPORT MISSING VERIFIED METRICS
+          # -------------------------------------------------
 
           if missing_metrics:
+
               print("")
               print(
-                  "WARNING: Publications without "
-                  "verified journal metrics:"
+                  "WARNING: The following publications "
+                  "do not have verified journal metrics:"
               )
 
               for item in missing_metrics:
-                  print(f"  - {item}")
-          else:
+
+                  print(
+                      f"  - {item}"
+                  )
+
+              print("")
               print(
-                  "All DOI-bearing publications have "
+                  "These publications require manual "
+                  "metric verification before their "
+                  "Q1/Q2/Impact Factor information is "
+                  "considered verified."
+              )
+
+          else:
+
+              print(
+                  "✓ All DOI-bearing publications have "
                   "verified metric records."
               )
 
           print("")
-          print("Metric verification scan completed.")
+          print(
+              "✓ Metric verification scan completed."
+          )
+
           PY
+
 
       # =====================================================
       # PROTECT VERIFIED ACS APPLIED NANO MATERIALS METRICS
@@ -273,22 +505,31 @@ jobs:
 
       - name: Verify ACS Applied Nano Materials metrics
         run: |
+
           python - <<'PY'
+
           import json
           import sys
 
           path = "data/cv/journal_metrics.json"
 
-          with open(path, "r", encoding="utf-8") as f:
+          with open(
+              path,
+              "r",
+              encoding="utf-8"
+          ) as f:
+
               metrics = json.load(f)
 
           doi = "10.1021/acsanm.5c05854"
 
           if doi not in metrics:
+
               print(
                   "ERROR: ACS Applied Nano Materials "
-                  "record is missing."
+                  "record is missing from journal_metrics.json."
               )
+
               sys.exit(1)
 
           record = metrics[doi]
@@ -310,44 +551,62 @@ jobs:
           )
 
           if actual_quartile != expected_quartile:
+
               print(
-                  f"ERROR: Quartile is {actual_quartile}; "
+                  "ERROR: ACS Applied Nano Materials "
+                  f"quartile is {actual_quartile}; "
                   f"expected {expected_quartile}."
               )
+
               sys.exit(1)
 
           if actual_if != expected_if:
+
               print(
-                  f"ERROR: Impact Factor is {actual_if}; "
+                  "ERROR: ACS Applied Nano Materials "
+                  f"Impact Factor is {actual_if}; "
                   f"expected {expected_if}."
               )
+
               sys.exit(1)
 
           if actual_year != expected_year:
+
               print(
-                  f"ERROR: Metric year is {actual_year}; "
+                  "ERROR: ACS Applied Nano Materials "
+                  f"metric year is {actual_year}; "
                   f"expected {expected_year}."
               )
+
               sys.exit(1)
 
           print(
-              "ACS Applied Nano Materials verified: "
+              "✓ ACS Applied Nano Materials verified: "
               "Q2 · IF 5.5 (JCR 2024)"
           )
+
           PY
 
+
       # =====================================================
-      # CHECK VERIFIED METRICS COUNT
+      # CHECK VERIFIED METRIC RECORD COUNT
       # =====================================================
 
       - name: Check verified metrics count
         run: |
+
           python - <<'PY'
+
           import json
 
           path = "data/cv/journal_metrics.json"
 
-          with open(path, "r", encoding="utf-8") as f:
+          with open(
+              path,
+              "r",
+              encoding="utf-8"
+          ) as f:
+
               metrics = json.load(f)
 
           count = len(metrics)
@@ -357,16 +616,26 @@ jobs:
           )
 
           if count >= 30:
+
               print(
-                  f"{count} verified metric records "
+                  f"✓ {count} verified metric records "
                   "are currently stored."
               )
+
           else:
+
               print(
-                  f"WARNING: {count} verified metric records "
+                  f"⚠ {count} verified metric records "
                   "are currently stored."
               )
+
+              print(
+                  "New publications should be verified "
+                  "before adding their metrics."
+              )
+
           PY
+
 
       # =====================================================
       # DISPLAY AUTOMATION SUMMARY
@@ -374,28 +643,38 @@ jobs:
 
       - name: Display CV update summary
         run: |
+
           python - <<'PY'
+
           import json
+          import os
+
+          publications_path = "data/cv/publications.json"
+          research_path = "data/cv/research.json"
+          profile_path = "data/cv/profile.json"
 
           with open(
-              "data/cv/publications.json",
+              publications_path,
               "r",
               encoding="utf-8"
           ) as f:
+
               publications = json.load(f)
 
           with open(
-              "data/cv/research.json",
+              research_path,
               "r",
               encoding="utf-8"
           ) as f:
+
               research = json.load(f)
 
           with open(
-              "data/cv/profile.json",
+              profile_path,
               "r",
               encoding="utf-8"
           ) as f:
+
               profile = json.load(f)
 
           articles = publications.get(
@@ -413,6 +692,16 @@ jobs:
               []
           )
 
+          pdf_path = "assets/Sangay Wangchuk CV (complete).pdf"
+
+          pdf_exists = os.path.exists(pdf_path)
+
+          pdf_size = (
+              os.path.getsize(pdf_path)
+              if pdf_exists
+              else 0
+          )
+
           print("")
           print("==========================================")
           print("CV → WEBSITE AUTOMATION SUMMARY")
@@ -427,32 +716,33 @@ jobs:
               f"Professional service records: {len(services)}"
           )
           print(
-              "Current Word CV:"
+              f"Generated PDF: {pdf_exists}"
           )
           print(
-              "cv/Sangay Wangchuk CV (complete).docx"
-          )
-          print(
-              "Current website PDF:"
-          )
-          print(
-              "assets/Sangay Wangchuk CV (complete).pdf"
+              f"PDF size: {pdf_size} bytes"
           )
           print("==========================================")
-          print("CV extraction completed successfully.")
-          print("Website data files validated.")
-          print("Current Word CV converted to PDF.")
-          print("Old PDF replaced.")
-          print("Automation pipeline completed.")
+          print("✓ CV extraction completed successfully.")
+          print("✓ Website data files validated.")
+          print("✓ Latest Word CV converted to PDF.")
+          print("✓ PDF is ready for website deployment.")
+          print("✓ Automation pipeline completed.")
           print("==========================================")
+
           PY
 
+
       # =====================================================
-      # COMMIT UPDATED DATA AND PDF
+      # COMMIT UPDATED WEBSITE DATA + PDF
+      #
+      # The generated PDF is included here.
+      #
+      # This replaces the old manually uploaded PDF.
       # =====================================================
 
       - name: Commit updated CV data and PDF
         run: |
+
           git config user.name "github-actions[bot]"
 
           git config user.email \
@@ -462,11 +752,15 @@ jobs:
           git add "assets/Sangay Wangchuk CV (complete).pdf"
 
           if git diff --cached --quiet; then
+
             echo "No CV data or PDF changes detected."
+
           else
+
             git commit \
               -m "Auto-update website from CV"
 
             git push
+
           fi
 
