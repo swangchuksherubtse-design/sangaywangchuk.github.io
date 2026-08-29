@@ -312,36 +312,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 /* =========================================================
-   DATA PATH HELPER
-   ========================================================= */
-
-function getCVDataURL(filename) {
-
-    /*
-     * GitHub Pages project-site safe path.
-     *
-     * index.html is at:
-     * /sangaywangchuk.github.io/
-     *
-     * Data files are at:
-     * /sangaywangchuk.github.io/data/cv/
-     */
-
-    return new URL(
-        `data/cv/${filename}`,
-        document.baseURI
-    ).href;
-}
-
-
-/* =========================================================
    11. CV PROFILE DATA LOADER
    ========================================================= */
 
 async function loadCVData() {
 
     const profileURL =
-        getCVDataURL("profile.json");
+        "data/cv/profile.json";
 
     console.log(
         "Loading CV profile:",
@@ -352,7 +329,7 @@ async function loadCVData() {
 
         const response =
             await fetch(
-                `${profileURL}?v=${Date.now()}`,
+                profileURL + "?v=" + Date.now(),
                 {
                     cache: "no-store"
                 }
@@ -533,16 +510,11 @@ async function loadResearchProjects() {
     if (!projectContainer) {
 
         console.warn(
-            "Research project container #research-projects-list was not found."
+            "Research project container not found."
         );
 
         return;
     }
-
-    console.log(
-        "Research project container found."
-    );
-
 
     projectContainer.innerHTML = `
         <p class="research-projects-loading">
@@ -552,7 +524,7 @@ async function loadResearchProjects() {
 
 
     const researchURL =
-        getCVDataURL("research.json");
+        "data/cv/research.json";
 
     console.log(
         "Loading research data:",
@@ -564,7 +536,7 @@ async function loadResearchProjects() {
 
         const response =
             await fetch(
-                `${researchURL}?v=${Date.now()}`,
+                researchURL + "?v=" + Date.now(),
                 {
                     cache: "no-store"
                 }
@@ -600,7 +572,7 @@ async function loadResearchProjects() {
         if (!projects.length) {
 
             throw new Error(
-                "research.json contains no projects array or the array is empty."
+                "No research projects found in research.json."
             );
         }
 
@@ -628,10 +600,16 @@ async function loadResearchProjects() {
         );
 
 
-        showResearchFallback(
-            projectContainer,
-            error
-        );
+        projectContainer.innerHTML = `
+            <div class="research-status">
+                <p>
+                    Research projects could not be loaded.
+                </p>
+                <small>
+                    ${escapeHTML(error.message)}
+                </small>
+            </div>
+        `;
     }
 }
 
@@ -830,15 +808,11 @@ async function loadResearchGrants() {
     if (!grantContainer) {
 
         console.warn(
-            "Research grant container #research-grants-list was not found."
+            "Research grant container not found."
         );
 
         return;
     }
-
-    console.log(
-        "Research grant container found."
-    );
 
 
     grantContainer.innerHTML = `
@@ -849,7 +823,7 @@ async function loadResearchGrants() {
 
 
     const profileURL =
-        getCVDataURL("profile.json");
+        "data/cv/profile.json";
 
 
     console.log(
@@ -862,7 +836,7 @@ async function loadResearchGrants() {
 
         const response =
             await fetch(
-                `${profileURL}?v=${Date.now()}`,
+                profileURL + "?v=" + Date.now(),
                 {
                     cache: "no-store"
                 }
@@ -886,17 +860,6 @@ async function loadResearchGrants() {
             profileData
         );
 
-
-        /*
-         * =================================================
-         * PRIMARY AUTOMATION FIELD
-         * =================================================
-         *
-         * Current CV automation stores grants in:
-         *
-         * profile.json
-         * → research_grants
-         */
 
         let grants = [];
 
@@ -976,10 +939,16 @@ async function loadResearchGrants() {
         );
 
 
-        showGrantFallback(
-            grantContainer,
-            error
-        );
+        grantContainer.innerHTML = `
+            <div class="research-status">
+                <p>
+                    Research grants could not be loaded.
+                </p>
+                <small>
+                    ${escapeHTML(error.message)}
+                </small>
+            </div>
+        `;
     }
 }
 
@@ -1026,12 +995,6 @@ function renderResearchGrants(
             );
 
 
-        /*
-         * =================================================
-         * PLAIN STRING GRANT
-         * =================================================
-         */
-
         if (
             typeof grant === "string"
         ) {
@@ -1062,12 +1025,6 @@ function renderResearchGrants(
             return;
         }
 
-
-        /*
-         * =================================================
-         * STRUCTURED GRANT OBJECT
-         * =================================================
-         */
 
         if (
             grant &&
@@ -1201,12 +1158,6 @@ function renderResearchGrants(
             return;
         }
 
-
-        /*
-         * =================================================
-         * UNKNOWN DATA TYPE
-         * =================================================
-         */
 
         card.innerHTML = `
 
