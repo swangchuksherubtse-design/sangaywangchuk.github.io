@@ -1,4 +1,4 @@
-```yaml
+yaml
 name: Update Website from CV
 
 on:
