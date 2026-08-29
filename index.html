@@ -1472,9 +1472,6 @@ content="#0b1726"
 
 <!-- =====================================================
      10 · PROFESSIONAL REFEREES
-     
-     Referee details remain private.
-     Visitors can submit a request through the form below.
 ===================================================== -->
 
 <section
@@ -1484,334 +1481,365 @@ content="#0b1726"
 
   <div class="container">
 
-    <div class="section-heading">
+```
+<div class="section-heading">
 
-      <div>
+  <div>
 
-        <p class="eyebrow">
-          10 · PROFESSIONAL REFEREES
-        </p>
+    <p class="eyebrow">
+      10 · PROFESSIONAL REFEREES
+    </p>
 
-        <h2>
-          Professional references<br>
-          <em>available upon request.</em>
-        </h2>
+    <h2>
+      Professional references<br>
+      <em>available upon request.</em>
+    </h2>
 
-      </div>
+  </div>
+
+  <p>
+    Professional referee details are available upon request
+    for academic appointments, research collaborations,
+    consultancy engagements and other professional purposes.
+  </p>
+
+</div>
+
+
+<!-- ================================================
+     REFEREE INFORMATION
+================================================= -->
+
+<div class="academic-grid">
+
+  <article>
+
+    <span>
+      ACADEMIC & PROFESSIONAL REFERENCES
+    </span>
+
+    <h3>
+      Referees available upon request
+    </h3>
+
+    <p>
+      A selected list of academic and professional referees
+      can be provided upon request. Referee contact details
+      are not publicly displayed in order to respect their
+      privacy and professional confidentiality.
+    </p>
+
+    <a
+      class="button primary"
+      href="#referee-request-form"
+    >
+      Request Professional Referee Details →
+    </a>
+
+  </article>
+
+
+  <article>
+
+    <span>
+      PROFESSIONAL PURPOSE
+    </span>
+
+    <h3>
+      Academic & research enquiries
+    </h3>
+
+    <p>
+      Referee information may be provided for academic
+      appointments, research collaboration, postgraduate
+      applications, consultancy engagements, professional
+      references and other appropriate purposes.
+    </p>
+
+  </article>
+
+</div>
+
+
+<!-- ================================================
+     REFEREE REQUEST FORM
+================================================= -->
+
+<div
+  id="referee-request-form"
+  class="referee-request-form"
+>
+
+  <div class="section-heading">
+
+    <div>
+
+      <p class="eyebrow">
+        REFEREE REQUEST FORM
+      </p>
+
+      <h2>
+        Request professional<br>
+        <em>referee details.</em>
+      </h2>
+
+    </div>
+
+    <p>
+      Please provide the information below and briefly
+      indicate why you require professional referee details.
+      Your request will be reviewed before referee information
+      is provided.
+    </p>
+
+  </div>
+
+
+  <form
+    action="https://formsubmit.co/swangchuk.sherubtse@rub.edu.bt"
+    method="POST"
+    class="referee-form"
+  >
+
+    <!-- FormSubmit configuration -->
+
+    <input
+      type="hidden"
+      name="_subject"
+      value="Professional Referee Details Request"
+    >
+
+    <input
+      type="hidden"
+      name="_captcha"
+      value="true"
+    >
+
+    <input
+      type="hidden"
+      name="_template"
+      value="table"
+    >
+
+    <input
+      type="hidden"
+      name="_next"
+      value="https://swangchuksherubtse-design.github.io/sangaywangchuk.github.io/#referee-request-success"
+    >
+
+
+    <!-- ============================================
+         FULL NAME
+    ============================================= -->
+
+    <div class="form-group">
+
+      <label for="referee-name">
+        Full Name <span>*</span>
+      </label>
+
+      <input
+        type="text"
+        id="referee-name"
+        name="Full Name"
+        placeholder="Your full name"
+        autocomplete="name"
+        required
+      >
+
+    </div>
+
+
+    <!-- ============================================
+         EMAIL
+    ============================================= -->
+
+    <div class="form-group">
+
+      <label for="referee-email">
+        Email Address <span>*</span>
+      </label>
+
+      <input
+        type="email"
+        id="referee-email"
+        name="Email Address"
+        placeholder="your.email@example.com"
+        autocomplete="email"
+        required
+      >
+
+    </div>
+
+
+    <!-- ============================================
+         INSTITUTION / ORGANIZATION
+    ============================================= -->
+
+    <div class="form-group">
+
+      <label for="referee-institution">
+        Institution / Organization
+      </label>
+
+      <input
+        type="text"
+        id="referee-institution"
+        name="Institution / Organization"
+        placeholder="University, organization or institution"
+        autocomplete="organization"
+      >
+
+    </div>
+
+
+    <!-- ============================================
+         POSITION / ROLE
+    ============================================= -->
+
+    <div class="form-group">
+
+      <label for="referee-position">
+        Position / Role
+      </label>
+
+      <input
+        type="text"
+        id="referee-position"
+        name="Position / Role"
+        placeholder="Your professional position or role"
+      >
+
+    </div>
+
+
+    <!-- ============================================
+         PURPOSE
+    ============================================= -->
+
+    <div class="form-group">
+
+      <label for="referee-purpose">
+        Purpose of Request <span>*</span>
+      </label>
+
+      <select
+        id="referee-purpose"
+        name="Purpose of Request"
+        required
+      >
+
+        <option value="" selected disabled>
+          Please select a purpose
+        </option>
+
+        <option value="Academic appointment">
+          Academic appointment
+        </option>
+
+        <option value="Research collaboration">
+          Research collaboration
+        </option>
+
+        <option value="Postgraduate application">
+          Postgraduate application
+        </option>
+
+        <option value="Consultancy engagement">
+          Consultancy engagement
+        </option>
+
+        <option value="Professional reference">
+          Professional reference
+        </option>
+
+        <option value="Other professional purpose">
+          Other professional purpose
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <!-- ============================================
+         MESSAGE
+    ============================================= -->
+
+    <div class="form-group full-width">
+
+      <label for="referee-message">
+        Message / Additional Information <span>*</span>
+      </label>
+
+      <textarea
+        id="referee-message"
+        name="Message / Additional Information"
+        rows="6"
+        placeholder="Please briefly explain your request and provide any relevant information."
+        required
+      ></textarea>
+
+    </div>
+
+
+    <!-- ============================================
+         PRIVACY NOTICE
+    ============================================= -->
+
+    <div class="referee-privacy">
 
       <p>
-        Professional referee details are available upon request
-        for academic appointments, research collaborations,
-        consultancy engagements and other professional purposes.
+        <strong>Privacy notice:</strong>
+        Referee contact details are shared selectively and
+        only for appropriate professional purposes. Submission
+        of this form does not guarantee that referee details
+        will be provided.
       </p>
 
     </div>
 
 
-    <div class="academic-grid">
+    <!-- ============================================
+         SUBMIT BUTTON
+    ============================================= -->
 
-      <!-- =================================================
-           REFEREE INFORMATION
-      ================================================= -->
+    <div class="form-actions">
 
-      <article>
-
-        <span>
-          ACADEMIC & PROFESSIONAL REFERENCES
-        </span>
-
-        <h3>
-          Referees available upon request
-        </h3>
-
-        <p>
-          A selected list of academic and professional referees
-          can be provided upon request. Referee names and contact
-          details are not publicly displayed in order to respect
-          their privacy and professional confidentiality.
-        </p>
-
-        <a
-          class="button primary"
-          href="#referee-request-form"
-        >
-          Request Referee Details →
-        </a>
-
-      </article>
-
-
-      <!-- =================================================
-           PROFESSIONAL PURPOSE
-      ================================================= -->
-
-      <article>
-
-        <span>
-          PROFESSIONAL PURPOSE
-        </span>
-
-        <h3>
-          Academic & research enquiries
-        </h3>
-
-        <p>
-          Referee information may be provided for academic
-          appointments, research collaboration, postgraduate
-          applications, consultancy engagements, professional
-          references and other appropriate purposes.
-        </p>
-
-        <p>
-          Requests are reviewed individually, and referee
-          information is shared only when appropriate.
-        </p>
-
-      </article>
-
-    </div>
-
-
-    <!-- =================================================
-         REFEREE REQUEST FORM
-    ================================================= -->
-
-    <div
-      id="referee-request-form"
-      class="referee-request-wrapper"
-    >
-
-      <div class="referee-form-heading">
-
-        <p class="eyebrow">
-          REFEREE REQUEST FORM
-        </p>
-
-        <h3>
-          Request professional referee details
-        </h3>
-
-        <p>
-          Please provide the information below so that I can
-          understand the purpose of your request and respond
-          appropriately.
-        </p>
-
-      </div>
-
-
-      <form
-        class="referee-form"
-        id="professional-referee-form"
-        novalidate
+      <button
+        type="submit"
+        class="button primary"
       >
-
-        <div class="form-grid">
-
-
-          <!-- NAME -->
-
-          <div class="form-field">
-
-            <label for="referee-name">
-              Full Name <span aria-hidden="true">*</span>
-            </label>
-
-            <input
-              type="text"
-              id="referee-name"
-              name="name"
-              placeholder="Your full name"
-              autocomplete="name"
-              required
-            >
-
-          </div>
-
-
-          <!-- EMAIL -->
-
-          <div class="form-field">
-
-            <label for="referee-email">
-              Email Address <span aria-hidden="true">*</span>
-            </label>
-
-            <input
-              type="email"
-              id="referee-email"
-              name="email"
-              placeholder="your.email@example.com"
-              autocomplete="email"
-              required
-            >
-
-          </div>
-
-
-          <!-- INSTITUTION -->
-
-          <div class="form-field">
-
-            <label for="referee-institution">
-              Institution / Organization
-            </label>
-
-            <input
-              type="text"
-              id="referee-institution"
-              name="institution"
-              placeholder="University, organization or company"
-              autocomplete="organization"
-            >
-
-          </div>
-
-
-          <!-- POSITION -->
-
-          <div class="form-field">
-
-            <label for="referee-position">
-              Position / Role
-            </label>
-
-            <input
-              type="text"
-              id="referee-position"
-              name="position"
-              placeholder="Your position or role"
-            >
-
-          </div>
-
-
-          <!-- PURPOSE -->
-
-          <div class="form-field form-field-full">
-
-            <label for="referee-purpose">
-              Purpose of Request <span aria-hidden="true">*</span>
-            </label>
-
-            <select
-              id="referee-purpose"
-              name="purpose"
-              required
-            >
-
-              <option
-                value=""
-                selected
-                disabled
-              >
-                Select the purpose of your request
-              </option>
-
-              <option value="Academic appointment">
-                Academic appointment
-              </option>
-
-              <option value="Research collaboration">
-                Research collaboration
-              </option>
-
-              <option value="Postgraduate application">
-                Postgraduate application
-              </option>
-
-              <option value="Professional reference">
-                Professional reference
-              </option>
-
-              <option value="Consultancy engagement">
-                Consultancy engagement
-              </option>
-
-              <option value="Other professional purpose">
-                Other professional purpose
-              </option>
-
-            </select>
-
-          </div>
-
-
-          <!-- MESSAGE -->
-
-          <div class="form-field form-field-full">
-
-            <label for="referee-message">
-              Additional Information
-            </label>
-
-            <textarea
-              id="referee-message"
-              name="message"
-              rows="6"
-              placeholder="Please briefly explain your request or provide any relevant information."
-            ></textarea>
-
-          </div>
-
-        </div>
-
-
-        <!-- PRIVACY NOTICE -->
-
-        <div class="referee-privacy-note">
-
-          <strong>
-            Privacy & confidentiality
-          </strong>
-
-          <p>
-            Referee contact information is not publicly displayed
-            on this website. Requests are considered individually,
-            and referee details will be shared only when appropriate
-            and in accordance with professional confidentiality.
-          </p>
-
-        </div>
-
-
-        <!-- SUBMIT -->
-
-        <div class="referee-form-actions">
-
-          <button
-            type="submit"
-            class="button primary"
-          >
-            Submit Referee Request →
-          </button>
-
-          <a
-            href="#referees"
-            class="button secondary"
-          >
-            Back to Referees
-          </a>
-
-        </div>
-
-
-        <!-- FORM STATUS -->
-
-        <p
-          id="referee-form-status"
-          class="referee-form-status"
-          role="status"
-          aria-live="polite"
-        ></p>
-
-      </form>
+        Submit Referee Request →
+      </button>
 
     </div>
+
+  </form>
+
+
+  <!-- ================================================
+       BACK TO REFEREES
+  ================================================= -->
+
+  <div class="referee-back">
+
+    <a
+      href="#referees"
+      aria-label="Back to Professional Referees section"
+    >
+      ← Back to Referees
+    </a>
+
+  </div>
+
+</div>
+```
 
   </div>
 
 </section>
+
 
 <!-- =====================================================
      11 · CONTACT
