@@ -1,3 +1,4 @@
+```yaml
 name: Update Website from CV
 
 on:
@@ -13,7 +14,9 @@ permissions:
   contents: write
 
 jobs:
+
   update-cv-data:
+
     runs-on: ubuntu-latest
 
     steps:
@@ -37,13 +40,26 @@ jobs:
 
 
       # =====================================================
-      # INSTALL DEPENDENCIES
+      # INSTALL PYTHON DEPENDENCIES
       # =====================================================
 
-      - name: Install dependencies
+      - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
           pip install python-docx
+
+
+      # =====================================================
+      # INSTALL LIBREOFFICE
+      #
+      # LibreOffice is used to convert the latest Word CV
+      # into a fresh PDF automatically.
+      # =====================================================
+
+      - name: Install LibreOffice
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libreoffice
 
 
       # =====================================================
@@ -62,7 +78,7 @@ jobs:
 
 
       # =====================================================
-      # VERIFY VERIFIED METRICS FILE
+      # VERIFY VERIFIED JOURNAL METRICS FILE
       # =====================================================
 
       - name: Verify journal metrics file
@@ -106,9 +122,6 @@ jobs:
 
       # =====================================================
       # RESTORE VERIFIED JOURNAL METRICS
-      #
-      # This guarantees that verified journal metrics remain
-      # protected even when the CV is re-extracted.
       # =====================================================
 
       - name: Restore verified journal metrics
@@ -119,6 +132,61 @@ jobs:
             data/cv/journal_metrics.json
 
           echo "✓ Verified journal metrics restored."
+
+
+      # =====================================================
+      # GENERATE CURRENT CV PDF
+      #
+      # IMPORTANT:
+      # The PDF is generated directly from the latest
+      # MS Word CV stored in:
+      #
+      # cv/Sangay Wangchuk CV (complete).docx
+      #
+      # The generated PDF is placed in:
+      #
+      # assets/Sangay Wangchuk CV (complete).pdf
+      #
+      # Therefore the website always uses the current
+      # Word CV rather than an old manually uploaded PDF.
+      # =====================================================
+
+      - name: Generate updated CV PDF
+        run: |
+
+          PDF_DIR="assets"
+          CV_FILE="cv/Sangay Wangchuk CV (complete).docx"
+          PDF_FILE="assets/Sangay Wangchuk CV (complete).pdf"
+
+          mkdir -p "$PDF_DIR"
+
+          echo "Removing previous generated CV PDF..."
+
+          rm -f "$PDF_FILE"
+
+          echo "Converting latest Word CV to PDF..."
+
+          libreoffice \
+            --headless \
+            --convert-to pdf \
+            --outdir "$PDF_DIR" \
+            "$CV_FILE"
+
+          echo "Checking generated PDF..."
+
+          if [ ! -f "$PDF_FILE" ]; then
+
+            echo "ERROR: PDF conversion failed."
+            echo "Expected file:"
+            echo "$PDF_FILE"
+
+            exit 1
+
+          fi
+
+          echo "✓ Updated CV PDF generated successfully."
+
+          ls -lh "$PDF_FILE"
 
 
       # =====================================================
@@ -136,6 +204,7 @@ jobs:
             "data/cv/publications.json"
             "data/cv/research.json"
             "data/cv/journal_metrics.json"
+            "assets/Sangay Wangchuk CV (complete).pdf"
           )
 
           for file in "${required_files[@]}"; do
@@ -153,8 +222,7 @@ jobs:
       # =====================================================
       # VALIDATE PUBLICATIONS
       #
-      # The website must not be limited to exactly 30
-      # publications. Future publications should be accepted.
+      # Future publications are allowed.
       # =====================================================
 
       - name: Validate publication data
@@ -186,10 +254,6 @@ jobs:
               f"Detected peer-reviewed journal articles: {count}"
           )
 
-          # -------------------------------------------------
-          # BASIC VALIDATION
-          # -------------------------------------------------
-
           if count == 0:
 
               print(
@@ -198,10 +262,6 @@ jobs:
               )
 
               sys.exit(1)
-
-          # -------------------------------------------------
-          # FUTURE-PROOF PUBLICATION VALIDATION
-          # -------------------------------------------------
 
           if count >= 30:
 
@@ -232,8 +292,7 @@ jobs:
       # =====================================================
       # VALIDATE DOI AND VERIFIED METRICS
       #
-      # Missing metrics do NOT stop the website update.
-      # They are reported for later verification.
+      # Missing metrics do NOT stop the workflow.
       # =====================================================
 
       - name: Validate publication metrics
@@ -245,10 +304,6 @@ jobs:
 
           publications_path = "data/cv/publications.json"
           metrics_path = "data/cv/journal_metrics.json"
-
-          # -------------------------------------------------
-          # LOAD PUBLICATIONS
-          # -------------------------------------------------
 
           with open(
               publications_path,
@@ -262,10 +317,6 @@ jobs:
               "peer_reviewed_journal_articles",
               []
           )
-
-          # -------------------------------------------------
-          # LOAD VERIFIED METRICS
-          # -------------------------------------------------
 
           with open(
               metrics_path,
@@ -287,10 +338,6 @@ jobs:
               f"Verified DOI records: {len(metrics)}"
           )
 
-          # -------------------------------------------------
-          # CHECK EACH PUBLICATION
-          # -------------------------------------------------
-
           missing_doi = []
           missing_metrics = []
 
@@ -309,10 +356,6 @@ jobs:
                   "Untitled publication"
               )
 
-              # ---------------------------------------------
-              # DOI CHECK
-              # ---------------------------------------------
-
               if not doi:
 
                   missing_doi.append(
@@ -320,10 +363,6 @@ jobs:
                   )
 
                   continue
-
-              # ---------------------------------------------
-              # NORMALIZE DOI
-              # ---------------------------------------------
 
               doi_key = doi.replace(
                   "https://doi.org/",
@@ -340,19 +379,11 @@ jobs:
                   ""
               ).strip().lower()
 
-              # ---------------------------------------------
-              # VERIFIED METRICS CHECK
-              # ---------------------------------------------
-
               if doi_key not in metrics:
 
                   missing_metrics.append(
                       f"{index}. {doi_key} — {title}"
                   )
-
-          # -------------------------------------------------
-          # REPORT MISSING DOI
-          # -------------------------------------------------
 
           if missing_doi:
 
@@ -363,14 +394,7 @@ jobs:
               )
 
               for item in missing_doi:
-
-                  print(
-                      f"  - {item}"
-                  )
-
-          # -------------------------------------------------
-          # REPORT MISSING VERIFIED METRICS
-          # -------------------------------------------------
+                  print(f"  - {item}")
 
           if missing_metrics:
 
@@ -381,10 +405,7 @@ jobs:
               )
 
               for item in missing_metrics:
-
-                  print(
-                      f"  - {item}"
-                  )
+                  print(f"  - {item}")
 
               print("")
               print(
@@ -400,14 +421,6 @@ jobs:
                   "✓ All DOI-bearing publications have "
                   "verified metric records."
               )
-
-          # -------------------------------------------------
-          # IMPORTANT
-          #
-          # Missing metrics do NOT fail the workflow.
-          # This allows new publications to appear on the
-          # website while their metrics are verified later.
-          # -------------------------------------------------
 
           print("")
           print(
@@ -613,18 +626,34 @@ jobs:
           print("==========================================")
           print("CV → WEBSITE AUTOMATION SUMMARY")
           print("==========================================")
+
           print(
               f"Peer-reviewed publications: {len(articles)}"
           )
+
           print(
               f"Research projects: {len(projects)}"
           )
+
           print(
               f"Professional service records: {len(services)}"
           )
+
+          print(
+              "Current Word CV: "
+              "cv/Sangay Wangchuk CV (complete).docx"
+          )
+
+          print(
+              "Current website PDF: "
+              "assets/Sangay Wangchuk CV (complete).pdf"
+          )
+
           print("==========================================")
           print("✓ CV extraction completed successfully.")
           print("✓ Website data files validated.")
+          print("✓ Current Word CV converted to PDF.")
+          print("✓ Old generated PDF replaced.")
           print("✓ Automation pipeline completed.")
           print("==========================================")
 
@@ -632,10 +661,10 @@ jobs:
 
 
       # =====================================================
-      # COMMIT UPDATED WEBSITE DATA
+      # COMMIT UPDATED WEBSITE DATA AND CURRENT CV PDF
       # =====================================================
 
-      - name: Commit updated CV data
+      - name: Commit updated CV data and PDF
         run: |
 
           git config user.name "github-actions[bot]"
@@ -644,16 +673,18 @@ jobs:
             "41898282+github-actions[bot]@users.noreply.github.com"
 
           git add data/cv/
+          git add assets/Sangay\ Wangchuk\ CV\ \(complete\).pdf
 
           if git diff --cached --quiet; then
 
-            echo "No CV data changes detected."
+            echo "No CV data or PDF changes detected."
 
           else
 
             git commit \
-              -m "Auto-update website data from CV"
+              -m "Auto-update website from CV"
 
             git push
 
           fi
+```
