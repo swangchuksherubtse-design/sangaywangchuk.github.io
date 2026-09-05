@@ -53,7 +53,7 @@ if (menuToggle && navLinks) {
        2. SMOOTH SCROLLING
        ===================================================== */
 
-    document.querySelectorAll('a[href^="#"]').forEach((link) => {
+    document.querySelectorAll('a[href^="#"]:not(.back-to-referees)').forEach((link) => {
 
         link.addEventListener("click", function (event) {
 
@@ -1264,3 +1264,46 @@ window.renderResearchProjects =
 window.renderResearchGrants =
     renderResearchGrants;
 
+/* =========================================================
+   BACK TO REFEREES
+   Dedicated navigation for the referee request form
+   ========================================================= */
+
+function backToReferees(event) {
+
+    if (event) {
+        event.preventDefault();
+    }
+
+    const refereeSection =
+        document.getElementById("referees");
+
+    if (!refereeSection) {
+        return false;
+    }
+
+    const header =
+        document.querySelector(".site-header");
+
+    const headerHeight =
+        header ? header.offsetHeight : 0;
+
+    const targetPosition =
+        refereeSection.getBoundingClientRect().top +
+        window.pageYOffset -
+        headerHeight -
+        20;
+
+    window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth"
+    });
+
+    history.replaceState(
+        null,
+        "",
+        "#referees"
+    );
+
+    return false;
+}
