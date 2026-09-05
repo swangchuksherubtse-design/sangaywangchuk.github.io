@@ -1,274 +1,391 @@
-/* =========================================================
-   main.js
-   Sangay Wangchuk Academic Profile
-
-   CV AUTOMATION
-   NAVIGATION
-   RESEARCH PROJECTS
-   RESEARCH GRANTS
-   PROFESSIONAL REFEREE REQUEST FORM
-   ========================================================= */
-
 document.addEventListener("DOMContentLoaded", () => {
-    "use strict";
 
-    console.log("main.js started successfully.");
-
-
-    /* =====================================================
+    /* =========================================================
        1. MOBILE NAVIGATION
-       ===================================================== */
+       ========================================================= */
 
     const menuToggle = document.querySelector(".menu-toggle");
-    const navLinks = document.querySelector(".nav-links");
+    const siteNav = document.querySelector(".site-nav");
 
-    if (menuToggle && navLinks) {
-
+    if (menuToggle && siteNav) {
         menuToggle.addEventListener("click", () => {
+            siteNav.classList.toggle("open");
 
-            navLinks.classList.toggle("open");
-            menuToggle.classList.toggle("active");
+            const expanded =
+                menuToggle.getAttribute("aria-expanded") === "true";
 
             menuToggle.setAttribute(
                 "aria-expanded",
-                navLinks.classList.contains("open")
+                String(!expanded)
             );
         });
 
-
-        navLinks.querySelectorAll("a").forEach((link) => {
-
+        siteNav.querySelectorAll("a").forEach((link) => {
             link.addEventListener("click", () => {
-
-                navLinks.classList.remove("open");
-                menuToggle.classList.remove("active");
-
-                menuToggle.setAttribute(
-                    "aria-expanded",
-                    "false"
-                );
+                siteNav.classList.remove("open");
+                menuToggle.setAttribute("aria-expanded", "false");
             });
         });
     }
 
 
-    /* =====================================================
+    /* =========================================================
        2. SMOOTH SCROLLING
-       
-       The Professional Referee Request link is excluded
-       because it uses its own dedicated show function.
-       The Back to Referees link is also excluded because
-       it uses its own dedicated navigation function.
-       ===================================================== */
+       ========================================================= */
 
     document
         .querySelectorAll(
-            'a[href^="#"]:not(.back-to-referees):not(.referee-request-link)'
+            'a[href^="#"]:not(.back-to-referees):not([href="#referee-request-form"])'
         )
         .forEach((link) => {
 
             link.addEventListener("click", function (event) {
 
-                const targetId =
-                    this.getAttribute("href");
+                const targetId = this.getAttribute("href");
 
                 if (
                     !targetId ||
-                    targetId === "#"
+                    targetId === "#" ||
+                    targetId === "#referee-request-form"
                 ) {
                     return;
                 }
 
-                const target =
-                    document.querySelector(targetId);
+                const target = document.querySelector(targetId);
 
-                if (target) {
-
-                    event.preventDefault();
-
-                    const header =
-                        document.querySelector("header");
-
-                    const headerHeight =
-                        header
-                            ? header.offsetHeight
-                            : 0;
-
-                    const targetPosition =
-                        target.getBoundingClientRect().top +
-                        window.pageYOffset -
-                        headerHeight;
-
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: "smooth"
-                    });
-
-                    history.replaceState(
-                        null,
-                        "",
-                        targetId
-                    );
+                if (!target) {
+                    return;
                 }
+
+                event.preventDefault();
+
+                const header = document.querySelector(".site-header");
+
+                const headerHeight = header
+                    ? header.getBoundingClientRect().height
+                    : 0;
+
+                const targetTop =
+                    target.getBoundingClientRect().top +
+                    window.scrollY -
+                    headerHeight -
+                    20;
+
+                window.scrollTo({
+                    top: targetTop,
+                    behavior: "smooth"
+                });
+
+                history.replaceState(
+                    null,
+                    "",
+                    targetId
+                );
             });
         });
 
 
-    /* =====================================================
-       3. ACTIVE NAVIGATION LINK ON SCROLL
-       ===================================================== */
+    /* =========================================================
+       3. PROFESSIONAL REFEREE REQUEST FORM
+       ========================================================= */
+
+    const refereeForm =
+        document.getElementById("referee-request-form");
+
+    const refereeRequestLinks =
+        document.querySelectorAll(
+            'a[href="#referee-request-form"]'
+        );
+
+
+    function showRefereeRequestForm(event) {
+
+        if (event) {
+            event.preventDefault();
+        }
+
+        const form =
+            document.getElementById("referee-request-form");
+
+        if (!form) {
+            return;
+        }
+
+        /* Make the form visible */
+        form.hidden = false;
+        form.removeAttribute("hidden");
+        form.setAttribute("aria-hidden", "false");
+
+        /* Scroll to the form after revealing it */
+        const header =
+            document.querySelector(".site-header");
+
+        const headerHeight = header
+            ? header.getBoundingClientRect().height
+            : 0;
+
+        const targetTop =
+            form.getBoundingClientRect().top +
+            window.scrollY -
+            headerHeight -
+            20;
+
+        window.scrollTo({
+            top: targetTop,
+            behavior: "smooth"
+        });
+
+        /* Update URL without reloading the page */
+        history.replaceState(
+            null,
+            "",
+            "#referee-request-form"
+        );
+
+        /* Focus the first field for accessibility */
+        setTimeout(() => {
+
+            const firstInput =
+                form.querySelector(
+                    "input:not([type='hidden']), select, textarea"
+                );
+
+            if (firstInput) {
+                firstInput.focus();
+            }
+
+        }, 500);
+    }
+
+
+    refereeRequestLinks.forEach((link) => {
+
+        link.addEventListener(
+            "click",
+            showRefereeRequestForm
+        );
+
+    });
+
+
+    /* =========================================================
+       4. HIDE REFEREE FORM ON BACK
+       ========================================================= */
+
+    window.backToReferees = function () {
+
+        const form =
+            document.getElementById("referee-request-form");
+
+        if (form) {
+            form.hidden = true;
+            form.setAttribute(
+                "aria-hidden",
+                "true"
+            );
+        }
+
+        const refereeSection =
+            document.getElementById("referees");
+
+        if (!refereeSection) {
+            return;
+        }
+
+        const header =
+            document.querySelector(".site-header");
+
+        const headerHeight = header
+            ? header.getBoundingClientRect().height
+            : 0;
+
+        const targetTop =
+            refereeSection.getBoundingClientRect().top +
+            window.scrollY -
+            headerHeight -
+            20;
+
+        window.scrollTo({
+            top: targetTop,
+            behavior: "smooth"
+        });
+
+        history.replaceState(
+            null,
+            "",
+            "#referees"
+        );
+    };
+
+
+    /* =========================================================
+       5. OPEN REFEREE FORM IF DIRECTLY LINKED
+       ========================================================= */
+
+    if (
+        window.location.hash ===
+        "#referee-request-form"
+    ) {
+        setTimeout(() => {
+            showRefereeRequestForm();
+        }, 100);
+    }
+
+
+    /* =========================================================
+       6. ACTIVE NAVIGATION
+       ========================================================= */
 
     const sections =
         document.querySelectorAll("section[id]");
 
-    const navigationLinks =
+    const navLinks =
         document.querySelectorAll(
-            '.nav-links a[href^="#"]'
+            ".site-nav a[href^='#']"
         );
 
-    const updateActiveNavigation = () => {
+    if (sections.length && navLinks.length) {
 
-        let currentSection = "";
+        const updateActiveNav = () => {
 
-        sections.forEach((section) => {
+            const scrollPosition =
+                window.scrollY +
+                window.innerHeight * 0.35;
 
-            const sectionTop =
-                section.offsetTop - 160;
+            let currentSection = "";
 
-            const sectionHeight =
-                section.offsetHeight;
+            sections.forEach((section) => {
 
-            if (
-                window.scrollY >= sectionTop &&
-                window.scrollY <
-                sectionTop + sectionHeight
-            ) {
+                const sectionTop =
+                    section.offsetTop;
 
-                currentSection =
-                    section.getAttribute("id");
-            }
-        });
+                const sectionBottom =
+                    sectionTop +
+                    section.offsetHeight;
 
+                if (
+                    scrollPosition >= sectionTop &&
+                    scrollPosition < sectionBottom
+                ) {
+                    currentSection =
+                        section.id;
+                }
 
-        navigationLinks.forEach((link) => {
+            });
 
-            link.classList.remove("active");
+            navLinks.forEach((link) => {
 
-            const href =
-                link.getAttribute("href");
+                link.classList.remove("active");
 
-            if (
-                href === `#${currentSection}`
-            ) {
+                const href =
+                    link.getAttribute("href");
 
-                link.classList.add("active");
-            }
-        });
-    };
+                if (
+                    href ===
+                    `#${currentSection}`
+                ) {
+                    link.classList.add("active");
+                }
 
-
-    window.addEventListener(
-        "scroll",
-        updateActiveNavigation
-    );
-
-    updateActiveNavigation();
-
-
-    /* =====================================================
-       4. HEADER SCROLL EFFECT
-       ===================================================== */
-
-    const header =
-        document.querySelector("header");
-
-    const updateHeader = () => {
-
-        if (!header) {
-            return;
-        }
-
-        if (window.scrollY > 30) {
-
-            header.classList.add("scrolled");
-
-        } else {
-
-            header.classList.remove("scrolled");
-        }
-    };
-
-
-    window.addEventListener(
-        "scroll",
-        updateHeader
-    );
-
-    updateHeader();
-
-
-    /* =====================================================
-       5. BACK TO TOP
-       ===================================================== */
-
-    const backToTop =
-        document.querySelector(
-            "#backToTop, .back-to-top"
-        );
-
-    if (backToTop) {
-
-        const toggleBackToTop = () => {
-
-            if (window.scrollY > 500) {
-
-                backToTop.classList.add("show");
-
-            } else {
-
-                backToTop.classList.remove("show");
-            }
+            });
         };
-
 
         window.addEventListener(
             "scroll",
-            toggleBackToTop
+            updateActiveNav,
+            { passive: true }
         );
 
-        toggleBackToTop();
+        updateActiveNav();
+    }
 
+
+    /* =========================================================
+       7. HEADER SCROLL EFFECT
+       ========================================================= */
+
+    const header =
+        document.querySelector(".site-header");
+
+    if (header) {
+
+        const updateHeader =
+            () => {
+
+                if (window.scrollY > 20) {
+                    header.classList.add("scrolled");
+                } else {
+                    header.classList.remove("scrolled");
+                }
+
+            };
+
+        window.addEventListener(
+            "scroll",
+            updateHeader,
+            { passive: true }
+        );
+
+        updateHeader();
+    }
+
+
+    /* =========================================================
+       8. BACK TO TOP
+       ========================================================= */
+
+    const backToTop =
+        document.querySelector(".back-to-top");
+
+    if (backToTop) {
+
+        window.addEventListener(
+            "scroll",
+            () => {
+
+                if (window.scrollY > 500) {
+                    backToTop.classList.add("show");
+                } else {
+                    backToTop.classList.remove("show");
+                }
+
+            },
+            { passive: true }
+        );
 
         backToTop.addEventListener(
             "click",
-            () => {
+            (event) => {
+
+                event.preventDefault();
 
                 window.scrollTo({
                     top: 0,
                     behavior: "smooth"
                 });
+
             }
         );
     }
 
 
-    /* =====================================================
-       6. FADE-IN ANIMATION
-       ===================================================== */
+    /* =========================================================
+       9. FADE-IN ANIMATIONS
+       ========================================================= */
 
-    const animatedElements =
+    const fadeElements =
         document.querySelectorAll(
-            ".fade-in, .reveal, .animate-on-scroll"
+            ".fade-in, .reveal"
         );
 
     if (
-        "IntersectionObserver" in window &&
-        animatedElements.length
+        fadeElements.length &&
+        "IntersectionObserver" in window
     ) {
 
         const observer =
             new IntersectionObserver(
-                (entries, observerInstance) => {
+                (entries, obs) => {
 
                     entries.forEach((entry) => {
 
@@ -280,212 +397,181 @@ document.addEventListener("DOMContentLoaded", () => {
                                 "visible"
                             );
 
-                            observerInstance.unobserve(
+                            obs.unobserve(
                                 entry.target
                             );
                         }
+
                     });
+
                 },
                 {
-                    threshold: 0.12
+                    threshold: 0.1
                 }
             );
 
-
-        animatedElements.forEach((element) => {
-
+        fadeElements.forEach((element) => {
             observer.observe(element);
-        });
-
-    } else {
-
-        animatedElements.forEach((element) => {
-
-            element.classList.add("visible");
         });
     }
 
 
-    /* =====================================================
-       7. CURRENT YEAR
-       ===================================================== */
-
-    const currentYear =
-        new Date().getFullYear();
+    /* =========================================================
+       10. CURRENT YEAR
+       ========================================================= */
 
     document
-        .querySelectorAll(
-            "#currentYear, .current-year"
-        )
+        .querySelectorAll("[data-current-year]")
         .forEach((element) => {
 
             element.textContent =
-                currentYear;
+                new Date().getFullYear();
+
         });
 
 
-    /* =====================================================
-       8. START CV AUTOMATION
-       ===================================================== */
+    /* =========================================================
+       11. LOAD CV DATA
+       ========================================================= */
 
     loadCVData();
 
 
-    /* =====================================================
-       9. START RESEARCH PROJECT LOADER
-       ===================================================== */
+    /* =========================================================
+       12. LOAD RESEARCH PROJECTS
+       ========================================================= */
 
     loadResearchProjects();
 
 
-    /* =====================================================
-       10. START RESEARCH GRANT LOADER
-       ===================================================== */
+    /* =========================================================
+       13. LOAD RESEARCH GRANTS
+       ========================================================= */
 
     loadResearchGrants();
 
 });
 
 
-/* =========================================================
-   11. CV PROFILE DATA LOADER
-   ========================================================= */
+/* =============================================================
+   LOAD CV DATA
+   ============================================================= */
 
 async function loadCVData() {
-
-    const profileURL =
-        "data/cv/profile.json";
-
-    console.log(
-        "Loading CV profile:",
-        profileURL
-    );
-
 
     try {
 
         const response =
             await fetch(
-                profileURL + "?v=" + Date.now(),
+                "data/cv/profile.json",
                 {
                     cache: "no-store"
                 }
             );
 
-
         if (!response.ok) {
-
             throw new Error(
-                `HTTP ${response.status} while loading profile.json`
+                `HTTP ${response.status}`
             );
         }
 
-
-        const profileData =
+        const data =
             await response.json();
 
-
-        console.log(
-            "CV profile data loaded successfully.",
-            profileData
-        );
-
-
-        updateCVContent(profileData);
-
+        updateCVContent(data);
 
     } catch (error) {
 
         console.error(
-            "CV profile data could not be loaded:",
+            "Unable to load CV data:",
             error
         );
+
     }
 }
 
 
-/* =========================================================
-   12. UPDATE CV CONTENT
-   ========================================================= */
+/* =============================================================
+   UPDATE CV CONTENT
+   ============================================================= */
 
 function updateCVContent(data) {
 
-    if (
-        !data ||
-        typeof data !== "object"
-    ) {
+    if (!data) {
         return;
     }
 
-
     document
-        .querySelectorAll("[data-cv-field]")
+        .querySelectorAll("[data-cv]")
         .forEach((element) => {
 
-            const field =
+            const key =
                 element.getAttribute(
-                    "data-cv-field"
+                    "data-cv"
                 );
-
-            if (!field) {
-                return;
-            }
-
 
             const value =
                 getNestedValue(
                     data,
-                    field
+                    key
                 );
-
 
             if (
                 value !== undefined &&
-                value !== null &&
-                typeof value !== "object"
+                value !== null
             ) {
 
                 element.textContent =
                     value;
+
             }
+
         });
 
 
+    /* Update statistics when available */
+
     updateStatistic(
-        data,
-        "publication_count",
-        [
-            '[data-stat="publications"]',
-            "#publicationCount"
-        ]
+        "publications",
+        getNestedValue(
+            data,
+            "publication_count"
+        )
     );
 
+    updateStatistic(
+        "projects",
+        getNestedValue(
+            data,
+            "research_project_count"
+        )
+    );
 
     updateStatistic(
-        data,
-        "research_project_count",
-        [
-            '[data-stat="projects"]',
-            "#projectCount"
-        ]
+        "grants",
+        getNestedValue(
+            data,
+            "research_grant_count"
+        )
     );
 }
 
 
-/* =========================================================
-   13. NESTED VALUE HELPER
-   ========================================================= */
+/* =============================================================
+   GET NESTED VALUE
+   ============================================================= */
 
-function getNestedValue(object, path) {
+function getNestedValue(
+    object,
+    path
+) {
 
     if (
         !object ||
         !path
     ) {
-
         return undefined;
     }
-
 
     return path
         .split(".")
@@ -493,13 +579,11 @@ function getNestedValue(object, path) {
             (current, key) => {
 
                 if (
-                    current === undefined ||
-                    current === null
+                    current === null ||
+                    current === undefined
                 ) {
-
                     return undefined;
                 }
-
 
                 return current[key];
 
@@ -509,143 +593,83 @@ function getNestedValue(object, path) {
 }
 
 
-/* =========================================================
-   14. UPDATE STATISTIC
-   ========================================================= */
+/* =============================================================
+   UPDATE STATISTIC
+   ============================================================= */
 
 function updateStatistic(
-    data,
-    key,
-    selectors
+    name,
+    value
 ) {
-
-    const value =
-        getNestedValue(
-            data,
-            key
-        );
-
 
     if (
         value === undefined ||
         value === null
     ) {
-
         return;
     }
 
+    const elements =
+        document.querySelectorAll(
+            `[data-stat="${name}"]`
+        );
 
-    selectors.forEach((selector) => {
+    elements.forEach((element) => {
 
-        document
-            .querySelectorAll(selector)
-            .forEach((element) => {
+        element.textContent =
+            value;
 
-                element.textContent =
-                    value;
-            });
     });
 }
 
 
-/* =========================================================
-   15. RESEARCH PROJECT LOADER
-   ========================================================= */
+/* =============================================================
+   LOAD RESEARCH PROJECTS
+   ============================================================= */
 
 async function loadResearchProjects() {
 
-    const projectContainer =
+    const container =
         document.querySelector(
-            "#research-projects-list"
+            "#research-projects"
         );
 
-
-    if (!projectContainer) {
-
-        console.warn(
-            "Research project container not found."
-        );
-
+    if (!container) {
         return;
     }
-
-
-    projectContainer.innerHTML = `
-        <p class="research-projects-loading">
-            Loading research projects…
-        </p>
-    `;
-
-
-    const researchURL =
-        "data/cv/research.json";
-
-
-    console.log(
-        "Loading research data:",
-        researchURL
-    );
-
 
     try {
 
         const response =
             await fetch(
-                researchURL + "?v=" + Date.now(),
+                "data/cv/research.json",
                 {
                     cache: "no-store"
                 }
             );
 
-
         if (!response.ok) {
-
             throw new Error(
-                `HTTP ${response.status} while loading research.json`
+                `HTTP ${response.status}`
             );
         }
 
-
-        const researchData =
+        const data =
             await response.json();
 
-
-        console.log(
-            "research.json loaded successfully.",
-            researchData
-        );
-
-
         const projects =
-            Array.isArray(
-                researchData.projects
-            )
-                ? researchData.projects
-                : [];
-
-
-        if (!projects.length) {
-
-            throw new Error(
-                "No research projects found in research.json."
-            );
-        }
-
+            Array.isArray(data)
+                ? data
+                : (
+                    data.projects ||
+                    data.research_projects ||
+                    []
+                );
 
         renderResearchProjects(
             projects,
-            projectContainer
+            container
         );
-
-
-        projectContainer.dataset.loaded =
-            "true";
-
-
-        console.log(
-            `Successfully rendered ${projects.length} research projects.`
-        );
-
 
     } catch (error) {
 
@@ -654,27 +678,14 @@ async function loadResearchProjects() {
             error
         );
 
-
-        projectContainer.innerHTML = `
-            <div class="research-status">
-
-                <p>
-                    Research projects could not be loaded.
-                </p>
-
-                <small>
-                    ${escapeHTML(error.message)}
-                </small>
-
-            </div>
-        `;
+        showResearchFallback(container);
     }
 }
 
 
-/* =========================================================
-   16. RENDER RESEARCH PROJECTS
-   ========================================================= */
+/* =============================================================
+   RENDER RESEARCH PROJECTS
+   ============================================================= */
 
 function renderResearchProjects(
     projects,
@@ -683,313 +694,143 @@ function renderResearchProjects(
 
     if (
         !Array.isArray(projects) ||
-        !projects.length
+        projects.length === 0
     ) {
 
         showResearchFallback(container);
-
         return;
     }
 
+    container.innerHTML =
+        projects
+            .map((project) => {
 
-    container.innerHTML = "";
+                const role =
+                    project.role ||
+                    "";
 
+                const title =
+                    project.title ||
+                    project.project ||
+                    project.name ||
+                    "";
 
-    projects.forEach((project, index) => {
+                const client =
+                    project.client ||
+                    project.funder ||
+                    project.organization ||
+                    "";
 
-        const card =
-            document.createElement(
-                "article"
-            );
+                const year =
+                    project.year ||
+                    project.period ||
+                    "";
 
+                const description =
+                    project.description ||
+                    "";
 
-        card.className =
-            "project";
+                return `
+                    <article class="research-project">
+                        <div class="project-meta">
+                            ${escapeHTML(role)}
+                            ${year
+                                ? ` · ${escapeHTML(String(year))}`
+                                : ""}
+                        </div>
 
+                        <h3>
+                            ${escapeHTML(title)}
+                        </h3>
 
-        const number =
-            String(index + 1).padStart(
-                2,
-                "0"
-            );
+                        ${
+                            client
+                                ? `
+                                    <p class="project-client">
+                                        ${escapeHTML(client)}
+                                    </p>
+                                  `
+                                : ""
+                        }
 
+                        ${
+                            description
+                                ? `
+                                    <p>
+                                        ${escapeHTML(description)}
+                                    </p>
+                                  `
+                                : ""
+                        }
+                    </article>
+                `;
 
-        const title =
-            project.project_entity ||
-            project.title ||
-            project.project ||
-            project.name ||
-            "Research Project";
-
-
-        const role =
-            project.role ||
-            project.position ||
-            "";
-
-
-        const description =
-            project.description ||
-            project.details ||
-            "";
-
-
-        const funder =
-            project.funder ||
-            project.funding_agency ||
-            project.client ||
-            project.agency ||
-            "";
-
-
-        const year =
-            project.year ||
-            project.date ||
-            "";
-
-
-        card.innerHTML = `
-
-            <div class="project-no">
-                ${escapeHTML(number)}
-            </div>
-
-            <div>
-
-                ${
-                    year
-                        ? `
-                            <p class="project-kicker">
-                                ${escapeHTML(year)}
-                            </p>
-                          `
-                        : ""
-                }
-
-                <h3>
-                    ${escapeHTML(title)}
-                </h3>
-
-                ${
-                    role
-                        ? `
-                            <p>
-                                <strong>
-                                    ${escapeHTML(role)}
-                                </strong>
-                            </p>
-                          `
-                        : ""
-                }
-
-                ${
-                    description
-                        ? `
-                            <p>
-                                ${escapeHTML(description)}
-                            </p>
-                          `
-                        : ""
-                }
-
-                ${
-                    funder
-                        ? `
-                            <p>
-                                <strong>
-                                    Funder / Client:
-                                </strong>
-                                ${escapeHTML(funder)}
-                            </p>
-                          `
-                        : ""
-                }
-
-            </div>
-
-        `;
-
-
-        container.appendChild(card);
-    });
+            })
+            .join("");
 }
 
 
-/* =========================================================
-   17. PROJECT FALLBACK
-   ========================================================= */
+/* =============================================================
+   RESEARCH FALLBACK
+   ============================================================= */
 
 function showResearchFallback(
-    container,
-    error
+    container
 ) {
+
+    container.innerHTML = `
+        <p class="data-fallback">
+            Research projects are currently being updated.
+        </p>
+    `;
+}
+
+
+/* =============================================================
+   LOAD RESEARCH GRANTS
+   ============================================================= */
+
+async function loadResearchGrants() {
+
+    const container =
+        document.querySelector(
+            "#research-grants"
+        );
 
     if (!container) {
         return;
     }
 
-
-    container.innerHTML = `
-
-        <div class="research-status">
-
-            <p>
-                Research projects could not be loaded.
-            </p>
-
-            <small>
-                Please check the CV automation data file.
-            </small>
-
-        </div>
-
-    `;
-
-
-    console.error(
-        "Research project loading failed.",
-        error || ""
-    );
-}
-
-
-/* =========================================================
-   18. RESEARCH GRANT LOADER
-   ========================================================= */
-
-async function loadResearchGrants() {
-
-    const grantContainer =
-        document.querySelector(
-            "#research-grants-list"
-        );
-
-
-    if (!grantContainer) {
-
-        console.warn(
-            "Research grant container not found."
-        );
-
-        return;
-    }
-
-
-    grantContainer.innerHTML = `
-        <p class="research-grants-loading">
-            Loading research grants…
-        </p>
-    `;
-
-
-    const profileURL =
-        "data/cv/profile.json";
-
-
-    console.log(
-        "Loading grant data:",
-        profileURL
-    );
-
-
     try {
 
         const response =
             await fetch(
-                profileURL + "?v=" + Date.now(),
+                "data/cv/profile.json",
                 {
                     cache: "no-store"
                 }
             );
 
-
         if (!response.ok) {
-
             throw new Error(
-                `HTTP ${response.status} while loading profile.json`
+                `HTTP ${response.status}`
             );
         }
 
-
-        const profileData =
+        const data =
             await response.json();
 
-
-        console.log(
-            "profile.json loaded for grants.",
-            profileData
-        );
-
-
-        let grants = [];
-
-
-        if (
+        const grants =
             Array.isArray(
-                profileData.research_grants
+                data.research_grants
             )
-        ) {
-
-            grants =
-                profileData.research_grants;
-
-        } else if (
-            Array.isArray(
-                profileData.grants
-            )
-        ) {
-
-            grants =
-                profileData.grants;
-
-        } else if (
-            Array.isArray(
-                profileData.researchGrants
-            )
-        ) {
-
-            grants =
-                profileData.researchGrants;
-
-        } else if (
-            Array.isArray(
-                profileData.research_grant
-            )
-        ) {
-
-            grants =
-                profileData.research_grant;
-        }
-
-
-        console.log(
-            "Detected research grants:",
-            grants
-        );
-
-
-        if (!grants.length) {
-
-            throw new Error(
-                "No research grants were found in profile.json."
-            );
-        }
-
+                ? data.research_grants
+                : [];
 
         renderResearchGrants(
             grants,
-            grantContainer
+            container
         );
-
-
-        grantContainer.dataset.loaded =
-            "true";
-
-
-        console.log(
-            `Successfully rendered ${grants.length} research grants.`
-        );
-
 
     } catch (error) {
 
@@ -998,27 +839,14 @@ async function loadResearchGrants() {
             error
         );
 
-
-        grantContainer.innerHTML = `
-            <div class="research-status">
-
-                <p>
-                    Research grants could not be loaded.
-                </p>
-
-                <small>
-                    ${escapeHTML(error.message)}
-                </small>
-
-            </div>
-        `;
+        showGrantFallback(container);
     }
 }
 
 
-/* =========================================================
-   19. RENDER RESEARCH GRANTS
-   ========================================================= */
+/* =============================================================
+   RENDER RESEARCH GRANTS
+   ============================================================= */
 
 function renderResearchGrants(
     grants,
@@ -1027,292 +855,144 @@ function renderResearchGrants(
 
     if (
         !Array.isArray(grants) ||
-        !grants.length
+        grants.length === 0
     ) {
 
         showGrantFallback(container);
-
         return;
     }
 
+    container.innerHTML =
+        grants
+            .map((grant) => {
 
-    container.innerHTML = "";
+                /*
+                 * Supports both the current simple
+                 * string format and future object format.
+                 */
 
+                if (
+                    typeof grant ===
+                    "string"
+                ) {
 
-    grants.forEach((grant, index) => {
+                    return `
+                        <article class="grant-item">
+                            <p>
+                                ${escapeHTML(grant)}
+                            </p>
+                        </article>
+                    `;
 
-        const card =
-            document.createElement(
-                "article"
-            );
+                }
 
+                const title =
+                    grant.title ||
+                    grant.project ||
+                    grant.name ||
+                    "";
 
-        card.className =
-            "project";
+                const funder =
+                    grant.funder ||
+                    grant.client ||
+                    grant.organization ||
+                    "";
 
+                const amount =
+                    grant.amount ||
+                    "";
 
-        const number =
-            String(index + 1).padStart(
-                2,
-                "0"
-            );
+                const year =
+                    grant.year ||
+                    grant.period ||
+                    "";
 
+                const description =
+                    grant.description ||
+                    "";
 
-        /*
-         * Support the current CV format where grants
-         * may still be stored as plain text strings.
-         */
+                return `
+                    <article class="grant-item">
 
-        if (
-            typeof grant === "string"
-        ) {
+                        ${
+                            funder
+                                ? `
+                                    <div class="grant-funder">
+                                        ${escapeHTML(funder)}
+                                    </div>
+                                  `
+                                : ""
+                        }
 
-            card.innerHTML = `
+                        ${
+                            title
+                                ? `
+                                    <h3>
+                                        ${escapeHTML(title)}
+                                    </h3>
+                                  `
+                                : ""
+                        }
 
-                <div class="project-no">
-                    ${escapeHTML(number)}
-                </div>
+                        ${
+                            amount
+                                ? `
+                                    <div class="grant-amount">
+                                        ${escapeHTML(String(amount))}
+                                    </div>
+                                  `
+                                : ""
+                        }
 
-                <div>
+                        ${
+                            year
+                                ? `
+                                    <div class="grant-year">
+                                        ${escapeHTML(String(year))}
+                                    </div>
+                                  `
+                                : ""
+                        }
 
-                    <p class="project-kicker">
-                        RESEARCH GRANT
-                    </p>
+                        ${
+                            description
+                                ? `
+                                    <p>
+                                        ${escapeHTML(description)}
+                                    </p>
+                                  `
+                                : ""
+                        }
 
-                    <p>
-                        ${escapeHTML(grant)}
-                    </p>
+                    </article>
+                `;
 
-                </div>
-
-            `;
-
-
-            container.appendChild(card);
-
-            return;
-        }
-
-
-        /*
-         * Support structured grant objects.
-         */
-
-        if (
-            grant &&
-            typeof grant === "object"
-        ) {
-
-            const title =
-                grant.title ||
-                grant.project_entity ||
-                grant.project ||
-                grant.name ||
-                "";
-
-
-            const description =
-                grant.description ||
-                grant.details ||
-                "";
-
-
-            const role =
-                grant.role ||
-                grant.position ||
-                "";
-
-
-            const funder =
-                grant.funder ||
-                grant.funding_agency ||
-                grant.agency ||
-                grant.client ||
-                "";
-
-
-            const amount =
-                grant.amount ||
-                grant.value ||
-                grant.funding ||
-                "";
-
-
-            const year =
-                grant.year ||
-                grant.date ||
-                "";
-
-
-            card.innerHTML = `
-
-                <div class="project-no">
-                    ${escapeHTML(number)}
-                </div>
-
-                <div>
-
-                    ${
-                        year
-                            ? `
-                                <p class="project-kicker">
-                                    ${escapeHTML(year)}
-                                </p>
-                              `
-                            : ""
-                    }
-
-                    ${
-                        title
-                            ? `
-                                <h3>
-                                    ${escapeHTML(title)}
-                                </h3>
-                              `
-                            : ""
-                    }
-
-                    ${
-                        role
-                            ? `
-                                <p>
-                                    <strong>
-                                        ${escapeHTML(role)}
-                                    </strong>
-                                </p>
-                              `
-                            : ""
-                    }
-
-                    ${
-                        description
-                            ? `
-                                <p>
-                                    ${escapeHTML(description)}
-                                </p>
-                              `
-                            : ""
-                    }
-
-                    ${
-                        funder
-                            ? `
-                                <p>
-                                    <strong>
-                                        Funder:
-                                    </strong>
-                                    ${escapeHTML(funder)}
-                                </p>
-                              `
-                            : ""
-                    }
-
-                    ${
-                        amount
-                            ? `
-                                <p>
-                                    <strong>
-                                        Funding:
-                                    </strong>
-                                    ${escapeHTML(amount)}
-                                </p>
-                              `
-                            : ""
-                    }
-
-                </div>
-
-            `;
-
-
-            container.appendChild(card);
-
-            return;
-        }
-
-
-        /*
-         * Unexpected grant format.
-         */
-
-        card.innerHTML = `
-
-            <div class="project-no">
-                ${escapeHTML(number)}
-            </div>
-
-            <div>
-
-                <p class="project-kicker">
-                    RESEARCH GRANT
-                </p>
-
-                <p>
-                    Grant information available in CV data.
-                </p>
-
-            </div>
-
-        `;
-
-
-        container.appendChild(card);
-    });
+            })
+            .join("");
 }
 
 
-/* =========================================================
-   20. GRANT FALLBACK
-   ========================================================= */
+/* =============================================================
+   GRANT FALLBACK
+   ============================================================= */
 
 function showGrantFallback(
-    container,
-    error
+    container
 ) {
 
-    if (!container) {
-        return;
-    }
-
-
     container.innerHTML = `
-
-        <div class="research-status">
-
-            <p>
-                Research grants could not be loaded.
-            </p>
-
-            <small>
-                Please check the CV automation data file.
-            </small>
-
-        </div>
-
+        <p class="data-fallback">
+            Research grants are currently being updated.
+        </p>
     `;
-
-
-    console.error(
-        "Research grant loading failed.",
-        error || ""
-    );
 }
 
 
-/* =========================================================
-   21. HTML ESCAPE
-   ========================================================= */
+/* =============================================================
+   ESCAPE HTML
+   ============================================================= */
 
 function escapeHTML(value) {
-
-    if (
-        value === undefined ||
-        value === null
-    ) {
-
-        return "";
-    }
-
 
     return String(value)
         .replace(/&/g, "&amp;")
@@ -1323,75 +1003,44 @@ function escapeHTML(value) {
 }
 
 
-/* =========================================================
-   22. PROFESSIONAL REFEREE REQUEST FORM
-       
-   The form is hidden by default in index.html using:
-       
-       hidden
-       
-   It is revealed only when the visitor clicks:
-       
-       Request Professional Referee Details →
-   ========================================================= */
+/* =============================================================
+   PUBLIC FUNCTIONS
+   ============================================================= */
 
-function showRefereeRequest(event) {
+window.showRefereeRequestForm =
+    function () {
 
-    if (event) {
-        event.preventDefault();
-    }
+        const form =
+            document.getElementById(
+                "referee-request-form"
+            );
 
+        if (!form) {
+            return;
+        }
 
-    const form =
-        document.getElementById(
-            "referee-request-form"
+        form.hidden = false;
+        form.removeAttribute("hidden");
+        form.setAttribute(
+            "aria-hidden",
+            "false"
         );
 
-
-    if (!form) {
-
-        console.warn(
-            "Professional referee request form not found."
+        history.replaceState(
+            null,
+            "",
+            "#referee-request-form"
         );
-
-        return;
-    }
-
-
-    /*
-     * Explicitly reveal the form.
-     */
-
-    form.hidden = false;
-
-
-    /*
-     * Update accessibility state.
-     */
-
-    form.setAttribute(
-        "aria-hidden",
-        "false"
-    );
-
-
-    /*
-     * Scroll to the form after it has become visible.
-     */
-
-    setTimeout(() => {
 
         const header =
             document.querySelector(
                 ".site-header"
             );
 
-
         const headerHeight =
             header
                 ? header.getBoundingClientRect().height
                 : 0;
-
 
         const targetTop =
             form.getBoundingClientRect().top +
@@ -1399,150 +1048,8 @@ function showRefereeRequest(event) {
             headerHeight -
             20;
 
-
         window.scrollTo({
-
             top: targetTop,
-
             behavior: "smooth"
-
         });
-
-    }, 50);
-
-
-    /*
-     * Update URL without causing a page reload.
-     */
-
-    history.replaceState(
-        null,
-        "",
-        "#referee-request-form"
-    );
-}
-
-
-/* =========================================================
-   23. BACK TO PROFESSIONAL REFEREES
-       
-   Hides the request form and returns to the main
-   Professional Referees section.
-   ========================================================= */
-
-function backToReferees() {
-
-    const form =
-        document.getElementById(
-            "referee-request-form"
-        );
-
-
-    const refereeSection =
-        document.getElementById(
-            "referees"
-        );
-
-
-    if (!refereeSection) {
-
-        console.warn(
-            "Professional Referees section not found."
-        );
-
-        return;
-    }
-
-
-    /*
-     * IMPORTANT:
-     * Hide the request form before navigating away.
-     */
-
-    if (form) {
-
-        form.hidden = true;
-
-        form.setAttribute(
-            "aria-hidden",
-            "true"
-        );
-    }
-
-
-    /*
-     * Calculate the correct position beneath
-     * the fixed/sticky header.
-     */
-
-    const header =
-        document.querySelector(
-            ".site-header"
-        );
-
-
-    const headerHeight =
-        header
-            ? header.getBoundingClientRect().height
-            : 0;
-
-
-    const targetTop =
-        refereeSection.getBoundingClientRect().top +
-        window.scrollY -
-        headerHeight -
-        20;
-
-
-    /*
-     * Return smoothly to Professional Referees.
-     */
-
-    window.scrollTo({
-
-        top: targetTop,
-
-        behavior: "smooth"
-
-    });
-
-
-    /*
-     * Remove the form fragment from the URL.
-     */
-
-    history.replaceState(
-        null,
-        "",
-        window.location.pathname
-    );
-}
-
-
-/* =========================================================
-   24. PUBLIC API
-       
-   Make functions available to inline onclick handlers
-   in index.html.
-   ========================================================= */
-
-window.loadCVData =
-    loadCVData;
-
-window.loadResearchProjects =
-    loadResearchProjects;
-
-window.loadResearchGrants =
-    loadResearchGrants;
-
-window.renderResearchProjects =
-    renderResearchProjects;
-
-window.renderResearchGrants =
-    renderResearchGrants;
-
-window.showRefereeRequest =
-    showRefereeRequest;
-
-window.backToReferees =
-    backToReferees;
+    };
