@@ -1561,8 +1561,9 @@
         </p>
 
         <a
-          class="button primary"
+          class="button primary referee-request-link"
           href="#referee-request-form"
+          onclick="showRefereeRequest(event);"
         >
           Request Professional Referee Details →
         </a>
@@ -1592,11 +1593,13 @@
 
     <!-- =================================================
          REFEREE REQUEST FORM
+         Hidden by default. Opens only when requested.
     ================================================= -->
 
     <div
       id="referee-request-form"
       class="referee-request-form"
+      hidden
     >
 
       <div class="section-heading">
@@ -1824,28 +1827,26 @@
       </form>
 
       <!-- =================================================
-     BACK TO REFEREES
-     Dedicated navigation handler
-================================================= -->
+           BACK TO REFEREES
+      ================================================= -->
 
-<div class="referee-back">
+      <div class="referee-back">
 
-  <a
-    class="back-to-referees"
-    href="javascript:void(0);"
-    onclick="backToReferees();"
-  >
-    ← Back to Referees
-  </a>
+        <a
+          class="back-to-referees"
+          href="javascript:void(0);"
+          onclick="backToReferees();"
+        >
+          ← Back to Referees
+        </a>
 
-</div>
+      </div>
 
-</div> <!-- END referee-request-form -->
+    </div>
 
-</div> <!-- END container -->
+  </div>
 
-</section> <!-- END Professional Referees section -->
-
+</section>
 
 <!-- =====================================================
      11 · CONNECT
