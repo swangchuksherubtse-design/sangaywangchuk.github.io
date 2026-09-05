@@ -13,40 +13,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
     console.log("main.js started successfully.");
 
-    /* =====================================================
-       1. MOBILE NAVIGATION
-       ===================================================== */
+   /* =====================================================
+   1. MOBILE NAVIGATION
+   ===================================================== */
 
-    const menuToggle = document.querySelector(".menu-toggle");
-    const navLinks = document.querySelector(".nav-links");
+const menuToggle = document.querySelector(".menu-toggle");
+const navLinks = document.querySelector(".nav-links");
 
-    if (menuToggle && navLinks) {
+if (menuToggle && navLinks) {
 
-        menuToggle.addEventListener("click", () => {
+    menuToggle.addEventListener("click", () => {
 
-            navLinks.classList.toggle("active");
-            menuToggle.classList.toggle("active");
+        navLinks.classList.toggle("open");
+        menuToggle.classList.toggle("active");
+
+        menuToggle.setAttribute(
+            "aria-expanded",
+            navLinks.classList.contains("open")
+        );
+    });
+
+    navLinks.querySelectorAll("a").forEach((link) => {
+
+        link.addEventListener("click", () => {
+
+            navLinks.classList.remove("open");
+            menuToggle.classList.remove("active");
 
             menuToggle.setAttribute(
                 "aria-expanded",
-                navLinks.classList.contains("active")
+                "false"
             );
         });
-
-        navLinks.querySelectorAll("a").forEach((link) => {
-
-            link.addEventListener("click", () => {
-
-                navLinks.classList.remove("active");
-                menuToggle.classList.remove("active");
-
-                menuToggle.setAttribute(
-                    "aria-expanded",
-                    "false"
-                );
-            });
-        });
-    }
+    });
+}
 
 
     /* =====================================================
