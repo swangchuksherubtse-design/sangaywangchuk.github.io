@@ -3370,3 +3370,36 @@ footer {
     scroll-behavior: auto !important;
   }
 }
+/* =========================================================
+   MOBILE NAVIGATION FIX — DO NOT AFFECT DESKTOP NAVIGATION
+   ========================================================= */
+@media (max-width: 850px) {
+
+  .menu-toggle {
+    display: block !important;
+    cursor: pointer;
+    z-index: 1001;
+  }
+
+  .nav-links {
+    display: none !important;
+  }
+
+  .nav-links.open {
+    display: flex !important;
+    position: absolute;
+    top: 76px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    z-index: 1000;
+  }
+
+  .nav-links.open a {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+}
