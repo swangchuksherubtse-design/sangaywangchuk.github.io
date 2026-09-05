@@ -1266,44 +1266,37 @@ window.renderResearchGrants =
 
 /* =========================================================
    BACK TO REFEREES
-   Dedicated navigation for the referee request form
+   Direct navigation to Professional Referees section
    ========================================================= */
 
-function backToReferees(event) {
+function backToReferees() {
 
-    if (event) {
-        event.preventDefault();
-    }
-
-    const refereeSection =
-        document.getElementById("referees");
+    const refereeSection = document.getElementById("referees");
 
     if (!refereeSection) {
-        return false;
+        return;
     }
 
-    const header =
-        document.querySelector(".site-header");
+    const header = document.querySelector(".site-header");
 
-    const headerHeight =
-        header ? header.offsetHeight : 0;
+    const headerHeight = header
+        ? header.getBoundingClientRect().height
+        : 0;
 
-    const targetPosition =
+    const targetTop =
         refereeSection.getBoundingClientRect().top +
-        window.pageYOffset -
+        window.scrollY -
         headerHeight -
         20;
 
     window.scrollTo({
-        top: targetPosition,
+        top: targetTop,
         behavior: "smooth"
     });
 
     history.replaceState(
         null,
         "",
-        "#referees"
+        window.location.pathname
     );
-
-    return false;
 }
