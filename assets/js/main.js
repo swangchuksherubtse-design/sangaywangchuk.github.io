@@ -6,6 +6,7 @@
    NAVIGATION
    RESEARCH PROJECTS
    RESEARCH GRANTS
+   PROFESSIONAL REFEREE REQUEST FORM
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -13,86 +14,104 @@ document.addEventListener("DOMContentLoaded", () => {
 
     console.log("main.js started successfully.");
 
-   /* =====================================================
-   1. MOBILE NAVIGATION
-   ===================================================== */
 
-const menuToggle = document.querySelector(".menu-toggle");
-const navLinks = document.querySelector(".nav-links");
+    /* =====================================================
+       1. MOBILE NAVIGATION
+       ===================================================== */
 
-if (menuToggle && navLinks) {
+    const menuToggle = document.querySelector(".menu-toggle");
+    const navLinks = document.querySelector(".nav-links");
 
-    menuToggle.addEventListener("click", () => {
+    if (menuToggle && navLinks) {
 
-        navLinks.classList.toggle("open");
-        menuToggle.classList.toggle("active");
+        menuToggle.addEventListener("click", () => {
 
-        menuToggle.setAttribute(
-            "aria-expanded",
-            navLinks.classList.contains("open")
-        );
-    });
-
-    navLinks.querySelectorAll("a").forEach((link) => {
-
-        link.addEventListener("click", () => {
-
-            navLinks.classList.remove("open");
-            menuToggle.classList.remove("active");
+            navLinks.classList.toggle("open");
+            menuToggle.classList.toggle("active");
 
             menuToggle.setAttribute(
                 "aria-expanded",
-                "false"
+                navLinks.classList.contains("open")
             );
         });
-    });
-}
+
+
+        navLinks.querySelectorAll("a").forEach((link) => {
+
+            link.addEventListener("click", () => {
+
+                navLinks.classList.remove("open");
+                menuToggle.classList.remove("active");
+
+                menuToggle.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+            });
+        });
+    }
 
 
     /* =====================================================
        2. SMOOTH SCROLLING
+       
+       The Professional Referee Request link is excluded
+       because it uses its own dedicated show function.
+       The Back to Referees link is also excluded because
+       it uses its own dedicated navigation function.
        ===================================================== */
 
-    document.querySelectorAll('a[href^="#"]:not(.back-to-referees)').forEach((link) => {
+    document
+        .querySelectorAll(
+            'a[href^="#"]:not(.back-to-referees):not(.referee-request-link)'
+        )
+        .forEach((link) => {
 
-        link.addEventListener("click", function (event) {
+            link.addEventListener("click", function (event) {
 
-            const targetId = this.getAttribute("href");
+                const targetId =
+                    this.getAttribute("href");
 
-            if (!targetId || targetId === "#") {
-                return;
-            }
+                if (
+                    !targetId ||
+                    targetId === "#"
+                ) {
+                    return;
+                }
 
-            const target = document.querySelector(targetId);
+                const target =
+                    document.querySelector(targetId);
 
-            if (target) {
+                if (target) {
 
-                event.preventDefault();
+                    event.preventDefault();
 
-                const header =
-                    document.querySelector("header");
+                    const header =
+                        document.querySelector("header");
 
-                const headerHeight =
-                    header ? header.offsetHeight : 0;
+                    const headerHeight =
+                        header
+                            ? header.offsetHeight
+                            : 0;
 
-                const targetPosition =
-                    target.getBoundingClientRect().top +
-                    window.pageYOffset -
-                    headerHeight;
+                    const targetPosition =
+                        target.getBoundingClientRect().top +
+                        window.pageYOffset -
+                        headerHeight;
 
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: "smooth"
-                });
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: "smooth"
+                    });
 
-                history.replaceState(
-                    null,
-                    "",
-                    targetId
-                );
-            }
+                    history.replaceState(
+                        null,
+                        "",
+                        targetId
+                    );
+                }
+            });
         });
-    });
 
 
     /* =====================================================
@@ -124,10 +143,12 @@ if (menuToggle && navLinks) {
                 window.scrollY <
                 sectionTop + sectionHeight
             ) {
+
                 currentSection =
                     section.getAttribute("id");
             }
         });
+
 
         navigationLinks.forEach((link) => {
 
@@ -139,10 +160,12 @@ if (menuToggle && navLinks) {
             if (
                 href === `#${currentSection}`
             ) {
+
                 link.classList.add("active");
             }
         });
     };
+
 
     window.addEventListener(
         "scroll",
@@ -166,11 +189,15 @@ if (menuToggle && navLinks) {
         }
 
         if (window.scrollY > 30) {
+
             header.classList.add("scrolled");
+
         } else {
+
             header.classList.remove("scrolled");
         }
     };
+
 
     window.addEventListener(
         "scroll",
@@ -194,11 +221,15 @@ if (menuToggle && navLinks) {
         const toggleBackToTop = () => {
 
             if (window.scrollY > 500) {
+
                 backToTop.classList.add("show");
+
             } else {
+
                 backToTop.classList.remove("show");
             }
         };
+
 
         window.addEventListener(
             "scroll",
@@ -206,6 +237,7 @@ if (menuToggle && navLinks) {
         );
 
         toggleBackToTop();
+
 
         backToTop.addEventListener(
             "click",
@@ -259,13 +291,16 @@ if (menuToggle && navLinks) {
                 }
             );
 
+
         animatedElements.forEach((element) => {
+
             observer.observe(element);
         });
 
     } else {
 
         animatedElements.forEach((element) => {
+
             element.classList.add("visible");
         });
     }
@@ -278,13 +313,15 @@ if (menuToggle && navLinks) {
     const currentYear =
         new Date().getFullYear();
 
-    document.querySelectorAll(
-        "#currentYear, .current-year"
-    ).forEach((element) => {
+    document
+        .querySelectorAll(
+            "#currentYear, .current-year"
+        )
+        .forEach((element) => {
 
-        element.textContent =
-            currentYear;
-    });
+            element.textContent =
+                currentYear;
+        });
 
 
     /* =====================================================
@@ -324,6 +361,7 @@ async function loadCVData() {
         profileURL
     );
 
+
     try {
 
         const response =
@@ -334,6 +372,7 @@ async function loadCVData() {
                 }
             );
 
+
         if (!response.ok) {
 
             throw new Error(
@@ -341,15 +380,19 @@ async function loadCVData() {
             );
         }
 
+
         const profileData =
             await response.json();
+
 
         console.log(
             "CV profile data loaded successfully.",
             profileData
         );
 
+
         updateCVContent(profileData);
+
 
     } catch (error) {
 
@@ -374,6 +417,7 @@ function updateCVContent(data) {
         return;
     }
 
+
     document
         .querySelectorAll("[data-cv-field]")
         .forEach((element) => {
@@ -387,11 +431,13 @@ function updateCVContent(data) {
                 return;
             }
 
+
             const value =
                 getNestedValue(
                     data,
                     field
                 );
+
 
             if (
                 value !== undefined &&
@@ -436,8 +482,10 @@ function getNestedValue(object, path) {
         !object ||
         !path
     ) {
+
         return undefined;
     }
+
 
     return path
         .split(".")
@@ -448,8 +496,10 @@ function getNestedValue(object, path) {
                     current === undefined ||
                     current === null
                 ) {
+
                     return undefined;
                 }
+
 
                 return current[key];
 
@@ -475,12 +525,15 @@ function updateStatistic(
             key
         );
 
+
     if (
         value === undefined ||
         value === null
     ) {
+
         return;
     }
+
 
     selectors.forEach((selector) => {
 
@@ -506,6 +559,7 @@ async function loadResearchProjects() {
             "#research-projects-list"
         );
 
+
     if (!projectContainer) {
 
         console.warn(
@@ -514,6 +568,7 @@ async function loadResearchProjects() {
 
         return;
     }
+
 
     projectContainer.innerHTML = `
         <p class="research-projects-loading">
@@ -524,6 +579,7 @@ async function loadResearchProjects() {
 
     const researchURL =
         "data/cv/research.json";
+
 
     console.log(
         "Loading research data:",
@@ -601,12 +657,15 @@ async function loadResearchProjects() {
 
         projectContainer.innerHTML = `
             <div class="research-status">
+
                 <p>
                     Research projects could not be loaded.
                 </p>
+
                 <small>
                     ${escapeHTML(error.message)}
                 </small>
+
             </div>
         `;
     }
@@ -642,6 +701,7 @@ function renderResearchProjects(
             document.createElement(
                 "article"
             );
+
 
         card.className =
             "project";
@@ -804,6 +864,7 @@ async function loadResearchGrants() {
             "#research-grants-list"
         );
 
+
     if (!grantContainer) {
 
         console.warn(
@@ -940,12 +1001,15 @@ async function loadResearchGrants() {
 
         grantContainer.innerHTML = `
             <div class="research-status">
+
                 <p>
                     Research grants could not be loaded.
                 </p>
+
                 <small>
                     ${escapeHTML(error.message)}
                 </small>
+
             </div>
         `;
     }
@@ -994,6 +1058,11 @@ function renderResearchGrants(
             );
 
 
+        /*
+         * Support the current CV format where grants
+         * may still be stored as plain text strings.
+         */
+
         if (
             typeof grant === "string"
         ) {
@@ -1024,6 +1093,10 @@ function renderResearchGrants(
             return;
         }
 
+
+        /*
+         * Support structured grant objects.
+         */
 
         if (
             grant &&
@@ -1158,6 +1231,10 @@ function renderResearchGrants(
         }
 
 
+        /*
+         * Unexpected grant format.
+         */
+
         card.innerHTML = `
 
             <div class="project-no">
@@ -1232,6 +1309,7 @@ function escapeHTML(value) {
         value === undefined ||
         value === null
     ) {
+
         return "";
     }
 
@@ -1246,7 +1324,206 @@ function escapeHTML(value) {
 
 
 /* =========================================================
-   22. PUBLIC API
+   22. PROFESSIONAL REFEREE REQUEST FORM
+       
+   The form is hidden by default in index.html using:
+       
+       hidden
+       
+   It is revealed only when the visitor clicks:
+       
+       Request Professional Referee Details →
+   ========================================================= */
+
+function showRefereeRequest(event) {
+
+    if (event) {
+        event.preventDefault();
+    }
+
+
+    const form =
+        document.getElementById(
+            "referee-request-form"
+        );
+
+
+    if (!form) {
+
+        console.warn(
+            "Professional referee request form not found."
+        );
+
+        return;
+    }
+
+
+    /*
+     * Explicitly reveal the form.
+     */
+
+    form.hidden = false;
+
+
+    /*
+     * Update accessibility state.
+     */
+
+    form.setAttribute(
+        "aria-hidden",
+        "false"
+    );
+
+
+    /*
+     * Scroll to the form after it has become visible.
+     */
+
+    setTimeout(() => {
+
+        const header =
+            document.querySelector(
+                ".site-header"
+            );
+
+
+        const headerHeight =
+            header
+                ? header.getBoundingClientRect().height
+                : 0;
+
+
+        const targetTop =
+            form.getBoundingClientRect().top +
+            window.scrollY -
+            headerHeight -
+            20;
+
+
+        window.scrollTo({
+
+            top: targetTop,
+
+            behavior: "smooth"
+
+        });
+
+    }, 50);
+
+
+    /*
+     * Update URL without causing a page reload.
+     */
+
+    history.replaceState(
+        null,
+        "",
+        "#referee-request-form"
+    );
+}
+
+
+/* =========================================================
+   23. BACK TO PROFESSIONAL REFEREES
+       
+   Hides the request form and returns to the main
+   Professional Referees section.
+   ========================================================= */
+
+function backToReferees() {
+
+    const form =
+        document.getElementById(
+            "referee-request-form"
+        );
+
+
+    const refereeSection =
+        document.getElementById(
+            "referees"
+        );
+
+
+    if (!refereeSection) {
+
+        console.warn(
+            "Professional Referees section not found."
+        );
+
+        return;
+    }
+
+
+    /*
+     * IMPORTANT:
+     * Hide the request form before navigating away.
+     */
+
+    if (form) {
+
+        form.hidden = true;
+
+        form.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+    }
+
+
+    /*
+     * Calculate the correct position beneath
+     * the fixed/sticky header.
+     */
+
+    const header =
+        document.querySelector(
+            ".site-header"
+        );
+
+
+    const headerHeight =
+        header
+            ? header.getBoundingClientRect().height
+            : 0;
+
+
+    const targetTop =
+        refereeSection.getBoundingClientRect().top +
+        window.scrollY -
+        headerHeight -
+        20;
+
+
+    /*
+     * Return smoothly to Professional Referees.
+     */
+
+    window.scrollTo({
+
+        top: targetTop,
+
+        behavior: "smooth"
+
+    });
+
+
+    /*
+     * Remove the form fragment from the URL.
+     */
+
+    history.replaceState(
+        null,
+        "",
+        window.location.pathname
+    );
+}
+
+
+/* =========================================================
+   24. PUBLIC API
+       
+   Make functions available to inline onclick handlers
+   in index.html.
    ========================================================= */
 
 window.loadCVData =
@@ -1264,39 +1541,8 @@ window.renderResearchProjects =
 window.renderResearchGrants =
     renderResearchGrants;
 
-/* =========================================================
-   BACK TO REFEREES
-   Direct navigation to Professional Referees section
-   ========================================================= */
+window.showRefereeRequest =
+    showRefereeRequest;
 
-function backToReferees() {
-
-    const refereeSection = document.getElementById("referees");
-
-    if (!refereeSection) {
-        return;
-    }
-
-    const header = document.querySelector(".site-header");
-
-    const headerHeight = header
-        ? header.getBoundingClientRect().height
-        : 0;
-
-    const targetTop =
-        refereeSection.getBoundingClientRect().top +
-        window.scrollY -
-        headerHeight -
-        20;
-
-    window.scrollTo({
-        top: targetTop,
-        behavior: "smooth"
-    });
-
-    history.replaceState(
-        null,
-        "",
-        window.location.pathname
-    );
-}
+window.backToReferees =
+    backToReferees;
