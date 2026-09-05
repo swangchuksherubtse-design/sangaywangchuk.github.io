@@ -3403,3 +3403,11 @@ footer {
     text-align: center;
   }
 }
+/* =========================================================
+   PROFESSIONAL REFEREE REQUEST FORM
+   Keep hidden until explicitly requested
+   ========================================================= */
+
+.referee-request-form[hidden] {
+    display: none !important;
+}
