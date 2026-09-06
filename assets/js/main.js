@@ -1025,22 +1025,31 @@ function renderResearchGrants(
             if (typeof grant === "string") {
 
                 return `
-                    <article class="grant-card">
+    <article class="grant-card">
 
-                        <div class="grant-no">
-                            ${String(index + 1).padStart(2, "0")}
-                        </div>
+        <div class="grant-no">
+            ${String(index + 1).padStart(2, "0")}
+        </div>
 
-                        <div class="grant-content">
+        <div class="grant-content">
 
-                            <p>
-                                ${escapeHTML(grant)}
-                            </p>
+            <div class="grant-meta">
+                ${grant.year ? grant.year + " · " : ""}
+                ${grant.type || "Research Grant"}
+            </div>
 
-                        </div>
+            <h3>
+                ${grant.organization || "Research Grant"}
+            </h3>
 
-                    </article>
-                `;
+            <p>
+                ${escapeHTML(grant)}
+            </p>
+
+        </div>
+
+    </article>
+`;
 
             }
 
