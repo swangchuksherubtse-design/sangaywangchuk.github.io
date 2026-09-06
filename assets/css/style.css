@@ -3496,105 +3496,144 @@ footer {
 }
 /* =========================================================
    RESEARCH GRANTS — TEXT VISIBILITY FIX ONLY
-   ========================================================= */
+   Scoped exclusively to #research-grants-list
+========================================================= */
 
-.research-grant {
-    display: grid !important;
-    grid-template-columns: 70px 1fr !important;
-    gap: 24px !important;
-    align-items: start !important;
-
-    padding: 28px 0 !important;
-    border-bottom: 1px solid rgba(16, 37, 43, 0.12) !important;
-
-    background: transparent !important;
-    color: var(--ink) !important;
+#research-grants-list {
+  position: relative !important;
+  z-index: 5 !important;
 }
 
-.research-grant:last-child {
-    border-bottom: none !important;
+#research-grants-list .grant-card {
+  position: relative !important;
+  z-index: 5 !important;
+
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start !important;
+
+  color: #ffffff !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
-.grant-no {
-    display: block !important;
+#research-grants-list .grant-card .grant-no {
+  display: block !important;
+  position: relative !important;
+  z-index: 6 !important;
 
-    font-size: 42px !important;
-    line-height: 1 !important;
-    font-weight: 700 !important;
+  flex: 0 0 auto !important;
 
-    color: var(--deep-teal) !important;
-    opacity: 1 !important;
-    visibility: visible !important;
+  color: var(--grant-aqua-light) !important;
+
+  font-size: 30px !important;
+  line-height: 1 !important;
+  font-weight: 700 !important;
+
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
-.grant-content {
-    display: block !important;
+#research-grants-list .grant-card .grant-content {
+  display: block !important;
+  position: relative !important;
+  z-index: 6 !important;
 
-    color: var(--ink) !important;
-    opacity: 1 !important;
-    visibility: visible !important;
+  flex: 1 1 auto !important;
+
+  color: #ffffff !important;
+
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
-.grant-content h3 {
-    margin: 0 0 10px !important;
+#research-grants-list .grant-card .grant-content p {
+  display: block !important;
+  position: relative !important;
 
-    color: var(--ink) !important;
-    font-size: 18px !important;
-    line-height: 1.5 !important;
-    font-weight: 650 !important;
+  margin: 0 !important;
 
-    opacity: 1 !important;
-    visibility: visible !important;
+  color: rgba(255, 255, 255, 0.92) !important;
+
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 15px !important;
+  line-height: 1.8 !important;
+  font-weight: 400 !important;
+
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
-.grant-content p {
-    margin: 0 0 10px !important;
+#research-grants-list .grant-card .grant-content h3 {
+  display: block !important;
 
-    color: var(--ink-soft) !important;
-    font-size: 15px !important;
-    line-height: 1.75 !important;
+  margin: 0 0 12px !important;
 
-    opacity: 1 !important;
-    visibility: visible !important;
+  color: #ffffff !important;
+
+  font-family: "Playfair Display", serif !important;
+  font-size: 23px !important;
+  line-height: 1.35 !important;
+  font-weight: 500 !important;
+
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
-.grant-content p:last-child {
-    margin-bottom: 0 !important;
+#research-grants-list .grant-card .grant-content strong {
+  color: var(--grant-gold) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
-.grant-content .grant-meta {
-    margin-top: 6px !important;
 
-    color: var(--ink-soft) !important;
+/* =========================================================
+   RESEARCH GRANTS — MOBILE
+========================================================= */
+
+@media (max-width: 720px) {
+
+  #research-grants-list .grant-card {
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    padding: 24px 20px !important;
+  }
+
+  #research-grants-list .grant-card .grant-no {
+    font-size: 25px !important;
+  }
+
+  #research-grants-list .grant-card .grant-content p {
     font-size: 14px !important;
+    line-height: 1.7 !important;
+  }
+
+  #research-grants-list .grant-card .grant-content h3 {
+    font-size: 20px !important;
+  }
 }
 
-.grant-content strong {
-    color: var(--ink) !important;
-    font-weight: 650 !important;
-}
 
+/* =========================================================
+   VERY SMALL SCREENS
+========================================================= */
 
-/* Mobile */
-@media (max-width: 700px) {
+@media (max-width: 420px) {
 
-    .research-grant {
-        grid-template-columns: 48px 1fr !important;
-        gap: 16px !important;
-        padding: 22px 0 !important;
-    }
+  #research-grants-list .grant-card {
+    padding: 21px 18px !important;
+  }
 
-    .grant-no {
-        font-size: 30px !important;
-    }
+  #research-grants-list .grant-card .grant-no {
+    font-size: 23px !important;
+  }
 
-    .grant-content h3 {
-        font-size: 16px !important;
-    }
+  #research-grants-list .grant-card .grant-content p {
+    font-size: 13.5px !important;
+    line-height: 1.65 !important;
+  }
 
-    .grant-content p {
-        font-size: 14px !important;
-        line-height: 1.65 !important;
-    }
-
+  #research-grants-list .grant-card .grant-content h3 {
+    font-size: 19px !important;
+  }
 }
