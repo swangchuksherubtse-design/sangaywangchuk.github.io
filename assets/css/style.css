@@ -977,7 +977,82 @@ select:focus-visible {
     );
 }
 
+/* =========================================================
+   RESEARCH GRANTS
+   ========================================================= */
 
+.research-grants-list {
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.research-grant {
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1fr);
+  gap: 35px;
+  padding: 40px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  position: relative;
+}
+
+.grant-no {
+  color: var(--accent-light);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  line-height: 1;
+  min-width: 35px;
+  opacity: 1;
+}
+
+.grant-content h3 {
+  margin-bottom: 12px;
+  color: var(--white);
+  font-family: "Playfair Display", serif;
+  font-size: 27px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.grant-content p {
+  max-width: 750px;
+  margin-bottom: 18px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.grant-content .grant-meta {
+  margin-bottom: 8px;
+}
+
+.grant-content .grant-meta strong {
+  color: var(--accent-light);
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   MOBILE — RESEARCH GRANTS
+   ========================================================= */
+
+@media (max-width: 720px) {
+
+  .research-grant {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 30px 0;
+  }
+
+  .grant-no {
+    font-size: 15px;
+    letter-spacing: 2px;
+  }
+
+  .grant-content h3 {
+    font-size: 24px;
+  }
+
+}
 /* =========================================================
    SECTION HEADING
 ========================================================= */
@@ -3427,4 +3502,143 @@ footer {
 
 .referee-request-form[hidden] {
     display: none !important;
+}
+/* =========================================================
+   FINAL RESEARCH GRANTS OVERRIDE
+   Numbered list presentation
+========================================================= */
+
+.research-grants-list .research-grant,
+.grants-list .research-grant,
+.grant-list .research-grant {
+  display: grid !important;
+
+  grid-template-columns: 90px minmax(0, 1fr) !important;
+
+  gap: 35px !important;
+
+  min-height: 0 !important;
+
+  padding: 40px 0 !important;
+
+  border: 0 !important;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14) !important;
+
+  border-radius: 0 !important;
+
+  background: transparent !important;
+
+  box-shadow: none !important;
+
+  backdrop-filter: none !important;
+
+  -webkit-backdrop-filter: none !important;
+
+  transform: none !important;
+}
+
+.research-grants-list .grant-no,
+.grants-list .grant-no,
+.grant-list .grant-no {
+  display: block !important;
+
+  color: var(--accent-light) !important;
+
+  font-size: 16px !important;
+
+  font-weight: 700 !important;
+
+  letter-spacing: 2px !important;
+
+  line-height: 1 !important;
+
+  min-width: 35px !important;
+
+  opacity: 1 !important;
+}
+
+.research-grants-list .grant-content h3,
+.grants-list .grant-content h3,
+.grant-list .grant-content h3 {
+  margin-bottom: 12px !important;
+
+  color: var(--white) !important;
+
+  font-family: "Playfair Display", serif !important;
+
+  font-size: 27px !important;
+
+  font-weight: 500 !important;
+
+  line-height: 1.3 !important;
+}
+
+.research-grants-list .grant-content p,
+.grants-list .grant-content p,
+.grant-list .grant-content p {
+  max-width: 750px !important;
+
+  margin-bottom: 18px !important;
+
+  color: rgba(255, 255, 255, 0.78) !important;
+
+  font-size: 14px !important;
+
+  line-height: 1.75 !important;
+}
+
+.research-grants-list .grant-content .grant-meta,
+.grants-list .grant-content .grant-meta,
+.grant-list .grant-content .grant-meta {
+  margin-bottom: 8px !important;
+
+  display: block !important;
+}
+
+.research-grants-list .grant-content .grant-meta strong,
+.grants-list .grant-content .grant-meta strong,
+.grant-list .grant-content .grant-meta strong {
+  color: var(--accent-light) !important;
+}
+
+
+/* =========================================================
+   MOBILE — FINAL GRANT OVERRIDE
+========================================================= */
+
+@media (max-width: 720px) {
+
+  .research-grants-list .research-grant,
+  .grants-list .research-grant,
+  .grant-list .research-grant {
+    grid-template-columns: 1fr !important;
+
+    gap: 12px !important;
+
+    padding: 30px 0 !important;
+  }
+
+  .research-grants-list .grant-no,
+  .grants-list .grant-no,
+  .grant-list .grant-no {
+    font-size: 15px !important;
+
+    letter-spacing: 2px !important;
+  }
+
+  .research-grants-list .grant-content h3,
+  .grants-list .grant-content h3,
+  .grant-list .grant-content h3 {
+    font-size: 24px !important;
+  }
+
+  .research-grants-list .grant-content p,
+  .grants-list .grant-content p,
+  .grant-list .grant-content p {
+    font-size: 13px !important;
+
+    line-height: 1.7 !important;
+  }
+
 }
