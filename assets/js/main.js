@@ -8,61 +8,139 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("main.js loaded successfully.");
 
     /* =========================================================
-   1. MOBILE NAVIGATION
-   ========================================================= */
+       1. MOBILE NAVIGATION
+       ========================================================= */
 
-const navToggle = document.querySelector(".menu-toggle");
-const navMenu = document.querySelector(".nav-links");
+    const navToggle = document.querySelector(".menu-toggle");
+    const navMenu = document.querySelector(".nav-links");
 
-if (navToggle && navMenu) {
+    if (navToggle && navMenu) {
 
-    // Set initial state
-    navMenu.classList.remove("active");
-    navMenu.style.removeProperty("display");
-    navToggle.setAttribute("aria-expanded", "false");
+        /*
+         * Start with a clean navigation state.
+         *
+         * IMPORTANT:
+         * Do NOT set display:none or display:flex from JavaScript.
+         * CSS controls whether the menu is visible on desktop/mobile.
+         * JavaScript only adds/removes the "active" class.
+         */
 
-    navToggle.addEventListener("click", function (event) {
+        navMenu.classList.remove("active");
+        navMenu.style.removeProperty("display");
 
-        event.preventDefault();
-        event.stopPropagation();
-
-        const isOpen = navMenu.classList.contains("active");
-
-        if (isOpen) {
-
-            navMenu.classList.remove("active");
-            navMenu.style.setProperty("display", "none", "important");
-            navToggle.setAttribute("aria-expanded", "false");
-
-        } else {
-
-            navMenu.classList.add("active");
-            navMenu.style.setProperty("display", "flex", "important");
-            navToggle.setAttribute("aria-expanded", "true");
-
-        }
-
-        console.log(
-            "Mobile menu:",
-            navMenu.classList.contains("active") ? "OPEN" : "CLOSED"
+        navToggle.setAttribute("aria-expanded", "false");
+        navToggle.setAttribute(
+            "aria-label",
+            "Open navigation menu"
         );
 
-    });
+        navToggle.addEventListener("click", function (event) {
 
-    // Close menu after selecting a navigation link
-    navMenu.querySelectorAll("a").forEach(function (link) {
+            event.preventDefault();
+            event.stopPropagation();
 
-        link.addEventListener("click", function () {
+            const isOpen =
+                navMenu.classList.contains("active");
 
-            navMenu.classList.remove("active");
-            navMenu.style.setProperty("display", "none", "important");
-            navToggle.setAttribute("aria-expanded", "false");
+            if (isOpen) {
+
+                navMenu.classList.remove("active");
+
+                navToggle.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
+                navToggle.setAttribute(
+                    "aria-label",
+                    "Open navigation menu"
+                );
+
+            } else {
+
+                navMenu.classList.add("active");
+
+                navToggle.setAttribute(
+                    "aria-expanded",
+                    "true"
+                );
+
+                navToggle.setAttribute(
+                    "aria-label",
+                    "Close navigation menu"
+                );
+
+            }
+
+            console.log(
+                "Mobile menu:",
+                navMenu.classList.contains("active")
+                    ? "OPEN"
+                    : "CLOSED"
+            );
 
         });
 
-    });
 
-}
+        /*
+         * Close mobile menu after selecting a navigation link.
+         *
+         * IMPORTANT:
+         * We remove only the "active" class.
+         * We do NOT force display:none here.
+         * This prevents the desktop navigation from disappearing
+         * after clicking a navigation link.
+         */
+
+        navMenu.querySelectorAll("a").forEach(function (link) {
+
+            link.addEventListener("click", function () {
+
+                navMenu.classList.remove("active");
+
+                navToggle.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
+                navToggle.setAttribute(
+                    "aria-label",
+                    "Open navigation menu"
+                );
+
+            });
+
+        });
+
+
+        /*
+         * If the browser is resized back to desktop width,
+         * remove the mobile "active" state and any stale inline
+         * display property.
+         */
+
+        window.addEventListener("resize", function () {
+
+            if (window.innerWidth > 1150) {
+
+                navMenu.classList.remove("active");
+                navMenu.style.removeProperty("display");
+
+                navToggle.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
+                navToggle.setAttribute(
+                    "aria-label",
+                    "Open navigation menu"
+                );
+
+            }
+
+        });
+
+    }
 
 
     /* =========================================================
@@ -790,6 +868,7 @@ function renderResearchProjects(projects, container) {
     }).join("");
 
 }
+
 
 /* =============================================================
    RESEARCH PROJECT FALLBACK
