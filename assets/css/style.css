@@ -3901,14 +3901,14 @@ font-size: 19px !important;
     }
 }
 /* =========================================================
-   RESEARCH GRANTS — NUMBER & META REFINEMENT
+   RESEARCH GRANTS — REFINED COMPACT SIZING
    Scoped ONLY to #research-grants-list
 ========================================================= */
 
 #research-grants-list .grant-card .grant-no {
     color: var(--grant-gold) !important;
     font-family: "DM Sans", sans-serif !important;
-    font-size: 34px !important;
+    font-size: 30px !important;
     font-weight: 700 !important;
     line-height: 1 !important;
     letter-spacing: -0.04em !important;
@@ -3918,7 +3918,7 @@ font-size: 19px !important;
 #research-grants-list .grant-card .grant-meta {
     color: var(--grant-gold) !important;
     font-family: "DM Sans", sans-serif !important;
-    font-size: 13px !important;
+    font-size: 12px !important;
     font-weight: 600 !important;
     line-height: 1.5 !important;
     letter-spacing: 0.04em !important;
@@ -3926,18 +3926,26 @@ font-size: 19px !important;
     opacity: 1 !important;
 }
 
-/* Keep only real organization headings */
-#research-grants-list .grant-card .grant-content h3 {
-    color: #ffffff !important;
+#research-grants-list .grant-card .grant-content p {
+    color: rgba(255, 255, 255, 0.88) !important;
+    font-family: "DM Sans", sans-serif !important;
+    font-size: 14px !important;
+    line-height: 1.7 !important;
+    font-weight: 400 !important;
 }
 
-/* Mobile */
 @media (max-width: 720px) {
+
     #research-grants-list .grant-card .grant-no {
-        font-size: 27px !important;
+        font-size: 25px !important;
     }
 
     #research-grants-list .grant-card .grant-meta {
-        font-size: 11px !important;
+        font-size: 10px !important;
     }
+
+    #research-grants-list .grant-card .grant-content p {
+        font-size: 13.5px !important;
+    }
+
 }
