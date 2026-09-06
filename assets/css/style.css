@@ -1,149 +1,146 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap');
 
-
 /* =========================================================
-   GLOBAL DESIGN SYSTEM
+GLOBAL DESIGN SYSTEM
 ========================================================= */
 
 :root {
-  /* Core text */
-  --ink: #10252b;
-  --ink-soft: #3f555b;
-  --ink-light: #64767b;
+/* Core text */
+--ink: #10252b;
+--ink-soft: #3f555b;
+--ink-light: #64767b;
 
-  /* Core surfaces */
-  --paper: #ffffff;
-  --cream: #f8f6f1;
-  --ivory: #fbfaf7;
-  --soft: #eef4f2;
-  --soft-blue: #edf5f7;
+/* Core surfaces */
+--paper: #ffffff;
+--cream: #f8f6f1;
+--ivory: #fbfaf7;
+--soft: #eef4f2;
+--soft-blue: #edf5f7;
 
-  /* Deep brand colours */
-  --deep-teal: #0d2930;
-  --deep-teal-2: #143840;
-  --deep-teal-3: #1b4650;
+/* Deep brand colours */
+--deep-teal: #0d2930;
+--deep-teal-2: #143840;
+--deep-teal-3: #1b4650;
 
-  --deep-navy: #101e2c;
-  --deep-navy-2: #172b3a;
+--deep-navy: #101e2c;
+--deep-navy-2: #172b3a;
 
-  /* Primary champagne-gold accent */
-  --accent: #b88a4a;
-  --accent-dark: #91692f;
-  --accent-light: #d8b77e;
-  --accent-pale: #efe1c7;
+/* Primary champagne-gold accent */
+--accent: #b88a4a;
+--accent-dark: #91692f;
+--accent-light: #d8b77e;
+--accent-pale: #efe1c7;
 
-  /* Supporting colours */
-  --muted: #68797d;
-  --line: rgba(16, 37, 43, 0.12);
-  --line-light: rgba(16, 37, 43, 0.08);
+/* Supporting colours */
+--muted: #68797d;
+--line: rgba(16, 37, 43, 0.12);
+--line-light: rgba(16, 37, 43, 0.08);
 
-  --white: #ffffff;
+--white: #ffffff;
 
-  /* Research accents */
-  --research-blue: #2b7186;
-  --research-teal: #147d7b;
-  --research-light: #e8f3f5;
-  --research-blue-light: #eaf2f7;
+/* Research accents */
+--research-blue: #2b7186;
+--research-teal: #147d7b;
+--research-light: #e8f3f5;
+--research-blue-light: #eaf2f7;
 
-  /* Grants & Research Support palette */
-  --grant-blue: #123f50;
-  --grant-blue-2: #165467;
-  --grant-teal: #147d7b;
-  --grant-aqua: #65c6c1;
-  --grant-aqua-light: #9adbd6;
-  --grant-gold: #d8b77e;
-  --grant-card: rgba(255, 255, 255, 0.075);
-  --grant-card-hover: rgba(255, 255, 255, 0.115);
+/* Grants & Research Support palette */
+--grant-blue: #123f50;
+--grant-blue-2: #165467;
+--grant-teal: #147d7b;
+--grant-aqua: #65c6c1;
+--grant-aqua-light: #9adbd6;
+--grant-gold: #d8b77e;
+--grant-card: rgba(255, 255, 255, 0.075);
+--grant-card-hover: rgba(255, 255, 255, 0.115);
 
-  /* Legacy / thematic accents retained */
-  --accent-wangchuk: #a95f3e;
-  --accent-materials: #95652b;
-  --accent-sensing: #147d7b;
-  --accent-literature: #66509a;
-  --accent-programme: #9a7050;
-  --accent-chemistry: #236c98;
-  --accent-impact: #a96820;
-  --accent-platforms: #5d6398;
+/* Legacy / thematic accents retained */
+--accent-wangchuk: #a95f3e;
+--accent-materials: #95652b;
+--accent-sensing: #147d7b;
+--accent-literature: #66509a;
+--accent-programme: #9a7050;
+--accent-chemistry: #236c98;
+--accent-impact: #a96820;
+--accent-platforms: #5d6398;
 
-  /* Academic profiles */
-  --profile-bg-1: #f1f4f8;
-  --profile-bg-2: #f2f1f8;
-  --profile-bg-3: #f8f6f1;
+/* Academic profiles */
+--profile-bg-1: #f1f4f8;
+--profile-bg-2: #f2f1f8;
+--profile-bg-3: #f8f6f1;
 
-  /* Radius */
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 22px;
+/* Radius */
+--radius-sm: 8px;
+--radius-md: 14px;
+--radius-lg: 22px;
 
-  /* Shadows */
-  --shadow-soft:
-    0 10px 30px rgba(16, 37, 43, 0.07);
+/* Shadows */
+--shadow-soft:
+0 10px 30px rgba(16, 37, 43, 0.07);
 
-  --shadow-card:
-    0 16px 40px rgba(16, 37, 43, 0.11);
+--shadow-card:
+0 16px 40px rgba(16, 37, 43, 0.11);
 
-  --shadow-deep:
-    0 22px 55px rgba(7, 25, 32, 0.18);
+--shadow-deep:
+0 22px 55px rgba(7, 25, 32, 0.18);
 }
 
-
 /* =========================================================
-   RESET
+RESET
 ========================================================= */
 
 * {
   box-sizing: border-box;
-}
+  }
 
 html {
-  scroll-behavior: smooth;
-  overflow-x: clip;
+scroll-behavior: smooth;
+overflow-x: clip;
 }
 
 body {
-  margin: 0;
-  min-width: 0;
-  overflow-x: clip;
+margin: 0;
+min-width: 0;
+overflow-x: clip;
 
-  background: var(--paper);
-  color: var(--ink);
+background: var(--paper);
+color: var(--ink);
 
-  font-family: "DM Sans", sans-serif;
-  font-size: 16px;
-  line-height: 1.7;
+font-family: "DM Sans", sans-serif;
+font-size: 16px;
+line-height: 1.7;
 
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
+-webkit-font-smoothing: antialiased;
+text-rendering: optimizeLegibility;
 }
 
 img {
-  max-width: 100%;
-  display: block;
+max-width: 100%;
+display: block;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+color: inherit;
+text-decoration: none;
 }
 
 button,
 input,
 select {
-  font: inherit;
+font: inherit;
 }
 
 button {
-  -webkit-tap-highlight-color: transparent;
+-webkit-tap-highlight-color: transparent;
 }
 
 .container {
-  width: min(1180px, calc(100% - 48px));
-  margin-inline: auto;
+width: min(1180px, calc(100% - 48px));
+margin-inline: auto;
 }
 
-
 /* =========================================================
-   SECTION SCROLL OFFSET
+SECTION SCROLL OFFSET
 ========================================================= */
 
 section,
@@ -155,1224 +152,1180 @@ section,
 #about,
 #academic-profiles,
 #contact {
-  scroll-margin-top: 95px;
+scroll-margin-top: 95px;
 }
 
-
 /* =========================================================
-   TYPOGRAPHY
+TYPOGRAPHY
 ========================================================= */
 
 h1,
 h2,
 h3,
 p {
-  margin-top: 0;
+margin-top: 0;
 }
 
 h1,
 h2,
 h3 {
-  color: var(--ink);
+color: var(--ink);
 }
 
 h1,
 h2 {
-  font-family: "Playfair Display", serif;
-  font-weight: 500;
-  line-height: 1.08;
+font-family: "Playfair Display", serif;
+font-weight: 500;
+line-height: 1.08;
 }
 
 h1 {
-  margin-bottom: 26px;
-  font-size: clamp(52px, 7vw, 88px);
-  letter-spacing: -2px;
+margin-bottom: 26px;
+font-size: clamp(52px, 7vw, 88px);
+letter-spacing: -2px;
 }
 
 h2 {
-  margin-bottom: 24px;
-  font-size: clamp(40px, 5vw, 64px);
-  letter-spacing: -1.5px;
+margin-bottom: 24px;
+font-size: clamp(40px, 5vw, 64px);
+letter-spacing: -1.5px;
 }
 
 h3 {
-  line-height: 1.25;
+line-height: 1.25;
 }
 
 h1 em,
 h2 em {
-  font-style: italic;
-  font-weight: 500;
+font-style: italic;
+font-weight: 500;
 }
 
 p {
-  color: var(--ink-soft);
+color: var(--ink-soft);
 }
 
-
 /* =========================================================
-   SECTION-SPECIFIC ITALIC ACCENTS
+SECTION-SPECIFIC ITALIC ACCENTS
 ========================================================= */
 
 .hero h1 em {
-  color: var(--accent-light);
+color: var(--accent-light);
 }
 
 #research h2 em {
-  color: var(--research-blue);
+color: var(--research-blue);
 }
 
 #research .section-heading h2 em {
-  color: var(--research-teal);
+color: var(--research-teal);
 }
 
 #publications h2 em {
-  color: var(--accent-dark);
+color: var(--accent-dark);
 }
 
 #academic-contributions h2 em {
-  color: #9a7050;
+color: #9a7050;
 }
 
-/* Grants & Research Support heading */
 #grants h2 em,
 #grants-research-support h2 em {
-  color: var(--grant-aqua-light);
+color: var(--grant-aqua-light);
 }
 
 #about h2 em {
-  color: var(--accent-chemistry);
+color: var(--accent-chemistry);
 }
 
 #about .about-grid h2 em {
-  color: var(--accent-impact);
+color: var(--accent-impact);
 }
 
 #academic-profiles h2 em {
-  color: var(--accent-platforms);
+color: var(--accent-platforms);
 }
 
-
 /* =========================================================
-   EYEBROW
+EYEBROW
 ========================================================= */
 
 .eyebrow {
-  margin-bottom: 16px;
+margin-bottom: 16px;
 
-  color: var(--accent);
+color: var(--accent);
 
-  font-size: 11px;
-  line-height: 1.4;
+font-size: 11px;
+line-height: 1.4;
 
-  font-weight: 700;
+font-weight: 700;
 
-  letter-spacing: 2px;
-  text-transform: uppercase;
+letter-spacing: 2px;
+text-transform: uppercase;
 }
 
-
 /* =========================================================
-   HEADER
-   STICKY NAVIGATION
+HEADER
+STICKY NAVIGATION
 ========================================================= */
 
 .site-header {
-  position: -webkit-sticky;
-  position: sticky;
+position: -webkit-sticky;
+position: sticky;
 
-  top: 0;
+top: 0;
 
-  z-index: 1000;
+z-index: 1000;
 
-  background: rgba(255, 255, 255, 0.97);
+background: rgba(255, 255, 255, 0.97);
 
-  border-bottom:
-    1px solid rgba(16, 37, 43, 0.10);
+border-bottom:
+1px solid rgba(16, 37, 43, 0.10);
 
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+backdrop-filter: blur(16px);
+-webkit-backdrop-filter: blur(16px);
 
-  isolation: isolate;
+isolation: isolate;
 }
 
 .nav {
-  position: relative;
+position: relative;
 
-  min-height: 78px;
+min-height: 78px;
 
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+display: flex;
+align-items: center;
+justify-content: space-between;
 
-  gap: 30px;
+gap: 30px;
 }
 
 .brand {
-  color: var(--ink);
+color: var(--ink);
 
-  font-size: 25px;
-  line-height: 1;
-  font-weight: 700;
+font-size: 25px;
+line-height: 1;
+font-weight: 700;
 
-  letter-spacing: -1px;
+letter-spacing: -1px;
 }
 
 .brand span {
-  color: var(--accent);
+color: var(--accent);
 }
 
-
 /* =========================================================
-   DESKTOP NAVIGATION
+DESKTOP NAVIGATION
 ========================================================= */
 
 .nav-links {
-  display: flex;
-  align-items: center;
-  gap: 28px;
+display: flex;
+align-items: center;
+gap: 28px;
 }
 
 .nav-links a {
-  position: relative;
+position: relative;
 
-  color: var(--ink-soft);
+color: var(--ink-soft);
 
-  font-size: 13px;
-  font-weight: 600;
+font-size: 13px;
+font-weight: 600;
 
-  transition:
-    color 0.25s ease,
-    background 0.25s ease;
+transition:
+color 0.25s ease,
+background 0.25s ease;
 }
 
 .nav-links a:not(.nav-button)::after {
-  content: "";
+content: "";
 
-  position: absolute;
+position: absolute;
 
-  left: 0;
-  bottom: -7px;
+left: 0;
+bottom: -7px;
 
-  width: 0;
-  height: 1px;
+width: 0;
+height: 1px;
 
-  background: var(--accent);
+background: var(--accent);
 
-  transition: width 0.25s ease;
+transition: width 0.25s ease;
 }
 
 .nav-links a:not(.nav-button):hover::after {
-  width: 100%;
+width: 100%;
 }
 
 .nav-links a:hover {
-  color: var(--ink);
+color: var(--ink);
 }
 
 .nav-button {
-  padding: 10px 18px;
+padding: 10px 18px;
 
-  border: 1px solid var(--ink);
+border: 1px solid var(--ink);
 
-  border-radius: 999px;
+border-radius: 999px;
 
-  transition:
-    background 0.25s ease,
-    color 0.25s ease,
-    border-color 0.25s ease,
-    transform 0.25s ease;
+transition:
+background 0.25s ease,
+color 0.25s ease,
+border-color 0.25s ease,
+transform 0.25s ease;
 }
 
 .nav-button:hover {
-  background: var(--deep-teal);
+background: var(--deep-teal);
 
-  border-color: var(--deep-teal);
+border-color: var(--deep-teal);
 
-  color: var(--white);
+color: var(--white);
 
-  transform: translateY(-1px);
+transform: translateY(-1px);
 }
 
-
 /* =========================================================
-   MOBILE MENU BUTTON
+MOBILE MENU BUTTON
 ========================================================= */
 
 .menu-toggle {
-  display: none;
+display: none;
 
-  align-items: center;
-  justify-content: center;
+align-items: center;
+justify-content: center;
 
-  width: 44px;
-  height: 44px;
+width: 44px;
+height: 44px;
 
-  padding: 0;
+padding: 0;
 
-  border: 0;
-  border-radius: 8px;
+border: 0;
+border-radius: 8px;
 
-  background: transparent;
+background: transparent;
 
-  color: var(--ink);
+color: var(--ink);
 
-  font-size: 28px;
-  line-height: 1;
+font-size: 28px;
+line-height: 1;
 
-  cursor: pointer;
+cursor: pointer;
 
-  position: relative;
-  z-index: 1101;
+position: relative;
+z-index: 1101;
 
-  -webkit-tap-highlight-color: transparent;
+-webkit-tap-highlight-color: transparent;
 }
 
 .menu-toggle:hover {
-  background: rgba(16, 37, 43, 0.06);
+background: rgba(16, 37, 43, 0.06);
 }
 
 .menu-toggle:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
+outline: 2px solid var(--accent);
+outline-offset: 3px;
 }
 
-
 /* =========================================================
-   GENERAL FOCUS ACCESSIBILITY
+GENERAL FOCUS ACCESSIBILITY
 ========================================================= */
 
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 select:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
+outline: 2px solid var(--accent);
+outline-offset: 3px;
 }
 
-
 /* =========================================================
-   HERO
+HERO
 ========================================================= */
 
 .hero {
-  position: relative;
-  overflow: hidden;
+position: relative;
+overflow: hidden;
 
-  padding: 45px 0 55px;
+padding: 45px 0 55px;
 
-  background:
-    radial-gradient(
-      circle at 88% 18%,
-      rgba(216, 183, 126, 0.20),
-      transparent 25%
-    ),
-    radial-gradient(
-      circle at 8% 90%,
-      rgba(37, 108, 152, 0.13),
-      transparent 28%
-    ),
-    linear-gradient(
-      135deg,
-      #0b242c 0%,
-      #12353e 48%,
-      #101f2d 100%
-    );
+background:
+radial-gradient(
+circle at 88% 18%,
+rgba(216, 183, 126, 0.20),
+transparent 25%
+),
+radial-gradient(
+circle at 8% 90%,
+rgba(37, 108, 152, 0.13),
+transparent 28%
+),
+linear-gradient(
+135deg,
+#0b242c 0%,
+#12353e 48%,
+#101f2d 100%
+);
 }
 
 .hero::before {
-  content: "";
+content: "";
 
-  position: absolute;
+position: absolute;
 
-  width: 560px;
-  height: 560px;
+width: 560px;
+height: 560px;
 
-  top: -280px;
-  right: -180px;
+top: -280px;
+right: -180px;
 
-  border-radius: 50%;
+border-radius: 50%;
 
-  border:
-    1px solid rgba(216, 183, 126, 0.18);
+border:
+1px solid rgba(216, 183, 126, 0.18);
 
-  box-shadow:
-    0 0 0 70px rgba(216, 183, 126, 0.025),
-    0 0 0 140px rgba(216, 183, 126, 0.018);
+box-shadow:
+0 0 0 70px rgba(216, 183, 126, 0.025),
+0 0 0 140px rgba(216, 183, 126, 0.018);
 
-  pointer-events: none;
+pointer-events: none;
 }
 
 .hero::after {
-  content: "";
+content: "";
 
-  position: absolute;
+position: absolute;
 
-  width: 420px;
-  height: 420px;
+width: 420px;
+height: 420px;
 
-  bottom: -250px;
-  left: -180px;
+bottom: -250px;
+left: -180px;
 
-  border-radius: 50%;
+border-radius: 50%;
 
-  background:
-    radial-gradient(
-      circle,
-      rgba(50, 133, 155, 0.16),
-      transparent 68%
-    );
+background:
+radial-gradient(
+circle,
+rgba(50, 133, 155, 0.16),
+transparent 68%
+);
 
-  pointer-events: none;
+pointer-events: none;
 }
 
 .hero-grid {
-  display: grid;
+display: grid;
 
-  grid-template-columns: 1.02fr 0.98fr;
+grid-template-columns: 1.02fr 0.98fr;
 
-  align-items: center;
+align-items: center;
 
-  gap: 70px;
+gap: 70px;
 
-  transform: translateY(-42px);
+transform: translateY(-42px);
 }
 
 .hero-copy {
-  position: relative;
-  z-index: 5;
+position: relative;
+z-index: 5;
 }
 
 .hero .eyebrow {
-  color: var(--accent-light);
+color: var(--accent-light);
 }
 
 .hero h1 {
-  color: var(--white);
+color: var(--white);
 }
 
 .hero .lead {
-  max-width: 680px;
+max-width: 680px;
 
-  margin-bottom: 22px;
+margin-bottom: 22px;
 
-  color: rgba(255, 255, 255, 0.84);
+color: rgba(255, 255, 255, 0.84);
 
-  font-size: 18px;
-  line-height: 1.75;
+font-size: 18px;
+line-height: 1.75;
 }
 
 .hero-affiliation {
-  margin-bottom: 30px;
+margin-bottom: 30px;
 
-  color: rgba(255, 255, 255, 0.64);
+color: rgba(255, 255, 255, 0.64);
 
-  font-size: 13px;
-  font-weight: 600;
+font-size: 13px;
+font-weight: 600;
 }
 
 .hero-actions {
-  display: flex;
-  flex-wrap: wrap;
+display: flex;
+flex-wrap: wrap;
 
-  gap: 12px;
+gap: 12px;
 
-  margin-bottom: 48px;
+margin-bottom: 48px;
 }
 
 .button {
-  display: inline-flex;
+display: inline-flex;
 
-  align-items: center;
-  justify-content: center;
+align-items: center;
+justify-content: center;
 
-  min-height: 48px;
+min-height: 48px;
 
-  padding: 12px 22px;
+padding: 12px 22px;
 
-  border-radius: 999px;
+border-radius: 999px;
 
-  font-size: 13px;
-  font-weight: 700;
+font-size: 13px;
+font-weight: 700;
 
-  transition:
-    transform 0.25s ease,
-    background 0.25s ease,
-    color 0.25s ease,
-    border-color 0.25s ease;
+transition:
+transform 0.25s ease,
+background 0.25s ease,
+color 0.25s ease,
+border-color 0.25s ease;
 }
 
 .button:hover {
-  transform: translateY(-2px);
+transform: translateY(-2px);
 }
 
 .button.primary {
-  background: var(--accent);
-  color: var(--deep-teal);
+background: var(--accent);
+color: var(--deep-teal);
 }
 
 .button.primary:hover {
-  background: var(--accent-light);
+background: var(--accent-light);
 }
 
 .button.secondary {
-  border: 1px solid rgba(255, 255, 255, 0.28);
+border: 1px solid rgba(255, 255, 255, 0.28);
 
-  background: rgba(255, 255, 255, 0.07);
+background: rgba(255, 255, 255, 0.07);
 
-  color: var(--white);
+color: var(--white);
 }
 
 .button.secondary:hover {
-  border-color: rgba(255, 255, 255, 0.55);
+border-color: rgba(255, 255, 255, 0.55);
 
-  background: rgba(255, 255, 255, 0.14);
+background: rgba(255, 255, 255, 0.14);
 }
 
 .quick-stats {
-  display: flex;
-  flex-wrap: wrap;
+display: flex;
+flex-wrap: wrap;
 
-  gap: 34px;
+gap: 34px;
 }
 
 .quick-stats > div {
-  display: flex;
+display: flex;
 
-  align-items: center;
+align-items: center;
 
-  gap: 10px;
+gap: 10px;
 }
 
 .quick-stats strong {
-  color: var(--white);
+color: var(--white);
 
-  font-size: 27px;
-  line-height: 1;
+font-size: 27px;
+line-height: 1;
 
-  font-weight: 700;
+font-weight: 700;
 }
 
 .quick-stats span {
-  color: rgba(255, 255, 255, 0.60);
+color: rgba(255, 255, 255, 0.60);
 
-  font-size: 10px;
-  line-height: 1.35;
+font-size: 10px;
+line-height: 1.35;
 
-  font-weight: 700;
+font-weight: 700;
 
-  letter-spacing: 0.8px;
+letter-spacing: 0.8px;
 
-  text-transform: uppercase;
+text-transform: uppercase;
 }
 
-
 /* =========================================================
-   HERO PHOTO / PANEL
+HERO PHOTO / PANEL
 ========================================================= */
 
 .hero-panel {
-  position: relative;
+position: relative;
 
-  min-height: 520px;
+min-height: 520px;
 
-  display: flex;
+display: flex;
 
-  flex-direction: column;
+flex-direction: column;
 
-  align-items: center;
+align-items: center;
 
-  justify-content: flex-start;
+justify-content: flex-start;
 }
 
 .orb {
-  position: absolute;
+position: absolute;
 
-  top: 35px;
-  left: 50%;
+top: 35px;
+left: 50%;
 
-  width: 405px;
-  height: 405px;
+width: 405px;
+height: 405px;
 
-  transform: translateX(-50%);
+transform: translateX(-50%);
 
-  border-radius: 50%;
+border-radius: 50%;
 
-  background:
-    radial-gradient(
-      circle,
-      rgba(216, 183, 126, 0.24),
-      rgba(184, 137, 77, 0.13) 42%,
-      rgba(184, 137, 77, 0.045) 68%,
-      transparent 72%
-    );
+background:
+radial-gradient(
+circle,
+rgba(216, 183, 126, 0.24),
+rgba(184, 137, 77, 0.13) 42%,
+rgba(184, 137, 77, 0.045) 68%,
+transparent 72%
+);
 
-  box-shadow:
-    0 0 90px rgba(216, 183, 126, 0.08);
+box-shadow:
+0 0 90px rgba(216, 183, 126, 0.08);
 
-  z-index: 1;
+z-index: 1;
 
-  pointer-events: none;
+pointer-events: none;
 }
 
-
 /* =========================================================
-   HERO PHOTO FRAME
-   FRAME POSITION — FIXED
+HERO PHOTO FRAME
 ========================================================= */
 
 .hero-photo {
-  position: relative;
+position: relative;
 
-  z-index: 4;
+z-index: 4;
 
-  flex: 0 0 auto;
+flex: 0 0 auto;
 
-  width: 330px;
-  height: 330px;
+width: 330px;
+height: 330px;
 
-  margin-top: 48px;
+margin-top: 48px;
 
-  overflow: hidden;
+overflow: hidden;
 
-  border:
-    10px solid rgba(255, 255, 255, 0.96);
+border:
+10px solid rgba(255, 255, 255, 0.96);
 
-  border-radius: 50%;
+border-radius: 50%;
 
-  background: #f5f2e9;
+background: #f5f2e9;
 
-  box-shadow:
-    0 20px 50px rgba(3, 18, 24, 0.32),
-    0 0 0 1px rgba(216, 183, 126, 0.35),
-    0 0 55px rgba(216, 183, 126, 0.13);
+box-shadow:
+0 20px 50px rgba(3, 18, 24, 0.32),
+0 0 0 1px rgba(216, 183, 126, 0.35),
+0 0 55px rgba(216, 183, 126, 0.13);
 
-  transform: translateY(35px);
+transform: translateY(35px);
 }
 
-
 /* =========================================================
-   HERO PROFILE PHOTO
-   ONLY THE ACTUAL PHOTO MOVES UP INSIDE FRAME
+HERO PROFILE PHOTO
 ========================================================= */
 
 .profile-photo {
-  display: block;
+display: block;
 
-  width: 100%;
-  height: 100%;
+width: 100%;
+height: 100%;
 
-  object-fit: cover;
+object-fit: cover;
 
-  transform:
-    translateY(-28px)
-    scale(1.62);
+transform:
+translateY(-28px)
+scale(1.62);
 
-  transform-origin: center center;
+transform-origin: center center;
 }
 
-
 /* =========================================================
-   HERO RESEARCH CARD
+HERO RESEARCH CARD
 ========================================================= */
 
 .research-card {
-  position: relative;
+position: relative;
 
-  z-index: 6;
+z-index: 6;
 
-  flex: 0 0 auto;
+flex: 0 0 auto;
 
-  width: min(350px, 88%);
+width: min(350px, 88%);
 
-  margin-top: 57px;
-  margin-right: -30px;
+margin-top: 57px;
+margin-right: -30px;
 
-  padding: 23px 25px;
+padding: 23px 25px;
 
-  border:
-    1px solid rgba(255, 255, 255, 0.50);
+border:
+1px solid rgba(255, 255, 255, 0.50);
 
-  border-radius: var(--radius-md);
+border-radius: var(--radius-md);
 
-  background: rgba(255, 255, 255, 0.96);
+background: rgba(255, 255, 255, 0.96);
 
-  box-shadow:
-    0 18px 45px rgba(3, 18, 24, 0.22);
+box-shadow:
+0 18px 45px rgba(3, 18, 24, 0.22);
 
-  backdrop-filter: blur(14px);
+backdrop-filter: blur(14px);
 
-  -webkit-backdrop-filter: blur(14px);
+-webkit-backdrop-filter: blur(14px);
 }
 
 .research-card > span {
-  display: block;
+display: block;
 
-  margin-bottom: 9px;
+margin-bottom: 9px;
 
-  color: var(--accent-dark);
+color: var(--accent-dark);
 
-  font-size: 10px;
-  line-height: 1.4;
+font-size: 10px;
+line-height: 1.4;
 
-  font-weight: 700;
+font-weight: 700;
 
-  letter-spacing: 1.4px;
+letter-spacing: 1.4px;
 
-  text-transform: uppercase;
+text-transform: uppercase;
 }
 
 .research-card h3 {
-  margin-bottom: 9px;
+margin-bottom: 9px;
 
-  color: var(--ink);
+color: var(--ink);
 
-  font-family: "Playfair Display", serif;
+font-family: "Playfair Display", serif;
 
-  font-size: 23px;
+font-size: 23px;
 
-  font-weight: 500;
+font-weight: 500;
 
-  line-height: 1.2;
+line-height: 1.2;
 }
 
 .research-card p {
-  margin-bottom: 15px;
+margin-bottom: 15px;
 
-  color: var(--ink-soft);
+color: var(--ink-soft);
 
-  font-size: 12px;
+font-size: 12px;
 
-  line-height: 1.55;
+line-height: 1.55;
 }
 
-
 /* =========================================================
-   TAGS
+TAGS
 ========================================================= */
 
 .tags {
-  display: flex;
+display: flex;
 
-  flex-wrap: wrap;
+flex-wrap: wrap;
 
-  gap: 7px;
+gap: 7px;
 }
 
 .tags span {
-  display: inline-flex;
+display: inline-flex;
 
-  align-items: center;
+align-items: center;
 
-  padding: 5px 9px;
+padding: 5px 9px;
 
-  border:
-    1px solid rgba(16, 37, 43, 0.12);
+border:
+1px solid rgba(16, 37, 43, 0.12);
 
-  border-radius: 999px;
+border-radius: 999px;
 
-  color: var(--ink-soft);
+color: var(--ink-soft);
 
-  font-size: 10px;
+font-size: 10px;
 
-  line-height: 1.2;
+line-height: 1.2;
 
-  font-weight: 600;
+font-weight: 600;
 
-  background: #f7f8f6;
+background: #f7f8f6;
 }
 
-
 /* =========================================================
-   TICKER
+TICKER
 ========================================================= */
 
 .ticker {
-  overflow: hidden;
+overflow: hidden;
 
-  border-top:
-    1px solid rgba(16, 37, 43, 0.10);
+border-top:
+1px solid rgba(16, 37, 43, 0.10);
 
-  border-bottom:
-    1px solid rgba(16, 37, 43, 0.10);
+border-bottom:
+1px solid rgba(16, 37, 43, 0.10);
 
-  background: #ffffff;
+background: #ffffff;
 }
 
 .ticker-inner {
-  min-height: 64px;
+min-height: 64px;
 
-  display: flex;
+display: flex;
 
-  align-items: center;
+align-items: center;
 
-  justify-content: space-between;
+justify-content: space-between;
 
-  gap: 30px;
+gap: 30px;
 
-  color: var(--muted);
+color: var(--muted);
 
-  font-size: 10px;
+font-size: 10px;
 
-  font-weight: 700;
+font-weight: 700;
 
-  letter-spacing: 1.5px;
+letter-spacing: 1.5px;
 }
 
-
 /* =========================================================
-   GENERAL SECTIONS
+GENERAL SECTIONS
 ========================================================= */
 
 .section {
-  position: relative;
+position: relative;
 
-  padding: 110px 0;
+padding: 110px 0;
 
-  overflow: hidden;
+overflow: hidden;
 }
 
-
 /* =========================================================
-   RESEARCH
+RESEARCH
 ========================================================= */
 
 .section.soft {
-  background:
-    radial-gradient(
-      circle at 90% 10%,
-      rgba(43, 113, 134, 0.07),
-      transparent 28%
-    ),
-    linear-gradient(
-      135deg,
-      #edf6f7 0%,
-      #f6faf9 52%,
-      #eaf3f5 100%
-    );
+background:
+radial-gradient(
+circle at 90% 10%,
+rgba(43, 113, 134, 0.07),
+transparent 28%
+),
+linear-gradient(
+135deg,
+#edf6f7 0%,
+#f6faf9 52%,
+#eaf3f5 100%
+);
 }
 
-
 /* =========================================================
-   PROJECTS
+PROJECTS
 ========================================================= */
 
 .section.dark {
-  background:
-    radial-gradient(
-      circle at 85% 15%,
-      rgba(216, 183, 126, 0.12),
-      transparent 30%
-    ),
-    radial-gradient(
-      circle at 10% 85%,
-      rgba(48, 122, 143, 0.12),
-      transparent 28%
-    ),
-    linear-gradient(
-      135deg,
-      #0b252d,
-      #12343d 52%,
-      #0c2730
-    );
+background:
+radial-gradient(
+circle at 85% 15%,
+rgba(216, 183, 126, 0.12),
+transparent 30%
+),
+radial-gradient(
+circle at 10% 85%,
+rgba(48, 122, 143, 0.12),
+transparent 28%
+),
+linear-gradient(
+135deg,
+#0b252d,
+#12343d 52%,
+#0c2730
+);
 }
 
-
 /* =========================================================
-   SECTION HEADING
+SECTION HEADING
 ========================================================= */
 
 .section-heading {
-  display: grid;
+display: grid;
 
-  grid-template-columns: 1fr 0.72fr;
+grid-template-columns: 1fr 0.72fr;
 
-  gap: 80px;
+gap: 80px;
 
-  align-items: end;
+align-items: end;
 
-  margin-bottom: 60px;
+margin-bottom: 60px;
 }
 
 .section-heading > p {
-  max-width: 530px;
+max-width: 530px;
 
-  margin-bottom: 6px;
+margin-bottom: 6px;
 
-  color: var(--ink-soft);
+color: var(--ink-soft);
 
-  font-size: 15px;
+font-size: 15px;
 
-  line-height: 1.8;
+line-height: 1.8;
 }
 
 .section-heading.light h2,
 .section-heading.light p {
-  color: var(--white);
+color: var(--white);
 }
 
 .section-heading.light .eyebrow {
-  color: var(--accent-light);
+color: var(--accent-light);
 }
 
-
 /* =========================================================
-   RESEARCH GRID
+RESEARCH GRID
 ========================================================= */
 
 .research-grid {
-  display: grid;
+display: grid;
 
-  grid-template-columns: repeat(4, 1fr);
+grid-template-columns: repeat(4, 1fr);
 
-  gap: 16px;
+gap: 16px;
 }
 
 .theme-card {
-  min-height: 360px;
+min-height: 360px;
 
-  padding: 30px;
+padding: 30px;
 
-  border:
-    1px solid rgba(43, 113, 134, 0.12);
+border:
+1px solid rgba(43, 113, 134, 0.12);
 
-  border-radius: var(--radius-md);
+border-radius: var(--radius-md);
 
-  background:
-    linear-gradient(
-      145deg,
-      #ffffff,
-      #eef6f7
-    );
+background:
+linear-gradient(
+145deg,
+#ffffff,
+#eef6f7
+);
 
-  box-shadow:
-    0 10px 30px rgba(28, 86, 100, 0.07);
+box-shadow:
+0 10px 30px rgba(28, 86, 100, 0.07);
 
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease,
-    border-color 0.3s ease;
+transition:
+transform 0.3s ease,
+box-shadow 0.3s ease,
+border-color 0.3s ease;
 }
 
 .theme-card:hover {
-  transform: translateY(-5px);
+transform: translateY(-5px);
 
-  border-color:
-    rgba(184, 137, 77, 0.28);
+border-color:
+rgba(184, 137, 77, 0.28);
 
-  box-shadow: var(--shadow-card);
+box-shadow: var(--shadow-card);
 }
 
 .theme-card.featured {
-  background:
-    linear-gradient(
-      145deg,
-      #1a4b56,
-      #0d3039
-    );
+background:
+linear-gradient(
+145deg,
+#1a4b56,
+#0d3039
+);
 
-  border-color:
-    rgba(216, 183, 126, 0.18);
+border-color:
+rgba(216, 183, 126, 0.18);
 }
 
 .theme-card .number {
-  display: block;
+display: block;
 
-  margin-bottom: 55px;
+margin-bottom: 55px;
 
-  color: var(--research-blue);
+color: var(--research-blue);
 
-  font-size: 11px;
+font-size: 11px;
 
-  font-weight: 700;
+font-weight: 700;
 
-  letter-spacing: 1px;
+letter-spacing: 1px;
 }
 
 .theme-card.featured .number {
-  color: var(--accent-light);
+color: var(--accent-light);
 }
 
 .theme-card h3 {
-  margin-bottom: 18px;
+margin-bottom: 18px;
 
-  color: var(--ink);
+color: var(--ink);
 
-  font-family: "Playfair Display", serif;
+font-family: "Playfair Display", serif;
 
-  font-size: 27px;
+font-size: 27px;
 
-  font-weight: 500;
+font-weight: 500;
 }
 
 .theme-card p {
-  margin-bottom: 25px;
+margin-bottom: 25px;
 
-  color: var(--ink-soft);
+color: var(--ink-soft);
 
-  font-size: 13px;
+font-size: 13px;
 
-  line-height: 1.7;
+line-height: 1.7;
 }
 
 .theme-card.featured h3,
 .theme-card.featured p {
-  color: var(--white);
+color: var(--white);
 }
 
 .theme-card a {
-  color: var(--research-blue);
+color: var(--research-blue);
 
-  font-size: 12px;
+font-size: 12px;
 
-  font-weight: 700;
+font-weight: 700;
 }
 
 .theme-card.featured a {
-  color: var(--accent-light);
+color: var(--accent-light);
 }
 
-
 /* =========================================================
-   PROJECTS
+PROJECTS
 ========================================================= */
 
 .project-list {
-  border-top:
-    1px solid rgba(255, 255, 255, 0.14);
+border-top:
+1px solid rgba(255, 255, 255, 0.14);
 }
 
 .project {
-  display: grid;
+display: grid;
 
-  grid-template-columns: 90px 1fr;
+grid-template-columns: 90px 1fr;
 
-  gap: 35px;
+gap: 35px;
 
-  padding: 40px 0;
+padding: 40px 0;
 
-  border-bottom:
-    1px solid rgba(255, 255, 255, 0.14);
+border-bottom:
+1px solid rgba(255, 255, 255, 0.14);
 }
 
 .project-no {
-  color: var(--accent-light);
+color: var(--accent-light);
 
-  font-size: 13px;
+font-size: 13px;
 
-  font-weight: 700;
+font-weight: 700;
 
-  letter-spacing: 1px;
+letter-spacing: 1px;
 }
 
 .project-kicker {
-  margin-bottom: 10px;
+margin-bottom: 10px;
 
-  color: var(--accent-light);
+color: var(--accent-light);
 
-  font-size: 10px;
+font-size: 10px;
 
-  font-weight: 700;
+font-weight: 700;
 
-  letter-spacing: 1.5px;
+letter-spacing: 1.5px;
 }
 
 .project h3 {
-  margin-bottom: 12px;
+margin-bottom: 12px;
 
-  color: var(--white);
+color: var(--white);
 
-  font-family: "Playfair Display", serif;
+font-family: "Playfair Display", serif;
 
-  font-size: 30px;
+font-size: 30px;
 
-  font-weight: 500;
+font-weight: 500;
 }
 
 .project > div:last-child > p:not(.project-kicker) {
-  max-width: 750px;
+max-width: 750px;
 
-  margin-bottom: 18px;
+margin-bottom: 18px;
 
-  color: rgba(255, 255, 255, 0.72);
+color: rgba(255, 255, 255, 0.72);
 
-  font-size: 14px;
+font-size: 14px;
 }
 
-
 /* =========================================================
-   05 · GRANTS & RESEARCH SUPPORT
-   DEEP BLUE–TEAL DESIGN
+05 · GRANTS & RESEARCH SUPPORT
 ========================================================= */
-
-/*
-   This section intentionally uses a darker blue–teal background
-   so that it is visually distinct from Publications and Academic
-   Contributions.
-
-   The selectors cover both:
-   #grants
-   #grants-research-support
-   .grants
-   .grants-research-support
-
-   Therefore the design will work with the existing section naming.
-*/
 
 #grants,
 #grants-research-support,
 .grants,
 .grants-research-support {
-  position: relative;
+position: relative;
 
-  overflow: hidden;
+overflow: hidden;
 
-  background:
-    radial-gradient(
-      circle at 88% 12%,
-      rgba(101, 198, 193, 0.16),
-      transparent 30%
-    ),
-    radial-gradient(
-      circle at 8% 88%,
-      rgba(216, 183, 126, 0.10),
-      transparent 30%
-    ),
-    linear-gradient(
-      135deg,
-      #0a2b36 0%,
-      #103f4d 48%,
-      #0b303c 100%
-    );
+background:
+radial-gradient(
+circle at 88% 12%,
+rgba(101, 198, 193, 0.16),
+transparent 30%
+),
+radial-gradient(
+circle at 8% 88%,
+rgba(216, 183, 126, 0.10),
+transparent 30%
+),
+linear-gradient(
+135deg,
+#0a2b36 0%,
+#103f4d 48%,
+#0b303c 100%
+);
 
-  color: var(--white);
+color: var(--white);
 }
 
-/* Decorative upper-right glow */
 #grants::before,
 #grants-research-support::before,
 .grants::before,
 .grants-research-support::before {
-  content: "";
+content: "";
 
-  position: absolute;
+position: absolute;
 
-  width: 430px;
-  height: 430px;
+width: 430px;
+height: 430px;
 
-  top: -220px;
-  right: -150px;
+top: -220px;
+right: -150px;
 
-  border-radius: 50%;
+border-radius: 50%;
 
-  border:
-    1px solid rgba(101, 198, 193, 0.14);
+border:
+1px solid rgba(101, 198, 193, 0.14);
 
-  box-shadow:
-    0 0 0 55px rgba(101, 198, 193, 0.025),
-    0 0 0 110px rgba(101, 198, 193, 0.018);
+box-shadow:
+0 0 0 55px rgba(101, 198, 193, 0.025),
+0 0 0 110px rgba(101, 198, 193, 0.018);
 
-  pointer-events: none;
+pointer-events: none;
 }
 
-/* Decorative lower-left glow */
 #grants::after,
 #grants-research-support::after,
 .grants::after,
 .grants-research-support::after {
-  content: "";
+content: "";
 
-  position: absolute;
+position: absolute;
 
-  width: 360px;
-  height: 360px;
+width: 360px;
+height: 360px;
 
-  bottom: -210px;
-  left: -140px;
+bottom: -210px;
+left: -140px;
 
-  border-radius: 50%;
+border-radius: 50%;
 
-  background:
-    radial-gradient(
-      circle,
-      rgba(216, 183, 126, 0.09),
-      transparent 70%
-    );
+background:
+radial-gradient(
+circle,
+rgba(216, 183, 126, 0.09),
+transparent 70%
+);
 
-  pointer-events: none;
+pointer-events: none;
 }
 
-
 /* ---------------------------------------------------------
-   Grants heading
+Grants heading
 --------------------------------------------------------- */
 
 #grants .container,
 #grants-research-support .container,
 .grants .container,
 .grants-research-support .container {
-  position: relative;
-  z-index: 2;
+position: relative;
+z-index: 2;
 }
 
 #grants .section-heading,
 #grants-research-support .section-heading,
 .grants .section-heading,
 .grants-research-support .section-heading {
-  position: relative;
-  z-index: 2;
+position: relative;
+z-index: 2;
 }
 
 #grants .eyebrow,
 #grants-research-support .eyebrow,
 .grants .eyebrow,
 .grants-research-support .eyebrow {
-  color: var(--grant-gold);
+color: var(--grant-gold);
 }
 
 #grants h2,
 #grants-research-support h2,
 .grants h2,
 .grants-research-support h2 {
-  color: var(--white);
+color: var(--white);
 }
 
 #grants h2 em,
 #grants-research-support h2 em,
 .grants h2 em,
 .grants-research-support h2 em {
-  color: var(--grant-aqua-light);
+color: var(--grant-aqua-light);
 }
 
 #grants .section-heading > p,
 #grants-research-support .section-heading > p,
 .grants .section-heading > p,
 .grants-research-support .section-heading > p {
-  color: rgba(255, 255, 255, 0.72);
+color: rgba(255, 255, 255, 0.72);
 }
 
-
 /* ---------------------------------------------------------
-   Grants grid
+Grants grid
 --------------------------------------------------------- */
 
 .grants-grid,
 .grant-grid,
 .grants-list,
 .grant-list {
-  position: relative;
-  z-index: 2;
+position: relative;
+z-index: 2;
 
-  display: grid;
+display: grid;
 
-  grid-template-columns: repeat(2, 1fr);
+grid-template-columns: repeat(2, 1fr);
 
-  gap: 18px;
+gap: 18px;
 }
 
-
 /* ---------------------------------------------------------
-   Grant cards
+Grant cards
 --------------------------------------------------------- */
 
 .grant-card,
@@ -1380,39 +1333,39 @@ select:focus-visible {
 .grant-grid article,
 .grants-list article,
 .grant-list article {
-  position: relative;
+position: relative;
 
-  min-height: 330px;
+min-height: 330px;
 
-  display: flex;
+display: flex;
 
-  flex-direction: column;
+flex-direction: column;
 
-  padding: 30px;
+padding: 30px;
 
-  border:
-    1px solid rgba(101, 198, 193, 0.18);
+border:
+1px solid rgba(101, 198, 193, 0.18);
 
-  border-radius: var(--radius-md);
+border-radius: var(--radius-md);
 
-  background:
-    linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.095),
-      rgba(255, 255, 255, 0.045)
-    );
+background:
+linear-gradient(
+145deg,
+rgba(255, 255, 255, 0.095),
+rgba(255, 255, 255, 0.045)
+);
 
-  box-shadow:
-    0 14px 35px rgba(3, 24, 31, 0.20);
+box-shadow:
+0 14px 35px rgba(3, 24, 31, 0.20);
 
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+backdrop-filter: blur(10px);
+-webkit-backdrop-filter: blur(10px);
 
-  transition:
-    transform 0.30s ease,
-    border-color 0.30s ease,
-    background 0.30s ease,
-    box-shadow 0.30s ease;
+transition:
+transform 0.30s ease,
+border-color 0.30s ease,
+background 0.30s ease,
+box-shadow 0.30s ease;
 }
 
 .grant-card:hover,
@@ -1420,49 +1373,47 @@ select:focus-visible {
 .grant-grid article:hover,
 .grants-list article:hover,
 .grant-list article:hover {
-  transform: translateY(-5px);
+transform: translateY(-5px);
 
-  border-color:
-    rgba(216, 183, 126, 0.50);
+border-color:
+rgba(216, 183, 126, 0.50);
 
-  background:
-    linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.13),
-      rgba(255, 255, 255, 0.065)
-    );
+background:
+linear-gradient(
+145deg,
+rgba(255, 255, 255, 0.13),
+rgba(255, 255, 255, 0.065)
+);
 
-  box-shadow:
-    0 20px 45px rgba(3, 24, 31, 0.28);
+box-shadow:
+0 20px 45px rgba(3, 24, 31, 0.28);
 }
 
-
 /* ---------------------------------------------------------
-   Grant number
+Grant number
 --------------------------------------------------------- */
 
 .grant-number,
 .grant-card .number,
 .grants-grid article > .number,
 .grant-grid article > .number {
-  display: block;
+display: block;
 
-  margin-bottom: 24px;
+margin-bottom: 24px;
 
-  color: var(--grant-aqua-light);
+color: var(--grant-aqua-light);
 
-  font-size: 11px;
+font-size: 11px;
 
-  line-height: 1.4;
+line-height: 1.4;
 
-  font-weight: 700;
+font-weight: 700;
 
-  letter-spacing: 1.5px;
+letter-spacing: 1.5px;
 }
 
-
 /* ---------------------------------------------------------
-   Grant source / funding body
+Grant source / funding body
 --------------------------------------------------------- */
 
 .grant-kicker,
@@ -1471,26 +1422,25 @@ select:focus-visible {
 .grant-card > span:first-child,
 .grants-grid article > span:first-child,
 .grant-grid article > span:first-child {
-  display: block;
+display: block;
 
-  margin-bottom: 10px;
+margin-bottom: 10px;
 
-  color: var(--grant-gold);
+color: var(--grant-gold);
 
-  font-size: 10px;
+font-size: 10px;
 
-  line-height: 1.4;
+line-height: 1.4;
 
-  font-weight: 700;
+font-weight: 700;
 
-  letter-spacing: 1.5px;
+letter-spacing: 1.5px;
 
-  text-transform: uppercase;
+text-transform: uppercase;
 }
 
-
 /* ---------------------------------------------------------
-   Grant title
+Grant title
 --------------------------------------------------------- */
 
 .grant-card h3,
@@ -1498,22 +1448,21 @@ select:focus-visible {
 .grant-grid article h3,
 .grants-list article h3,
 .grant-list article h3 {
-  margin-bottom: 14px;
+margin-bottom: 14px;
 
-  color: var(--white);
+color: var(--white);
 
-  font-family: "Playfair Display", serif;
+font-family: "Playfair Display", serif;
 
-  font-size: 25px;
+font-size: 25px;
 
-  line-height: 1.3;
+line-height: 1.3;
 
-  font-weight: 500;
+font-weight: 500;
 }
 
-
 /* ---------------------------------------------------------
-   Grant description
+Grant description
 --------------------------------------------------------- */
 
 .grant-card p,
@@ -1521,2119 +1470,2260 @@ select:focus-visible {
 .grant-grid article p,
 .grants-list article p,
 .grant-list article p {
-  margin-bottom: 20px;
+margin-bottom: 20px;
 
-  color: rgba(255, 255, 255, 0.73);
+color: rgba(255, 255, 255, 0.73);
 
-  font-size: 13px;
+font-size: 13px;
 
-  line-height: 1.72;
+line-height: 1.72;
 }
 
-
 /* ---------------------------------------------------------
-   Grant metadata
-   Examples:
-   Co-PI
-   PI
-   Nu. 200,000
-   Food Analysis
+Grant metadata
 --------------------------------------------------------- */
 
 .grant-meta,
 .grant-tags,
 .grant-details,
 .grant-card .tags {
-  display: flex;
+display: flex;
 
-  flex-wrap: wrap;
+flex-wrap: wrap;
 
-  gap: 7px;
+gap: 7px;
 
-  margin-top: auto;
+margin-top: auto;
 }
 
 .grant-meta span,
 .grant-tags span,
 .grant-details span,
 .grant-card .tags span {
-  display: inline-flex;
+display: inline-flex;
 
-  align-items: center;
+align-items: center;
 
-  min-height: 27px;
+min-height: 27px;
 
-  padding: 5px 9px;
+padding: 5px 9px;
 
-  border:
-    1px solid rgba(101, 198, 193, 0.24);
+border:
+1px solid rgba(101, 198, 193, 0.24);
 
-  border-radius: 999px;
+border-radius: 999px;
 
-  background:
-    rgba(101, 198, 193, 0.08);
+background:
+rgba(101, 198, 193, 0.08);
 
-  color: var(--grant-aqua-light);
+color: var(--grant-aqua-light);
 
-  font-size: 9px;
+font-size: 9px;
 
-  line-height: 1.2;
+line-height: 1.2;
 
-  font-weight: 700;
+font-weight: 700;
 
-  letter-spacing: 0.7px;
+letter-spacing: 0.7px;
 
-  text-transform: uppercase;
+text-transform: uppercase;
 }
 
-
 /* Gold treatment for financial values */
+
 .grant-meta .amount,
 .grant-tags .amount,
 .grant-details .amount,
 .grant-card .amount {
-  border-color:
-    rgba(216, 183, 126, 0.32);
+border-color:
+rgba(216, 183, 126, 0.32);
 
-  background:
-    rgba(216, 183, 126, 0.10);
+background:
+rgba(216, 183, 126, 0.10);
 
-  color: var(--grant-gold);
+color: var(--grant-gold);
 }
 
-
 /* ---------------------------------------------------------
-   Alternative markup support
-   If metadata is written directly as paragraphs/spans
+Alternative markup support
 --------------------------------------------------------- */
 
 .grant-card strong,
 .grants-grid article strong,
 .grant-grid article strong {
-  color: var(--grant-gold);
+color: var(--grant-gold);
 }
 
-
 /* ---------------------------------------------------------
-   Grants divider
+Grants divider
 --------------------------------------------------------- */
 
 #grants .grant-list,
 #grants-research-support .grant-list,
 #grants .grants-list,
 #grants-research-support .grants-list {
-  border-top:
-    1px solid rgba(255, 255, 255, 0.13);
+border-top:
+1px solid rgba(255, 255, 255, 0.13);
 }
 
-
 /* ---------------------------------------------------------
-   Featured grant card
+Featured grant card
 --------------------------------------------------------- */
 
 .grant-card.featured,
 .grants-grid article.featured,
 .grant-grid article.featured {
-  background:
-    linear-gradient(
-      145deg,
-      rgba(20, 125, 123, 0.34),
-      rgba(13, 63, 77, 0.70)
-    );
+background:
+linear-gradient(
+145deg,
+rgba(20, 125, 123, 0.34),
+rgba(13, 63, 77, 0.70)
+);
 
-  border-color:
-    rgba(216, 183, 126, 0.28);
+border-color:
+rgba(216, 183, 126, 0.28);
 }
 
-
 /* =========================================================
-   RESEARCH AT A GLANCE
+RESEARCH AT A GLANCE
 ========================================================= */
 
 .research-glance {
-  display: grid;
+display: grid;
 
-  grid-template-columns: repeat(4, 1fr);
+grid-template-columns: repeat(4, 1fr);
 
-  gap: 12px;
+gap: 12px;
 
-  margin-bottom: 48px;
+margin-bottom: 48px;
 }
 
 .research-glance .glance-card {
-  min-height: 160px;
+min-height: 160px;
 
-  padding: 25px 24px;
+padding: 25px 24px;
 
-  border:
-    1px solid rgba(43, 113, 134, 0.10);
+border:
+1px solid rgba(43, 113, 134, 0.10);
 
-  border-radius: var(--radius-md);
+border-radius: var(--radius-md);
 
-  background: #f9fcfc;
+background: #f9fcfc;
 
-  box-shadow:
-    0 8px 25px rgba(28, 86, 100, 0.05);
+box-shadow:
+0 8px 25px rgba(28, 86, 100, 0.05);
 }
 
 .research-glance .glance-card span {
-  display: block;
+display: block;
 
-  margin-bottom: 10px;
+margin-bottom: 10px;
 
-  color: var(--research-blue);
+color: var(--research-blue);
 
-  font-size: 10px;
+font-size: 10px;
 
-  line-height: 1.4;
+line-height: 1.4;
 
-  font-weight: 700;
+font-weight: 700;
 
-  letter-spacing: 1.5px;
+letter-spacing: 1.5px;
 
-  text-transform: uppercase;
+text-transform: uppercase;
 }
 
 .research-glance .glance-card strong {
-  display: block;
+display: block;
 
-  margin: 0 0 8px;
+margin: 0 0 8px;
 
-  color: var(--ink);
+color: var(--ink);
 
-  font-size: 28px;
+font-size: 28px;
 
-  line-height: 1.15;
+line-height: 1.15;
 
-  font-weight: 700;
+font-weight: 700;
 
-  letter-spacing: -0.5px;
+letter-spacing: -0.5px;
 }
 
 .research-glance .glance-card p {
-  margin: 0;
+margin: 0;
 
-  color: var(--ink-soft);
+color: var(--ink-soft);
 
-  font-size: 13px;
+font-size: 13px;
 
-  line-height: 1.5;
+line-height: 1.5;
 }
 
-
 /* =========================================================
-   PUBLICATIONS
+PUBLICATIONS
 ========================================================= */
 
 #publications {
-  background:
-    linear-gradient(
-      135deg,
-      #fffdf8 0%,
-      #fbfaf6 52%,
-      #f8f5ee 100%
-    );
+background:
+linear-gradient(
+135deg,
+#fffdf8 0%,
+#fbfaf6 52%,
+#f8f5ee 100%
+);
 }
 
 .pub-feature {
-  margin-top: 1rem;
+margin-top: 1rem;
 
-  padding: 38px;
+padding: 38px;
 
-  border:
-    1px solid rgba(184, 137, 77, 0.20);
+border:
+1px solid rgba(184, 137, 77, 0.20);
 
-  border-radius: var(--radius-lg);
+border-radius: var(--radius-lg);
 
-  background:
-    linear-gradient(
-      135deg,
-      #fffefb,
-      #faf8f2
-    );
+background:
+linear-gradient(
+135deg,
+#fffefb,
+#faf8f2
+);
 
-  box-shadow:
-    0 12px 30px rgba(16, 37, 43, 0.05);
+box-shadow:
+0 12px 30px rgba(16, 37, 43, 0.05);
 }
 
 .publication-intro {
-  margin-bottom: 2rem;
+margin-bottom: 2rem;
 }
 
 .pub-label {
-  display: block;
+display: block;
 
-  margin-bottom: 9px;
+margin-bottom: 9px;
 
-  color: var(--accent-dark);
+color: var(--accent-dark);
 
-  font-size: 10px;
+font-size: 10px;
 
-  font-weight: 700;
+font-weight: 700;
 
-  letter-spacing: 1.5px;
+letter-spacing: 1.5px;
 
-  text-transform: uppercase;
+text-transform: uppercase;
 }
 
 .publication-intro h3 {
-  margin-bottom: 0.75rem;
+margin-bottom: 0.75rem;
 
-  color: var(--ink);
+color: var(--ink);
 
-  font-family: "Playfair Display", serif;
+font-family: "Playfair Display", serif;
 
-  font-size: 30px;
+font-size: 30px;
 
-  font-weight: 500;
+font-weight: 500;
 }
 
 .publication-intro p {
-  max-width: 780px;
+max-width: 780px;
 
-  margin-bottom: 0;
+margin-bottom: 0;
 
-  color: var(--ink-soft);
+color: var(--ink-soft);
 
-  font-size: 14px;
+font-size: 14px;
 
-  line-height: 1.7;
+line-height: 1.7;
 }
 
-
 /* =========================================================
-   PUBLICATION DATABASE
+PUBLICATION DATABASE
 ========================================================= */
 
 .publication-controls {
-  display: grid;
+display: grid;
 
-  grid-template-columns:
-    minmax(260px, 1.6fr)
-    minmax(150px, 0.75fr)
-    minmax(190px, 1fr)
-    auto;
+grid-template-columns:
+minmax(260px, 1.6fr)
+minmax(150px, 0.75fr)
+minmax(190px, 1fr)
+auto;
 
-  gap: 0.75rem;
+gap: 0.75rem;
 
-  margin: 1.5rem 0 2rem;
+margin: 1.5rem 0 2rem;
 
-  padding: 1rem;
+padding: 1rem;
 
-  background: #fffefb;
+background: #fffefb;
 
-  border:
-    1px solid rgba(11, 23, 38, 0.10);
+border:
+1px solid rgba(11, 23, 38, 0.10);
 
-  box-shadow:
-    0 12px 30px rgba(11, 23, 38, 0.06);
+box-shadow:
+0 12px 30px rgba(11, 23, 38, 0.06);
 }
 
 .publication-search-wrap,
 .publication-filter-wrap {
-  min-width: 0;
+min-width: 0;
 }
 
 .publication-filter-wrap {
-  display: contents;
+display: contents;
 }
 
 .publication-controls input,
 .publication-controls select,
 .publication-controls button {
-  min-height: 48px;
+min-height: 48px;
 
-  width: 100%;
+width: 100%;
 
-  box-sizing: border-box;
+box-sizing: border-box;
 
-  font-family: inherit;
+font-family: inherit;
 
-  font-size: 0.9rem;
+font-size: 0.9rem;
 }
 
 .publication-controls input,
 .publication-controls select {
-  border:
-    1px solid rgba(11, 23, 38, 0.14);
+border:
+1px solid rgba(11, 23, 38, 0.14);
 
-  border-radius: 0;
+border-radius: 0;
 
-  background: #fcfbf8;
+background: #fcfbf8;
 
-  color: #0b1726;
+color: #0b1726;
 
-  padding: 0 0.95rem;
+padding: 0 0.95rem;
 
-  outline: none;
+outline: none;
 
-  transition:
-    border-color 0.2s ease,
-    background 0.2s ease,
-    box-shadow 0.2s ease;
+transition:
+border-color 0.2s ease,
+background 0.2s ease,
+box-shadow 0.2s ease;
 }
 
 .publication-controls input::placeholder {
-  color: #6f7883;
+color: #6f7883;
 }
 
 .publication-controls input:focus,
 .publication-controls select:focus {
-  background: #ffffff;
+background: #ffffff;
 
-  border-color: var(--accent);
+border-color: var(--accent);
 
-  box-shadow:
-    0 0 0 3px rgba(184, 138, 68, 0.10);
+box-shadow:
+0 0 0 3px rgba(184, 138, 68, 0.10);
 }
 
 .publication-controls select {
-  cursor: pointer;
+cursor: pointer;
 }
 
-
 /* =========================================================
-   PUBLICATION RESET BUTTON
+PUBLICATION RESET BUTTON
 ========================================================= */
 
 .publication-reset {
-  border:
-    1px solid var(--deep-navy);
+border:
+1px solid var(--deep-navy);
 
-  border-radius: 0;
+border-radius: 0;
 
-  background: var(--deep-navy);
+background: var(--deep-navy);
 
-  color: #ffffff;
+color: #ffffff;
 
-  padding: 0 1.25rem;
+padding: 0 1.25rem;
 
-  cursor: pointer;
+cursor: pointer;
 
-  font-weight: 600;
+font-weight: 600;
 
-  letter-spacing: 0.02em;
+letter-spacing: 0.02em;
 
-  transition:
-    background 0.2s ease,
-    transform 0.2s ease,
-    opacity 0.2s ease;
+transition:
+background 0.2s ease,
+transform 0.2s ease,
+opacity 0.2s ease;
 }
 
 .publication-reset:hover {
-  background: var(--deep-teal);
+background: var(--deep-teal);
 
-  opacity: 0.95;
+opacity: 0.95;
 
-  transform: translateY(-1px);
+transform: translateY(-1px);
 }
 
 .publication-reset:active {
-  transform: translateY(0);
+transform: translateY(0);
 }
 
-
 /* =========================================================
-   PUBLICATION COUNT
+PUBLICATION COUNT
 ========================================================= */
 
 .publication-count {
-  margin: 2rem 0 1.25rem;
+margin: 2rem 0 1.25rem;
 
-  padding: 1rem 1.25rem;
+padding: 1rem 1.25rem;
 
-  border-left:
-    3px solid var(--accent);
+border-left:
+3px solid var(--accent);
 
-  background:
-    rgba(11, 23, 38, 0.035);
+background:
+rgba(11, 23, 38, 0.035);
 
-  display: flex;
+display: flex;
 
-  align-items: baseline;
+align-items: baseline;
 
-  justify-content: space-between;
+justify-content: space-between;
 
-  gap: 1rem;
+gap: 1rem;
 
-  flex-wrap: wrap;
+flex-wrap: wrap;
 }
 
 .publication-count-main {
-  color: var(--ink);
+color: var(--ink);
 
-  font-size: 1rem;
+font-size: 1rem;
 
-  font-weight: 700;
+font-weight: 700;
 
-  letter-spacing: 0.01em;
+letter-spacing: 0.01em;
 }
 
 .publication-count-sub {
-  color: var(--muted);
+color: var(--muted);
 
-  font-size: 0.82rem;
+font-size: 0.82rem;
 }
 
-
 /* =========================================================
-   PUBLICATION LIST
+PUBLICATION LIST
 ========================================================= */
 
 .pub-list {
-  display: flex;
+display: flex;
 
-  flex-direction: column;
+flex-direction: column;
 
-  gap: 0;
+gap: 0;
 }
 
-
 /* =========================================================
-   PUBLICATION ITEM
+PUBLICATION ITEM
 ========================================================= */
 
 .publication-item {
-  display: grid;
+display: grid;
 
-  grid-template-columns:
-    72px minmax(0, 1fr);
+grid-template-columns:
+72px minmax(0, 1fr);
 
-  gap: 1.5rem;
+gap: 1.5rem;
 
-  padding: 1.75rem 0;
+padding: 1.75rem 0;
 
-  border-top:
-    1px solid rgba(11, 23, 38, 0.11);
+border-top:
+1px solid rgba(11, 23, 38, 0.11);
 
-  transition:
-    padding-left 0.25s ease,
-    background 0.25s ease;
+transition:
+padding-left 0.25s ease,
+background 0.25s ease;
 }
 
 .publication-item:last-child {
-  border-bottom:
-    1px solid rgba(11, 23, 38, 0.11);
+border-bottom:
+1px solid rgba(11, 23, 38, 0.11);
 }
 
 .publication-item:hover {
-  padding-left: 0.6rem;
+padding-left: 0.6rem;
 }
 
-
 /* =========================================================
-   PUBLICATION NUMBER
+PUBLICATION NUMBER
 ========================================================= */
 
 .publication-number {
-  font-family: "DM Sans", sans-serif;
+font-family: "DM Sans", sans-serif;
 
-  font-size: 0.82rem;
+font-size: 0.82rem;
 
-  font-weight: 700;
+font-weight: 700;
 
-  color: var(--accent);
+color: var(--accent);
 
-  letter-spacing: 0.08em;
+letter-spacing: 0.08em;
 
-  padding-top: 0.2rem;
+padding-top: 0.2rem;
 }
 
-
 /* =========================================================
-   PUBLICATION METADATA
+PUBLICATION METADATA
 ========================================================= */
 
 .publication-meta {
-  display: flex;
+display: flex;
 
-  flex-wrap: wrap;
+flex-wrap: wrap;
 
-  align-items: center;
+align-items: center;
 
-  gap: 8px;
+gap: 8px;
 
-  margin-bottom: 0.7rem;
+margin-bottom: 0.7rem;
 }
 
 .publication-meta span {
-  display: inline-flex;
+display: inline-flex;
 
-  align-items: center;
+align-items: center;
 
-  min-height: 28px;
+min-height: 28px;
 
-  padding: 5px 10px;
+padding: 5px 10px;
 
-  border:
-    1px solid rgba(127, 127, 127, 0.22);
+border:
+1px solid rgba(127, 127, 127, 0.22);
 
-  border-radius: 999px;
+border-radius: 999px;
 
-  font-size: 0.72rem;
+font-size: 0.72rem;
 
-  font-weight: 700;
+font-weight: 700;
 
-  line-height: 1.2;
+line-height: 1.2;
 
-  letter-spacing: 0.04em;
+letter-spacing: 0.04em;
 
-  white-space: nowrap;
+white-space: nowrap;
 
-  text-transform: uppercase;
+text-transform: uppercase;
 
-  background:
-    rgba(255, 255, 255, 0.70);
+background:
+rgba(255, 255, 255, 0.70);
 
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    background 0.2s ease;
+transition:
+transform 0.2s ease,
+box-shadow 0.2s ease,
+background 0.2s ease;
 }
 
 .publication-meta span:first-child {
-  color: #8a6416;
+color: #8a6416;
 
-  background:
-    rgba(212, 175, 55, 0.10);
+background:
+rgba(212, 175, 55, 0.10);
 
-  border-color:
-    rgba(212, 175, 55, 0.28);
+border-color:
+rgba(212, 175, 55, 0.28);
 }
 
 .publication-meta span:nth-child(2) {
-  color: #176b68;
+color: #176b68;
 
-  background:
-    rgba(23, 107, 104, 0.08);
+background:
+rgba(23, 107, 104, 0.08);
 
-  border-color:
-    rgba(23, 107, 104, 0.22);
+border-color:
+rgba(23, 107, 104, 0.22);
 }
 
 .publication-meta span:nth-child(3) {
-  color: #5d467c;
+color: #5d467c;
 
-  background:
-    rgba(93, 70, 124, 0.08);
+background:
+rgba(93, 70, 124, 0.08);
 
-  border-color:
-    rgba(93, 70, 124, 0.22);
+border-color:
+rgba(93, 70, 124, 0.22);
 
-  font-weight: 650;
+font-weight: 650;
 }
 
 .publication-meta span:hover {
-  transform: translateY(-1px);
+transform: translateY(-1px);
 
-  box-shadow:
-    0 3px 10px rgba(0, 0, 0, 0.06);
+box-shadow:
+0 3px 10px rgba(0, 0, 0, 0.06);
 }
 
-
 /* =========================================================
-   PUBLICATION TITLE
+PUBLICATION TITLE
 ========================================================= */
 
 .publication-content h3 {
-  margin: 0;
+margin: 0;
 
-  max-width: 920px;
+max-width: 920px;
 
-  color: #0b1726;
+color: #0b1726;
 
-  font-family: "Playfair Display", serif;
+font-family: "Playfair Display", serif;
 
-  font-size: clamp(1.15rem, 1.7vw, 1.45rem);
+font-size: clamp(1.15rem, 1.7vw, 1.45rem);
 
-  line-height: 1.4;
+line-height: 1.4;
 
-  font-weight: 600;
+font-weight: 600;
 }
 
-
 /* =========================================================
-   JOURNAL
+JOURNAL
 ========================================================= */
 
 .publication-journal {
-  margin: 0.65rem 0 0;
+margin: 0.65rem 0 0;
 
-  color: #56616d;
+color: #56616d;
 
-  font-size: 0.92rem;
+font-size: 0.92rem;
 
-  font-weight: 600;
+font-weight: 600;
 
-  font-style: italic;
+font-style: italic;
 }
 
-
 /* =========================================================
-   DOI LINK
+DOI LINK
 ========================================================= */
 
 .publication-doi {
-  display: inline-flex;
+display: inline-flex;
 
-  align-items: center;
+align-items: center;
 
-  margin-top: 0.9rem;
+margin-top: 0.9rem;
 
-  color: #0b1726;
+color: #0b1726;
 
-  font-size: 0.78rem;
+font-size: 0.78rem;
 
-  font-weight: 700;
+font-weight: 700;
 
-  text-decoration: none;
+text-decoration: none;
 
-  letter-spacing: 0.04em;
+letter-spacing: 0.04em;
 
-  text-transform: uppercase;
+text-transform: uppercase;
 
-  border-bottom:
-    1px solid var(--accent);
+border-bottom:
+1px solid var(--accent);
 
-  padding-bottom: 0.15rem;
+padding-bottom: 0.15rem;
 
-  transition:
-    color 0.2s ease,
-    border-color 0.2s ease;
+transition:
+color 0.2s ease,
+border-color 0.2s ease;
 }
 
 .publication-doi:hover {
-  color: var(--accent);
+color: var(--accent);
 
-  border-color: #0b1726;
+border-color: #0b1726;
 }
 
-
 /* =========================================================
-   EMPTY SEARCH RESULT
+EMPTY SEARCH RESULT
 ========================================================= */
 
 .publication-empty {
-  padding: 4rem 2rem;
+padding: 4rem 2rem;
 
-  text-align: center;
+text-align: center;
 
-  border:
-    1px dashed rgba(11, 23, 38, 0.18);
+border:
+1px dashed rgba(11, 23, 38, 0.18);
 
-  background:
-    rgba(11, 23, 38, 0.025);
+background:
+rgba(11, 23, 38, 0.025);
 }
 
 .publication-empty h3 {
-  margin-bottom: 0.5rem;
+margin-bottom: 0.5rem;
 
-  color: var(--ink);
+color: var(--ink);
 
-  font-family: "Playfair Display", serif;
+font-family: "Playfair Display", serif;
 
-  font-size: 25px;
+font-size: 25px;
 }
 
 .publication-empty p {
-  margin: 0;
+margin: 0;
 
-  opacity: 0.7;
+opacity: 0.7;
 }
 
-
 /* =========================================================
-   ACADEMIC CONTRIBUTIONS
+ACADEMIC CONTRIBUTIONS
 ========================================================= */
 
 #academic-contributions {
-  background:
-    radial-gradient(
-      circle at 90% 12%,
-      rgba(184, 137, 77, 0.07),
-      transparent 28%
-    ),
-    linear-gradient(
-      135deg,
-      #f8f6f1,
-      #f4f0e8 52%,
-      #faf9f5
-    );
+background:
+radial-gradient(
+circle at 90% 12%,
+rgba(184, 137, 77, 0.07),
+transparent 28%
+),
+linear-gradient(
+135deg,
+#f8f6f1,
+#f4f0e8 52%,
+#faf9f5
+);
 }
 
 .academic-grid {
-  display: grid;
+display: grid;
 
-  grid-template-columns: repeat(3, 1fr);
+grid-template-columns: repeat(3, 1fr);
 
-  gap: 18px;
+gap: 18px;
 }
 
 .academic-grid article {
-  padding: 32px;
+padding: 32px;
 
-  border:
-    1px solid rgba(126, 100, 70, 0.12);
+border:
+1px solid rgba(126, 100, 70, 0.12);
 
-  border-radius: var(--radius-md);
+border-radius: var(--radius-md);
 
-  background:
-    linear-gradient(
-      145deg,
-      #fffefa,
-      #f6f1e8
-    );
+background:
+linear-gradient(
+145deg,
+#fffefa,
+#f6f1e8
+);
 
-  box-shadow:
-    0 8px 25px rgba(73, 59, 40, 0.05);
+box-shadow:
+0 8px 25px rgba(73, 59, 40, 0.05);
 
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
+transition:
+transform 0.25s ease,
+box-shadow 0.25s ease;
 }
 
 .academic-grid article:hover {
-  transform: translateY(-4px);
+transform: translateY(-4px);
 
-  box-shadow: var(--shadow-card);
+box-shadow: var(--shadow-card);
 }
 
 .academic-grid article > span {
-  display: block;
+display: block;
 
-  margin-bottom: 35px;
+margin-bottom: 35px;
 
-  color: var(--accent-dark);
+color: var(--accent-dark);
 
-  font-size: 10px;
+font-size: 10px;
 
-  font-weight: 700;
+font-weight: 700;
 
-  letter-spacing: 1.4px;
+letter-spacing: 1.4px;
 }
 
 .academic-grid h3 {
-  margin-bottom: 12px;
+margin-bottom: 12px;
 
-  color: var(--ink);
+color: var(--ink);
 
-  font-family: "Playfair Display", serif;
+font-family: "Playfair Display", serif;
 
-  font-size: 27px;
+font-size: 27px;
 
-  font-weight: 500;
+font-weight: 500;
 }
 
 .academic-grid p {
-  margin-bottom: 0;
+margin-bottom: 0;
 
-  color: var(--ink-soft);
+color: var(--ink-soft);
 
-  font-size: 13px;
+font-size: 13px;
 }
 
-
 /* =========================================================
-   ABOUT
+ABOUT
 ========================================================= */
 
 .about {
-  position: relative;
+position: relative;
 
-  background:
-    radial-gradient(
-      circle at 90% 20%,
-      rgba(37, 108, 152, 0.07),
-      transparent 28%
-    ),
-    radial-gradient(
-      circle at 10% 80%,
-      rgba(184, 137, 77, 0.07),
-      transparent 30%
-    ),
-    linear-gradient(
-      135deg,
-      #f8f7f3,
-      #eaf3f1 55%,
-      #f4f8f6 100%
-    );
+background:
+radial-gradient(
+circle at 90% 20%,
+rgba(37, 108, 152, 0.07),
+transparent 28%
+),
+radial-gradient(
+circle at 10% 80%,
+rgba(184, 137, 77, 0.07),
+transparent 30%
+),
+linear-gradient(
+135deg,
+#f8f7f3,
+#eaf3f1 55%,
+#f4f8f6 100%
+);
 }
 
 .about-grid {
-  display: grid;
+display: grid;
 
-  grid-template-columns: 0.8fr 1.2fr;
+grid-template-columns: 0.8fr 1.2fr;
 
-  gap: 100px;
+gap: 100px;
 }
 
 .about-grid h2 {
-  max-width: 500px;
+max-width: 500px;
 }
 
 .about-grid p {
-  margin-bottom: 20px;
+margin-bottom: 20px;
 
-  color: var(--ink-soft);
+color: var(--ink-soft);
 
-  font-size: 15px;
+font-size: 15px;
 
-  line-height: 1.85;
+line-height: 1.85;
 }
 
 .about-grid .button {
-  margin-top: 12px;
+margin-top: 12px;
 }
 
-
 /* =========================================================
-   ACADEMIC PROFILES
+ACADEMIC PROFILES
 ========================================================= */
 
 .profiles {
-  position: relative;
+position: relative;
 
-  overflow: hidden;
+overflow: hidden;
 
-  background:
-    radial-gradient(
-      circle at 15% 20%,
-      rgba(78, 95, 168, 0.08),
-      transparent 30%
-    ),
-    radial-gradient(
-      circle at 88% 78%,
-      rgba(102, 80, 154, 0.07),
-      transparent 32%
-    ),
-    linear-gradient(
-      135deg,
-      #f1f4f8 0%,
-      #f1f0f8 52%,
-      #f6f4f8 100%
-    );
+background:
+radial-gradient(
+circle at 15% 20%,
+rgba(78, 95, 168, 0.08),
+transparent 30%
+),
+radial-gradient(
+circle at 88% 78%,
+rgba(102, 80, 154, 0.07),
+transparent 32%
+),
+linear-gradient(
+135deg,
+#f1f4f8 0%,
+#f1f0f8 52%,
+#f6f4f8 100%
+);
 }
 
 .profiles::before {
-  content: "";
+content: "";
 
-  position: absolute;
+position: absolute;
 
-  width: 360px;
-  height: 360px;
+width: 360px;
+height: 360px;
 
-  top: -170px;
-  right: -100px;
+top: -170px;
+right: -100px;
 
-  border-radius: 50%;
+border-radius: 50%;
 
-  background:
-    radial-gradient(
-      circle,
-      rgba(78, 95, 168, 0.08),
-      transparent 70%
-    );
+background:
+radial-gradient(
+circle,
+rgba(78, 95, 168, 0.08),
+transparent 70%
+);
 
-  pointer-events: none;
+pointer-events: none;
 }
 
 .profiles::after {
-  content: "";
+content: "";
 
-  position: absolute;
+position: absolute;
 
-  width: 300px;
-  height: 300px;
+width: 300px;
+height: 300px;
 
-  bottom: -150px;
-  left: -100px;
+bottom: -150px;
+left: -100px;
 
-  border-radius: 50%;
+border-radius: 50%;
 
-  background:
-    radial-gradient(
-      circle,
-      rgba(102, 80, 154, 0.06),
-      transparent 70%
-    );
+background:
+radial-gradient(
+circle,
+rgba(102, 80, 154, 0.06),
+transparent 70%
+);
 
-  pointer-events: none;
+pointer-events: none;
 }
 
 .profiles .container {
-  position: relative;
+position: relative;
 
-  z-index: 2;
+z-index: 2;
 }
 
 .academic-profiles-grid {
-  display: grid;
+display: grid;
 
-  grid-template-columns: repeat(3, 1fr);
+grid-template-columns: repeat(3, 1fr);
 
-  gap: 16px;
+gap: 16px;
 }
 
 .profile-card {
-  position: relative;
+position: relative;
 
-  min-height: 260px;
+min-height: 260px;
 
-  padding: 28px;
+padding: 28px;
 
-  border:
-    1px solid rgba(78, 95, 168, 0.12);
+border:
+1px solid rgba(78, 95, 168, 0.12);
 
-  border-radius: var(--radius-md);
+border-radius: var(--radius-md);
 
-  background:
-    rgba(255, 255, 255, 0.92);
+background:
+rgba(255, 255, 255, 0.92);
 
-  box-shadow:
-    0 10px 30px rgba(67, 70, 110, 0.06);
+box-shadow:
+0 10px 30px rgba(67, 70, 110, 0.06);
 
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    border-color 0.25s ease;
+transition:
+transform 0.25s ease,
+box-shadow 0.25s ease,
+border-color 0.25s ease;
 }
 
 .profile-card:hover {
-  transform: translateY(-4px);
+transform: translateY(-4px);
 
-  border-color:
-    rgba(78, 95, 168, 0.32);
+border-color:
+rgba(78, 95, 168, 0.32);
 
-  box-shadow:
-    0 16px 38px rgba(67, 70, 110, 0.11);
+box-shadow:
+0 16px 38px rgba(67, 70, 110, 0.11);
 }
 
 .profile-number {
-  display: block;
+display: block;
 
-  margin-bottom: 30px;
+margin-bottom: 30px;
 
-  color: var(--accent-platforms);
+color: var(--accent-platforms);
 
-  font-size: 11px;
+font-size: 11px;
 
-  font-weight: 700;
+font-weight: 700;
 }
 
 .profile-label {
-  display: block;
+display: block;
 
-  margin-bottom: 8px;
+margin-bottom: 8px;
 
-  color: var(--muted);
+color: var(--muted);
 
-  font-size: 9px;
+font-size: 9px;
 
-  font-weight: 700;
+font-weight: 700;
 
-  letter-spacing: 1.4px;
+letter-spacing: 1.4px;
 }
 
 .profile-card h3 {
-  margin-bottom: 10px;
+margin-bottom: 10px;
 
-  color: var(--ink);
+color: var(--ink);
 
-  font-family: "Playfair Display", serif;
+font-family: "Playfair Display", serif;
 
-  font-size: 28px;
+font-size: 28px;
 
-  font-weight: 500;
+font-weight: 500;
 }
 
 .profile-card p {
-  margin-bottom: 18px;
+margin-bottom: 18px;
 
-  color: var(--ink-soft);
+color: var(--ink-soft);
 
-  font-size: 12px;
+font-size: 12px;
 
-  line-height: 1.6;
+line-height: 1.6;
 }
 
 .profile-link {
-  color: var(--accent-platforms);
+color: var(--accent-platforms);
 
-  font-size: 11px;
+font-size: 11px;
 
-  font-weight: 700;
+font-weight: 700;
 }
 
 .profile-link:hover {
-  color: var(--accent-literature);
+color: var(--accent-literature);
 }
 
 .profile-note {
-  margin-top: 24px;
+margin-top: 24px;
 
-  text-align: center;
+text-align: center;
 }
 
 .profile-note p {
-  margin: 0;
+margin: 0;
 
-  color: var(--muted);
+color: var(--muted);
 
-  font-size: 11px;
+font-size: 11px;
 }
 
-
 /* =========================================================
-   CONTACT
+CONTACT
 ========================================================= */
 
 .contact {
-  padding: 105px 0;
+padding: 105px 0;
 
-  background:
-    radial-gradient(
-      circle at 80% 20%,
-      rgba(216, 183, 126, 0.12),
-      transparent 28%
-    ),
-    radial-gradient(
-      circle at 10% 90%,
-      rgba(42, 118, 139, 0.10),
-      transparent 30%
-    ),
-    linear-gradient(
-      135deg,
-      #091f27,
-      #102f39 55%,
-      #101e2c
-    );
+background:
+radial-gradient(
+circle at 80% 20%,
+rgba(216, 183, 126, 0.12),
+transparent 28%
+),
+radial-gradient(
+circle at 10% 90%,
+rgba(42, 118, 139, 0.10),
+transparent 30%
+),
+linear-gradient(
+135deg,
+#091f27,
+#102f39 55%,
+#101e2c
+);
 }
 
 .contact-inner {
-  display: grid;
+display: grid;
 
-  grid-template-columns: 1fr 0.8fr;
+grid-template-columns: 1fr 0.8fr;
 
-  gap: 90px;
+gap: 90px;
 
-  align-items: center;
+align-items: center;
 }
 
 .contact h2,
 .contact p {
-  color: var(--white);
+color: var(--white);
 }
 
 .contact h2 {
-  margin-bottom: 0;
+margin-bottom: 0;
 }
 
 .contact > .container > div:last-child > p:first-child {
-  color: rgba(255, 255, 255, 0.70);
+color: rgba(255, 255, 255, 0.70);
 
-  font-size: 14px;
+font-size: 14px;
 }
 
 .contact-email {
-  margin-top: 15px;
+margin-top: 15px;
 
-  color: rgba(255, 255, 255, 0.55) !important;
+color: rgba(255, 255, 255, 0.55) !important;
 
-  font-size: 11px !important;
+font-size: 11px !important;
 }
 
-
 /* =========================================================
-   FOOTER
+FOOTER
 ========================================================= */
 
 footer {
-  background:
-    linear-gradient(
-      135deg,
-      #06151d,
-      #0b222a
-    );
+background:
+linear-gradient(
+135deg,
+#06151d,
+#0b222a
+);
 
-  border-top:
-    1px solid rgba(255, 255, 255, 0.08);
+border-top:
+1px solid rgba(255, 255, 255, 0.08);
 }
 
 .footer-inner {
-  min-height: 80px;
+min-height: 80px;
 
-  display: flex;
+display: flex;
 
-  align-items: center;
+align-items: center;
 
-  justify-content: space-between;
+justify-content: space-between;
 
-  gap: 20px;
+gap: 20px;
 
-  color: rgba(255, 255, 255, 0.55);
+color: rgba(255, 255, 255, 0.55);
 
-  font-size: 10px;
+font-size: 10px;
 
-  letter-spacing: 0.5px;
+letter-spacing: 0.5px;
 }
 
-
 /* =========================================================
-   ACCESSIBILITY
+ACCESSIBILITY
 ========================================================= */
 
 .sr-only {
-  position: absolute;
+position: absolute;
 
-  width: 1px;
-  height: 1px;
+width: 1px;
+height: 1px;
 
-  padding: 0;
-  margin: -1px;
+padding: 0;
+margin: -1px;
 
-  overflow: hidden;
+overflow: hidden;
 
-  clip: rect(0, 0, 0, 0);
+clip: rect(0, 0, 0, 0);
 
-  white-space: nowrap;
+white-space: nowrap;
 
-  border: 0;
+border: 0;
 }
 
-
 /* =========================================================
-   TABLET
+TABLET
 ========================================================= */
 
 @media (max-width: 1000px) {
 
-  .hero-grid {
-    grid-template-columns: 1fr;
+.hero-grid {
+grid-template-columns: 1fr;
 
-    gap: 30px;
-  }
 
-  .hero-panel {
-    min-height: 615px;
-  }
+gap: 30px;
 
-  .orb {
-    top: 30px;
 
-    width: 365px;
-    height: 365px;
-  }
-
-  .hero-photo {
-    width: 310px;
-    height: 310px;
-
-    margin-top: 45px;
-
-    border-width: 9px;
-
-    transform: translateY(35px);
-  }
-
-  .profile-photo {
-    transform:
-      translateY(-28px)
-      scale(1.58);
-  }
-
-  .research-card {
-    margin-top: 57px;
-
-    margin-right: 0;
-
-    width: min(350px, 78%);
-  }
-
-  .research-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .research-glance {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .academic-profiles-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .section-heading {
-    grid-template-columns: 1fr;
-
-    gap: 15px;
-  }
-
-  .about-grid {
-    grid-template-columns: 1fr;
-
-    gap: 40px;
-  }
-
-  .contact-inner {
-    grid-template-columns: 1fr;
-
-    gap: 35px;
-  }
-
-  /* Grants tablet */
-  .grants-grid,
-  .grant-grid,
-  .grants-list,
-  .grant-list {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
+.hero-panel {
+min-height: 615px;
+}
+
+.orb {
+top: 30px;
+
+
+width: 365px;
+height: 365px;
+
+
+}
+
+.hero-photo {
+width: 310px;
+height: 310px;
+
+
+margin-top: 45px;
+
+border-width: 9px;
+
+transform: translateY(35px);
+
+
+}
+
+.profile-photo {
+transform:
+translateY(-28px)
+scale(1.58);
+}
+
+.research-card {
+margin-top: 57px;
+
+
+margin-right: 0;
+
+width: min(350px, 78%);
+
+
+}
+
+.research-grid {
+grid-template-columns: repeat(2, 1fr);
+}
+
+.research-glance {
+grid-template-columns: repeat(2, 1fr);
+}
+
+.academic-profiles-grid {
+grid-template-columns: repeat(2, 1fr);
+}
+
+.section-heading {
+grid-template-columns: 1fr;
+
+
+gap: 15px;
+
+
+}
+
+.about-grid {
+grid-template-columns: 1fr;
+
+
+gap: 40px;
+
+
+}
+
+.contact-inner {
+grid-template-columns: 1fr;
+
+
+gap: 35px;
+
+
+}
+
+.grants-grid,
+.grant-grid,
+.grants-list,
+.grant-list {
+grid-template-columns: repeat(2, 1fr);
+}
+}
 
 /* =========================================================
-   MOBILE NAVIGATION
+MOBILE NAVIGATION
 ========================================================= */
 
 @media (max-width: 900px) {
 
-  .nav {
-    min-height: 68px;
-  }
-
-  .menu-toggle {
-    display: flex;
-  }
-
-  .nav-links {
-    display: none;
-
-    position: absolute;
-
-    top: calc(100% + 8px);
-
-    left: 0;
-    right: 0;
-
-    z-index: 1100;
-
-    flex-direction: column;
-
-    align-items: stretch;
-
-    gap: 4px;
-
-    padding: 12px;
-
-    border:
-      1px solid rgba(16, 37, 43, 0.12);
-
-    border-radius: 14px;
-
-    background:
-      rgba(255, 255, 255, 0.99);
-
-    box-shadow:
-      0 18px 45px rgba(16, 37, 43, 0.16);
-
-    backdrop-filter: blur(14px);
-
-    -webkit-backdrop-filter: blur(14px);
-  }
-
-  .nav-links.open {
-    display: flex;
-  }
-
-  .nav-links a {
-    display: block;
-
-    width: 100%;
-
-    padding: 13px 14px;
-
-    border-radius: 8px;
-
-    color: var(--ink);
-
-    font-size: 14px;
-
-    text-align: left;
-  }
-
-  .nav-links a:hover {
-    background: rgba(16, 37, 43, 0.05);
-  }
-
-  .nav-links a:not(.nav-button)::after {
-    display: none;
-  }
-
-  .nav-button {
-    margin-top: 5px;
-
-    text-align: center !important;
-
-    background: var(--deep-teal);
-
-    border-color: var(--deep-teal);
-
-    color: var(--white) !important;
-  }
-
-  .nav-button:hover {
-    background: var(--deep-teal-2);
-
-    border-color: var(--deep-teal-2);
-  }
-
-  section,
-  #research,
-  #publications,
-  #academic-contributions,
-  #grants,
-  #grants-research-support,
-  #about,
-  #academic-profiles,
-  #contact {
-    scroll-margin-top: 82px;
-  }
-
-  .publication-controls {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .publication-search-wrap {
-    grid-column: 1 / -1;
-  }
-
-  .publication-reset {
-    width: 100%;
-  }
-
-  /* Grants mobile/tablet navigation */
-  .grant-card,
-  .grants-grid article,
-  .grant-grid article,
-  .grants-list article,
-  .grant-list article {
-    min-height: 300px;
-  }
+.nav {
+min-height: 68px;
 }
 
+.menu-toggle {
+display: flex;
+}
+
+.nav-links {
+display: none;
+
+
+position: absolute;
+
+top: calc(100% + 8px);
+
+left: 0;
+right: 0;
+
+z-index: 1100;
+
+flex-direction: column;
+
+align-items: stretch;
+
+gap: 4px;
+
+padding: 12px;
+
+border:
+  1px solid rgba(16, 37, 43, 0.12);
+
+border-radius: 14px;
+
+background:
+  rgba(255, 255, 255, 0.99);
+
+box-shadow:
+  0 18px 45px rgba(16, 37, 43, 0.16);
+
+backdrop-filter: blur(14px);
+
+-webkit-backdrop-filter: blur(14px);
+
+
+}
+
+.nav-links.open {
+display: flex;
+}
+
+.nav-links a {
+display: block;
+
+
+width: 100%;
+
+padding: 13px 14px;
+
+border-radius: 8px;
+
+color: var(--ink);
+
+font-size: 14px;
+
+text-align: left;
+
+
+}
+
+.nav-links a:hover {
+background: rgba(16, 37, 43, 0.05);
+}
+
+.nav-links a:not(.nav-button)::after {
+display: none;
+}
+
+.nav-button {
+margin-top: 5px;
+
+
+text-align: center !important;
+
+background: var(--deep-teal);
+
+border-color: var(--deep-teal);
+
+color: var(--white) !important;
+
+
+}
+
+.nav-button:hover {
+background: var(--deep-teal-2);
+
+
+border-color: var(--deep-teal-2);
+
+
+}
+
+section,
+#research,
+#publications,
+#academic-contributions,
+#grants,
+#grants-research-support,
+#about,
+#academic-profiles,
+#contact {
+scroll-margin-top: 82px;
+}
+
+.publication-controls {
+grid-template-columns: 1fr 1fr;
+}
+
+.publication-search-wrap {
+grid-column: 1 / -1;
+}
+
+.publication-reset {
+width: 100%;
+}
+
+.grant-card,
+.grants-grid article,
+.grant-grid article,
+.grants-list article,
+.grant-list article {
+min-height: 300px;
+}
+}
 
 /* =========================================================
-   MOBILE
+MOBILE
 ========================================================= */
 
 @media (max-width: 720px) {
 
-  .container {
-    width: min(100% - 32px, 1180px);
-  }
-
-  .hero {
-    padding: 75px 0 70px;
-  }
-
-  h1 {
-    font-size: 52px;
-  }
-
-  h2 {
-    font-size: 42px;
-  }
-
-  .hero .lead {
-    font-size: 16px;
-  }
-
-  .hero-panel {
-    min-height: 525px;
-
-    overflow: visible;
-  }
-
-  .orb {
-    top: 18px;
-
-    width: 330px;
-    height: 330px;
-  }
-
-
-  /* =======================================================
-     MOBILE PHOTO FRAME
-     FRAME POSITION PRESERVED
-  ======================================================= */
-
-  .hero-photo {
-    width: 270px;
-    height: 270px;
-
-    margin-top: 34px;
-
-    border-width: 8px;
-
-    transform: translateY(38px);
-  }
-
-
-  /* =======================================================
-     MOBILE PHOTO
-     ONLY PHOTO MOVES UP
-  ======================================================= */
-
-  .profile-photo {
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-
-    transform:
-      translateY(-26px)
-      scale(1.54);
-
-    transform-origin: center center;
-  }
-
-  .research-card {
-    position: relative;
-
-    right: auto;
-    bottom: auto;
-
-    width: min(315px, 88vw);
-
-    margin-top: 57px;
-    margin-right: 0;
-
-    padding: 19px;
-
-    z-index: 6;
-  }
-
-  .quick-stats {
-    gap: 20px;
-  }
-
-  .ticker-inner {
-    justify-content: flex-start;
-
-    overflow-x: auto;
-
-    padding: 0 5px;
-
-    scrollbar-width: none;
-  }
-
-  .ticker-inner::-webkit-scrollbar {
-    display: none;
-  }
-
-  .section {
-    padding: 80px 0;
-  }
-
-  .research-grid,
-  .academic-grid,
-  .academic-profiles-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .theme-card {
-    min-height: auto;
-  }
-
-  .project {
-    grid-template-columns: 1fr;
-
-    gap: 12px;
-
-    padding: 30px 0;
-  }
-
-  .project h3 {
-    font-size: 25px;
-  }
-
-  .research-glance {
-    grid-template-columns: 1fr;
-  }
-
-
-  /* =======================================================
-     GRANTS & RESEARCH SUPPORT — MOBILE
-  ======================================================= */
-
-  .grants-grid,
-  .grant-grid,
-  .grants-list,
-  .grant-list {
-    grid-template-columns: 1fr;
-
-    gap: 14px;
-  }
-
-  .grant-card,
-  .grants-grid article,
-  .grant-grid article,
-  .grants-list article,
-  .grant-list article {
-    min-height: auto;
-
-    padding: 24px 22px;
-  }
-
-  .grant-card h3,
-  .grants-grid article h3,
-  .grant-grid article h3,
-  .grants-list article h3,
-  .grant-list article h3 {
-    font-size: 23px;
-  }
-
-  .grant-card p,
-  .grants-grid article p,
-  .grant-grid article p,
-  .grants-list article p,
-  .grant-list article p {
-    font-size: 12.5px;
-
-    line-height: 1.7;
-  }
-
-
-  /* =======================================================
-     PUBLICATION FEATURE — MOBILE
-  ======================================================= */
-
-  .pub-feature {
-    padding: 22px 18px;
-  }
-
-  .publication-intro {
-    margin-bottom: 1.4rem;
-  }
-
-  .publication-intro h3 {
-    font-size: 25px;
-  }
-
-  .publication-intro p {
-    font-size: 13px;
-  }
-
-  .publication-controls {
-    grid-template-columns: 1fr;
-
-    padding: 0.8rem;
-
-    margin: 14px 0 16px;
-
-    gap: 0.65rem;
-  }
-
-  .publication-search-wrap {
-    grid-column: auto;
-  }
-
-  .publication-controls input,
-  .publication-controls select,
-  .publication-controls button {
-    min-height: 46px;
-  }
-
-
-  /* =======================================================
-     PUBLICATION COUNT — MOBILE
-  ======================================================= */
-
-  .publication-count {
-    align-items: flex-start;
-
-    flex-direction: column;
-
-    gap: 0.35rem;
-  }
-
-
-  /* =======================================================
-     PUBLICATION ITEM — MOBILE
-  ======================================================= */
-
-  .publication-item {
-    grid-template-columns:
-      42px minmax(0, 1fr);
-
-    gap: 0.8rem;
-
-    padding: 1.4rem 0;
-  }
-
-  .publication-item:hover {
-    padding-left: 0;
-  }
-
-  .publication-number {
-    font-size: 0.72rem;
-  }
-
-  .publication-content h3 {
-    font-size: 1.08rem;
-
-    line-height: 1.45;
-  }
-
-
-  /* =======================================================
-     PUBLICATION METADATA — MOBILE
-  ======================================================= */
-
-  .publication-meta {
-    gap: 6px;
-  }
-
-  .publication-meta span {
-    min-height: 26px;
-
-    padding: 4px 8px;
-
-    font-size: 0.65rem;
-  }
-
-  .publication-journal {
-    font-size: 0.85rem;
-  }
-
-  .about-grid {
-    gap: 30px;
-  }
-
-  .contact {
-    padding: 80px 0;
-  }
-
-  .footer-inner {
-    min-height: auto;
-
-    padding: 25px 0;
-
-    flex-direction: column;
-
-    align-items: flex-start;
-  }
+.container {
+width: min(100% - 32px, 1180px);
 }
 
+.hero {
+padding: 75px 0 70px;
+}
+
+h1 {
+font-size: 52px;
+}
+
+h2 {
+font-size: 42px;
+}
+
+.hero .lead {
+font-size: 16px;
+}
+
+.hero-panel {
+min-height: 525px;
+
+
+overflow: visible;
+
+
+}
+
+.orb {
+top: 18px;
+
+
+width: 330px;
+height: 330px;
+
+
+}
+
+.hero-photo {
+width: 270px;
+height: 270px;
+
+
+margin-top: 34px;
+
+border-width: 8px;
+
+transform: translateY(38px);
+
+
+}
+
+.profile-photo {
+width: 100%;
+height: 100%;
+
+
+object-fit: cover;
+
+transform:
+  translateY(-26px)
+  scale(1.54);
+
+transform-origin: center center;
+
+
+}
+
+.research-card {
+position: relative;
+
+
+right: auto;
+bottom: auto;
+
+width: min(315px, 88vw);
+
+margin-top: 57px;
+margin-right: 0;
+
+padding: 19px;
+
+z-index: 6;
+
+
+}
+
+.quick-stats {
+gap: 20px;
+}
+
+.ticker-inner {
+justify-content: flex-start;
+
+
+overflow-x: auto;
+
+padding: 0 5px;
+
+scrollbar-width: none;
+
+
+}
+
+.ticker-inner::-webkit-scrollbar {
+display: none;
+}
+
+.section {
+padding: 80px 0;
+}
+
+.research-grid,
+.academic-grid,
+.academic-profiles-grid {
+grid-template-columns: 1fr;
+}
+
+.theme-card {
+min-height: auto;
+}
+
+.project {
+grid-template-columns: 1fr;
+
+
+gap: 12px;
+
+padding: 30px 0;
+
+
+}
+
+.project h3 {
+font-size: 25px;
+}
+
+.research-glance {
+grid-template-columns: 1fr;
+}
+
+/* =======================================================
+GRANTS & RESEARCH SUPPORT — MOBILE
+======================================================= */
+
+.grants-grid,
+.grant-grid,
+.grants-list,
+.grant-list {
+grid-template-columns: 1fr;
+
+
+gap: 14px;
+
+
+}
+
+.grant-card,
+.grants-grid article,
+.grant-grid article,
+.grants-list article,
+.grant-list article {
+min-height: auto;
+
+
+padding: 24px 22px;
+
+
+}
+
+.grant-card h3,
+.grants-grid article h3,
+.grant-grid article h3,
+.grants-list article h3,
+.grant-list article h3 {
+font-size: 23px;
+}
+
+.grant-card p,
+.grants-grid article p,
+.grant-grid article p,
+.grants-list article p,
+.grant-list article p {
+font-size: 12.5px;
+
+
+line-height: 1.7;
+
+
+}
+
+/* =======================================================
+PUBLICATION FEATURE — MOBILE
+======================================================= */
+
+.pub-feature {
+padding: 22px 18px;
+}
+
+.publication-intro {
+margin-bottom: 1.4rem;
+}
+
+.publication-intro h3 {
+font-size: 25px;
+}
+
+.publication-intro p {
+font-size: 13px;
+}
+
+.publication-controls {
+grid-template-columns: 1fr;
+
+
+padding: 0.8rem;
+
+margin: 14px 0 16px;
+
+gap: 0.65rem;
+
+
+}
+
+.publication-search-wrap {
+grid-column: auto;
+}
+
+.publication-controls input,
+.publication-controls select,
+.publication-controls button {
+min-height: 46px;
+}
+
+/* =======================================================
+PUBLICATION COUNT — MOBILE
+======================================================= */
+
+.publication-count {
+align-items: flex-start;
+
+
+flex-direction: column;
+
+gap: 0.35rem;
+
+
+}
+
+/* =======================================================
+PUBLICATION ITEM — MOBILE
+======================================================= */
+
+.publication-item {
+grid-template-columns:
+42px minmax(0, 1fr);
+
+
+gap: 0.8rem;
+
+padding: 1.4rem 0;
+
+
+}
+
+.publication-item:hover {
+padding-left: 0;
+}
+
+.publication-number {
+font-size: 0.72rem;
+}
+
+.publication-content h3 {
+font-size: 1.08rem;
+
+
+line-height: 1.45;
+
+
+}
+
+/* =======================================================
+PUBLICATION METADATA — MOBILE
+======================================================= */
+
+.publication-meta {
+gap: 6px;
+}
+
+.publication-meta span {
+min-height: 26px;
+
+
+padding: 4px 8px;
+
+font-size: 0.65rem;
+
+
+}
+
+.publication-journal {
+font-size: 0.85rem;
+}
+
+.about-grid {
+gap: 30px;
+}
+
+.contact {
+padding: 80px 0;
+}
+
+.footer-inner {
+min-height: auto;
+
+
+padding: 25px 0;
+
+flex-direction: column;
+
+align-items: flex-start;
+
+
+}
+}
 
 /* =========================================================
-   VERY SMALL SCREENS
+VERY SMALL SCREENS
 ========================================================= */
 
 @media (max-width: 420px) {
 
-  .container {
-    width: min(100% - 28px, 1180px);
-  }
-
-  h1 {
-    font-size: 46px;
-  }
-
-  h2 {
-    font-size: 37px;
-  }
-
-  .hero-panel {
-    min-height: 480px;
-  }
-
-  .orb {
-    top: 15px;
-
-    width: 290px;
-    height: 290px;
-  }
-
-
-  /* =======================================================
-     VERY SMALL PHOTO FRAME
-     FRAME POSITION PRESERVED
-  ======================================================= */
-
-  .hero-photo {
-    width: 240px;
-    height: 240px;
-
-    margin-top: 25px;
-
-    border-width: 8px;
-
-    transform: translateY(38px);
-  }
-
-
-  /* =======================================================
-     VERY SMALL PHOTO
-     ONLY PHOTO MOVES UP
-  ======================================================= */
-
-  .profile-photo {
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-
-    transform:
-      translateY(-26px)
-      scale(1.54);
-
-    transform-origin: center center;
-  }
-
-  .research-card {
-    width: 92%;
-
-    margin-top: 57px;
-  }
-
-  .quick-stats {
-    display: grid;
-
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .quick-stats > div {
-    align-items: flex-start;
-  }
-
-
-  /* =======================================================
-     VERY SMALL GRANT CARDS
-  ======================================================= */
-
-  .grant-card,
-  .grants-grid article,
-  .grant-grid article,
-  .grants-list article,
-  .grant-list article {
-    padding: 21px 18px;
-  }
-
-  .grant-card h3,
-  .grants-grid article h3,
-  .grant-grid article h3,
-  .grants-list article h3,
-  .grant-list article h3 {
-    font-size: 21px;
-  }
-
-  .grant-card p,
-  .grants-grid article p,
-  .grant-grid article p,
-  .grants-list article p,
-  .grant-list article p {
-    font-size: 12px;
-  }
-
-  .publication-item {
-    grid-template-columns:
-      36px minmax(0, 1fr);
-
-    gap: 0.65rem;
-  }
-
-  .publication-number {
-    font-size: 0.68rem;
-  }
-
-  .publication-content h3 {
-    font-size: 1rem;
-  }
+.container {
+width: min(100% - 28px, 1180px);
 }
 
+h1 {
+font-size: 46px;
+}
+
+h2 {
+font-size: 37px;
+}
+
+.hero-panel {
+min-height: 480px;
+}
+
+.orb {
+top: 15px;
+
+
+width: 290px;
+height: 290px;
+
+
+}
+
+.hero-photo {
+width: 240px;
+height: 240px;
+
+
+margin-top: 25px;
+
+border-width: 8px;
+
+transform: translateY(38px);
+
+
+}
+
+.profile-photo {
+width: 100%;
+height: 100%;
+
+
+object-fit: cover;
+
+transform:
+  translateY(-26px)
+  scale(1.54);
+
+transform-origin: center center;
+
+
+}
+
+.research-card {
+width: 92%;
+
+
+margin-top: 57px;
+
+
+}
+
+.quick-stats {
+display: grid;
+
+
+grid-template-columns: repeat(2, 1fr);
+
+
+}
+
+.quick-stats > div {
+align-items: flex-start;
+}
+
+/* =======================================================
+VERY SMALL GRANT CARDS
+======================================================= */
+
+.grant-card,
+.grants-grid article,
+.grant-grid article,
+.grants-list article,
+.grant-list article {
+padding: 21px 18px;
+}
+
+.grant-card h3,
+.grants-grid article h3,
+.grant-grid article h3,
+.grants-list article h3,
+.grant-list article h3 {
+font-size: 21px;
+}
+
+.grant-card p,
+.grants-grid article p,
+.grant-grid article p,
+.grants-list article p,
+.grant-list article p {
+font-size: 12px;
+}
+
+.publication-item {
+grid-template-columns:
+36px minmax(0, 1fr);
+
+
+gap: 0.65rem;
+
+
+}
+
+.publication-number {
+font-size: 0.68rem;
+}
+
+.publication-content h3 {
+font-size: 1rem;
+}
+}
 
 /* =========================================================
-   REDUCED MOTION ACCESSIBILITY
+REDUCED MOTION ACCESSIBILITY
 ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
 
-  html {
-    scroll-behavior: auto;
-  }
-
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+html {
+scroll-behavior: auto;
 }
 
+*,
+*::before,
+*::after {
+animation-duration: 0.01ms !important;
+animation-iteration-count: 1 !important;
+transition-duration: 0.01ms !important;
+scroll-behavior: auto !important;
+}
+}
 
 /* =========================================================
-   FINAL NAVIGATION OVERRIDE — 2026-09-06
-   Class-only navigation state; no inline display manipulation.
+FINAL NAVIGATION OVERRIDE — 2026-09-06
+Class-only navigation state; no inline display manipulation.
 ========================================================= */
 
 @media (min-width: 1151px) {
-  .site-header {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
 
-  .nav {
-    display: flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
+.site-header {
+display: block !important;
+visibility: visible !important;
+opacity: 1 !important;
+}
 
-  .brand {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
+.nav {
+display: flex !important;
+visibility: visible !important;
+opacity: 1 !important;
+}
 
-  .nav-links {
-    display: flex !important;
-    position: static !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    justify-content: flex-end !important;
-    width: auto !important;
-    margin-left: auto !important;
-    padding: 0 !important;
-    gap: 28px !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
+.brand {
+display: block !important;
+visibility: visible !important;
+opacity: 1 !important;
+}
 
-  .nav-links a {
-    display: inline-block !important;
-    width: auto !important;
-    padding: 0 !important;
-    color: var(--ink-soft) !important;
-    white-space: nowrap !important;
-  }
+.nav-links {
+display: flex !important;
+position: static !important;
+flex-direction: row !important;
+align-items: center !important;
+justify-content: flex-end !important;
+width: auto !important;
+margin-left: auto !important;
+padding: 0 !important;
+gap: 28px !important;
+border: 0 !important;
+border-radius: 0 !important;
+background: transparent !important;
+box-shadow: none !important;
+backdrop-filter: none !important;
+-webkit-backdrop-filter: none !important;
+visibility: visible !important;
+opacity: 1 !important;
+}
 
-  .nav-links .nav-button {
-    display: inline-block !important;
-    width: auto !important;
-    padding: 10px 18px !important;
-    border: 1px solid var(--ink) !important;
-    border-radius: 999px !important;
-    background: transparent !important;
-    color: var(--ink) !important;
-  }
+.nav-links a {
+display: inline-block !important;
+width: auto !important;
+padding: 0 !important;
+color: var(--ink-soft) !important;
+white-space: nowrap !important;
+}
 
-  .menu-toggle {
-    display: none !important;
-    visibility: hidden !important;
-  }
+.nav-links .nav-button {
+display: inline-block !important;
+width: auto !important;
+padding: 10px 18px !important;
+border: 1px solid var(--ink) !important;
+border-radius: 999px !important;
+background: transparent !important;
+color: var(--ink) !important;
+}
+
+.menu-toggle {
+display: none !important;
+visibility: hidden !important;
+}
 }
 
 @media (max-width: 1150px) {
-  .menu-toggle {
-    display: flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
 
-  .nav-links {
-    position: absolute !important;
-    top: calc(100% + 8px) !important;
-    left: 0 !important;
-    right: 0 !important;
-    width: 100% !important;
-    flex-direction: column !important;
-    align-items: stretch !important;
-    margin: 0 !important;
-    padding: 12px !important;
-    border: 1px solid rgba(16, 37, 43, 0.12) !important;
-    border-radius: 14px !important;
-    background: rgba(255, 255, 255, 0.99) !important;
-    box-shadow: 0 18px 45px rgba(16, 37, 43, 0.16) !important;
-    z-index: 1100 !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
-
-  .nav-links:not(.active) {
-    display: none !important;
-  }
-
-  .nav-links.active {
-    display: flex !important;
-  }
-
-  .nav-links a {
-    display: block !important;
-    width: 100% !important;
-    padding: 13px 14px !important;
-    color: var(--ink) !important;
-    white-space: normal !important;
-  }
-
-  .nav-links .nav-button {
-    display: block !important;
-    width: 100% !important;
-    margin-top: 5px !important;
-    padding: 10px 18px !important;
-    border: 1px solid var(--deep-teal) !important;
-    border-radius: 999px !important;
-    background: var(--deep-teal) !important;
-    color: var(--white) !important;
-    text-align: center !important;
-  }
+.menu-toggle {
+display: flex !important;
+visibility: visible !important;
+opacity: 1 !important;
 }
+
+.nav-links {
+position: absolute !important;
+top: calc(100% + 8px) !important;
+left: 0 !important;
+right: 0 !important;
+width: 100% !important;
+flex-direction: column !important;
+align-items: stretch !important;
+margin: 0 !important;
+padding: 12px !important;
+border: 1px solid rgba(16, 37, 43, 0.12) !important;
+border-radius: 14px !important;
+background: rgba(255, 255, 255, 0.99) !important;
+box-shadow: 0 18px 45px rgba(16, 37, 43, 0.16) !important;
+z-index: 1100 !important;
+visibility: visible !important;
+opacity: 1 !important;
+}
+
+.nav-links:not(.active) {
+display: none !important;
+}
+
+.nav-links.active {
+display: flex !important;
+}
+
+.nav-links a {
+display: block !important;
+width: 100% !important;
+padding: 13px 14px !important;
+color: var(--ink) !important;
+white-space: normal !important;
+}
+
+.nav-links .nav-button {
+display: block !important;
+width: 100% !important;
+margin-top: 5px !important;
+padding: 10px 18px !important;
+border: 1px solid var(--deep-teal) !important;
+border-radius: 999px !important;
+background: var(--deep-teal) !important;
+color: var(--white) !important;
+text-align: center !important;
+}
+}
+
 /* =========================================================
-   RESEARCH GRANTS — TEXT VISIBILITY FIX ONLY
-   Scoped exclusively to #research-grants-list
+RESEARCH GRANTS 01–05
+TEXT VISIBILITY + SPACING + CARD HEIGHT FIX
+SCOPED EXCLUSIVELY TO #research-grants-list
 ========================================================= */
 
 #research-grants-list {
-  position: relative !important;
-  z-index: 5 !important;
+position: relative !important;
+z-index: 5 !important;
 }
+
+/* ---------------------------------------------------------
+Grant card layout
+--------------------------------------------------------- */
 
 #research-grants-list .grant-card {
-  position: relative !important;
-  z-index: 5 !important;
+position: relative !important;
+z-index: 5 !important;
 
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: flex-start !important;
+display: flex !important;
+flex-direction: row !important;
+align-items: flex-start !important;
 
-  color: #ffffff !important;
-  opacity: 1 !important;
-  visibility: visible !important;
+column-gap: 32px !important;
+
+padding: 22px 24px !important;
+
+min-height: 0 !important;
+height: auto !important;
+
+color: #ffffff !important;
+
+opacity: 1 !important;
+visibility: visible !important;
 }
+
+/* ---------------------------------------------------------
+Grant numbering — 01, 02, 03, 04, 05
+--------------------------------------------------------- */
 
 #research-grants-list .grant-card .grant-no {
-  display: block !important;
-  position: relative !important;
-  z-index: 6 !important;
+display: block !important;
 
-  flex: 0 0 auto !important;
+position: relative !important;
+z-index: 6 !important;
 
-  color: var(--grant-aqua-light) !important;
+flex: 0 0 48px !important;
 
-  font-size: 30px !important;
-  line-height: 1 !important;
-  font-weight: 700 !important;
+width: 48px !important;
 
-  opacity: 1 !important;
-  visibility: visible !important;
+margin: 0 !important;
+padding: 0 !important;
+
+color: var(--grant-aqua-light) !important;
+
+font-size: 30px !important;
+line-height: 1.4 !important;
+
+font-weight: 700 !important;
+
+text-align: left !important;
+
+opacity: 1 !important;
+visibility: visible !important;
 }
+
+/* ---------------------------------------------------------
+Grant content
+--------------------------------------------------------- */
 
 #research-grants-list .grant-card .grant-content {
-  display: block !important;
-  position: relative !important;
-  z-index: 6 !important;
+display: block !important;
 
-  flex: 1 1 auto !important;
+position: relative !important;
+z-index: 6 !important;
 
-  color: #ffffff !important;
+flex: 1 1 auto !important;
 
-  opacity: 1 !important;
-  visibility: visible !important;
+min-width: 0 !important;
+
+margin: 0 !important;
+padding: 0 !important;
+
+color: #ffffff !important;
+
+opacity: 1 !important;
+visibility: visible !important;
 }
+
+/* ---------------------------------------------------------
+Actual grant text
+--------------------------------------------------------- */
 
 #research-grants-list .grant-card .grant-content p {
-  display: block !important;
-  position: relative !important;
+display: block !important;
 
-  margin: 0 !important;
+position: relative !important;
 
-  color: rgba(255, 255, 255, 0.92) !important;
+margin: 0 !important;
+padding: 0 !important;
 
-  font-family: "DM Sans", sans-serif !important;
-  font-size: 15px !important;
-  line-height: 1.8 !important;
-  font-weight: 400 !important;
+color: rgba(255, 255, 255, 0.92) !important;
 
-  opacity: 1 !important;
-  visibility: visible !important;
+font-family: "DM Sans", sans-serif !important;
+
+font-size: 15px !important;
+
+line-height: 1.65 !important;
+
+font-weight: 400 !important;
+
+opacity: 1 !important;
+visibility: visible !important;
 }
+
+/* ---------------------------------------------------------
+Grant heading support
+--------------------------------------------------------- */
 
 #research-grants-list .grant-card .grant-content h3 {
-  display: block !important;
+display: block !important;
 
-  margin: 0 0 12px !important;
+margin: 0 0 12px !important;
+padding: 0 !important;
 
-  color: #ffffff !important;
+color: #ffffff !important;
 
-  font-family: "Playfair Display", serif !important;
-  font-size: 23px !important;
-  line-height: 1.35 !important;
-  font-weight: 500 !important;
+font-family: "Playfair Display", serif !important;
 
-  opacity: 1 !important;
-  visibility: visible !important;
+font-size: 23px !important;
+
+line-height: 1.35 !important;
+
+font-weight: 500 !important;
+
+opacity: 1 !important;
+visibility: visible !important;
 }
+
+/* ---------------------------------------------------------
+Highlighted values
+--------------------------------------------------------- */
 
 #research-grants-list .grant-card .grant-content strong {
-  color: var(--grant-gold) !important;
-  opacity: 1 !important;
-  visibility: visible !important;
+color: var(--grant-gold) !important;
+
+opacity: 1 !important;
+visibility: visible !important;
 }
 
-
 /* =========================================================
-   RESEARCH GRANTS — MOBILE
+RESEARCH GRANTS — MOBILE
 ========================================================= */
 
 @media (max-width: 720px) {
 
-  #research-grants-list .grant-card {
-    flex-direction: row !important;
-    align-items: flex-start !important;
-    padding: 24px 20px !important;
-  }
+#research-grants-list .grant-card {
+flex-direction: row !important;
 
-  #research-grants-list .grant-card .grant-no {
-    font-size: 25px !important;
-  }
 
-  #research-grants-list .grant-card .grant-content p {
-    font-size: 14px !important;
-    line-height: 1.7 !important;
-  }
+align-items: flex-start !important;
 
-  #research-grants-list .grant-card .grant-content h3 {
-    font-size: 20px !important;
-  }
+column-gap: 20px !important;
+
+padding: 18px 18px !important;
+
+min-height: 0 !important;
+
+height: auto !important;
+
+
 }
 
+#research-grants-list .grant-card .grant-no {
+flex: 0 0 38px !important;
+
+
+width: 38px !important;
+
+font-size: 25px !important;
+
+line-height: 1.4 !important;
+
+
+}
+
+#research-grants-list .grant-card .grant-content {
+min-width: 0 !important;
+}
+
+#research-grants-list .grant-card .grant-content p {
+font-size: 14px !important;
+
+
+line-height: 1.6 !important;
+
+
+}
+
+#research-grants-list .grant-card .grant-content h3 {
+font-size: 20px !important;
+}
+}
 
 /* =========================================================
-   VERY SMALL SCREENS
+VERY SMALL SCREENS
 ========================================================= */
 
 @media (max-width: 420px) {
 
-  #research-grants-list .grant-card {
-    padding: 21px 18px !important;
-  }
+#research-grants-list .grant-card {
+column-gap: 16px !important;
 
-  #research-grants-list .grant-card .grant-no {
-    font-size: 23px !important;
-  }
 
-  #research-grants-list .grant-card .grant-content p {
-    font-size: 13.5px !important;
-    line-height: 1.65 !important;
-  }
+padding: 16px 15px !important;
 
-  #research-grants-list .grant-card .grant-content h3 {
-    font-size: 19px !important;
-  }
+min-height: 0 !important;
+
+height: auto !important;
+
+
+}
+
+#research-grants-list .grant-card .grant-no {
+flex: 0 0 34px !important;
+
+
+width: 34px !important;
+
+font-size: 23px !important;
+
+line-height: 1.4 !important;
+
+
+}
+
+#research-grants-list .grant-card .grant-content p {
+font-size: 13.5px !important;
+
+
+line-height: 1.58 !important;
+
+
+}
+
+#research-grants-list .grant-card .grant-content h3 {
+font-size: 19px !important;
+}
 }
