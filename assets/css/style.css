@@ -3729,3 +3729,155 @@ footer {
   }
 }
 
+/* =========================================================
+   FINAL NAVIGATION OVERRIDE
+   Guarantees correct desktop/laptop/mobile behavior
+========================================================= */
+
+/* ---------------------------------------------------------
+   DESKTOP
+   More than 1150px wide
+--------------------------------------------------------- */
+
+@media (min-width: 1151px) {
+
+  .site-header {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .nav {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .brand {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .nav-links {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+
+    position: static !important;
+
+    flex-direction: row !important;
+    align-items: center !important;
+
+    width: auto !important;
+
+    margin-left: auto !important;
+    padding: 0 !important;
+
+    border: 0 !important;
+    border-radius: 0 !important;
+
+    background: transparent !important;
+    box-shadow: none !important;
+
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .nav-links a {
+    display: inline-block !important;
+    width: auto !important;
+
+    padding: 0 !important;
+
+    color: var(--ink-soft) !important;
+
+    white-space: nowrap !important;
+  }
+
+  .nav-links .nav-button {
+    display: inline-block !important;
+
+    width: auto !important;
+
+    padding: 10px 18px !important;
+
+    border: 1px solid var(--ink) !important;
+    border-radius: 999px !important;
+
+    background: transparent !important;
+
+    color: var(--ink) !important;
+  }
+
+  .menu-toggle {
+    display: none !important;
+    visibility: hidden !important;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   LAPTOP / TABLET / MOBILE
+   1150px and below
+--------------------------------------------------------- */
+
+@media (max-width: 1150px) {
+
+  .menu-toggle {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .nav-links {
+    position: absolute !important;
+
+    top: calc(100% + 8px) !important;
+    left: 0 !important;
+    right: 0 !important;
+
+    width: 100% !important;
+
+    flex-direction: column !important;
+    align-items: stretch !important;
+
+    margin: 0 !important;
+    padding: 12px !important;
+
+    border: 1px solid rgba(16, 37, 43, 0.12) !important;
+    border-radius: 14px !important;
+
+    background: rgba(255, 255, 255, 0.99) !important;
+
+    box-shadow:
+      0 18px 45px rgba(16, 37, 43, 0.16) !important;
+
+    visibility: visible !important;
+    opacity: 1 !important;
+
+    z-index: 1100 !important;
+  }
+
+  /* Closed */
+  .nav-links:not(.active) {
+    display: none !important;
+  }
+
+  /* Open */
+  .nav-links.active {
+    display: flex !important;
+  }
+
+  .nav-links a {
+    display: block !important;
+
+    width: 100% !important;
+
+    padding: 13px 14px !important;
+
+    color: var(--ink) !important;
+
+    white-space: normal !important;
+  }
+}
