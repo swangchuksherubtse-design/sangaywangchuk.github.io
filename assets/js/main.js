@@ -1,29 +1,30 @@
-document.addEventListener("DOMContentLoaded", () => {
+javascript
+/* =========================================================
+   SANGAY WANGCHUK — PROFESSIONAL PROFILE
+   Main JavaScript
+   ========================================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    console.log("main.js loaded successfully.");
 
     /* =========================================================
        1. MOBILE NAVIGATION
        ========================================================= */
 
-    const menuToggle = document.querySelector(".menu-toggle");
-    const siteNav = document.querySelector(".site-nav");
+    const navToggle = document.querySelector(".nav-toggle");
+    const navMenu = document.querySelector(".nav-menu");
 
-    if (menuToggle && siteNav) {
-        menuToggle.addEventListener("click", () => {
-            siteNav.classList.toggle("open");
-
-            const expanded =
-                menuToggle.getAttribute("aria-expanded") === "true";
-
-            menuToggle.setAttribute(
-                "aria-expanded",
-                String(!expanded)
-            );
+    if (navToggle && navMenu) {
+        navToggle.addEventListener("click", function () {
+            navMenu.classList.toggle("active");
+            navToggle.classList.toggle("active");
         });
 
-        siteNav.querySelectorAll("a").forEach((link) => {
-            link.addEventListener("click", () => {
-                siteNav.classList.remove("open");
-                menuToggle.setAttribute("aria-expanded", "false");
+        navMenu.querySelectorAll("a").forEach(function (link) {
+            link.addEventListener("click", function () {
+                navMenu.classList.remove("active");
+                navToggle.classList.remove("active");
             });
         });
     }
@@ -33,202 +34,109 @@ document.addEventListener("DOMContentLoaded", () => {
        2. SMOOTH SCROLLING
        ========================================================= */
 
-    document
-        .querySelectorAll(
-            'a[href^="#"]:not(.back-to-referees):not([href="#referee-request-form"])'
-        )
-        .forEach((link) => {
+    document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
 
-            link.addEventListener("click", function (event) {
+        anchor.addEventListener("click", function (event) {
 
-                const targetId = this.getAttribute("href");
+            const targetId = this.getAttribute("href");
 
-                if (
-                    !targetId ||
-                    targetId === "#" ||
-                    targetId === "#referee-request-form"
-                ) {
-                    return;
-                }
+            if (!targetId || targetId === "#") {
+                return;
+            }
 
-                const target = document.querySelector(targetId);
+            const target = document.querySelector(targetId);
 
-                if (!target) {
-                    return;
-                }
-
+            if (target) {
                 event.preventDefault();
 
-                const header = document.querySelector(".site-header");
-
-                const headerHeight = header
-                    ? header.getBoundingClientRect().height
-                    : 0;
-
-                const targetTop =
-                    target.getBoundingClientRect().top +
-                    window.scrollY -
-                    headerHeight -
-                    20;
-
-                window.scrollTo({
-                    top: targetTop,
-                    behavior: "smooth"
+                target.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
                 });
-
-                history.replaceState(
-                    null,
-                    "",
-                    targetId
-                );
-            });
+            }
         });
+
+    });
 
 
     /* =========================================================
        3. PROFESSIONAL REFEREE REQUEST FORM
        ========================================================= */
 
-    const refereeForm =
-        document.getElementById("referee-request-form");
+    const refereeForm = document.getElementById("refereeRequestForm");
 
-    const refereeRequestLinks =
-        document.querySelectorAll(
-            'a[href="#referee-request-form"]'
-        );
+    if (refereeForm) {
 
+        refereeForm.addEventListener("submit", function (event) {
 
-    function showRefereeRequestForm(event) {
-
-        if (event) {
             event.preventDefault();
-        }
 
-        const form =
-            document.getElementById("referee-request-form");
+            const formData = new FormData(refereeForm);
 
-        if (!form) {
-            return;
-        }
+            const name = formData.get("name") || "";
+            const email = formData.get("email") || "";
+            const institution = formData.get("institution") || "";
+            const purpose = formData.get("purpose") || "";
 
-        /* Make the form visible */
-        form.hidden = false;
-        form.removeAttribute("hidden");
-        form.setAttribute("aria-hidden", "false");
+            const subject =
+                "Professional Reference Request - " + name;
 
-        /* Scroll to the form after revealing it */
-        const header =
-            document.querySelector(".site-header");
+            const body =
+                "Dear Dr. Wangchuk,%0D%0A%0D%0A" +
+                "I would like to request a professional reference.%0D%0A%0D%0A" +
+                "Name: " + encodeURIComponent(name) + "%0D%0A" +
+                "Email: " + encodeURIComponent(email) + "%0D%0A" +
+                "Institution: " + encodeURIComponent(institution) + "%0D%0A" +
+                "Purpose: " + encodeURIComponent(purpose) + "%0D%0A%0D%0A" +
+                "Thank you.";
 
-        const headerHeight = header
-            ? header.getBoundingClientRect().height
-            : 0;
-
-        const targetTop =
-            form.getBoundingClientRect().top +
-            window.scrollY -
-            headerHeight -
-            20;
-
-        window.scrollTo({
-            top: targetTop,
-            behavior: "smooth"
+            window.location.href =
+                "mailto:?subject=" +
+                encodeURIComponent(subject) +
+                "&body=" +
+                body;
         });
-
-        /* Update URL without reloading the page */
-        history.replaceState(
-            null,
-            "",
-            "#referee-request-form"
-        );
-
-        /* Focus the first field for accessibility */
-        setTimeout(() => {
-
-            const firstInput =
-                form.querySelector(
-                    "input:not([type='hidden']), select, textarea"
-                );
-
-            if (firstInput) {
-                firstInput.focus();
-            }
-
-        }, 500);
     }
 
 
-    refereeRequestLinks.forEach((link) => {
-
-        link.addEventListener(
-            "click",
-            showRefereeRequestForm
-        );
-
-    });
-
-
     /* =========================================================
-       4. HIDE REFEREE FORM ON BACK
+       4. BACK TO REFEREES
        ========================================================= */
 
     window.backToReferees = function () {
 
-        const form =
-            document.getElementById("referee-request-form");
+        const formSection =
+            document.getElementById("referee-request");
 
-        if (form) {
-            form.hidden = true;
-            form.setAttribute(
-                "aria-hidden",
-                "true"
-            );
+        if (formSection) {
+            formSection.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
         }
 
-        const refereeSection =
-            document.getElementById("referees");
-
-        if (!refereeSection) {
-            return;
-        }
-
-        const header =
-            document.querySelector(".site-header");
-
-        const headerHeight = header
-            ? header.getBoundingClientRect().height
-            : 0;
-
-        const targetTop =
-            refereeSection.getBoundingClientRect().top +
-            window.scrollY -
-            headerHeight -
-            20;
-
-        window.scrollTo({
-            top: targetTop,
-            behavior: "smooth"
-        });
-
-        history.replaceState(
-            null,
-            "",
-            "#referees"
-        );
     };
 
 
     /* =========================================================
-       5. OPEN REFEREE FORM IF DIRECTLY LINKED
+       5. OPEN REFEREE FORM FROM HASH
        ========================================================= */
 
-    if (
-        window.location.hash ===
-        "#referee-request-form"
-    ) {
-        setTimeout(() => {
-            showRefereeRequestForm();
-        }, 100);
+    if (window.location.hash === "#referee-request") {
+
+        setTimeout(function () {
+
+            const formSection =
+                document.getElementById("referee-request");
+
+            if (formSection) {
+                formSection.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+            }
+
+        }, 300);
     }
 
 
@@ -240,64 +148,41 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll("section[id]");
 
     const navLinks =
-        document.querySelectorAll(
-            ".site-nav a[href^='#']"
-        );
+        document.querySelectorAll('.nav-menu a[href^="#"]');
 
-    if (sections.length && navLinks.length) {
+    function updateActiveNavigation() {
 
-        const updateActiveNav = () => {
+        let currentSection = "";
 
-            const scrollPosition =
-                window.scrollY +
-                window.innerHeight * 0.35;
+        sections.forEach(function (section) {
 
-            let currentSection = "";
+            const sectionTop =
+                section.getBoundingClientRect().top;
 
-            sections.forEach((section) => {
+            if (sectionTop <= 150) {
+                currentSection = section.getAttribute("id");
+            }
 
-                const sectionTop =
-                    section.offsetTop;
+        });
 
-                const sectionBottom =
-                    sectionTop +
-                    section.offsetHeight;
+        navLinks.forEach(function (link) {
 
-                if (
-                    scrollPosition >= sectionTop &&
-                    scrollPosition < sectionBottom
-                ) {
-                    currentSection =
-                        section.id;
-                }
+            link.classList.remove("active");
 
-            });
+            const href =
+                link.getAttribute("href");
 
-            navLinks.forEach((link) => {
+            if (href === "#" + currentSection) {
+                link.classList.add("active");
+            }
 
-                link.classList.remove("active");
-
-                const href =
-                    link.getAttribute("href");
-
-                if (
-                    href ===
-                    `#${currentSection}`
-                ) {
-                    link.classList.add("active");
-                }
-
-            });
-        };
-
-        window.addEventListener(
-            "scroll",
-            updateActiveNav,
-            { passive: true }
-        );
-
-        updateActiveNav();
+        });
     }
+
+    window.addEventListener(
+        "scroll",
+        updateActiveNavigation
+    );
 
 
     /* =========================================================
@@ -305,67 +190,49 @@ document.addEventListener("DOMContentLoaded", () => {
        ========================================================= */
 
     const header =
-        document.querySelector(".site-header");
+        document.querySelector("header");
 
     if (header) {
 
-        const updateHeader =
-            () => {
+        window.addEventListener("scroll", function () {
 
-                if (window.scrollY > 20) {
-                    header.classList.add("scrolled");
-                } else {
-                    header.classList.remove("scrolled");
-                }
+            if (window.scrollY > 50) {
+                header.classList.add("scrolled");
+            } else {
+                header.classList.remove("scrolled");
+            }
 
-            };
-
-        window.addEventListener(
-            "scroll",
-            updateHeader,
-            { passive: true }
-        );
-
-        updateHeader();
+        });
     }
 
 
     /* =========================================================
-       8. BACK TO TOP
+       8. BACK TO TOP BUTTON
        ========================================================= */
 
     const backToTop =
-        document.querySelector(".back-to-top");
+        document.getElementById("backToTop");
 
     if (backToTop) {
 
-        window.addEventListener(
-            "scroll",
-            () => {
+        window.addEventListener("scroll", function () {
 
-                if (window.scrollY > 500) {
-                    backToTop.classList.add("show");
-                } else {
-                    backToTop.classList.remove("show");
-                }
-
-            },
-            { passive: true }
-        );
-
-        backToTop.addEventListener(
-            "click",
-            (event) => {
-
-                event.preventDefault();
-
-                window.scrollTo({
-                    top: 0,
-                    behavior: "smooth"
-                });
-
+            if (window.scrollY > 500) {
+                backToTop.classList.add("show");
+            } else {
+                backToTop.classList.remove("show");
             }
-        );
+
+        });
+
+        backToTop.addEventListener("click", function () {
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        });
     }
 
 
@@ -374,45 +241,38 @@ document.addEventListener("DOMContentLoaded", () => {
        ========================================================= */
 
     const fadeElements =
-        document.querySelectorAll(
-            ".fade-in, .reveal"
-        );
+        document.querySelectorAll(".fade-in");
 
-    if (
-        fadeElements.length &&
-        "IntersectionObserver" in window
-    ) {
+    if ("IntersectionObserver" in window) {
 
         const observer =
-            new IntersectionObserver(
-                (entries, obs) => {
+            new IntersectionObserver(function (entries) {
 
-                    entries.forEach((entry) => {
+                entries.forEach(function (entry) {
 
-                        if (
-                            entry.isIntersecting
-                        ) {
+                    if (entry.isIntersecting) {
 
-                            entry.target.classList.add(
-                                "visible"
-                            );
+                        entry.target.classList.add("visible");
 
-                            obs.unobserve(
-                                entry.target
-                            );
-                        }
+                        observer.unobserve(entry.target);
+                    }
 
-                    });
+                });
 
-                },
-                {
-                    threshold: 0.1
-                }
-            );
+            }, {
+                threshold: 0.1
+            });
 
-        fadeElements.forEach((element) => {
+        fadeElements.forEach(function (element) {
             observer.observe(element);
         });
+
+    } else {
+
+        fadeElements.forEach(function (element) {
+            element.classList.add("visible");
+        });
+
     }
 
 
@@ -420,18 +280,17 @@ document.addEventListener("DOMContentLoaded", () => {
        10. CURRENT YEAR
        ========================================================= */
 
-    document
-        .querySelectorAll("[data-current-year]")
-        .forEach((element) => {
+    const yearElements =
+        document.querySelectorAll(".current-year");
 
-            element.textContent =
-                new Date().getFullYear();
-
-        });
+    yearElements.forEach(function (element) {
+        element.textContent =
+            new Date().getFullYear();
+    });
 
 
     /* =========================================================
-       11. LOAD CV DATA
+       11. LOAD CV PROFILE DATA
        ========================================================= */
 
     loadCVData();
@@ -454,36 +313,46 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 /* =============================================================
-   LOAD CV DATA
+   11. LOAD CV PROFILE DATA
    ============================================================= */
 
 async function loadCVData() {
 
+    const url =
+        new URL("data/cv/profile.json", document.baseURI).href;
+
+    console.log("Loading CV profile:", url);
+
     try {
 
         const response =
-            await fetch(
-                "data/cv/profile.json",
-                {
-                    cache: "no-store"
-                }
-            );
+            await fetch(url, {
+                cache: "no-store"
+            });
 
         if (!response.ok) {
             throw new Error(
-                `HTTP ${response.status}`
+                "HTTP " +
+                response.status +
+                " - " +
+                response.statusText
             );
         }
 
         const data =
             await response.json();
 
+        console.log(
+            "CV profile loaded successfully:",
+            data
+        );
+
         updateCVContent(data);
 
     } catch (error) {
 
         console.error(
-            "Unable to load CV data:",
+            "ERROR loading profile.json:",
             error
         );
 
@@ -497,99 +366,65 @@ async function loadCVData() {
 
 function updateCVContent(data) {
 
-    if (!data) {
+    if (!data || typeof data !== "object") {
         return;
     }
 
-    document
-        .querySelectorAll("[data-cv]")
-        .forEach((element) => {
+    /*
+     * This function intentionally updates only elements
+     * that have matching data-cv attributes.
+     *
+     * Therefore it will not interfere with the existing
+     * static content of the website.
+     */
 
-            const key =
-                element.getAttribute(
-                    "data-cv"
-                );
+    const elements =
+        document.querySelectorAll("[data-cv]");
 
-            const value =
-                getNestedValue(
-                    data,
-                    key
-                );
+    elements.forEach(function (element) {
 
-            if (
-                value !== undefined &&
-                value !== null
-            ) {
+        const key =
+            element.getAttribute("data-cv");
 
-                element.textContent =
-                    value;
+        if (!key) {
+            return;
+        }
 
-            }
+        const value =
+            getNestedValue(data, key);
 
-        });
+        if (
+            value !== undefined &&
+            value !== null &&
+            typeof value !== "object"
+        ) {
+            element.textContent = value;
+        }
 
-
-    /* Update statistics when available */
-
-    updateStatistic(
-        "publications",
-        getNestedValue(
-            data,
-            "publication_count"
-        )
-    );
-
-    updateStatistic(
-        "projects",
-        getNestedValue(
-            data,
-            "research_project_count"
-        )
-    );
-
-    updateStatistic(
-        "grants",
-        getNestedValue(
-            data,
-            "research_grant_count"
-        )
-    );
+    });
 }
 
 
 /* =============================================================
-   GET NESTED VALUE
+   GET NESTED OBJECT VALUE
    ============================================================= */
 
-function getNestedValue(
-    object,
-    path
-) {
-
-    if (
-        !object ||
-        !path
-    ) {
-        return undefined;
-    }
+function getNestedValue(object, path) {
 
     return path
         .split(".")
-        .reduce(
-            (current, key) => {
+        .reduce(function (current, key) {
 
-                if (
-                    current === null ||
-                    current === undefined
-                ) {
-                    return undefined;
-                }
-
+            if (
+                current !== null &&
+                current !== undefined
+            ) {
                 return current[key];
+            }
 
-            },
-            object
-        );
+            return undefined;
+
+        }, object);
 }
 
 
@@ -597,74 +432,115 @@ function getNestedValue(
    UPDATE STATISTIC
    ============================================================= */
 
-function updateStatistic(
-    name,
-    value
-) {
+function updateStatistic(selector, value) {
 
-    if (
-        value === undefined ||
-        value === null
-    ) {
-        return;
+    const element =
+        document.querySelector(selector);
+
+    if (element && value !== undefined) {
+        element.textContent = value;
     }
-
-    const elements =
-        document.querySelectorAll(
-            `[data-stat="${name}"]`
-        );
-
-    elements.forEach((element) => {
-
-        element.textContent =
-            value;
-
-    });
 }
 
 
 /* =============================================================
-   LOAD RESEARCH PROJECTS
+   12. LOAD RESEARCH PROJECTS
    ============================================================= */
 
 async function loadResearchProjects() {
 
     const container =
-        document.querySelector(
-            "#research-projects"
-        );
+        document.getElementById("research-projects");
 
     if (!container) {
+
+        console.warn(
+            "Research projects container #research-projects was not found."
+        );
+
         return;
     }
+
+    const url =
+        new URL(
+            "data/cv/research.json",
+            document.baseURI
+        ).href;
+
+    console.log(
+        "Loading research projects from:",
+        url
+    );
 
     try {
 
         const response =
-            await fetch(
-                "data/cv/research.json",
-                {
-                    cache: "no-store"
-                }
-            );
+            await fetch(url, {
+                cache: "no-store"
+            });
+
+        console.log(
+            "research.json response:",
+            response.status,
+            response.statusText
+        );
 
         if (!response.ok) {
+
             throw new Error(
-                `HTTP ${response.status}`
+                "HTTP " +
+                response.status +
+                " - " +
+                response.statusText
             );
         }
 
         const data =
             await response.json();
 
-        const projects =
-            Array.isArray(data)
-                ? data
-                : (
-                    data.projects ||
-                    data.research_projects ||
-                    []
-                );
+        console.log(
+            "Research JSON loaded successfully:",
+            data
+        );
+
+        let projects = [];
+
+        /*
+         * Your actual research.json structure:
+         *
+         * {
+         *   "projects": [...]
+         * }
+         */
+
+        if (Array.isArray(data)) {
+
+            projects = data;
+
+        } else if (Array.isArray(data.projects)) {
+
+            projects = data.projects;
+
+        } else if (
+            Array.isArray(data.research_projects)
+        ) {
+
+            projects = data.research_projects;
+        }
+
+        console.log(
+            "Research projects found:",
+            projects.length
+        );
+
+        if (projects.length === 0) {
+
+            showResearchFallback(
+                "No research projects are currently listed."
+            );
+
+            return;
+        }
 
         renderResearchProjects(
             projects,
@@ -674,11 +550,13 @@ async function loadResearchProjects() {
     } catch (error) {
 
         console.error(
-            "Unable to load research projects:",
+            "ERROR loading research projects:",
             error
         );
 
-        showResearchFallback(container);
+        showResearchFallback(
+            "Research projects could not be loaded. Please check the browser console."
+        );
     }
 }
 
@@ -692,140 +570,203 @@ function renderResearchProjects(
     container
 ) {
 
-    if (
-        !Array.isArray(projects) ||
-        projects.length === 0
-    ) {
+    container.innerHTML = projects.map(function (project) {
 
-        showResearchFallback(container);
-        return;
-    }
+        /*
+         * IMPORTANT:
+         * Your research.json uses "project_entity"
+         * as the project title.
+         */
 
-    container.innerHTML =
-        projects
-            .map((project) => {
+        const title =
+            project.project_entity ||
+            project.title ||
+            project.project ||
+            project.name ||
+            "Research Project";
 
-                const role =
-                    project.role ||
-                    "";
+        const role =
+            project.role ||
+            "";
 
-                const title =
-                    project.title ||
-                    project.project ||
-                    project.name ||
-                    "";
+        const description =
+            project.description ||
+            "";
 
-                const client =
-                    project.client ||
-                    project.funder ||
-                    project.organization ||
-                    "";
+        const funder =
+            project.funder ||
+            project.client ||
+            project.funding_agency ||
+            project.organization ||
+            "";
 
-                const year =
-                    project.year ||
-                    project.period ||
-                    "";
+        const year =
+            project.year ||
+            "";
 
-                const description =
-                    project.description ||
-                    "";
+        return `
+            <article class="research-project-card">
 
-                return `
-                    <article class="research-project">
-                        <div class="project-meta">
-                            ${escapeHTML(role)}
-                            ${year
-                                ? ` · ${escapeHTML(String(year))}`
-                                : ""}
-                        </div>
+                <div class="research-project-content">
+
+                    <div class="research-project-header">
 
                         <h3>
                             ${escapeHTML(title)}
                         </h3>
 
                         ${
-                            client
-                                ? `
-                                    <p class="project-client">
-                                        ${escapeHTML(client)}
-                                    </p>
-                                  `
+                            year
+                                ? `<span class="research-project-year">
+                                    ${escapeHTML(year)}
+                                   </span>`
                                 : ""
                         }
 
-                        ${
-                            description
-                                ? `
-                                    <p>
-                                        ${escapeHTML(description)}
-                                    </p>
-                                  `
-                                : ""
-                        }
-                    </article>
-                `;
+                    </div>
 
-            })
-            .join("");
+                    ${
+                        role
+                            ? `<p class="research-project-role">
+                                <strong>
+                                    ${escapeHTML(role)}
+                                </strong>
+                               </p>`
+                            : ""
+                    }
+
+                    ${
+                        description
+                            ? `<p>
+                                ${escapeHTML(description)}
+                               </p>`
+                            : ""
+                    }
+
+                    ${
+                        funder
+                            ? `<p class="research-project-funder">
+                                <strong>Funder:</strong>
+                                ${escapeHTML(funder)}
+                               </p>`
+                            : ""
+                    }
+
+                </div>
+
+            </article>
+        `;
+
+    }).join("");
+
 }
 
 
 /* =============================================================
-   RESEARCH FALLBACK
+   RESEARCH PROJECT FALLBACK
    ============================================================= */
 
-function showResearchFallback(
-    container
-) {
-
-    container.innerHTML = `
-        <p class="data-fallback">
-            Research projects are currently being updated.
-        </p>
-    `;
-}
-
-
-/* =============================================================
-   LOAD RESEARCH GRANTS
-   ============================================================= */
-
-async function loadResearchGrants() {
+function showResearchFallback(message) {
 
     const container =
-        document.querySelector(
-            "#research-grants"
-        );
+        document.getElementById("research-projects");
 
     if (!container) {
         return;
     }
 
+    container.innerHTML = `
+        <div class="research-loading-error">
+            ${escapeHTML(message)}
+        </div>
+    `;
+}
+
+
+/* =============================================================
+   13. LOAD RESEARCH GRANTS
+   ============================================================= */
+
+async function loadResearchGrants() {
+
+    const container =
+        document.getElementById("research-grants");
+
+    if (!container) {
+
+        console.warn(
+            "Research grants container #research-grants was not found."
+        );
+
+        return;
+    }
+
+    const url =
+        new URL(
+            "data/cv/profile.json",
+            document.baseURI
+        ).href;
+
+    console.log(
+        "Loading research grants from:",
+        url
+    );
+
     try {
 
         const response =
-            await fetch(
-                "data/cv/profile.json",
-                {
-                    cache: "no-store"
-                }
-            );
+            await fetch(url, {
+                cache: "no-store"
+            });
+
+        console.log(
+            "profile.json response:",
+            response.status,
+            response.statusText
+        );
 
         if (!response.ok) {
+
             throw new Error(
-                `HTTP ${response.status}`
+                "HTTP " +
+                response.status +
+                " - " +
+                response.statusText
             );
         }
 
         const data =
             await response.json();
 
+        console.log(
+            "Profile JSON loaded for grants:",
+            data
+        );
+
+        /*
+         * Your actual profile.json contains:
+         *
+         * "research_grants": [...]
+         */
+
         const grants =
-            Array.isArray(
-                data.research_grants
-            )
+            Array.isArray(data.research_grants)
                 ? data.research_grants
                 : [];
+
+        console.log(
+            "Research grants found:",
+            grants.length
+        );
+
+        if (grants.length === 0) {
+
+            showGrantFallback(
+                "No research grants are currently listed."
+            );
+
+            return;
+        }
 
         renderResearchGrants(
             grants,
@@ -835,11 +776,13 @@ async function loadResearchGrants() {
     } catch (error) {
 
         console.error(
-            "Unable to load research grants:",
+            "ERROR loading research grants:",
             error
         );
 
-        showGrantFallback(container);
+        showGrantFallback(
+            "Research grants could not be loaded. Please check the browser console."
+        );
     }
 }
 
@@ -853,137 +796,112 @@ function renderResearchGrants(
     container
 ) {
 
-    if (
-        !Array.isArray(grants) ||
-        grants.length === 0
-    ) {
+    container.innerHTML = grants.map(function (grant) {
 
-        showGrantFallback(container);
-        return;
-    }
+        /*
+         * Your profile.json stores each grant as a string.
+         */
 
-    container.innerHTML =
-        grants
-            .map((grant) => {
+        if (typeof grant === "string") {
 
-                /*
-                 * Supports both the current simple
-                 * string format and future object format.
-                 */
+            return `
+                <article class="research-grant-card">
 
-                if (
-                    typeof grant ===
-                    "string"
-                ) {
+                    <p>
+                        ${escapeHTML(grant)}
+                    </p>
 
-                    return `
-                        <article class="grant-item">
-                            <p>
-                                ${escapeHTML(grant)}
-                            </p>
-                        </article>
-                    `;
+                </article>
+            `;
+        }
 
+
+        /*
+         * Also support object-based grant data
+         * for future CV automation.
+         */
+
+        const title =
+            grant.title ||
+            grant.project ||
+            grant.name ||
+            "Research Grant";
+
+        const amount =
+            grant.amount ||
+            grant.value ||
+            grant.funding ||
+            "";
+
+        const funder =
+            grant.funder ||
+            grant.organization ||
+            grant.agency ||
+            "";
+
+        const year =
+            grant.year ||
+            "";
+
+        return `
+            <article class="research-grant-card">
+
+                <h3>
+                    ${escapeHTML(title)}
+                </h3>
+
+                ${
+                    funder
+                        ? `<p>
+                            <strong>Funder:</strong>
+                            ${escapeHTML(funder)}
+                           </p>`
+                        : ""
                 }
 
-                const title =
-                    grant.title ||
-                    grant.project ||
-                    grant.name ||
-                    "";
+                ${
+                    amount
+                        ? `<p>
+                            <strong>Amount:</strong>
+                            ${escapeHTML(amount)}
+                           </p>`
+                        : ""
+                }
 
-                const funder =
-                    grant.funder ||
-                    grant.client ||
-                    grant.organization ||
-                    "";
+                ${
+                    year
+                        ? `<p>
+                            <strong>Year:</strong>
+                            ${escapeHTML(year)}
+                           </p>`
+                        : ""
+                }
 
-                const amount =
-                    grant.amount ||
-                    "";
+            </article>
+        `;
 
-                const year =
-                    grant.year ||
-                    grant.period ||
-                    "";
+    }).join("");
 
-                const description =
-                    grant.description ||
-                    "";
-
-                return `
-                    <article class="grant-item">
-
-                        ${
-                            funder
-                                ? `
-                                    <div class="grant-funder">
-                                        ${escapeHTML(funder)}
-                                    </div>
-                                  `
-                                : ""
-                        }
-
-                        ${
-                            title
-                                ? `
-                                    <h3>
-                                        ${escapeHTML(title)}
-                                    </h3>
-                                  `
-                                : ""
-                        }
-
-                        ${
-                            amount
-                                ? `
-                                    <div class="grant-amount">
-                                        ${escapeHTML(String(amount))}
-                                    </div>
-                                  `
-                                : ""
-                        }
-
-                        ${
-                            year
-                                ? `
-                                    <div class="grant-year">
-                                        ${escapeHTML(String(year))}
-                                    </div>
-                                  `
-                                : ""
-                        }
-
-                        ${
-                            description
-                                ? `
-                                    <p>
-                                        ${escapeHTML(description)}
-                                    </p>
-                                  `
-                                : ""
-                        }
-
-                    </article>
-                `;
-
-            })
-            .join("");
 }
 
 
 /* =============================================================
-   GRANT FALLBACK
+   RESEARCH GRANT FALLBACK
    ============================================================= */
 
-function showGrantFallback(
-    container
-) {
+function showGrantFallback(message) {
+
+    const container =
+        document.getElementById("research-grants");
+
+    if (!container) {
+        return;
+    }
 
     container.innerHTML = `
-        <p class="data-fallback">
-            Research grants are currently being updated.
-        </p>
+        <div class="research-loading-error">
+            ${escapeHTML(message)}
+        </div>
     `;
 }
 
@@ -993,6 +911,10 @@ function showGrantFallback(
    ============================================================= */
 
 function escapeHTML(value) {
+
+    if (value === null || value === undefined) {
+        return "";
+    }
 
     return String(value)
         .replace(/&/g, "&amp;")
@@ -1004,52 +926,28 @@ function escapeHTML(value) {
 
 
 /* =============================================================
-   PUBLIC FUNCTIONS
+   GLOBAL REFEREE FORM FUNCTION
    ============================================================= */
 
 window.showRefereeRequestForm =
     function () {
 
-        const form =
-            document.getElementById(
-                "referee-request-form"
-            );
+        const formSection =
+            document.getElementById("referee-request");
 
-        if (!form) {
-            return;
+        if (formSection) {
+
+            formSection.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
         }
 
-        form.hidden = false;
-        form.removeAttribute("hidden");
-        form.setAttribute(
-            "aria-hidden",
-            "false"
-        );
-
-        history.replaceState(
-            null,
-            "",
-            "#referee-request-form"
-        );
-
-        const header =
-            document.querySelector(
-                ".site-header"
-            );
-
-        const headerHeight =
-            header
-                ? header.getBoundingClientRect().height
-                : 0;
-
-        const targetTop =
-            form.getBoundingClientRect().top +
-            window.scrollY -
-            headerHeight -
-            20;
-
-        window.scrollTo({
-            top: targetTop,
-            behavior: "smooth"
-        });
     };
+
+
+/* =============================================================
+   END OF MAIN.JS
+   ============================================================= */
+
