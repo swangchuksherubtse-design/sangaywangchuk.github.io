@@ -3494,3 +3494,107 @@ footer {
     text-align: center !important;
   }
 }
+/* =========================================================
+   RESEARCH GRANTS — TEXT VISIBILITY FIX ONLY
+   ========================================================= */
+
+.research-grant {
+    display: grid !important;
+    grid-template-columns: 70px 1fr !important;
+    gap: 24px !important;
+    align-items: start !important;
+
+    padding: 28px 0 !important;
+    border-bottom: 1px solid rgba(16, 37, 43, 0.12) !important;
+
+    background: transparent !important;
+    color: var(--ink) !important;
+}
+
+.research-grant:last-child {
+    border-bottom: none !important;
+}
+
+.grant-no {
+    display: block !important;
+
+    font-size: 42px !important;
+    line-height: 1 !important;
+    font-weight: 700 !important;
+
+    color: var(--deep-teal) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.grant-content {
+    display: block !important;
+
+    color: var(--ink) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.grant-content h3 {
+    margin: 0 0 10px !important;
+
+    color: var(--ink) !important;
+    font-size: 18px !important;
+    line-height: 1.5 !important;
+    font-weight: 650 !important;
+
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.grant-content p {
+    margin: 0 0 10px !important;
+
+    color: var(--ink-soft) !important;
+    font-size: 15px !important;
+    line-height: 1.75 !important;
+
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.grant-content p:last-child {
+    margin-bottom: 0 !important;
+}
+
+.grant-content .grant-meta {
+    margin-top: 6px !important;
+
+    color: var(--ink-soft) !important;
+    font-size: 14px !important;
+}
+
+.grant-content strong {
+    color: var(--ink) !important;
+    font-weight: 650 !important;
+}
+
+
+/* Mobile */
+@media (max-width: 700px) {
+
+    .research-grant {
+        grid-template-columns: 48px 1fr !important;
+        gap: 16px !important;
+        padding: 22px 0 !important;
+    }
+
+    .grant-no {
+        font-size: 30px !important;
+    }
+
+    .grant-content h3 {
+        font-size: 16px !important;
+    }
+
+    .grant-content p {
+        font-size: 14px !important;
+        line-height: 1.65 !important;
+    }
+
+}
