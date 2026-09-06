@@ -1,4 +1,3 @@
-javascript
 /* =========================================================
    SANGAY WANGCHUK — PROFESSIONAL PROFILE
    Main JavaScript
@@ -12,21 +11,42 @@ document.addEventListener("DOMContentLoaded", function () {
        1. MOBILE NAVIGATION
        ========================================================= */
 
-    const navToggle = document.querySelector(".nav-toggle");
-    const navMenu = document.querySelector(".nav-menu");
+    const navToggle = document.querySelector(".menu-toggle");
+    const navMenu = document.querySelector(".nav-links");
 
     if (navToggle && navMenu) {
+
         navToggle.addEventListener("click", function () {
+
             navMenu.classList.toggle("active");
             navToggle.classList.toggle("active");
+
+            const expanded =
+                navToggle.getAttribute("aria-expanded") === "true";
+
+            navToggle.setAttribute(
+                "aria-expanded",
+                String(!expanded)
+            );
+
         });
 
         navMenu.querySelectorAll("a").forEach(function (link) {
+
             link.addEventListener("click", function () {
+
                 navMenu.classList.remove("active");
                 navToggle.classList.remove("active");
+
+                navToggle.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
             });
+
         });
+
     }
 
 
@@ -38,22 +58,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
         anchor.addEventListener("click", function (event) {
 
-            const targetId = this.getAttribute("href");
+            const targetId =
+                this.getAttribute("href");
 
             if (!targetId || targetId === "#") {
                 return;
             }
 
-            const target = document.querySelector(targetId);
+            const target =
+                document.querySelector(targetId);
 
             if (target) {
+
                 event.preventDefault();
 
                 target.scrollIntoView({
                     behavior: "smooth",
                     block: "start"
                 });
+
             }
+
         });
 
     });
@@ -63,39 +88,24 @@ document.addEventListener("DOMContentLoaded", function () {
        3. PROFESSIONAL REFEREE REQUEST FORM
        ========================================================= */
 
-    const refereeForm = document.getElementById("refereeRequestForm");
+    const refereeForm =
+        document.querySelector(".referee-form");
 
     if (refereeForm) {
 
-        refereeForm.addEventListener("submit", function (event) {
+        refereeForm.addEventListener("submit", function () {
 
-            event.preventDefault();
+            console.log(
+                "Referee request form submitted."
+            );
 
-            const formData = new FormData(refereeForm);
+            /*
+             * The form is handled by FormSubmit.
+             * Do NOT prevent the default submission.
+             */
 
-            const name = formData.get("name") || "";
-            const email = formData.get("email") || "";
-            const institution = formData.get("institution") || "";
-            const purpose = formData.get("purpose") || "";
-
-            const subject =
-                "Professional Reference Request - " + name;
-
-            const body =
-                "Dear Dr. Wangchuk,%0D%0A%0D%0A" +
-                "I would like to request a professional reference.%0D%0A%0D%0A" +
-                "Name: " + encodeURIComponent(name) + "%0D%0A" +
-                "Email: " + encodeURIComponent(email) + "%0D%0A" +
-                "Institution: " + encodeURIComponent(institution) + "%0D%0A" +
-                "Purpose: " + encodeURIComponent(purpose) + "%0D%0A%0D%0A" +
-                "Thank you.";
-
-            window.location.href =
-                "mailto:?subject=" +
-                encodeURIComponent(subject) +
-                "&body=" +
-                body;
         });
+
     }
 
 
@@ -105,50 +115,104 @@ document.addEventListener("DOMContentLoaded", function () {
 
     window.backToReferees = function () {
 
+        const refereeSection =
+            document.getElementById("referees");
+
         const formSection =
-            document.getElementById("referee-request");
+            document.getElementById("referee-request-form");
 
         if (formSection) {
-            formSection.scrollIntoView({
+
+            formSection.hidden = true;
+
+        }
+
+        if (refereeSection) {
+
+            refereeSection.scrollIntoView({
                 behavior: "smooth",
                 block: "start"
             });
+
         }
 
     };
 
 
     /* =========================================================
-       5. OPEN REFEREE FORM FROM HASH
+       5. SHOW REFEREE REQUEST FORM
        ========================================================= */
 
-    if (window.location.hash === "#referee-request") {
+    window.showRefereeRequest = function (event) {
 
-        setTimeout(function () {
+        if (event) {
+            event.preventDefault();
+        }
 
-            const formSection =
-                document.getElementById("referee-request");
+        const formSection =
+            document.getElementById("referee-request-form");
 
-            if (formSection) {
+        if (formSection) {
+
+            formSection.hidden = false;
+
+            setTimeout(function () {
+
                 formSection.scrollIntoView({
                     behavior: "smooth",
                     block: "start"
                 });
+
+            }, 50);
+
+        }
+
+    };
+
+
+    /* =========================================================
+       6. OPEN REFEREE FORM FROM HASH
+       ========================================================= */
+
+    if (
+        window.location.hash ===
+        "#referee-request-form"
+    ) {
+
+        setTimeout(function () {
+
+            const formSection =
+                document.getElementById(
+                    "referee-request-form"
+                );
+
+            if (formSection) {
+
+                formSection.hidden = false;
+
+                formSection.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+
             }
 
         }, 300);
+
     }
 
 
     /* =========================================================
-       6. ACTIVE NAVIGATION
+       7. ACTIVE NAVIGATION
        ========================================================= */
 
     const sections =
         document.querySelectorAll("section[id]");
 
     const navLinks =
-        document.querySelectorAll('.nav-menu a[href^="#"]');
+        document.querySelectorAll(
+            '.nav-links a[href^="#"]'
+        );
 
     function updateActiveNavigation() {
 
@@ -160,7 +224,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 section.getBoundingClientRect().top;
 
             if (sectionTop <= 150) {
-                currentSection = section.getAttribute("id");
+
+                currentSection =
+                    section.getAttribute("id");
+
             }
 
         });
@@ -172,11 +239,17 @@ document.addEventListener("DOMContentLoaded", function () {
             const href =
                 link.getAttribute("href");
 
-            if (href === "#" + currentSection) {
+            if (
+                href ===
+                "#" + currentSection
+            ) {
+
                 link.classList.add("active");
+
             }
 
         });
+
     }
 
     window.addEventListener(
@@ -184,9 +257,11 @@ document.addEventListener("DOMContentLoaded", function () {
         updateActiveNavigation
     );
 
+    updateActiveNavigation();
+
 
     /* =========================================================
-       7. HEADER SCROLL EFFECT
+       8. HEADER SCROLL EFFECT
        ========================================================= */
 
     const header =
@@ -197,17 +272,22 @@ document.addEventListener("DOMContentLoaded", function () {
         window.addEventListener("scroll", function () {
 
             if (window.scrollY > 50) {
+
                 header.classList.add("scrolled");
+
             } else {
+
                 header.classList.remove("scrolled");
+
             }
 
         });
+
     }
 
 
     /* =========================================================
-       8. BACK TO TOP BUTTON
+       9. BACK TO TOP BUTTON
        ========================================================= */
 
     const backToTop =
@@ -218,9 +298,13 @@ document.addEventListener("DOMContentLoaded", function () {
         window.addEventListener("scroll", function () {
 
             if (window.scrollY > 500) {
+
                 backToTop.classList.add("show");
+
             } else {
+
                 backToTop.classList.remove("show");
+
             }
 
         });
@@ -233,11 +317,12 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
         });
+
     }
 
 
     /* =========================================================
-       9. FADE-IN ANIMATIONS
+       10. FADE-IN ANIMATIONS
        ========================================================= */
 
     const fadeElements =
@@ -246,65 +331,79 @@ document.addEventListener("DOMContentLoaded", function () {
     if ("IntersectionObserver" in window) {
 
         const observer =
-            new IntersectionObserver(function (entries) {
+            new IntersectionObserver(
+                function (entries) {
 
-                entries.forEach(function (entry) {
+                    entries.forEach(function (entry) {
 
-                    if (entry.isIntersecting) {
+                        if (entry.isIntersecting) {
 
-                        entry.target.classList.add("visible");
+                            entry.target.classList.add(
+                                "visible"
+                            );
 
-                        observer.unobserve(entry.target);
-                    }
+                            observer.unobserve(
+                                entry.target
+                            );
 
-                });
+                        }
 
-            }, {
-                threshold: 0.1
-            });
+                    });
+
+                },
+                {
+                    threshold: 0.1
+                }
+            );
 
         fadeElements.forEach(function (element) {
+
             observer.observe(element);
+
         });
 
     } else {
 
         fadeElements.forEach(function (element) {
+
             element.classList.add("visible");
+
         });
 
     }
 
 
     /* =========================================================
-       10. CURRENT YEAR
+       11. CURRENT YEAR
        ========================================================= */
 
     const yearElements =
         document.querySelectorAll(".current-year");
 
     yearElements.forEach(function (element) {
+
         element.textContent =
             new Date().getFullYear();
+
     });
 
 
     /* =========================================================
-       11. LOAD CV PROFILE DATA
+       12. LOAD CV PROFILE DATA
        ========================================================= */
 
     loadCVData();
 
 
     /* =========================================================
-       12. LOAD RESEARCH PROJECTS
+       13. LOAD RESEARCH PROJECTS
        ========================================================= */
 
     loadResearchProjects();
 
 
     /* =========================================================
-       13. LOAD RESEARCH GRANTS
+       14. LOAD RESEARCH GRANTS
        ========================================================= */
 
     loadResearchGrants();
@@ -313,15 +412,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 /* =============================================================
-   11. LOAD CV PROFILE DATA
+   12. LOAD CV PROFILE DATA
    ============================================================= */
 
 async function loadCVData() {
 
     const url =
-        new URL("data/cv/profile.json", document.baseURI).href;
+        new URL(
+            "data/cv/profile.json",
+            document.baseURI
+        ).href;
 
-    console.log("Loading CV profile:", url);
+    console.log(
+        "Loading CV profile:",
+        url
+    );
 
     try {
 
@@ -331,12 +436,14 @@ async function loadCVData() {
             });
 
         if (!response.ok) {
+
             throw new Error(
                 "HTTP " +
                 response.status +
                 " - " +
                 response.statusText
             );
+
         }
 
         const data =
@@ -357,6 +464,7 @@ async function loadCVData() {
         );
 
     }
+
 }
 
 
@@ -366,17 +474,12 @@ async function loadCVData() {
 
 function updateCVContent(data) {
 
-    if (!data || typeof data !== "object") {
+    if (
+        !data ||
+        typeof data !== "object"
+    ) {
         return;
     }
-
-    /*
-     * This function intentionally updates only elements
-     * that have matching data-cv attributes.
-     *
-     * Therefore it will not interfere with the existing
-     * static content of the website.
-     */
 
     const elements =
         document.querySelectorAll("[data-cv]");
@@ -398,10 +501,14 @@ function updateCVContent(data) {
             value !== null &&
             typeof value !== "object"
         ) {
-            element.textContent = value;
+
+            element.textContent =
+                value;
+
         }
 
     });
+
 }
 
 
@@ -419,12 +526,15 @@ function getNestedValue(object, path) {
                 current !== null &&
                 current !== undefined
             ) {
+
                 return current[key];
+
             }
 
             return undefined;
 
         }, object);
+
 }
 
 
@@ -437,28 +547,45 @@ function updateStatistic(selector, value) {
     const element =
         document.querySelector(selector);
 
-    if (element && value !== undefined) {
-        element.textContent = value;
+    if (
+        element &&
+        value !== undefined
+    ) {
+
+        element.textContent =
+            value;
+
     }
+
 }
 
 
 /* =============================================================
-   12. LOAD RESEARCH PROJECTS
+   13. LOAD RESEARCH PROJECTS
    ============================================================= */
 
 async function loadResearchProjects() {
 
+    /*
+     * IMPORTANT:
+     * index.html uses:
+     *
+     * id="research-projects-list"
+     */
+
     const container =
-        document.getElementById("research-projects");
+        document.getElementById(
+            "research-projects-list"
+        );
 
     if (!container) {
 
-        console.warn(
-            "Research projects container #research-projects was not found."
+        console.error(
+            "Research projects container #research-projects-list was not found."
         );
 
         return;
+
     }
 
     const url =
@@ -493,6 +620,7 @@ async function loadResearchProjects() {
                 " - " +
                 response.statusText
             );
+
         }
 
         const data =
@@ -505,19 +633,13 @@ async function loadResearchProjects() {
 
         let projects = [];
 
-        /*
-         * Your actual research.json structure:
-         *
-         * {
-         *   "projects": [...]
-         * }
-         */
-
         if (Array.isArray(data)) {
 
             projects = data;
 
-        } else if (Array.isArray(data.projects)) {
+        } else if (
+            Array.isArray(data.projects)
+        ) {
 
             projects = data.projects;
 
@@ -526,6 +648,7 @@ async function loadResearchProjects() {
         ) {
 
             projects = data.research_projects;
+
         }
 
         console.log(
@@ -540,6 +663,7 @@ async function loadResearchProjects() {
             );
 
             return;
+
         }
 
         renderResearchProjects(
@@ -557,7 +681,9 @@ async function loadResearchProjects() {
         showResearchFallback(
             "Research projects could not be loaded. Please check the browser console."
         );
+
     }
+
 }
 
 
@@ -570,94 +696,97 @@ function renderResearchProjects(
     container
 ) {
 
-    container.innerHTML = projects.map(function (project) {
+    container.innerHTML =
+        projects.map(function (project) {
 
-        /*
-         * IMPORTANT:
-         * Your research.json uses "project_entity"
-         * as the project title.
-         */
+            const title =
+                project.project_entity ||
+                project.title ||
+                project.project ||
+                project.name ||
+                "Research Project";
 
-        const title =
-            project.project_entity ||
-            project.title ||
-            project.project ||
-            project.name ||
-            "Research Project";
+            const role =
+                project.role ||
+                "";
 
-        const role =
-            project.role ||
-            "";
+            const description =
+                project.description ||
+                "";
 
-        const description =
-            project.description ||
-            "";
+            const funder =
+                project.funder ||
+                project.client ||
+                project.funding_agency ||
+                project.organization ||
+                "";
 
-        const funder =
-            project.funder ||
-            project.client ||
-            project.funding_agency ||
-            project.organization ||
-            "";
+            const year =
+                project.year ||
+                "";
 
-        const year =
-            project.year ||
-            "";
+            return `
+                <article class="research-project-card">
 
-        return `
-            <article class="research-project-card">
+                    <div class="research-project-content">
 
-                <div class="research-project-content">
+                        <div class="research-project-header">
 
-                    <div class="research-project-header">
+                            <h3>
+                                ${escapeHTML(title)}
+                            </h3>
 
-                        <h3>
-                            ${escapeHTML(title)}
-                        </h3>
+                            ${
+                                year
+                                    ? `
+                                        <span class="research-project-year">
+                                            ${escapeHTML(year)}
+                                        </span>
+                                      `
+                                    : ""
+                            }
+
+                        </div>
 
                         ${
-                            year
-                                ? `<span class="research-project-year">
-                                    ${escapeHTML(year)}
-                                   </span>`
+                            role
+                                ? `
+                                    <p class="research-project-role">
+                                        <strong>
+                                            ${escapeHTML(role)}
+                                        </strong>
+                                    </p>
+                                  `
+                                : ""
+                        }
+
+                        ${
+                            description
+                                ? `
+                                    <p>
+                                        ${escapeHTML(description)}
+                                    </p>
+                                  `
+                                : ""
+                        }
+
+                        ${
+                            funder
+                                ? `
+                                    <p class="research-project-funder">
+                                        <strong>Funder:</strong>
+                                        ${escapeHTML(funder)}
+                                    </p>
+                                  `
                                 : ""
                         }
 
                     </div>
 
-                    ${
-                        role
-                            ? `<p class="research-project-role">
-                                <strong>
-                                    ${escapeHTML(role)}
-                                </strong>
-                               </p>`
-                            : ""
-                    }
+                </article>
+            `;
 
-                    ${
-                        description
-                            ? `<p>
-                                ${escapeHTML(description)}
-                               </p>`
-                            : ""
-                    }
-
-                    ${
-                        funder
-                            ? `<p class="research-project-funder">
-                                <strong>Funder:</strong>
-                                ${escapeHTML(funder)}
-                               </p>`
-                            : ""
-                    }
-
-                </div>
-
-            </article>
-        `;
-
-    }).join("");
+        }).join("");
 
 }
 
@@ -669,7 +798,9 @@ function renderResearchProjects(
 function showResearchFallback(message) {
 
     const container =
-        document.getElementById("research-projects");
+        document.getElementById(
+            "research-projects-list"
+        );
 
     if (!container) {
         return;
@@ -680,25 +811,36 @@ function showResearchFallback(message) {
             ${escapeHTML(message)}
         </div>
     `;
+
 }
 
 
 /* =============================================================
-   13. LOAD RESEARCH GRANTS
+   14. LOAD RESEARCH GRANTS
    ============================================================= */
 
 async function loadResearchGrants() {
 
+    /*
+     * IMPORTANT:
+     * index.html uses:
+     *
+     * id="research-grants-list"
+     */
+
     const container =
-        document.getElementById("research-grants");
+        document.getElementById(
+            "research-grants-list"
+        );
 
     if (!container) {
 
-        console.warn(
-            "Research grants container #research-grants was not found."
+        console.error(
+            "Research grants container #research-grants-list was not found."
         );
 
         return;
+
     }
 
     const url =
@@ -733,6 +875,7 @@ async function loadResearchGrants() {
                 " - " +
                 response.statusText
             );
+
         }
 
         const data =
@@ -742,12 +885,6 @@ async function loadResearchGrants() {
             "Profile JSON loaded for grants:",
             data
         );
-
-        /*
-         * Your actual profile.json contains:
-         *
-         * "research_grants": [...]
-         */
 
         const grants =
             Array.isArray(data.research_grants)
@@ -766,6 +903,7 @@ async function loadResearchGrants() {
             );
 
             return;
+
         }
 
         renderResearchGrants(
@@ -783,7 +921,9 @@ async function loadResearchGrants() {
         showGrantFallback(
             "Research grants could not be loaded. Please check the browser console."
         );
+
     }
+
 }
 
 
@@ -796,91 +936,98 @@ function renderResearchGrants(
     container
 ) {
 
-    container.innerHTML = grants.map(function (grant) {
+    container.innerHTML =
+        grants.map(function (grant) {
 
-        /*
-         * Your profile.json stores each grant as a string.
-         */
+            /*
+             * String-based grant
+             */
 
-        if (typeof grant === "string") {
+            if (typeof grant === "string") {
+
+                return `
+                    <article class="research-grant-card">
+
+                        <p>
+                            ${escapeHTML(grant)}
+                        </p>
+
+                    </article>
+                `;
+
+            }
+
+
+            /*
+             * Object-based grant
+             */
+
+            const title =
+                grant.title ||
+                grant.project ||
+                grant.name ||
+                "Research Grant";
+
+            const amount =
+                grant.amount ||
+                grant.value ||
+                grant.funding ||
+                "";
+
+            const funder =
+                grant.funder ||
+                grant.organization ||
+                grant.agency ||
+                "";
+
+            const year =
+                grant.year ||
+                "";
 
             return `
                 <article class="research-grant-card">
 
-                    <p>
-                        ${escapeHTML(grant)}
-                    </p>
+                    <h3>
+                        ${escapeHTML(title)}
+                    </h3>
+
+                    ${
+                        funder
+                            ? `
+                                <p>
+                                    <strong>Funder:</strong>
+                                    ${escapeHTML(funder)}
+                                </p>
+                              `
+                            : ""
+                    }
+
+                    ${
+                        amount
+                            ? `
+                                <p>
+                                    <strong>Amount:</strong>
+                                    ${escapeHTML(amount)}
+                                </p>
+                              `
+                            : ""
+                    }
+
+                    ${
+                        year
+                            ? `
+                                <p>
+                                    <strong>Year:</strong>
+                                    ${escapeHTML(year)}
+                                </p>
+                              `
+                            : ""
+                    }
 
                 </article>
             `;
-        }
 
-
-        /*
-         * Also support object-based grant data
-         * for future CV automation.
-         */
-
-        const title =
-            grant.title ||
-            grant.project ||
-            grant.name ||
-            "Research Grant";
-
-        const amount =
-            grant.amount ||
-            grant.value ||
-            grant.funding ||
-            "";
-
-        const funder =
-            grant.funder ||
-            grant.organization ||
-            grant.agency ||
-            "";
-
-        const year =
-            grant.year ||
-            "";
-
-        return `
-            <article class="research-grant-card">
-
-                <h3>
-                    ${escapeHTML(title)}
-                </h3>
-
-                ${
-                    funder
-                        ? `<p>
-                            <strong>Funder:</strong>
-                            ${escapeHTML(funder)}
-                           </p>`
-                        : ""
-                }
-
-                ${
-                    amount
-                        ? `<p>
-                            <strong>Amount:</strong>
-                            ${escapeHTML(amount)}
-                           </p>`
-                        : ""
-                }
-
-                ${
-                    year
-                        ? `<p>
-                            <strong>Year:</strong>
-                            ${escapeHTML(year)}
-                           </p>`
-                        : ""
-                }
-
-            </article>
-        `;
-
-    }).join("");
+        }).join("");
 
 }
 
@@ -892,7 +1039,9 @@ function renderResearchGrants(
 function showGrantFallback(message) {
 
     const container =
-        document.getElementById("research-grants");
+        document.getElementById(
+            "research-grants-list"
+        );
 
     if (!container) {
         return;
@@ -903,6 +1052,7 @@ function showGrantFallback(message) {
             ${escapeHTML(message)}
         </div>
     `;
+
 }
 
 
@@ -912,8 +1062,13 @@ function showGrantFallback(message) {
 
 function escapeHTML(value) {
 
-    if (value === null || value === undefined) {
+    if (
+        value === null ||
+        value === undefined
+    ) {
+
         return "";
+
     }
 
     return String(value)
@@ -922,32 +1077,10 @@ function escapeHTML(value) {
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
+
 }
-
-
-/* =============================================================
-   GLOBAL REFEREE FORM FUNCTION
-   ============================================================= */
-
-window.showRefereeRequestForm =
-    function () {
-
-        const formSection =
-            document.getElementById("referee-request");
-
-        if (formSection) {
-
-            formSection.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
-            });
-
-        }
-
-    };
 
 
 /* =============================================================
    END OF MAIN.JS
    ============================================================= */
-
