@@ -691,105 +691,90 @@ async function loadResearchProjects() {
    RENDER RESEARCH PROJECTS
    ============================================================= */
 
-function renderResearchProjects(
-    projects,
-    container
-) {
+function renderResearchProjects(projects, container) {
 
-    container.innerHTML =
-        projects.map(function (project) {
+    container.innerHTML = projects.map(function (project, index) {
 
-            const title =
-                project.project_entity ||
-                project.title ||
-                project.project ||
-                project.name ||
-                "Research Project";
+        const title =
+            project.project_entity ||
+            project.title ||
+            project.project ||
+            project.name ||
+            "Research Project";
 
-            const role =
-                project.role ||
-                "";
+        const role =
+            project.role ||
+            "";
 
-            const description =
-                project.description ||
-                "";
+        const description =
+            project.description ||
+            "";
 
-            const funder =
-                project.funder ||
-                project.client ||
-                project.funding_agency ||
-                project.organization ||
-                "";
+        const funder =
+            project.funder ||
+            project.client ||
+            project.funding_agency ||
+            project.organization ||
+            "";
 
-            const year =
-                project.year ||
-                "";
+        const year =
+            project.year ||
+            "";
 
-            return `
-                <article class="research-project-card">
+        return `
+            <article class="project">
 
-                    <div class="research-project-content">
+                <div class="project-no">
+                    ${String(index + 1).padStart(2, "0")}
+                </div>
 
-                        <div class="research-project-header">
+                <div>
 
-                            <h3>
-                                ${escapeHTML(title)}
-                            </h3>
+                    ${
+                        year || role
+                            ? `
+                                <p class="project-kicker">
+                                    ${year ? escapeHTML(year) : ""}
+                                    ${year && role ? " · " : ""}
+                                    ${role ? escapeHTML(role) : ""}
+                                </p>
+                              `
+                            : ""
+                    }
 
-                            ${
-                                year
-                                    ? `
-                                        <span class="research-project-year">
-                                            ${escapeHTML(year)}
-                                        </span>
-                                      `
-                                    : ""
-                            }
+                    <h3>
+                        ${escapeHTML(title)}
+                    </h3>
 
-                        </div>
+                    ${
+                        description
+                            ? `
+                                <p>
+                                    ${escapeHTML(description)}
+                                </p>
+                              `
+                            : ""
+                    }
 
-                        ${
-                            role
-                                ? `
-                                    <p class="research-project-role">
-                                        <strong>
-                                            ${escapeHTML(role)}
-                                        </strong>
-                                    </p>
-                                  `
-                                : ""
-                        }
+                    ${
+                        funder
+                            ? `
+                                <p>
+                                    <strong>Funder:</strong>
+                                    ${escapeHTML(funder)}
+                                </p>
+                              `
+                            : ""
+                    }
 
-                        ${
-                            description
-                                ? `
-                                    <p>
-                                        ${escapeHTML(description)}
-                                    </p>
-                                  `
-                                : ""
-                        }
+                </div>
 
-                        ${
-                            funder
-                                ? `
-                                    <p class="research-project-funder">
-                                        <strong>Funder:</strong>
-                                        ${escapeHTML(funder)}
-                                    </p>
-                                  `
-                                : ""
-                        }
+            </article>
+        `;
 
-                    </div>
-
-                </article>
-            `;
-
-        }).join("");
+    }).join("");
 
 }
-
 
 /* =============================================================
    RESEARCH PROJECT FALLBACK
