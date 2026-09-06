@@ -234,7 +234,6 @@ p {
   color: #9a7050;
 }
 
-/* Grants & Research Support heading */
 #grants h2 em,
 #grants-research-support h2 em {
   color: var(--grant-aqua-light);
@@ -718,7 +717,6 @@ select:focus-visible {
 
 /* =========================================================
    HERO PHOTO FRAME
-   FRAME POSITION — FIXED
 ========================================================= */
 
 .hero-photo {
@@ -753,7 +751,6 @@ select:focus-visible {
 
 /* =========================================================
    HERO PROFILE PHOTO
-   ONLY THE ACTUAL PHOTO MOVES UP INSIDE FRAME
 ========================================================= */
 
 .profile-photo {
@@ -977,9 +974,10 @@ select:focus-visible {
     );
 }
 
+
 /* =========================================================
    RESEARCH GRANTS
-   ========================================================= */
+========================================================= */
 
 .research-grants-list {
   border-top: 1px solid rgba(255, 255, 255, 0.14);
@@ -1031,28 +1029,6 @@ select:focus-visible {
 }
 
 
-/* =========================================================
-   MOBILE — RESEARCH GRANTS
-   ========================================================= */
-
-@media (max-width: 720px) {
-
-  .research-grant {
-    grid-template-columns: 1fr;
-    gap: 12px;
-    padding: 30px 0;
-  }
-
-  .grant-no {
-    font-size: 15px;
-    letter-spacing: 2px;
-  }
-
-  .grant-content h3 {
-    font-size: 24px;
-  }
-
-}
 /* =========================================================
    SECTION HEADING
 ========================================================= */
@@ -1209,7 +1185,7 @@ select:focus-visible {
 
 
 /* =========================================================
-   PROJECTS
+   PROJECT LIST
 ========================================================= */
 
 .project-list {
@@ -1290,23 +1266,8 @@ select:focus-visible {
 
 
 /* =========================================================
-   05 · GRANTS & RESEARCH SUPPORT
-   DEEP BLUE–TEAL DESIGN
+   GRANTS & RESEARCH SUPPORT
 ========================================================= */
-
-/*
-   This section intentionally uses a darker blue–teal background
-   so that it is visually distinct from Publications and Academic
-   Contributions.
-
-   The selectors cover both:
-   #grants
-   #grants-research-support
-   .grants
-   .grants-research-support
-
-   Therefore the design will work with the existing section naming.
-*/
 
 #grants,
 #grants-research-support,
@@ -1337,7 +1298,6 @@ select:focus-visible {
   color: var(--white);
 }
 
-/* Decorative upper-right glow */
 #grants::before,
 #grants-research-support::before,
 .grants::before,
@@ -1364,7 +1324,6 @@ select:focus-visible {
   pointer-events: none;
 }
 
-/* Decorative lower-left glow */
 #grants::after,
 #grants-research-support::after,
 .grants::after,
@@ -1390,11 +1349,6 @@ select:focus-visible {
 
   pointer-events: none;
 }
-
-
-/* ---------------------------------------------------------
-   Grants heading
---------------------------------------------------------- */
 
 #grants .container,
 #grants-research-support .container,
@@ -1440,11 +1394,6 @@ select:focus-visible {
   color: rgba(255, 255, 255, 0.72);
 }
 
-
-/* ---------------------------------------------------------
-   Grants grid
---------------------------------------------------------- */
-
 .grants-grid,
 .grant-grid,
 .grants-list,
@@ -1458,11 +1407,6 @@ select:focus-visible {
 
   gap: 18px;
 }
-
-
-/* ---------------------------------------------------------
-   Grant cards
---------------------------------------------------------- */
 
 .grant-card,
 .grants-grid article,
@@ -1525,11 +1469,6 @@ select:focus-visible {
     0 20px 45px rgba(3, 24, 31, 0.28);
 }
 
-
-/* ---------------------------------------------------------
-   Grant number
---------------------------------------------------------- */
-
 .grant-number,
 .grant-card .number,
 .grants-grid article > .number,
@@ -1548,11 +1487,6 @@ select:focus-visible {
 
   letter-spacing: 1.5px;
 }
-
-
-/* ---------------------------------------------------------
-   Grant source / funding body
---------------------------------------------------------- */
 
 .grant-kicker,
 .grant-source,
@@ -1577,11 +1511,6 @@ select:focus-visible {
   text-transform: uppercase;
 }
 
-
-/* ---------------------------------------------------------
-   Grant title
---------------------------------------------------------- */
-
 .grant-card h3,
 .grants-grid article h3,
 .grant-grid article h3,
@@ -1600,11 +1529,6 @@ select:focus-visible {
   font-weight: 500;
 }
 
-
-/* ---------------------------------------------------------
-   Grant description
---------------------------------------------------------- */
-
 .grant-card p,
 .grants-grid article p,
 .grant-grid article p,
@@ -1618,16 +1542,6 @@ select:focus-visible {
 
   line-height: 1.72;
 }
-
-
-/* ---------------------------------------------------------
-   Grant metadata
-   Examples:
-   Co-PI
-   PI
-   Nu. 200,000
-   Food Analysis
---------------------------------------------------------- */
 
 .grant-meta,
 .grant-tags,
@@ -1675,8 +1589,6 @@ select:focus-visible {
   text-transform: uppercase;
 }
 
-
-/* Gold treatment for financial values */
 .grant-meta .amount,
 .grant-tags .amount,
 .grant-details .amount,
@@ -1690,22 +1602,11 @@ select:focus-visible {
   color: var(--grant-gold);
 }
 
-
-/* ---------------------------------------------------------
-   Alternative markup support
-   If metadata is written directly as paragraphs/spans
---------------------------------------------------------- */
-
 .grant-card strong,
 .grants-grid article strong,
 .grant-grid article strong {
   color: var(--grant-gold);
 }
-
-
-/* ---------------------------------------------------------
-   Grants divider
---------------------------------------------------------- */
 
 #grants .grant-list,
 #grants-research-support .grant-list,
@@ -1714,11 +1615,6 @@ select:focus-visible {
   border-top:
     1px solid rgba(255, 255, 255, 0.13);
 }
-
-
-/* ---------------------------------------------------------
-   Featured grant card
---------------------------------------------------------- */
 
 .grant-card.featured,
 .grants-grid article.featured,
@@ -2868,7 +2764,6 @@ footer {
     gap: 35px;
   }
 
-  /* Grants tablet */
   .grants-grid,
   .grant-grid,
   .grants-list,
@@ -2880,21 +2775,72 @@ footer {
 
 /* =========================================================
    MOBILE NAVIGATION
+   SINGLE SYSTEM — MATCHES main.js .active
 ========================================================= */
 
 @media (max-width: 900px) {
 
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+
   .nav {
+    position: relative;
+
     min-height: 68px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 30px;
   }
 
   .menu-toggle {
     display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 44px;
+    height: 44px;
+
+    margin-left: auto;
+
+    padding: 0;
+
+    border: 0;
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: var(--ink);
+
+    font-size: 30px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    position: relative;
+
+    z-index: 1101;
+
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .menu-toggle:hover {
+    background: rgba(16, 37, 43, 0.06);
+  }
+
+  .menu-toggle:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
   }
 
   .nav-links {
-    display: none;
-
     position: absolute;
 
     top: calc(100% + 8px);
@@ -2902,13 +2848,17 @@ footer {
     left: 0;
     right: 0;
 
-    z-index: 1100;
+    width: 100%;
+
+    display: none;
 
     flex-direction: column;
 
     align-items: stretch;
 
     gap: 4px;
+
+    margin: 0;
 
     padding: 12px;
 
@@ -2926,9 +2876,13 @@ footer {
     backdrop-filter: blur(14px);
 
     -webkit-backdrop-filter: blur(14px);
+
+    z-index: 1100;
   }
 
-  .nav-links.open {
+  /* IMPORTANT:
+     main.js toggles .active */
+  .nav-links.active {
     display: flex;
   }
 
@@ -2943,35 +2897,62 @@ footer {
 
     color: var(--ink);
 
+    background: transparent;
+
     font-size: 14px;
 
+    font-weight: 600;
+
+    line-height: 1.4;
+
     text-align: left;
+
+    text-decoration: none;
   }
 
-  .nav-links a:hover {
-    background: rgba(16, 37, 43, 0.05);
+  .nav-links a:hover,
+  .nav-links a:focus {
+    color: var(--ink);
+
+    background:
+      rgba(16, 37, 43, 0.05);
   }
 
   .nav-links a:not(.nav-button)::after {
     display: none;
   }
 
-  .nav-button {
+  .nav-links .nav-button {
+    display: block;
+
+    width: 100%;
+
     margin-top: 5px;
 
-    text-align: center !important;
+    padding: 10px 18px;
 
-    background: var(--deep-teal);
+    border:
+      1px solid var(--deep-teal);
 
-    border-color: var(--deep-teal);
+    border-radius: 999px;
+
+    background:
+      var(--deep-teal);
 
     color: var(--white) !important;
+
+    text-align: center;
   }
 
-  .nav-button:hover {
-    background: var(--deep-teal-2);
+  .nav-links .nav-button:hover,
+  .nav-links .nav-button:focus {
+    background:
+      var(--deep-teal-2);
 
-    border-color: var(--deep-teal-2);
+    border-color:
+      var(--deep-teal-2);
+
+    color: var(--white) !important;
   }
 
   section,
@@ -2998,7 +2979,6 @@ footer {
     width: 100%;
   }
 
-  /* Grants mobile/tablet navigation */
   .grant-card,
   .grants-grid article,
   .grant-grid article,
@@ -3048,12 +3028,6 @@ footer {
     height: 330px;
   }
 
-
-  /* =======================================================
-     MOBILE PHOTO FRAME
-     FRAME POSITION PRESERVED
-  ======================================================= */
-
   .hero-photo {
     width: 270px;
     height: 270px;
@@ -3064,12 +3038,6 @@ footer {
 
     transform: translateY(18px);
   }
-
-
-  /* =======================================================
-     MOBILE PHOTO
-     ONLY PHOTO MOVES UP
-  ======================================================= */
 
   .profile-photo {
     width: 100%;
@@ -3139,10 +3107,13 @@ footer {
 
     padding: 30px 0;
   }
-.project-no {
-  font-size: 15px;
-  letter-spacing: 2px;
-}
+
+  .project-no {
+    font-size: 15px;
+
+    letter-spacing: 2px;
+  }
+
   .project h3 {
     font-size: 25px;
   }
@@ -3313,6 +3284,29 @@ footer {
 
     align-items: flex-start;
   }
+
+
+  /* =======================================================
+     MOBILE — RESEARCH GRANTS
+  ======================================================= */
+
+  .research-grant {
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+
+    padding: 30px 0;
+  }
+
+  .grant-no {
+    font-size: 15px;
+
+    letter-spacing: 2px;
+  }
+
+  .grant-content h3 {
+    font-size: 24px;
+  }
 }
 
 
@@ -3345,12 +3339,6 @@ footer {
     height: 290px;
   }
 
-
-  /* =======================================================
-     VERY SMALL PHOTO FRAME
-     FRAME POSITION PRESERVED
-  ======================================================= */
-
   .hero-photo {
     width: 240px;
     height: 240px;
@@ -3361,12 +3349,6 @@ footer {
 
     transform: translateY(18px);
   }
-
-
-  /* =======================================================
-     VERY SMALL PHOTO
-     ONLY PHOTO MOVES UP
-  ======================================================= */
 
   .profile-photo {
     width: 100%;
@@ -3440,69 +3422,40 @@ footer {
   .publication-content h3 {
     font-size: 1rem;
   }
-}
 
 
-/* =========================================================
-   REDUCED MOTION ACCESSIBILITY
-========================================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-  html {
-    scroll-behavior: auto;
-  }
-
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-/* =========================================================
-   MOBILE NAVIGATION FIX — DO NOT AFFECT DESKTOP NAVIGATION
-   ========================================================= */
-@media (max-width: 850px) {
-
-  .menu-toggle {
-    display: block !important;
-    cursor: pointer;
-    z-index: 1001;
-  }
+  /* =======================================================
+     VERY SMALL SCREEN NAVIGATION
+  ======================================================= */
 
   .nav-links {
-    display: none !important;
+    top: calc(100% + 6px);
+    padding: 9px;
   }
 
-  .nav-links.open {
-    display: flex !important;
-    position: absolute;
-    top: 76px;
-    left: 0;
-    right: 0;
-    flex-direction: column;
-    align-items: center;
-    gap: 0;
-    z-index: 1000;
+  .nav-links a {
+    padding: 11px 12px;
+    font-size: 13px;
   }
 
-  .nav-links.open a {
-    display: block;
-    width: 100%;
-    text-align: center;
+  .menu-toggle {
+    width: 42px;
+    height: 42px;
+    font-size: 28px;
   }
 }
+
+
 /* =========================================================
    PROFESSIONAL REFEREE REQUEST FORM
    Keep hidden until explicitly requested
-   ========================================================= */
+========================================================= */
 
 .referee-request-form[hidden] {
-    display: none !important;
+  display: none !important;
 }
+
+
 /* =========================================================
    FINAL RESEARCH GRANTS OVERRIDE
    Numbered list presentation
@@ -3513,7 +3466,8 @@ footer {
 .grant-list .research-grant {
   display: grid !important;
 
-  grid-template-columns: 90px minmax(0, 1fr) !important;
+  grid-template-columns:
+    90px minmax(0, 1fr) !important;
 
   gap: 35px !important;
 
@@ -3523,7 +3477,8 @@ footer {
 
   border: 0 !important;
 
-  border-bottom: 1px solid rgba(255, 255, 255, 0.14) !important;
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.14) !important;
 
   border-radius: 0 !important;
 
@@ -3640,201 +3595,28 @@ footer {
 
     line-height: 1.7 !important;
   }
-
-}
-/* =========================================================
-   FINAL MOBILE NAVIGATION
-   ========================================================= */
-
-/* Header must stay above page content */
-.site-header {
-  position: relative;
-  z-index: 9999;
-}
-
-/* Desktop: hamburger hidden */
-.menu-toggle {
-  display: none !important;
-}
-
-/* =========================================================
-   TABLET + MOBILE
-   ========================================================= */
-
-@media (max-width: 900px) {
-
-  .site-header {
-    position: sticky;
-    top: 0;
-    z-index: 9999;
-  }
-
-  .nav {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    min-height: 72px;
-  }
-
-  /* HAMBURGER BUTTON */
-
-  .menu-toggle {
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-
-    width: 46px;
-    height: 46px;
-
-    margin-left: auto;
-
-    padding: 0;
-
-    border: none;
-    outline: none;
-    background: transparent;
-
-    color: #ffffff;
-
-    font-family: Arial, sans-serif;
-    font-size: 32px;
-    font-weight: 400;
-    line-height: 1;
-
-    cursor: pointer;
-
-    position: relative;
-    z-index: 10001;
-
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .menu-toggle:focus {
-    outline: none;
-  }
-
-  /* MOBILE NAVIGATION */
-
-  .nav-links {
-    position: absolute !important;
-
-    top: 100% !important;
-    left: 0 !important;
-    right: 0 !important;
-
-    width: 100% !important;
-
-    display: none !important;
-
-    flex-direction: column !important;
-    align-items: stretch !important;
-
-    padding: 18px 24px 24px !important;
-    margin: 0 !important;
-
-    background: #0b1726 !important;
-
-    border-top: 1px solid rgba(255,255,255,0.15);
-    border-bottom: 1px solid rgba(255,255,255,0.15);
-
-    box-shadow: 0 15px 35px rgba(0,0,0,0.35);
-
-    opacity: 1 !important;
-    visibility: visible !important;
-
-    transform: none !important;
-
-    z-index: 10000 !important;
-  }
-
-  /* OPEN MENU */
-
-  .nav-links.active {
-    display: flex !important;
-  }
-
-  /* MENU ITEMS */
-
-  .nav-links a {
-    display: block !important;
-
-    width: 100% !important;
-
-    padding: 14px 4px !important;
-    margin: 0 !important;
-
-    color: #ffffff !important;
-
-    background: transparent !important;
-
-    text-decoration: none;
-
-    font-size: 15px;
-    line-height: 1.4;
-
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-
-    opacity: 1 !important;
-    visibility: visible !important;
-  }
-
-  .nav-links a:last-child {
-    border-bottom: none;
-  }
-
-  .nav-links a:hover,
-  .nav-links a:focus,
-  .nav-links a.active {
-    color: #d8b77e !important;
-  }
-
-  /* CONTACT BUTTON */
-
-  .nav-links .nav-button {
-    display: block !important;
-
-    width: 100% !important;
-
-    margin-top: 14px !important;
-
-    padding: 12px 18px !important;
-
-    text-align: center;
-
-    border: 1px solid #b88a4a;
-
-    border-radius: 4px;
-
-    color: #ffffff !important;
-  }
-
 }
 
 
 /* =========================================================
-   SMALL PHONES
-   ========================================================= */
+   REDUCED MOTION ACCESSIBILITY
+========================================================= */
 
-@media (max-width: 600px) {
+@media (prefers-reduced-motion: reduce) {
 
-  .nav {
-    min-height: 68px;
+  html {
+    scroll-behavior: auto;
   }
 
-  .menu-toggle {
-    width: 44px;
-    height: 44px;
-    font-size: 30px;
-  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
 
-  .nav-links {
-    padding: 16px 20px 22px !important;
-  }
+    animation-iteration-count: 1 !important;
 
-  .nav-links a {
-    padding: 13px 3px !important;
-    font-size: 14px;
-  }
+    transition-duration: 0.01ms !important;
 
+    scroll-behavior: auto !important;
+  }
 }
