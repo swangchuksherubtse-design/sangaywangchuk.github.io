@@ -1,4 +1,3 @@
-css
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap');
 
 
@@ -7,16 +6,19 @@ css
 ========================================================= */
 
 :root {
+  /* Core text */
   --ink: #10252b;
   --ink-soft: #3f555b;
   --ink-light: #64767b;
 
+  /* Core surfaces */
   --paper: #ffffff;
   --cream: #f8f6f1;
   --ivory: #fbfaf7;
   --soft: #eef4f2;
   --soft-blue: #edf5f7;
 
+  /* Deep brand colours */
   --deep-teal: #0d2930;
   --deep-teal-2: #143840;
   --deep-teal-3: #1b4650;
@@ -24,22 +26,26 @@ css
   --deep-navy: #101e2c;
   --deep-navy-2: #172b3a;
 
+  /* Primary champagne-gold accent */
   --accent: #b88a4a;
   --accent-dark: #91692f;
   --accent-light: #d8b77e;
   --accent-pale: #efe1c7;
 
+  /* Supporting colours */
   --muted: #68797d;
   --line: rgba(16, 37, 43, 0.12);
   --line-light: rgba(16, 37, 43, 0.08);
 
   --white: #ffffff;
 
+  /* Research accents */
   --research-blue: #2b7186;
   --research-teal: #147d7b;
   --research-light: #e8f3f5;
   --research-blue-light: #eaf2f7;
 
+  /* Grants & Research Support palette */
   --grant-blue: #123f50;
   --grant-blue-2: #165467;
   --grant-teal: #147d7b;
@@ -49,6 +55,7 @@ css
   --grant-card: rgba(255, 255, 255, 0.075);
   --grant-card-hover: rgba(255, 255, 255, 0.115);
 
+  /* Legacy / thematic accents retained */
   --accent-wangchuk: #a95f3e;
   --accent-materials: #95652b;
   --accent-sensing: #147d7b;
@@ -58,14 +65,17 @@ css
   --accent-impact: #a96820;
   --accent-platforms: #5d6398;
 
+  /* Academic profiles */
   --profile-bg-1: #f1f4f8;
   --profile-bg-2: #f2f1f8;
   --profile-bg-3: #f8f6f1;
 
+  /* Radius */
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 22px;
 
+  /* Shadows */
   --shadow-soft:
     0 10px 30px rgba(16, 37, 43, 0.07);
 
@@ -224,6 +234,7 @@ p {
   color: #9a7050;
 }
 
+/* Grants & Research Support heading */
 #grants h2 em,
 #grants-research-support h2 em {
   color: var(--grant-aqua-light);
@@ -263,7 +274,7 @@ p {
 
 /* =========================================================
    HEADER
-   DESKTOP-FIRST NAVIGATION
+   STICKY NAVIGATION
 ========================================================= */
 
 .site-header {
@@ -298,8 +309,6 @@ p {
 }
 
 .brand {
-  flex: 0 0 auto;
-
   color: var(--ink);
 
   font-size: 25px;
@@ -316,20 +325,12 @@ p {
 
 /* =========================================================
    DESKTOP NAVIGATION
-   IMPORTANT:
-   Visible by default.
-   Hidden only inside mobile media query.
 ========================================================= */
 
 .nav-links {
   display: flex;
-
   align-items: center;
-  justify-content: flex-end;
-
   gap: 28px;
-
-  margin-left: auto;
 }
 
 .nav-links a {
@@ -339,8 +340,6 @@ p {
 
   font-size: 13px;
   font-weight: 600;
-
-  white-space: nowrap;
 
   transition:
     color 0.25s ease,
@@ -398,7 +397,6 @@ p {
 
 /* =========================================================
    MOBILE MENU BUTTON
-   Hidden on desktop/laptop.
 ========================================================= */
 
 .menu-toggle {
@@ -406,8 +404,6 @@ p {
 
   align-items: center;
   justify-content: center;
-
-  flex: 0 0 auto;
 
   width: 44px;
   height: 44px;
@@ -463,7 +459,7 @@ select:focus-visible {
   position: relative;
   overflow: hidden;
 
-  padding: 28px 0 32px;
+  padding: 45px 0 55px;
 
   background:
     radial-gradient(
@@ -539,7 +535,7 @@ select:focus-visible {
 
   gap: 70px;
 
-  transform: translateY(-58px);
+  transform: translateY(-42px);
 }
 
 .hero-copy {
@@ -722,6 +718,7 @@ select:focus-visible {
 
 /* =========================================================
    HERO PHOTO FRAME
+   FRAME POSITION — FIXED
 ========================================================= */
 
 .hero-photo {
@@ -734,7 +731,7 @@ select:focus-visible {
   width: 330px;
   height: 330px;
 
-  margin-top: 38px;
+  margin-top: 48px;
 
   overflow: hidden;
 
@@ -750,8 +747,14 @@ select:focus-visible {
     0 0 0 1px rgba(216, 183, 126, 0.35),
     0 0 55px rgba(216, 183, 126, 0.13);
 
-  transform: translateY(15px);
+  transform: translateY(35px);
 }
+
+
+/* =========================================================
+   HERO PROFILE PHOTO
+   ONLY THE ACTUAL PHOTO MOVES UP INSIDE FRAME
+========================================================= */
 
 .profile-photo {
   display: block;
@@ -762,7 +765,7 @@ select:focus-visible {
   object-fit: cover;
 
   transform:
-    translateY(-35px)
+    translateY(-28px)
     scale(1.62);
 
   transform-origin: center center;
@@ -782,7 +785,7 @@ select:focus-visible {
 
   width: min(350px, 88%);
 
-  margin-top: 42px;
+  margin-top: 57px;
   margin-right: -30px;
 
   padding: 23px 25px;
@@ -976,84 +979,6 @@ select:focus-visible {
 
 
 /* =========================================================
-   RESEARCH GRANTS
-========================================================= */
-
-.research-grants-list {
-  border-top:
-    1px solid rgba(255, 255, 255, 0.14);
-}
-
-.research-grant {
-  display: grid;
-
-  grid-template-columns:
-    90px minmax(0, 1fr);
-
-  gap: 35px;
-
-  padding: 40px 0;
-
-  border-bottom:
-    1px solid rgba(255, 255, 255, 0.14);
-
-  position: relative;
-}
-
-.grant-no {
-  color: var(--accent-light);
-
-  font-size: 16px;
-
-  font-weight: 700;
-
-  letter-spacing: 2px;
-
-  line-height: 1;
-
-  min-width: 35px;
-
-  opacity: 1;
-}
-
-.grant-content h3 {
-  margin-bottom: 12px;
-
-  color: var(--white);
-
-  font-family: "Playfair Display", serif;
-
-  font-size: 27px;
-
-  font-weight: 500;
-
-  line-height: 1.3;
-}
-
-.grant-content p {
-  max-width: 750px;
-
-  margin-bottom: 18px;
-
-  color: rgba(255, 255, 255, 0.78);
-
-  font-size: 14px;
-
-  line-height: 1.75;
-}
-
-.grant-content .grant-meta {
-  margin-bottom: 8px;
-}
-
-.grant-content .grant-meta strong {
-  color: var(--accent-light);
-
-  font-weight: 700;
-}
-
-
-/* =========================================================
    SECTION HEADING
 ========================================================= */
 
@@ -1209,7 +1134,7 @@ select:focus-visible {
 
 
 /* =========================================================
-   PROJECT LIST
+   PROJECTS
 ========================================================= */
 
 .project-list {
@@ -1220,8 +1145,7 @@ select:focus-visible {
 .project {
   display: grid;
 
-  grid-template-columns:
-    90px minmax(0, 1fr);
+  grid-template-columns: 90px 1fr;
 
   gap: 35px;
 
@@ -1229,24 +1153,16 @@ select:focus-visible {
 
   border-bottom:
     1px solid rgba(255, 255, 255, 0.14);
-
-  position: relative;
 }
 
 .project-no {
   color: var(--accent-light);
 
-  font-size: 16px;
+  font-size: 13px;
 
   font-weight: 700;
 
-  letter-spacing: 2px;
-
-  line-height: 1;
-
-  min-width: 35px;
-
-  opacity: 1;
+  letter-spacing: 1px;
 }
 
 .project-kicker {
@@ -1259,8 +1175,6 @@ select:focus-visible {
   font-weight: 700;
 
   letter-spacing: 1.5px;
-
-  text-transform: uppercase;
 }
 
 .project h3 {
@@ -1273,8 +1187,6 @@ select:focus-visible {
   font-size: 30px;
 
   font-weight: 500;
-
-  line-height: 1.3;
 }
 
 .project > div:last-child > p:not(.project-kicker) {
@@ -1282,17 +1194,30 @@ select:focus-visible {
 
   margin-bottom: 18px;
 
-  color: rgba(255, 255, 255, 0.78);
+  color: rgba(255, 255, 255, 0.72);
 
   font-size: 14px;
-
-  line-height: 1.75;
 }
 
 
 /* =========================================================
-   GRANTS & RESEARCH SUPPORT
+   05 · GRANTS & RESEARCH SUPPORT
+   DEEP BLUE–TEAL DESIGN
 ========================================================= */
+
+/*
+   This section intentionally uses a darker blue–teal background
+   so that it is visually distinct from Publications and Academic
+   Contributions.
+
+   The selectors cover both:
+   #grants
+   #grants-research-support
+   .grants
+   .grants-research-support
+
+   Therefore the design will work with the existing section naming.
+*/
 
 #grants,
 #grants-research-support,
@@ -1323,6 +1248,7 @@ select:focus-visible {
   color: var(--white);
 }
 
+/* Decorative upper-right glow */
 #grants::before,
 #grants-research-support::before,
 .grants::before,
@@ -1349,6 +1275,7 @@ select:focus-visible {
   pointer-events: none;
 }
 
+/* Decorative lower-left glow */
 #grants::after,
 #grants-research-support::after,
 .grants::after,
@@ -1375,12 +1302,16 @@ select:focus-visible {
   pointer-events: none;
 }
 
+
+/* ---------------------------------------------------------
+   Grants heading
+--------------------------------------------------------- */
+
 #grants .container,
 #grants-research-support .container,
 .grants .container,
 .grants-research-support .container {
   position: relative;
-
   z-index: 2;
 }
 
@@ -1389,7 +1320,6 @@ select:focus-visible {
 .grants .section-heading,
 .grants-research-support .section-heading {
   position: relative;
-
   z-index: 2;
 }
 
@@ -1421,12 +1351,16 @@ select:focus-visible {
   color: rgba(255, 255, 255, 0.72);
 }
 
+
+/* ---------------------------------------------------------
+   Grants grid
+--------------------------------------------------------- */
+
 .grants-grid,
 .grant-grid,
 .grants-list,
 .grant-list {
   position: relative;
-
   z-index: 2;
 
   display: grid;
@@ -1435,6 +1369,11 @@ select:focus-visible {
 
   gap: 18px;
 }
+
+
+/* ---------------------------------------------------------
+   Grant cards
+--------------------------------------------------------- */
 
 .grant-card,
 .grants-grid article,
@@ -1467,7 +1406,6 @@ select:focus-visible {
     0 14px 35px rgba(3, 24, 31, 0.20);
 
   backdrop-filter: blur(10px);
-
   -webkit-backdrop-filter: blur(10px);
 
   transition:
@@ -1498,6 +1436,11 @@ select:focus-visible {
     0 20px 45px rgba(3, 24, 31, 0.28);
 }
 
+
+/* ---------------------------------------------------------
+   Grant number
+--------------------------------------------------------- */
+
 .grant-number,
 .grant-card .number,
 .grants-grid article > .number,
@@ -1516,6 +1459,11 @@ select:focus-visible {
 
   letter-spacing: 1.5px;
 }
+
+
+/* ---------------------------------------------------------
+   Grant source / funding body
+--------------------------------------------------------- */
 
 .grant-kicker,
 .grant-source,
@@ -1540,6 +1488,11 @@ select:focus-visible {
   text-transform: uppercase;
 }
 
+
+/* ---------------------------------------------------------
+   Grant title
+--------------------------------------------------------- */
+
 .grant-card h3,
 .grants-grid article h3,
 .grant-grid article h3,
@@ -1558,6 +1511,11 @@ select:focus-visible {
   font-weight: 500;
 }
 
+
+/* ---------------------------------------------------------
+   Grant description
+--------------------------------------------------------- */
+
 .grant-card p,
 .grants-grid article p,
 .grant-grid article p,
@@ -1571,6 +1529,16 @@ select:focus-visible {
 
   line-height: 1.72;
 }
+
+
+/* ---------------------------------------------------------
+   Grant metadata
+   Examples:
+   Co-PI
+   PI
+   Nu. 200,000
+   Food Analysis
+--------------------------------------------------------- */
 
 .grant-meta,
 .grant-tags,
@@ -1618,6 +1586,8 @@ select:focus-visible {
   text-transform: uppercase;
 }
 
+
+/* Gold treatment for financial values */
 .grant-meta .amount,
 .grant-tags .amount,
 .grant-details .amount,
@@ -1631,11 +1601,22 @@ select:focus-visible {
   color: var(--grant-gold);
 }
 
+
+/* ---------------------------------------------------------
+   Alternative markup support
+   If metadata is written directly as paragraphs/spans
+--------------------------------------------------------- */
+
 .grant-card strong,
 .grants-grid article strong,
 .grant-grid article strong {
   color: var(--grant-gold);
 }
+
+
+/* ---------------------------------------------------------
+   Grants divider
+--------------------------------------------------------- */
 
 #grants .grant-list,
 #grants-research-support .grant-list,
@@ -1644,6 +1625,11 @@ select:focus-visible {
   border-top:
     1px solid rgba(255, 255, 255, 0.13);
 }
+
+
+/* ---------------------------------------------------------
+   Featured grant card
+--------------------------------------------------------- */
 
 .grant-card.featured,
 .grants-grid article.featured,
@@ -2717,8 +2703,6 @@ footer {
 
 /* =========================================================
    TABLET
-   901px–1000px still uses DESKTOP NAVIGATION.
-   This is intentional.
 ========================================================= */
 
 @media (max-width: 1000px) {
@@ -2730,7 +2714,7 @@ footer {
   }
 
   .hero-panel {
-    min-height: 570px;
+    min-height: 615px;
   }
 
   .orb {
@@ -2744,21 +2728,21 @@ footer {
     width: 310px;
     height: 310px;
 
-    margin-top: 35px;
+    margin-top: 45px;
 
     border-width: 9px;
 
-    transform: translateY(15px);
+    transform: translateY(35px);
   }
 
   .profile-photo {
     transform:
-      translateY(-34px)
+      translateY(-28px)
       scale(1.58);
   }
 
   .research-card {
-    margin-top: 42px;
+    margin-top: 57px;
 
     margin-right: 0;
 
@@ -2795,143 +2779,47 @@ footer {
     gap: 35px;
   }
 
+  /* Grants tablet */
   .grants-grid,
   .grant-grid,
   .grants-list,
   .grant-list {
     grid-template-columns: repeat(2, 1fr);
   }
-
-  /*
-     Slightly tighten desktop navigation at tablet width.
-     Still horizontal; hamburger is NOT shown yet.
-  */
-
-  .nav {
-    gap: 18px;
-  }
-
-  .nav-links {
-    gap: 16px;
-  }
-
-  .nav-links a {
-    font-size: 12px;
-  }
-
-  .nav-button {
-    padding: 9px 14px;
-  }
 }
 
 
 /* =========================================================
    MOBILE NAVIGATION
-   SINGLE SYSTEM — MATCHES main.js .active
-   Hamburger appears ONLY at <=900px.
 ========================================================= */
 
-@media (max-width: 1150px) {
-
-  .site-header {
-    position: sticky;
-
-    top: 0;
-
-    z-index: 1000;
-  }
+@media (max-width: 900px) {
 
   .nav {
-    position: relative;
-
     min-height: 68px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 20px;
   }
-
-  /*
-     Hamburger is visible only on mobile.
-  */
 
   .menu-toggle {
     display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    width: 44px;
-    height: 44px;
-
-    margin-left: auto;
-
-    padding: 0;
-
-    border: 0;
-
-    border-radius: 8px;
-
-    background: transparent;
-
-    color: var(--ink);
-
-    font-size: 30px;
-
-    line-height: 1;
-
-    cursor: pointer;
-
-    position: relative;
-
-    z-index: 1101;
-
-    -webkit-tap-highlight-color: transparent;
   }
-
-  .menu-toggle:hover {
-    background:
-      rgba(16, 37, 43, 0.06);
-  }
-
-  .menu-toggle:focus-visible {
-    outline: 2px solid var(--accent);
-
-    outline-offset: 3px;
-  }
-
-
-  /*
-     Mobile navigation starts hidden.
-     JavaScript adds .active.
-  */
 
   .nav-links {
+    display: none;
+
     position: absolute;
 
     top: calc(100% + 8px);
 
     left: 0;
-
     right: 0;
 
-    width: 100%;
-
-    display: none;
+    z-index: 1100;
 
     flex-direction: column;
 
     align-items: stretch;
 
-    justify-content: flex-start;
-
     gap: 4px;
-
-    margin: 0;
 
     padding: 12px;
 
@@ -2949,24 +2837,11 @@ footer {
     backdrop-filter: blur(14px);
 
     -webkit-backdrop-filter: blur(14px);
-
-    z-index: 1100;
   }
 
-
-  /*
-     IMPORTANT:
-     main.js uses navMenu.classList.toggle("active")
-  */
-
-  .nav-links.active {
+  .nav-links.open {
     display: flex;
   }
-
-
-  /*
-     Mobile navigation links.
-  */
 
   .nav-links a {
     display: block;
@@ -2979,75 +2854,36 @@ footer {
 
     color: var(--ink);
 
-    background: transparent;
-
     font-size: 14px;
 
-    font-weight: 600;
-
-    line-height: 1.4;
-
     text-align: left;
-
-    text-decoration: none;
-
-    white-space: normal;
   }
 
-  .nav-links a:hover,
-  .nav-links a:focus {
-    color: var(--ink);
-
-    background:
-      rgba(16, 37, 43, 0.05);
+  .nav-links a:hover {
+    background: rgba(16, 37, 43, 0.05);
   }
 
   .nav-links a:not(.nav-button)::after {
     display: none;
   }
 
-
-  /*
-     Contact button inside mobile menu.
-  */
-
-  .nav-links .nav-button {
-    display: block;
-
-    width: 100%;
-
+  .nav-button {
     margin-top: 5px;
 
-    padding: 10px 18px;
+    text-align: center !important;
 
-    border:
-      1px solid var(--deep-teal);
+    background: var(--deep-teal);
 
-    border-radius: 999px;
-
-    background:
-      var(--deep-teal);
-
-    color: var(--white) !important;
-
-    text-align: center;
-  }
-
-  .nav-links .nav-button:hover,
-  .nav-links .nav-button:focus {
-    background:
-      var(--deep-teal-2);
-
-    border-color:
-      var(--deep-teal-2);
+    border-color: var(--deep-teal);
 
     color: var(--white) !important;
   }
 
+  .nav-button:hover {
+    background: var(--deep-teal-2);
 
-  /*
-     Mobile section offset.
-  */
+    border-color: var(--deep-teal-2);
+  }
 
   section,
   #research,
@@ -3061,11 +2897,6 @@ footer {
     scroll-margin-top: 82px;
   }
 
-
-  /*
-     Publication controls.
-  */
-
   .publication-controls {
     grid-template-columns: 1fr 1fr;
   }
@@ -3078,11 +2909,7 @@ footer {
     width: 100%;
   }
 
-
-  /*
-     Grant cards.
-  */
-
+  /* Grants mobile/tablet navigation */
   .grant-card,
   .grants-grid article,
   .grant-grid article,
@@ -3104,7 +2931,7 @@ footer {
   }
 
   .hero {
-    padding: 55px 0 45px;
+    padding: 75px 0 70px;
   }
 
   h1 {
@@ -3120,7 +2947,7 @@ footer {
   }
 
   .hero-panel {
-    min-height: 475px;
+    min-height: 525px;
 
     overflow: visible;
   }
@@ -3132,16 +2959,28 @@ footer {
     height: 330px;
   }
 
+
+  /* =======================================================
+     MOBILE PHOTO FRAME
+     FRAME POSITION PRESERVED
+  ======================================================= */
+
   .hero-photo {
     width: 270px;
     height: 270px;
 
-    margin-top: 28px;
+    margin-top: 34px;
 
     border-width: 8px;
 
-    transform: translateY(18px);
+    transform: translateY(38px);
   }
+
+
+  /* =======================================================
+     MOBILE PHOTO
+     ONLY PHOTO MOVES UP
+  ======================================================= */
 
   .profile-photo {
     width: 100%;
@@ -3150,7 +2989,7 @@ footer {
     object-fit: cover;
 
     transform:
-      translateY(-31px)
+      translateY(-26px)
       scale(1.54);
 
     transform-origin: center center;
@@ -3164,8 +3003,7 @@ footer {
 
     width: min(315px, 88vw);
 
-    margin-top: 42px;
-
+    margin-top: 57px;
     margin-right: 0;
 
     padding: 19px;
@@ -3211,12 +3049,6 @@ footer {
     gap: 12px;
 
     padding: 30px 0;
-  }
-
-  .project-no {
-    font-size: 15px;
-
-    letter-spacing: 2px;
   }
 
   .project h3 {
@@ -3389,29 +3221,6 @@ footer {
 
     align-items: flex-start;
   }
-
-
-  /* =======================================================
-     MOBILE — RESEARCH GRANTS
-  ======================================================= */
-
-  .research-grant {
-    grid-template-columns: 1fr;
-
-    gap: 12px;
-
-    padding: 30px 0;
-  }
-
-  .grant-no {
-    font-size: 15px;
-
-    letter-spacing: 2px;
-  }
-
-  .grant-content h3 {
-    font-size: 24px;
-  }
 }
 
 
@@ -3434,7 +3243,7 @@ footer {
   }
 
   .hero-panel {
-    min-height: 435px;
+    min-height: 480px;
   }
 
   .orb {
@@ -3444,16 +3253,28 @@ footer {
     height: 290px;
   }
 
+
+  /* =======================================================
+     VERY SMALL PHOTO FRAME
+     FRAME POSITION PRESERVED
+  ======================================================= */
+
   .hero-photo {
     width: 240px;
     height: 240px;
 
-    margin-top: 20px;
+    margin-top: 25px;
 
     border-width: 8px;
 
-    transform: translateY(18px);
+    transform: translateY(38px);
   }
+
+
+  /* =======================================================
+     VERY SMALL PHOTO
+     ONLY PHOTO MOVES UP
+  ======================================================= */
 
   .profile-photo {
     width: 100%;
@@ -3462,7 +3283,7 @@ footer {
     object-fit: cover;
 
     transform:
-      translateY(-31px)
+      translateY(-26px)
       scale(1.54);
 
     transform-origin: center center;
@@ -3527,182 +3348,6 @@ footer {
   .publication-content h3 {
     font-size: 1rem;
   }
-
-
-  /* =======================================================
-     VERY SMALL SCREEN NAVIGATION
-  ======================================================= */
-
-  .nav-links {
-    top: calc(100% + 6px);
-
-    padding: 9px;
-  }
-
-  .nav-links a {
-    padding: 11px 12px;
-
-    font-size: 13px;
-  }
-
-  .menu-toggle {
-    width: 42px;
-
-    height: 42px;
-
-    font-size: 28px;
-  }
-}
-
-
-/* =========================================================
-   PROFESSIONAL REFEREE REQUEST FORM
-========================================================= */
-
-.referee-request-form[hidden] {
-  display: none !important;
-}
-
-
-/* =========================================================
-   FINAL RESEARCH GRANTS OVERRIDE
-   Numbered list presentation
-========================================================= */
-
-.research-grants-list .research-grant,
-.grants-list .research-grant,
-.grant-list .research-grant {
-  display: grid !important;
-
-  grid-template-columns:
-    90px minmax(0, 1fr) !important;
-
-  gap: 35px !important;
-
-  min-height: 0 !important;
-
-  padding: 40px 0 !important;
-
-  border: 0 !important;
-
-  border-bottom:
-    1px solid rgba(255, 255, 255, 0.14) !important;
-
-  border-radius: 0 !important;
-
-  background: transparent !important;
-
-  box-shadow: none !important;
-
-  backdrop-filter: none !important;
-
-  -webkit-backdrop-filter: none !important;
-
-  transform: none !important;
-}
-
-.research-grants-list .grant-no,
-.grants-list .grant-no,
-.grant-list .grant-no {
-  display: block !important;
-
-  color: var(--accent-light) !important;
-
-  font-size: 16px !important;
-
-  font-weight: 700 !important;
-
-  letter-spacing: 2px !important;
-
-  line-height: 1 !important;
-
-  min-width: 35px !important;
-
-  opacity: 1 !important;
-}
-
-.research-grants-list .grant-content h3,
-.grants-list .grant-content h3,
-.grant-list .grant-content h3 {
-  margin-bottom: 12px !important;
-
-  color: var(--white) !important;
-
-  font-family: "Playfair Display", serif !important;
-
-  font-size: 27px !important;
-
-  font-weight: 500 !important;
-
-  line-height: 1.3 !important;
-}
-
-.research-grants-list .grant-content p,
-.grants-list .grant-content p,
-.grant-list .grant-content p {
-  max-width: 750px !important;
-
-  margin-bottom: 18px !important;
-
-  color: rgba(255, 255, 255, 0.78) !important;
-
-  font-size: 14px !important;
-
-  line-height: 1.75 !important;
-}
-
-.research-grants-list .grant-content .grant-meta,
-.grants-list .grant-content .grant-meta,
-.grant-list .grant-content .grant-meta {
-  margin-bottom: 8px !important;
-
-  display: block !important;
-}
-
-.research-grants-list .grant-content .grant-meta strong,
-.grants-list .grant-content .grant-meta strong,
-.grant-list .grant-content .grant-meta strong {
-  color: var(--accent-light) !important;
-}
-
-
-/* =========================================================
-   MOBILE — FINAL GRANT OVERRIDE
-========================================================= */
-
-@media (max-width: 720px) {
-
-  .research-grants-list .research-grant,
-  .grants-list .research-grant,
-  .grant-list .research-grant {
-    grid-template-columns: 1fr !important;
-
-    gap: 12px !important;
-
-    padding: 30px 0 !important;
-  }
-
-  .research-grants-list .grant-no,
-  .grants-list .grant-no,
-  .grant-list .grant-no {
-    font-size: 15px !important;
-
-    letter-spacing: 2px !important;
-  }
-
-  .research-grants-list .grant-content h3,
-  .grants-list .grant-content h3,
-  .grant-list .grant-content h3 {
-    font-size: 24px !important;
-  }
-
-  .research-grants-list .grant-content p,
-  .grants-list .grant-content p,
-  .grant-list .grant-content p {
-    font-size: 13px !important;
-
-    line-height: 1.7 !important;
-  }
 }
 
 
@@ -3720,27 +3365,19 @@ footer {
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
-
     animation-iteration-count: 1 !important;
-
     transition-duration: 0.01ms !important;
-
     scroll-behavior: auto !important;
   }
 }
 
+
 /* =========================================================
-   FINAL NAVIGATION OVERRIDE
-   Guarantees correct desktop/laptop/mobile behavior
+   FINAL NAVIGATION OVERRIDE — 2026-09-06
+   Class-only navigation state; no inline display manipulation.
 ========================================================= */
 
-/* ---------------------------------------------------------
-   DESKTOP
-   More than 1150px wide
---------------------------------------------------------- */
-
 @media (min-width: 1151px) {
-
   .site-header {
     display: block !important;
     visibility: visible !important;
@@ -3761,52 +3398,39 @@ footer {
 
   .nav-links {
     display: flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-
     position: static !important;
-
     flex-direction: row !important;
     align-items: center !important;
-
+    justify-content: flex-end !important;
     width: auto !important;
-
     margin-left: auto !important;
     padding: 0 !important;
-
+    gap: 28px !important;
     border: 0 !important;
     border-radius: 0 !important;
-
     background: transparent !important;
     box-shadow: none !important;
-
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
 
   .nav-links a {
     display: inline-block !important;
     width: auto !important;
-
     padding: 0 !important;
-
     color: var(--ink-soft) !important;
-
     white-space: nowrap !important;
   }
 
   .nav-links .nav-button {
     display: inline-block !important;
-
     width: auto !important;
-
     padding: 10px 18px !important;
-
     border: 1px solid var(--ink) !important;
     border-radius: 999px !important;
-
     background: transparent !important;
-
     color: var(--ink) !important;
   }
 
@@ -3816,14 +3440,7 @@ footer {
   }
 }
 
-
-/* ---------------------------------------------------------
-   LAPTOP / TABLET / MOBILE
-   1150px and below
---------------------------------------------------------- */
-
 @media (max-width: 1150px) {
-
   .menu-toggle {
     display: flex !important;
     visibility: visible !important;
@@ -3832,52 +3449,48 @@ footer {
 
   .nav-links {
     position: absolute !important;
-
     top: calc(100% + 8px) !important;
     left: 0 !important;
     right: 0 !important;
-
     width: 100% !important;
-
     flex-direction: column !important;
     align-items: stretch !important;
-
     margin: 0 !important;
     padding: 12px !important;
-
     border: 1px solid rgba(16, 37, 43, 0.12) !important;
     border-radius: 14px !important;
-
     background: rgba(255, 255, 255, 0.99) !important;
-
-    box-shadow:
-      0 18px 45px rgba(16, 37, 43, 0.16) !important;
-
+    box-shadow: 0 18px 45px rgba(16, 37, 43, 0.16) !important;
+    z-index: 1100 !important;
     visibility: visible !important;
     opacity: 1 !important;
-
-    z-index: 1100 !important;
   }
 
-  /* Closed */
   .nav-links:not(.active) {
     display: none !important;
   }
 
-  /* Open */
   .nav-links.active {
     display: flex !important;
   }
 
   .nav-links a {
     display: block !important;
-
     width: 100% !important;
-
     padding: 13px 14px !important;
-
     color: var(--ink) !important;
-
     white-space: normal !important;
+  }
+
+  .nav-links .nav-button {
+    display: block !important;
+    width: 100% !important;
+    margin-top: 5px !important;
+    padding: 10px 18px !important;
+    border: 1px solid var(--deep-teal) !important;
+    border-radius: 999px !important;
+    background: var(--deep-teal) !important;
+    color: var(--white) !important;
+    text-align: center !important;
   }
 }
