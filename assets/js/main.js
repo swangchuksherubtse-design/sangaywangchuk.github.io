@@ -1025,7 +1025,7 @@ function renderResearchGrants(
             if (typeof grant === "string") {
 
                 return `
-                    <article class="research-grant">
+                    <article class="grant-card">
 
                         <div class="grant-no">
                             ${String(index + 1).padStart(2, "0")}
@@ -1077,7 +1077,7 @@ function renderResearchGrants(
                 "";
 
             return `
-                <article class="research-grant">
+                <article class="grant-card">
 
                     <div class="grant-no">
                         ${String(index + 1).padStart(2, "0")}
