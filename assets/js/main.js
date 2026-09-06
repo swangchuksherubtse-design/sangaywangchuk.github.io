@@ -922,7 +922,7 @@ function renderResearchGrants(
 ) {
 
     container.innerHTML =
-        grants.map(function (grant) {
+        grants.map(function (grant, index) {
 
             /*
              * String-based grant
@@ -931,11 +931,19 @@ function renderResearchGrants(
             if (typeof grant === "string") {
 
                 return `
-                    <article class="research-grant-card">
+                    <article class="research-grant">
 
-                        <p>
-                            ${escapeHTML(grant)}
-                        </p>
+                        <div class="grant-no">
+                            ${String(index + 1).padStart(2, "0")}
+                        </div>
+
+                        <div class="grant-content">
+
+                            <p>
+                                ${escapeHTML(grant)}
+                            </p>
+
+                        </div>
 
                     </article>
                 `;
@@ -969,45 +977,68 @@ function renderResearchGrants(
                 grant.year ||
                 "";
 
+            const description =
+                grant.description ||
+                grant.details ||
+                "";
+
             return `
-                <article class="research-grant-card">
+                <article class="research-grant">
 
-                    <h3>
-                        ${escapeHTML(title)}
-                    </h3>
+                    <div class="grant-no">
+                        ${String(index + 1).padStart(2, "0")}
+                    </div>
 
-                    ${
-                        funder
-                            ? `
-                                <p>
-                                    <strong>Funder:</strong>
-                                    ${escapeHTML(funder)}
-                                </p>
-                              `
-                            : ""
-                    }
+                    <div class="grant-content">
 
-                    ${
-                        amount
-                            ? `
-                                <p>
-                                    <strong>Amount:</strong>
-                                    ${escapeHTML(amount)}
-                                </p>
-                              `
-                            : ""
-                    }
+                        <h3>
+                            ${escapeHTML(title)}
+                        </h3>
 
-                    ${
-                        year
-                            ? `
-                                <p>
-                                    <strong>Year:</strong>
-                                    ${escapeHTML(year)}
-                                </p>
-                              `
-                            : ""
-                    }
+                        ${
+                            description
+                                ? `
+                                    <p>
+                                        ${escapeHTML(description)}
+                                    </p>
+                                  `
+                                : ""
+                        }
+
+                        ${
+                            funder
+                                ? `
+                                    <p class="grant-meta">
+                                        <strong>Funder:</strong>
+                                        ${escapeHTML(funder)}
+                                    </p>
+                                  `
+                                : ""
+                        }
+
+                        ${
+                            amount
+                                ? `
+                                    <p class="grant-meta">
+                                        <strong>Amount:</strong>
+                                        ${escapeHTML(amount)}
+                                    </p>
+                                  `
+                                : ""
+                        }
+
+                        ${
+                            year
+                                ? `
+                                    <p class="grant-meta">
+                                        <strong>Year:</strong>
+                                        ${escapeHTML(year)}
+                                    </p>
+                                  `
+                                : ""
+                        }
+
+                    </div>
 
                 </article>
             `;
