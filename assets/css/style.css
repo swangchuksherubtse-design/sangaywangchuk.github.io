@@ -2831,7 +2831,7 @@ footer {
    Hamburger appears ONLY at <=900px.
 ========================================================= */
 
-@media (max-width: 900px) {
+@media (max-width: 1150px) {
 
   .site-header {
     position: sticky;
