@@ -1018,51 +1018,50 @@ function renderResearchGrants(
     container.innerHTML =
         grants.map(function (grant, index) {
 
-            /*
-             * String-based grant
-             */
+            const number =
+                String(index + 1).padStart(2, "0");
+
+
+            /* =================================================
+               STRING-BASED GRANT
+               ================================================= */
 
             if (typeof grant === "string") {
 
                 return `
-    <article class="grant-card">
+                    <article class="grant-card">
 
-        <div class="grant-no">
-            ${String(index + 1).padStart(2, "0")}
-        </div>
+                        <div class="grant-no">
+                            ${number}
+                        </div>
 
-        <div class="grant-content">
+                        <div class="grant-content">
 
-            <div class="grant-meta">
-                ${grant.year ? grant.year + " · " : ""}
-                ${grant.type || "Research Grant"}
-            </div>
+                            <div class="grant-meta">
+                                Research Grant
+                            </div>
 
-            <h3>
-                ${grant.organization || "Research Grant"}
-            </h3>
+                            <p>
+                                ${escapeHTML(grant)}
+                            </p>
 
-            <p>
-                ${escapeHTML(grant)}
-            </p>
+                        </div>
 
-        </div>
-
-    </article>
-`;
+                    </article>
+                `;
 
             }
 
 
-            /*
-             * Object-based grant
-             */
+            /* =================================================
+               OBJECT-BASED GRANT
+               ================================================= */
 
             const title =
                 grant.title ||
                 grant.project ||
                 grant.name ||
-                "Research Grant";
+                "";
 
             const amount =
                 grant.amount ||
@@ -1080,23 +1079,69 @@ function renderResearchGrants(
                 grant.year ||
                 "";
 
+            const type =
+                grant.type ||
+                "Research Grant";
+
             const description =
                 grant.description ||
                 grant.details ||
                 "";
 
+
+            /*
+             * If the object only contains "Research Grant"
+             * as its title/name, do NOT display another white
+             * Research Grant heading.
+             */
+
+            const hasRealTitle =
+                title &&
+                title.toLowerCase() !== "research grant";
+
+
             return `
                 <article class="grant-card">
 
                     <div class="grant-no">
-                        ${String(index + 1).padStart(2, "0")}
+                        ${number}
                     </div>
 
                     <div class="grant-content">
 
-                        <h3>
-                            ${escapeHTML(title)}
-                        </h3>
+                        ${
+                            year || type
+                                ? `
+                                    <div class="grant-meta">
+                                        ${year ? escapeHTML(year) : ""}
+                                        ${year && type ? " · " : ""}
+                                        ${escapeHTML(type)}
+                                    </div>
+                                  `
+                                : ""
+                        }
+
+                        ${
+                            hasRealTitle
+                                ? `
+                                    <h3>
+                                        ${escapeHTML(title)}
+                                    </h3>
+                                  `
+                                : ""
+                        }
+
+                        ${
+                            funder &&
+                            funder.toLowerCase() !== "research grant"
+                                ? `
+                                    <p class="grant-funder">
+                                        <strong>Funder:</strong>
+                                        ${escapeHTML(funder)}
+                                    </p>
+                                  `
+                                : ""
+                        }
 
                         ${
                             description
@@ -1109,33 +1154,11 @@ function renderResearchGrants(
                         }
 
                         ${
-                            funder
-                                ? `
-                                    <p class="grant-meta">
-                                        <strong>Funder:</strong>
-                                        ${escapeHTML(funder)}
-                                    </p>
-                                  `
-                                : ""
-                        }
-
-                        ${
                             amount
                                 ? `
                                     <p class="grant-meta">
                                         <strong>Amount:</strong>
                                         ${escapeHTML(amount)}
-                                    </p>
-                                  `
-                                : ""
-                        }
-
-                        ${
-                            year
-                                ? `
-                                    <p class="grant-meta">
-                                        <strong>Year:</strong>
-                                        ${escapeHTML(year)}
                                     </p>
                                   `
                                 : ""
