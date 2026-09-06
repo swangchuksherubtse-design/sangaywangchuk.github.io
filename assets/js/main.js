@@ -8,46 +8,61 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("main.js loaded successfully.");
 
     /* =========================================================
-       1. MOBILE NAVIGATION
-       ========================================================= */
+   1. MOBILE NAVIGATION
+   ========================================================= */
 
-    const navToggle = document.querySelector(".menu-toggle");
-    const navMenu = document.querySelector(".nav-links");
+const navToggle = document.querySelector(".menu-toggle");
+const navMenu = document.querySelector(".nav-links");
 
-    if (navToggle && navMenu) {
+if (navToggle && navMenu) {
 
-        navToggle.addEventListener("click", function () {
+    // Set initial state
+    navMenu.classList.remove("active");
+    navMenu.style.removeProperty("display");
+    navToggle.setAttribute("aria-expanded", "false");
 
-            navMenu.classList.toggle("active");
-            navToggle.classList.toggle("active");
+    navToggle.addEventListener("click", function (event) {
 
-            const expanded =
-                navToggle.getAttribute("aria-expanded") === "true";
+        event.preventDefault();
+        event.stopPropagation();
 
-            navToggle.setAttribute(
-                "aria-expanded",
-                String(!expanded)
-            );
+        const isOpen = navMenu.classList.contains("active");
+
+        if (isOpen) {
+
+            navMenu.classList.remove("active");
+            navMenu.style.setProperty("display", "none", "important");
+            navToggle.setAttribute("aria-expanded", "false");
+
+        } else {
+
+            navMenu.classList.add("active");
+            navMenu.style.setProperty("display", "flex", "important");
+            navToggle.setAttribute("aria-expanded", "true");
+
+        }
+
+        console.log(
+            "Mobile menu:",
+            navMenu.classList.contains("active") ? "OPEN" : "CLOSED"
+        );
+
+    });
+
+    // Close menu after selecting a navigation link
+    navMenu.querySelectorAll("a").forEach(function (link) {
+
+        link.addEventListener("click", function () {
+
+            navMenu.classList.remove("active");
+            navMenu.style.setProperty("display", "none", "important");
+            navToggle.setAttribute("aria-expanded", "false");
 
         });
 
-        navMenu.querySelectorAll("a").forEach(function (link) {
+    });
 
-            link.addEventListener("click", function () {
-
-                navMenu.classList.remove("active");
-                navToggle.classList.remove("active");
-
-                navToggle.setAttribute(
-                    "aria-expanded",
-                    "false"
-                );
-
-            });
-
-        });
-
-    }
+}
 
 
     /* =========================================================
