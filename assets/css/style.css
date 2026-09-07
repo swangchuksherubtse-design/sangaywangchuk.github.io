@@ -3908,7 +3908,7 @@ font-size: 19px !important;
 #research-grants-list .grant-card .grant-no {
     color: var(--grant-gold) !important;
     font-family: "DM Sans", sans-serif !important;
-    font-size: 25px !important;
+    font-size: 20px !important;
     font-weight: 700 !important;
     line-height: 1 !important;
     letter-spacing: -0.04em !important;
@@ -3937,7 +3937,7 @@ font-size: 19px !important;
 @media (max-width: 720px) {
 
     #research-grants-list .grant-card .grant-no {
-        font-size: 25px !important;
+        font-size: 20px !important;
     }
 
     #research-grants-list .grant-card .grant-meta {
