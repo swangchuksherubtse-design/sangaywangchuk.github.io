@@ -3479,256 +3479,7 @@ text-align: center !important;
 }
 
 /* =========================================================
-RESEARCH GRANTS 01–05
-TEXT VISIBILITY + SPACING + CARD HEIGHT FIX
-SCOPED EXCLUSIVELY TO #research-grants-list
-========================================================= */
-
-#research-grants-list {
-position: relative !important;
-z-index: 5 !important;
-}
-
-/* ---------------------------------------------------------
-Grant card layout
---------------------------------------------------------- */
-
-#research-grants-list .grant-card {
-position: relative !important;
-z-index: 5 !important;
-
-display: flex !important;
-flex-direction: row !important;
-align-items: flex-start !important;
-
-column-gap: 32px !important;
-
-padding: 22px 24px !important;
-
-min-height: 0 !important;
-height: auto !important;
-
-color: #ffffff !important;
-
-opacity: 1 !important;
-visibility: visible !important;
-}
-
-/* ---------------------------------------------------------
-Grant numbering — 01, 02, 03, 04, 05
---------------------------------------------------------- */
-
-#research-grants-list .grant-card .grant-no {
-display: block !important;
-
-position: relative !important;
-z-index: 6 !important;
-
-flex: 0 0 48px !important;
-
-width: 48px !important;
-
-margin: 0 !important;
-padding: 0 !important;
-
-color: var(--grant-aqua-light) !important;
-
-font-size: 20px !important;
-line-height: 1.4 !important;
-
-font-weight: 700 !important;
-
-text-align: left !important;
-
-opacity: 1 !important;
-visibility: visible !important;
-}
-
-/* ---------------------------------------------------------
-Grant content
---------------------------------------------------------- */
-
-#research-grants-list .grant-card .grant-content {
-display: block !important;
-
-position: relative !important;
-z-index: 6 !important;
-
-flex: 1 1 auto !important;
-
-min-width: 0 !important;
-
-margin: 0 !important;
-padding: 0 !important;
-
-color: #ffffff !important;
-
-opacity: 1 !important;
-visibility: visible !important;
-}
-
-/* ---------------------------------------------------------
-Actual grant text
---------------------------------------------------------- */
-
-#research-grants-list .grant-card .grant-content p {
-display: block !important;
-
-position: relative !important;
-
-margin: 0 !important;
-padding: 0 !important;
-
-color: rgba(255, 255, 255, 0.92) !important;
-
-font-family: "DM Sans", sans-serif !important;
-
-font-size: 15px !important;
-
-line-height: 1.65 !important;
-
-font-weight: 400 !important;
-
-opacity: 1 !important;
-visibility: visible !important;
-}
-
-/* ---------------------------------------------------------
-Grant heading support
---------------------------------------------------------- */
-
-#research-grants-list .grant-card .grant-content h3 {
-display: block !important;
-
-margin: 0 0 12px !important;
-padding: 0 !important;
-
-color: #ffffff !important;
-
-font-family: "Playfair Display", serif !important;
-
-font-size: 23px !important;
-
-line-height: 1.35 !important;
-
-font-weight: 500 !important;
-
-opacity: 1 !important;
-visibility: visible !important;
-}
-
-/* ---------------------------------------------------------
-Highlighted values
---------------------------------------------------------- */
-
-#research-grants-list .grant-card .grant-content strong {
-color: var(--grant-gold) !important;
-
-opacity: 1 !important;
-visibility: visible !important;
-}
-
-/* =========================================================
-RESEARCH GRANTS — MOBILE
-========================================================= */
-
-@media (max-width: 720px) {
-
-#research-grants-list .grant-card {
-flex-direction: row !important;
-
-
-align-items: flex-start !important;
-
-column-gap: 20px !important;
-
-padding: 18px 18px !important;
-
-min-height: 0 !important;
-
-height: auto !important;
-
-
-}
-
-#research-grants-list .grant-card .grant-no {
-flex: 0 0 38px !important;
-
-
-width: 38px !important;
-
-font-size: 20px !important;
-
-line-height: 1.4 !important;
-
-
-}
-
-#research-grants-list .grant-card .grant-content {
-min-width: 0 !important;
-}
-
-#research-grants-list .grant-card .grant-content p {
-font-size: 14px !important;
-
-
-line-height: 1.6 !important;
-
-
-}
-
-#research-grants-list .grant-card .grant-content h3 {
-font-size: 20px !important;
-}
-}
-
-/* =========================================================
-VERY SMALL SCREENS
-========================================================= */
-
-@media (max-width: 420px) {
-
-#research-grants-list .grant-card {
-column-gap: 16px !important;
-
-
-padding: 16px 15px !important;
-
-min-height: 0 !important;
-
-height: auto !important;
-
-
-}
-
-#research-grants-list .grant-card .grant-no {
-flex: 0 0 34px !important;
-
-
-width: 34px !important;
-
-font-size: 23px !important;
-
-line-height: 1.4 !important;
-
-
-}
-
-#research-grants-list .grant-card .grant-content p {
-font-size: 13.5px !important;
-
-
-line-height: 1.58 !important;
-
-
-}
-
-#research-grants-list .grant-card .grant-content h3 {
-font-size: 19px !important;
-}
-}
-/* =========================================================
-   RESEARCH GRANTS — REFINED ACADEMIC DESIGN
+   RESEARCH GRANTS — FINAL REFINED DESIGN
    Scoped ONLY to #research-grants-list
 ========================================================= */
 
@@ -3753,54 +3504,76 @@ font-size: 19px !important;
 }
 
 
-/* Number */
+/* ---------------------------------------------------------
+   Grant numbering — 01, 02, 03, 04, 05
+--------------------------------------------------------- */
 
 #research-grants-list .grant-card .grant-no {
     display: block !important;
 
     padding-top: 2px !important;
 
-    color: var(--grant-aqua-light) !important;
+    color: var(--grant-gold) !important;
 
     font-family: "DM Sans", sans-serif !important;
-    font-size: 34px !important;
+    font-size: 24px !important;
     line-height: 1 !important;
     font-weight: 700 !important;
     letter-spacing: -0.04em !important;
 
     opacity: 1 !important;
+    visibility: visible !important;
 }
 
 
-/* Content */
+/* ---------------------------------------------------------
+   Grant content
+--------------------------------------------------------- */
 
 #research-grants-list .grant-card .grant-content {
     min-width: 0 !important;
+
+    color: #ffffff !important;
+
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
 
-/* Year / role line */
+/* ---------------------------------------------------------
+   Gold "Research Grant" metadata
+--------------------------------------------------------- */
 
 #research-grants-list .grant-card .grant-meta {
+    display: block !important;
+
     margin: 0 0 9px !important;
+    padding: 0 !important;
 
     color: var(--grant-gold) !important;
 
     font-family: "DM Sans", sans-serif !important;
-    font-size: 13px !important;
+    font-size: 12px !important;
     line-height: 1.5 !important;
     font-weight: 600 !important;
+
     letter-spacing: 0.04em !important;
     text-transform: uppercase !important;
 
     opacity: 1 !important;
+    visibility: visible !important;
 }
 
 
-/* Organization */
+/* ---------------------------------------------------------
+   Grant heading — only used for object-based grants
+--------------------------------------------------------- */
 
 #research-grants-list .grant-card .grant-content h3 {
+    display: block !important;
+
     margin: 0 0 12px !important;
+    padding: 0 !important;
 
     color: #ffffff !important;
 
@@ -3810,26 +3583,46 @@ font-size: 19px !important;
     font-weight: 500 !important;
 
     opacity: 1 !important;
+    visibility: visible !important;
 }
 
 
-/* Description */
+/* ---------------------------------------------------------
+   Grant description
+--------------------------------------------------------- */
 
 #research-grants-list .grant-card .grant-content p {
+    display: block !important;
+
     margin: 0 !important;
+    padding: 0 !important;
 
     color: rgba(255, 255, 255, 0.88) !important;
 
     font-family: "DM Sans", sans-serif !important;
-    font-size: 15px !important;
-    line-height: 1.75 !important;
+    font-size: 14px !important;
+    line-height: 1.7 !important;
     font-weight: 400 !important;
 
     opacity: 1 !important;
+    visibility: visible !important;
 }
 
 
-/* Subtle hover */
+/* ---------------------------------------------------------
+   Highlighted values
+--------------------------------------------------------- */
+
+#research-grants-list .grant-card .grant-content strong {
+    color: var(--grant-gold) !important;
+
+    font-weight: 600 !important;
+}
+
+
+/* ---------------------------------------------------------
+   Subtle hover
+--------------------------------------------------------- */
 
 #research-grants-list .grant-card:hover {
     background: rgba(255, 255, 255, 0.025) !important;
@@ -3850,15 +3643,15 @@ font-size: 19px !important;
     #research-grants-list .grant-card {
         grid-template-columns: 48px 1fr !important;
         column-gap: 17px !important;
-        padding: 24px 0 !important;
+        padding: 22px 0 !important;
     }
 
     #research-grants-list .grant-card .grant-no {
-        font-size: 27px !important;
+        font-size: 21px !important;
     }
 
     #research-grants-list .grant-card .grant-meta {
-        font-size: 11px !important;
+        font-size: 10px !important;
     }
 
     #research-grants-list .grant-card .grant-content h3 {
@@ -3866,8 +3659,8 @@ font-size: 19px !important;
     }
 
     #research-grants-list .grant-card .grant-content p {
-        font-size: 14px !important;
-        line-height: 1.7 !important;
+        font-size: 13.5px !important;
+        line-height: 1.65 !important;
     }
 }
 
@@ -3881,15 +3674,15 @@ font-size: 19px !important;
     #research-grants-list .grant-card {
         grid-template-columns: 40px 1fr !important;
         column-gap: 14px !important;
-        padding: 21px 0 !important;
+        padding: 19px 0 !important;
     }
 
     #research-grants-list .grant-card .grant-no {
-        font-size: 24px !important;
+        font-size: 20px !important;
     }
 
     #research-grants-list .grant-card .grant-meta {
-        font-size: 10px !important;
+        font-size: 9.5px !important;
     }
 
     #research-grants-list .grant-card .grant-content h3 {
@@ -3897,55 +3690,7 @@ font-size: 19px !important;
     }
 
     #research-grants-list .grant-card .grant-content p {
-        font-size: 13.5px !important;
+        font-size: 13px !important;
+        line-height: 1.6 !important;
     }
-}
-/* =========================================================
-   RESEARCH GRANTS — REFINED COMPACT SIZING
-   Scoped ONLY to #research-grants-list
-========================================================= */
-
-#research-grants-list .grant-card .grant-no {
-    color: var(--grant-gold) !important;
-    font-family: "DM Sans", sans-serif !important;
-    font-size: 20px !important;
-    font-weight: 700 !important;
-    line-height: 1 !important;
-    letter-spacing: -0.04em !important;
-    opacity: 1 !important;
-}
-
-#research-grants-list .grant-card .grant-meta {
-    color: var(--grant-gold) !important;
-    font-family: "DM Sans", sans-serif !important;
-    font-size: 12px !important;
-    font-weight: 600 !important;
-    line-height: 1.5 !important;
-    letter-spacing: 0.04em !important;
-    text-transform: uppercase !important;
-    opacity: 1 !important;
-}
-
-#research-grants-list .grant-card .grant-content p {
-    color: rgba(255, 255, 255, 0.88) !important;
-    font-family: "DM Sans", sans-serif !important;
-    font-size: 14px !important;
-    line-height: 1.7 !important;
-    font-weight: 400 !important;
-}
-
-@media (max-width: 720px) {
-
-    #research-grants-list .grant-card .grant-no {
-        font-size: 20px !important;
-    }
-
-    #research-grants-list .grant-card .grant-meta {
-        font-size: 10px !important;
-    }
-
-    #research-grants-list .grant-card .grant-content p {
-        font-size: 13.5px !important;
-    }
-
 }
