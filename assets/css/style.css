@@ -3516,7 +3516,7 @@ text-align: center !important;
     color: var(--grant-gold) !important;
 
     font-family: "DM Sans", sans-serif !important;
-    font-size: 24px !important;
+    font-size: 17px !important;
     line-height: 1 !important;
     font-weight: 700 !important;
     letter-spacing: -0.04em !important;
@@ -3647,7 +3647,7 @@ text-align: center !important;
     }
 
     #research-grants-list .grant-card .grant-no {
-        font-size: 21px !important;
+        font-size: 16px !important;
     }
 
     #research-grants-list .grant-card .grant-meta {
@@ -3655,7 +3655,7 @@ text-align: center !important;
     }
 
     #research-grants-list .grant-card .grant-content h3 {
-        font-size: 20px !important;
+        font-size: 16px !important;
     }
 
     #research-grants-list .grant-card .grant-content p {
@@ -3678,7 +3678,7 @@ text-align: center !important;
     }
 
     #research-grants-list .grant-card .grant-no {
-        font-size: 20px !important;
+        font-size: 15px !important;
     }
 
     #research-grants-list .grant-card .grant-meta {
