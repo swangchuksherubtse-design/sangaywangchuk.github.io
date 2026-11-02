@@ -3,6 +3,19 @@
   "peer_reviewed_journal_articles": [
     {
       "year": 2026,
+      "authors": "Saichanapan, J., Promsuwan, K., Saisahas, K., Soleh, A., Samoson, K., Wangchuk, S., Abdullah, F., Kunalan, V., Abdullah, F., Abdullah, A.F.L., Chang, K.W., & Limbut, W",
+      "title": "A portable voltammetric sensor for presumptive screening of xylazine and ketamine in spiked beverages",
+      "journal": "Journal of Forensic Sciences",
+      "category": "Research Publication",
+      "quartile": "",
+      "impactFactor": "",
+      "metricYear": "",
+      "details": "",
+      "doi": "https://doi.org/10.1111/1556-4029.70503",
+      "citation": "Saichanapan, J., Promsuwan, K., Saisahas, K., Soleh, A., Samoson, K., Wangchuk, S., Abdullah, F., Kunalan, V., Abdullah, F., Abdullah, A.F.L., Chang, K.W., & Limbut, W. (2026). A portable voltammetric sensor for presumptive screening of xylazine and ketamine in spiked beverages. Journal of Forensic Sciences. https://doi.org/10.1111/1556-4029.70503. (Q2, IF 1.9)."
+    },
+    {
+      "year": 2026,
       "authors": "Promsuwan, K., S., Saichanapan, J., Soleh, A., Saisahas, K., Samoson, K., Wangchuk, S., & Limbut, W",
       "title": "A smartphone-assisted NFC-enabled microfluidic electrochemical sensor for on-site monitoring of residual free chlorine in water",
       "journal": "Journal of Environmental Chemical Engineering",
@@ -392,5 +405,5 @@
       "citation": "Subba, J. R., & Wangchuk, S. (2022). Detection of adulterants in some common food items available in the Bhutanese market. Bhutan Journal of Research and Development, 11(1). https://doi.org/10.17102/bjrd.rub.11.1.026."
     }
   ],
-  "article_count": 30
+  "article_count": 31
 }
